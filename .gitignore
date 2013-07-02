@@ -1,0 +1,10 @@
+sic-storage-web/target/*
+sic-storage-web/.settings/*
+sic-storage-web/.mymetadata
+sic-storage-web/.classpath
+sic-storage-web/.project
+sic-storage-ear/target/*
+sic-storage-ear/.settings/*
+sic-storage-ear/.classpath
+sic-storage-ear/.mymetadata
+sic-storage-ear/.project
