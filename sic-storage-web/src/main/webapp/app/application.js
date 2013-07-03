@@ -8,7 +8,7 @@ Ext.define('storeplaces.Application', {
     ],
 
     controllers: [
-        // TODO: add controllers here
+        'storeplaces.controller.Main'
     ],
 
     stores: [

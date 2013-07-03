@@ -2,7 +2,8 @@ Ext.define('storeplaces.view.Viewport', {
     extend: 'Ext.container.Viewport',
     requires:[
         'Ext.layout.container.Fit',
-        'storeplaces.view.Main'
+        'storeplaces.view.Main',
+        'Ext.grid.header.Container'
     ],
 
     layout: {

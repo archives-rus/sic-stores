@@ -11,5 +11,11 @@ Ext.define('storeplaces.view.Main', {
 //        type: 'border'
 //    },
 
-    items: [Ext.create('storeplaces.view.card.CStorePlace')]
+    items: [Ext.create('storeplaces.view.card.CStorePlace'),Ext.create('Ext.Button',{
+    	text:'Просмотр',
+    	id:'readOnlyMode'
+    }),Ext.create('Ext.Button',{
+    	text:'Редактирование',
+    	id:'editMode'
+    })]
 });

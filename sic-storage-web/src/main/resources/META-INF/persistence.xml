@@ -4,8 +4,7 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/">
    <persistence-unit name="EntityManager" transaction-type="JTA">
    	  <jta-data-source>java:jboss/SicDS</jta-data-source>
-   	  <jar-file>../../lib/core-model-${version.core-model}.jar</jar-file>
-   	  <!-- <class>ru.insoft.archive.extcommons.model.table.adm.AdmUser</class> -->
+
       <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
         <property name="hibernate.archive.autodetection" value="class, hbm"/>

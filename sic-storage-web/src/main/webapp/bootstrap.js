@@ -19,6 +19,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.grid.TransformGrid": [],
   "Ext.ux.FieldReplicator": [],
   "Ext.ux.grid.filter.ListFilter": [],
+  "storeplaces.view.lib.StyledFieldSet": [],
   "storeplaces.controller.Main": [],
   "Ext.ux.ajax.XmlSimlet": [],
   "Ext.ux.event.Driver": [],
@@ -51,6 +52,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "storeplaces.view.Main": [],
   "Ext.ux.grid.filter.NumericFilter": [],
   "storeplaces.store.StorageTypeStore": [],
+  "storeplaces.view.lib.YearInterval": [],
   "Ext.ux.grid.menu.RangeMenu": [],
   "Ext.ux.RowExpander": [],
   "Ext.ux.event.Recorder": [],
@@ -62,13 +64,16 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.TabScrollerMenu": [],
   "Ext.ux.IFrame": [],
   "Ext.ux.DataView.Draggable": [],
+  "storeplaces.model.DocTableEntryRead": [],
   "Ext.ux.TabCloseMenu": [],
+  "storeplaces.store.DocsReadStore": [],
   "Ext.ux.form.SearchField": [],
   "Ext.ux.dd.CellFieldDropZone": [],
   "Ext.ux.LiveSearchGridPanel": [],
   "Ext.ux.DataTip": [],
   "Ext.ux.grid.filter.DateFilter": [],
   "Ext.ux.grid.filter.DateTimeFilter": [],
+  "storeplaces.model.DocTableEntryWrite": [],
   "Ext.ux.TreePicker": [],
   "Ext.ux.form.ItemSelector": [
     "Ext.ux.ItemSelector"
@@ -93,6 +98,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.grid.filter.ListFilter": [
     "gridfilter.list"
   ],
+  "storeplaces.view.lib.StyledFieldSet": [],
   "storeplaces.controller.Main": [],
   "Ext.ux.ajax.XmlSimlet": [
     "simlet.xml"
@@ -148,6 +154,7 @@ Ext.ClassManager.addNameAliasMappings({
     "gridfilter.numeric"
   ],
   "storeplaces.store.StorageTypeStore": [],
+  "storeplaces.view.lib.YearInterval": [],
   "Ext.ux.grid.menu.RangeMenu": [],
   "Ext.ux.RowExpander": [],
   "Ext.ux.event.Recorder": [],
@@ -165,9 +172,11 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.uxiframe"
   ],
   "Ext.ux.DataView.Draggable": [],
+  "storeplaces.model.DocTableEntryRead": [],
   "Ext.ux.TabCloseMenu": [
     "plugin.tabclosemenu"
   ],
+  "storeplaces.store.DocsReadStore": [],
   "Ext.ux.form.SearchField": [
     "widget.searchfield"
   ],
@@ -182,6 +191,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.grid.filter.DateTimeFilter": [
     "gridfilter.datetime"
   ],
+  "storeplaces.model.DocTableEntryWrite": [],
   "Ext.ux.TreePicker": [
     "widget.treepicker"
   ],
