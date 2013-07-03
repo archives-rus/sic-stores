@@ -13,6 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.ext-commons>0.0.1-SNAPSHOT</version.ext-commons>
+		<version.core-model>0.0.1-SNAPSHOT</version.core-model>
 	</properties>
 		
 	<dependencies>
