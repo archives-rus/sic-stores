@@ -19,6 +19,12 @@
     <servlet-name>QueryDocuments</servlet-name>
     <servlet-class>servlet.QueryDocuments</servlet-class>
   </servlet>
+  <servlet>
+    <description>No description</description>
+    <servlet-name>DescValuesProvider</servlet-name>
+    <servlet-class>servlet.DescValuesProvider</servlet-class>
+  </servlet>
+
 
     <servlet-mapping>
 	    <servlet-name>DescValuesProvider</servlet-name>
@@ -31,6 +37,10 @@
   <servlet-mapping>
     <servlet-name>QueryDocuments</servlet-name>
     <url-pattern>/servlet/QueryDocuments</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DescValuesProvider</servlet-name>
+    <url-pattern>/servlet/DescValuesProvider</url-pattern>
   </servlet-mapping>
 	<filter> 
         <filter-name>AuthFilter</filter-name>

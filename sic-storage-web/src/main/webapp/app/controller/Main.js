@@ -35,6 +35,8 @@ Ext.define('storeplaces.controller.Main', {
 							}
 						});
 			},
+			onLaunch:function(){
+			},
 			loadStorePlaceDocsEdit:function(){
 				this.getCard().setReadOnly(false);
 				
