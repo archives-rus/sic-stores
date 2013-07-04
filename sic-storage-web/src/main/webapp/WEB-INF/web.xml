@@ -7,10 +7,21 @@
     	<servlet-name>Auth</servlet-name>
 	    <servlet-class>ru.insoft.archive.extcommons.servlet.Auth</servlet-class>
     </servlet>
+  <servlet>
+    <description>No description</description>
+    <display-name>Authorization servlet</display-name>
+    <servlet-name>QueryDocuments</servlet-name>
+    <servlet-class>servlet.QueryDocuments</servlet-class>
+  </servlet>
+
     <servlet-mapping>
 	    <servlet-name>Auth</servlet-name>
     	<url-pattern>/servlet/Auth</url-pattern>
   	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>QueryDocuments</servlet-name>
+    <url-pattern>/servlet/QueryDocuments</url-pattern>
+  </servlet-mapping>
 	<filter> 
         <filter-name>AuthFilter</filter-name>
         <filter-class>ru.insoft.archive.extcommons.filter.AuthFilter</filter-class>

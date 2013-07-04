@@ -17,5 +17,11 @@ Ext.define('storeplaces.view.Main', {
     }),Ext.create('Ext.Button',{
     	text:'Редактирование',
     	id:'editMode'
+    }),Ext.create('Ext.Button',{
+    	text:'Загрузить  таблицу для чтения',
+    	id:'loadViewDocsTable'
+    }),Ext.create('Ext.Button',{
+    	text:'Загрузить таблицу для редактирования',
+    	id:'loadEditDocsTable'
     })]
 });
