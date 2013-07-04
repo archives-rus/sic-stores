@@ -8,3 +8,6 @@ sic-storage-ear/.settings/*
 sic-storage-ear/.classpath
 sic-storage-ear/.mymetadata
 sic-storage-ear/.project
+
+/.project
+/.settings
