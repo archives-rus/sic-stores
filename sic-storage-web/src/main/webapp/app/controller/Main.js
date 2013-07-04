@@ -56,5 +56,11 @@ Ext.define('storeplaces.controller.Main', {
 				if (!success){
 					Ext.Msg.alert('Ошибка','Некорректный ответ сервера');
 				}
+			},
+			removeFromDocGrid:function(grid,rowIndex,colIndex){
+				console.info('Main controller');
+				console.info('actioncolumn handler: rowIndex: '+ rowIndex + ', colIndex: ' + colIndex);
+				var rec = grid.getStore().getAt(rowIndex);
+				grid.getStore().remove(rec);
 			}
 		});

@@ -1,7 +1,6 @@
 Ext.define("storeplaces.view.card.CStorePlace", {
 			extend : 'Ext.container.Container',
 			layout : 'absolute',
-			require : ['Ext.grid.header.Container'],
 			xtype : 'storeplacecard',
 			cbStorageType : null,
 			tfAddr : null,
@@ -32,28 +31,36 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 						text : '№ описи',
 						dataIndex : 'series'
 					}],
-					
-			gridEditOnlyColumns: [{
-				text:'ИД',
-				dataIndex:'id',
-				hidden:true,
-				hideable:false
-			},{
-				text:'Вид документа',
-				dataIndex:'documentTypeId'
-			},{
-				text:'Даты',
-				dataIndex:'dates'
-			},{
-				text:'№ описи',
-				dataIndex:'series'
-			},{
-				text:'Х',
-				dataIndex:'',
-				width:30
-			}
-			],
 
+			gridEditOnlyColumns : [{
+						text : 'ИД',
+						dataIndex : 'id',
+						hidden : true,
+						hideable : false
+					}, {
+						text : 'Вид документа',
+						dataIndex : 'documentTypeId'
+					}, {
+						text : 'Даты',
+						dataIndex : 'dates'
+					}, {
+						text : '№ описи',
+						dataIndex : 'series'
+					}, {
+						width:30,
+						xtype : 'actioncolumn',
+						items : [{
+							icon: 'resources/img/emblem-unreadable.png',
+							tooltip : 'Удалить',
+							handler : function(grid,rowIndex,colIndex){
+								if (window.app){
+									window.app.getController('storeplaces.controller.Main').removeFromDocGrid(grid,rowIndex,colIndex);
+								}else{
+									console.log('window app is undefined!');
+								}
+							}
+						}]
+					}],
 			setReadOnly : function(isReadOnly) {
 				console.log('setReadOnly(): ' + isReadOnly);
 				var me = this;
@@ -64,7 +71,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				me.nfCount.setDisabled(isReadOnly);
 				me.yearInterval.setDisabled(isReadOnly);
 				me.taDocsContent.setDisabled(isReadOnly);
-				
+
 				var readOnlyCls = 'sic-read-only';
 				if (isReadOnly) {
 					me.currentMode = me.readOnlyMode;
@@ -75,11 +82,13 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					me.taOrg.addCls(readOnlyCls);
 					me.nfCount.addCls(readOnlyCls);
 					me.yearInterval.addCls(readOnlyCls);
-				
+
 					me.taDocsContent.addCls(readOnlyCls);
 
 					me.docGrid.removeDocked(me.docGridToolBar, false);
-					me.docGrid.reconfigure(Ext.getStore('storeplaces.store.DocsReadStore'),me.gridReadOnlyColumns);
+					me.docGrid.reconfigure(
+							Ext.getStore('storeplaces.store.DocsReadStore'),
+							me.gridReadOnlyColumns);
 
 				} else {
 					me.currentMode = me.editOnlyMode;
@@ -93,7 +102,9 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					me.taDocsContent.removeCls(readOnlyCls);
 
 					me.docGrid.addDocked(me.docGridToolBar);
-					me.docGrid.reconfigure(Ext.getStore('storeplaces.store.DocsWriteStore'),me.gridEditOnlyColumns);
+					me.docGrid.reconfigure(
+							Ext.getStore('storeplaces.store.DocsWriteStore'),
+							me.gridEditOnlyColumns);
 				}
 
 			},

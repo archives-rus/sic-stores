@@ -12,5 +12,8 @@ Ext.application({
 
     extend: 'storeplaces.Application',
     
-    autoCreateViewport: true
+    autoCreateViewport: true,
+    launch:function(){
+    	window.app=this;
+    }
 });
