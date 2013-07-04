@@ -22,6 +22,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	readOnlyMode : 'READ',
 	editOnlyMode : 'EDIT',
 	cbDocTypes : null,
+	docTypeColumnEditor:null,
 	gridReadOnlyColumns : [{
 				text : 'Вид документа',
 				dataIndex : 'documentType'
@@ -50,7 +51,17 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 							emptyText : 'Не выбран',
 							forceSelection : true,
 							validateOnChange : false
-						})
+						}),
+				renderer:function(value){
+					var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor.getStore();
+					for (var i = 0;i<editorComboStore.getCount();i++){
+						var obj = editorComboStore.getAt(i);
+						if (obj.data.id==value){
+							return obj.data.name;
+						}
+					}
+					return 'value not found';
+				}
 			}, {
 				text : 'Даты',
 				dataIndex : 'dates',
