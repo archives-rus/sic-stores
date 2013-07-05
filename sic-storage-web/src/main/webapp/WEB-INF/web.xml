@@ -7,6 +7,12 @@
     	<servlet-name>Auth</servlet-name>
 	    <servlet-class>ru.insoft.archive.extcommons.servlet.Auth</servlet-class>
     </servlet>
+    <servlet>
+    	<description>No description</description>
+	    <display-name>DescValuesProvider</display-name>
+    	<servlet-name>DescValuesProvider</servlet-name>
+	    <servlet-class>ru.insoft.archive.sic_storage.servlet.DescValuesProvider</servlet-class>
+    </servlet>
   <servlet>
     <description>No description</description>
     <display-name>Authorization servlet</display-name>
@@ -21,6 +27,10 @@
 
 
     <servlet-mapping>
+	    <servlet-name>DescValuesProvider</servlet-name>
+    	<url-pattern>/servlet/DescValuesProvider</url-pattern>
+  	</servlet-mapping>
+  	<servlet-mapping>
 	    <servlet-name>Auth</servlet-name>
     	<url-pattern>/servlet/Auth</url-pattern>
   	</servlet-mapping>
