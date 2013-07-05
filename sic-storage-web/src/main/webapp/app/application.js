@@ -8,7 +8,8 @@ Ext.define('storeplaces.Application', {
     ],
 
     controllers: [
-        'storeplaces.controller.Main'
+        'storeplaces.controller.StorePlaceCardController',
+        'storeplaces.controller.OrgPageController'
     ],
 
     stores: [

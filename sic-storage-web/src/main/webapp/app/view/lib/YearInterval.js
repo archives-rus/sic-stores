@@ -13,6 +13,20 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 //				backgroundColor:'red'
 //			},
 			tfTo : null,
+			setDisableed:function(isEnabled){
+				this.tfFrom.setDisabled(isEnabled);
+				this.tfTo.setDisabled(isEnabled);
+			},
+			addCls:function(cls){
+				this.callParent(arguments);
+				this.tfFrom.addCls(cls);
+				this.tfTo.addCls(cls);
+			},
+			removeCls:function(cls){
+				this.callParent(arguments);
+				this.tfFrom.removeCls(cls)
+				this.tfTo.removeCls(cls);
+				},
 			initComponent : function() {
 				var me = this;
 				var items = new Array();
@@ -28,7 +42,6 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 
 				me.tfFrom = Ext.create('Ext.form.field.Text', {
 							width : 80,
-							id : 'tfFrom',
 							fieldLabel : 'с',
 							labelWidth : 20,
 							height:22

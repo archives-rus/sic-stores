@@ -4,24 +4,21 @@ Ext.define('storeplaces.view.Main', {
         'Ext.tab.Panel',
         'Ext.layout.container.Border'
     ],
-    
+    height:'100%',
+    autoScroll:true,
     xtype: 'app-main',
 
 //    layout: {
 //        type: 'border'
 //    },
 
-    items: [Ext.create('storeplaces.view.card.CStorePlace'),Ext.create('Ext.Button',{
-    	text:'Просмотр',
-    	id:'readOnlyMode'
-    }),Ext.create('Ext.Button',{
-    	text:'Редактирование',
-    	id:'editMode'
-    }),Ext.create('Ext.Button',{
-    	text:'Загрузить  таблицу для чтения',
-    	id:'loadViewDocsTable'
-    }),Ext.create('Ext.Button',{
-    	text:'Загрузить таблицу для редактирования',
-    	id:'loadEditDocsTable'
-    })]
+//    items: [Ext.create('storeplaces.view.card.CStorePlace'),Ext.create('Ext.Button',{
+//    	text:'Режим чтения',
+//    	id:'loadViewDocsTable'
+//    }),Ext.create('Ext.Button',{
+//    	text:'Режим редактирования',
+//    	id:'loadEditDocsTable'
+//    })]
+
+	items:[Ext.create('storeplaces.view.page.COrganizationPage')]
 });

@@ -1,5 +1,5 @@
 Ext.define("storeplaces.view.card.CStorePlace", {
-	extend : 'Ext.container.Container',
+	extend : 'Ext.form.Panel',
 	layout : 'absolute',
 	xtype : 'storeplacecard',
 	requires : ['Ext.grid.plugin.CellEditing'],
@@ -22,7 +22,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	readOnlyMode : 'READ',
 	editOnlyMode : 'EDIT',
 	cbDocTypes : null,
-	docTypeColumnEditor:null,
+	docTypeColumnEditor : null,
 	gridReadOnlyColumns : [{
 				text : 'Вид документа',
 				dataIndex : 'documentType'
@@ -52,11 +52,12 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 							forceSelection : true,
 							validateOnChange : false
 						}),
-				renderer:function(value){
-					var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor.getStore();
-					for (var i = 0;i<editorComboStore.getCount();i++){
+				renderer : function(value) {
+					var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor
+							.getStore();
+					for (var i = 0; i < editorComboStore.getCount(); i++) {
 						var obj = editorComboStore.getAt(i);
-						if (obj.data.id==value){
+						if (obj.data.id == value) {
 							return obj.data.name;
 						}
 					}
@@ -85,7 +86,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					handler : function(grid, rowIndex, colIndex) {
 						if (window.app) {
 							window.app
-									.getController('storeplaces.controller.Main')
+									.getController('storeplaces.controller.StorePlaceCardController')
 									.removeFromDocGrid(grid, rowIndex, colIndex);
 						} else {
 							console.log('window app is undefined!');
@@ -101,7 +102,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		me.tfPhone.setDisabled(isReadOnly);
 		me.taOrg.setDisabled(isReadOnly);
 		me.nfCount.setDisabled(isReadOnly);
-		me.yearInterval.setDisabled(isReadOnly);
+		me.yearInterval.setDisableed(isReadOnly);
 		me.taDocsContent.setDisabled(isReadOnly);
 
 		var readOnlyCls = 'sic-read-only';
@@ -154,6 +155,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		me.cbStorageType = Ext.create('Ext.form.field.ComboBox', {
+					name : 'storageType',
 					fieldLabel : 'Место хранения',
 					labelSeparator : '',
 					labelWidth : me.fieldLabelWidth,
@@ -186,6 +188,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		me.taOrg = Ext.create('Ext.form.field.TextArea', {
+					name : 'orgName',
 					fieldLabel : 'Название организации',
 					width : me.fieldLabelWidth,
 					height : 46,
@@ -196,6 +199,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		me.nfCount = Ext.create('Ext.form.field.Text', {
+					name : 'documentCount',
 					fieldLabel : 'Количество ед. хр.',
 					labelSeparator : '',
 					height : 22,
@@ -206,6 +210,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		me.tfAddr = Ext.create('Ext.form.field.Text', {
+					name : 'address',
 					fieldLabel : 'Адрес',
 					labelSeparator : '',
 					width : 400,
@@ -216,6 +221,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		me.tfPhone = Ext.create('Ext.form.field.Text', {
+					name : 'phone',
 					fieldLabel : 'Телефон',
 					height : 22,
 					width : 300,
@@ -258,6 +264,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		me.taDocsContent = Ext.create('Ext.form.field.TextArea', {
+					name : 'contents',
 					labelWidth : me.fieldLabelWidth,
 					fieldLabel : 'Состав документов',
 					height : 50,
@@ -273,5 +280,14 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		me.callParent(arguments);
+	},
+	loadRecord : function() {
+		var me = this;
+		me.callParent(arguments);
+		var model = arguments[0];
+		var beginYear = model.beginYear;
+		var endYear = model.endYear;
+		me.yearInterval.tfFrom.setValue(beginYear);
+		me.yearInterval.tfTo.setValue(endYear);
 	}
 });

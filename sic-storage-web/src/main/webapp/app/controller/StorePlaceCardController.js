@@ -1,4 +1,4 @@
-Ext.define('storeplaces.controller.Main', {
+Ext.define('storeplaces.controller.StorePlaceCardController', {
 			extend : 'Ext.app.Controller',
 			refs : [{
 						ref : 'card',
@@ -10,16 +10,6 @@ Ext.define('storeplaces.controller.Main', {
 								click : function(btn, evObj) {
 									console.log('button click');
 									console.info(btn.getItemId());
-									console
-											.log('card id: '
-													+ this.getCard().id);
-									if (btn.getItemId() == 'readOnlyMode') {
-
-										this.getCard().setReadOnly(true);
-									}
-									if (btn.getItemId() == 'editMode') {
-										this.getCard().setReadOnly(false);
-									}
 									switch (btn.getItemId()) {
 										case 'loadViewDocsTable' :
 											this.loadStorePlaceDocsRead();
@@ -37,19 +27,41 @@ Ext.define('storeplaces.controller.Main', {
 			},
 			onLaunch:function(){
 			},
+			
+			getTestStorePlace:function(){
+				var testStorePlace={
+					id:1,
+					storageType:'Тип места хранения тест',
+					archive:'Архив архив',
+					orgName:'Имя организации',
+					address:'тест адрес',
+					phone:'89269269226',
+					documentCount:'25',
+					beginYear:2010,
+					endYear:2013,
+					contents:'Состав документов тестовый текст',
+					getData:function(){
+						return this;
+					}
+				};
+				return testStorePlace;
+			},
 			loadStorePlaceDocsEdit:function(){
 				this.getCard().setReadOnly(false);
-				
+				var storePlaceTestData = this.getTestStorePlace();
+				this.getCard().loadRecord(storePlaceTestData);
 				this.getCard().docGrid.getStore().getProxy().extraParams = {
-					storageId:2,
+					storageId:storePlaceTestData.id,
 					mode: 'EDIT'
 				};
 				this.getCard().docGrid.getStore().load(this.checkStoreLoadingResult);
 			},
 			loadStorePlaceDocsRead : function() {
 				this.getCard().setReadOnly(true);
+				var storePlaceTestData = this.getTestStorePlace();
+				this.getCard().loadRecord(storePlaceTestData);
 				this.getCard().docGrid.getStore().getProxy().extraParams = {
-					storageId : 1,
+					storageId : storePlaceTestData.id,
 					mode : 'VIEW'
 				};
 				this.getCard().docGrid.getStore().load(this.checkStoreLoadingResult);
