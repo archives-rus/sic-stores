@@ -13,6 +13,7 @@ Ext.Loader.addClassPathMappings({
 });
 Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.BoxReorderer": [],
+  "storeplaces.controller.OrgPageController": [],
   "Ext.ux.grid.filter.Filter": [],
   "Ext.ux.GroupTabRenderer": [],
   "Ext.ux.ajax.DataSimlet": [],
@@ -20,12 +21,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.FieldReplicator": [],
   "Ext.ux.grid.filter.ListFilter": [],
   "storeplaces.view.lib.StyledFieldSet": [],
-  "storeplaces.controller.Main": [],
   "Ext.ux.ajax.XmlSimlet": [],
   "Ext.ux.event.Driver": [],
+  "storeplaces.store.DocsWriteStore": [],
   "storeplaces.view.Viewport": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
   "Ext.ux.DataView.DragSelector": [],
+  "storeplaces.store.OrgNamesStore": [],
   "Ext.ux.grid.menu.ListMenu": [],
   "storeplaces.view.card.CStorePlace": [],
   "Ext.ux.GMapPanel": [],
@@ -37,17 +39,22 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.grid.filter.StringFilter": [],
   "Ext.ux.statusbar.ValidationStatus": [],
   "Ext.ux.layout.Center": [],
+  "storeplaces.controller.StorePlaceCardController": [],
   "Ext.ux.PreviewPlugin": [],
   "Ext.ux.DataView.Animated": [],
   "Ext.ux.ajax.SimXhr": [],
   "Ext.ux.event.RecorderManager": [],
   "Ext.ux.ProgressBarPager": [],
   "Ext.ux.CellDragDrop": [],
+  "storeplaces.view.page.COrganizationPage": [],
+  "storeplaces.model.OrganizationName": [],
   "Ext.ux.statusbar.StatusBar": [
     "Ext.ux.StatusBar"
   ],
   "Ext.ux.ajax.Simlet": [],
   "Ext.ux.SlidingPager": [],
+  "storeplaces.model.StoragePlace": [],
+  "storeplaces.store.DocTypesStore": [],
   "Ext.ux.TabReorderer": [],
   "storeplaces.view.Main": [],
   "Ext.ux.grid.filter.NumericFilter": [],
@@ -88,6 +95,7 @@ Ext.ClassManager.addNameAlternateMappings({
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.BoxReorderer": [],
+  "storeplaces.controller.OrgPageController": [],
   "Ext.ux.grid.filter.Filter": [],
   "Ext.ux.GroupTabRenderer": [
     "plugin.grouptabrenderer"
@@ -99,16 +107,19 @@ Ext.ClassManager.addNameAliasMappings({
     "gridfilter.list"
   ],
   "storeplaces.view.lib.StyledFieldSet": [],
-  "storeplaces.controller.Main": [],
   "Ext.ux.ajax.XmlSimlet": [
     "simlet.xml"
   ],
   "Ext.ux.event.Driver": [],
+  "storeplaces.store.DocsWriteStore": [],
   "storeplaces.view.Viewport": [],
   "Ext.ux.dd.PanelFieldDragZone": [],
   "Ext.ux.DataView.DragSelector": [],
+  "storeplaces.store.OrgNamesStore": [],
   "Ext.ux.grid.menu.ListMenu": [],
-  "storeplaces.view.card.CStorePlace": [],
+  "storeplaces.view.card.CStorePlace": [
+    "widget.storeplacecard"
+  ],
   "Ext.ux.GMapPanel": [
     "widget.gmappanel"
   ],
@@ -127,6 +138,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.layout.Center": [
     "layout.ux.center"
   ],
+  "storeplaces.controller.StorePlaceCardController": [],
   "Ext.ux.PreviewPlugin": [
     "plugin.preview"
   ],
@@ -139,6 +151,10 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.ux.CellDragDrop": [
     "plugin.celldragdrop"
   ],
+  "storeplaces.view.page.COrganizationPage": [
+    "widget.corgpage"
+  ],
+  "storeplaces.model.OrganizationName": [],
   "Ext.ux.statusbar.StatusBar": [
     "widget.statusbar"
   ],
@@ -146,6 +162,8 @@ Ext.ClassManager.addNameAliasMappings({
     "simlet.basic"
   ],
   "Ext.ux.SlidingPager": [],
+  "storeplaces.model.StoragePlace": [],
+  "storeplaces.store.DocTypesStore": [],
   "Ext.ux.TabReorderer": [],
   "storeplaces.view.Main": [
     "widget.app-main"

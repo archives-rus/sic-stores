@@ -1,5 +1,5 @@
 $image-search-path: 'D:/workspace/sic-storage/sic-storage-web/src/main/webapp/build/storeplaces/production/resources';
-$theme-name:  'ext-theme-classic' !default;
+$theme-name:  'places-theme' !default;
 $include-ext-abstractcomponent: true;
 $include-ext-abstractmanager: true;
 $include-ext-abstractplugin: true;
@@ -536,22 +536,33 @@ $include-ext-window-messagebox: true;
 $include-ext-window-window: true;
 $include-storeplaces-application: true;
 $include-storeplaces-app-application: true;
-$include-storeplaces-controller-main: true;
+$include-storeplaces-controller-orgpagecontroller: true;
+$include-storeplaces-controller-storeplacecardcontroller: true;
 $include-storeplaces-model-doctableentryread: true;
 $include-storeplaces-model-doctableentrywrite: true;
+$include-storeplaces-model-organizationname: true;
+$include-storeplaces-model-storageplace: true;
+$include-storeplaces-store-doctypesstore: true;
 $include-storeplaces-store-docsreadstore: true;
+$include-storeplaces-store-docswritestore: true;
+$include-storeplaces-store-orgnamesstore: true;
 $include-storeplaces-store-storagetypestore: true;
 $include-storeplaces-view-main: true;
 $include-storeplaces-view-viewport: true;
 $include-storeplaces-view-card-cstoreplace: true;
 $include-storeplaces-view-lib-styledfieldset: true;
 $include-storeplaces-view-lib-yearinterval: true;
+$include-storeplaces-view-page-corganizationpage: true;
 /* including package ext-theme-base */
 @import '../../../ext/packages/ext-theme-base/sass/etc/all';
 /* including package ext-theme-neutral */
 @import '../../../ext/packages/ext-theme-neutral/sass/etc/all';
 /* including package ext-theme-classic */
 @import '../../../ext/packages/ext-theme-classic/sass/etc/all';
+/* including package places-theme */
+@import '../../../packages/places-theme/sass/etc/all';
+/* including package places-theme */
+@import '../../../packages/places-theme/sass/var/Component';
 /* including package ext-theme-classic */
 @import '../../../ext/packages/ext-theme-classic/sass/var/Component';
 @import '../../../ext/packages/ext-theme-classic/sass/var/LoadMask';
