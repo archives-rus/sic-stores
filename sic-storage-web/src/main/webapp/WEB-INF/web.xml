@@ -13,17 +13,25 @@
     	<servlet-name>DescValuesProvider</servlet-name>
 	    <servlet-class>ru.insoft.archive.sic_storage.servlet.DescValuesProvider</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QueryFundInfo</servlet-name>
+        <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryFundInfo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QueryArchStorage</servlet-name>
+        <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryArchStorage</servlet-class>
+    </servlet>
   <servlet>
     <description>No description</description>
     <display-name>Authorization servlet</display-name>
     <servlet-name>QueryDocuments</servlet-name>
     <servlet-class>servlet.QueryDocuments</servlet-class>
   </servlet>
-  <servlet>
+  <!--<servlet>
     <description>No description</description>
     <servlet-name>DescValuesProvider</servlet-name>
     <servlet-class>servlet.DescValuesProvider</servlet-class>
-  </servlet>
+  </servlet>-->
 
 
     <servlet-mapping>
@@ -34,13 +42,17 @@
 	    <servlet-name>Auth</servlet-name>
     	<url-pattern>/servlet/Auth</url-pattern>
   	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QueryFundInfo</servlet-name>
+        <url-pattern>/servlet/QueryFundInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QueryArchStorage</servlet-name>
+        <url-pattern>/servlet/QueryArchStorage</url-pattern>
+    </servlet-mapping>
   <servlet-mapping>
     <servlet-name>QueryDocuments</servlet-name>
     <url-pattern>/servlet/QueryDocuments</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>DescValuesProvider</servlet-name>
-    <url-pattern>/servlet/DescValuesProvider</url-pattern>
   </servlet-mapping>
 	<filter> 
         <filter-name>AuthFilter</filter-name>
