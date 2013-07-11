@@ -11,3 +11,9 @@ sic-storage-ear/.project
 
 /.project
 /.settings
+/sic-storage.iml
+/.idea
+/sic-storage-ear/sic-storage-ear.iml
+/sic-storage-ear/web
+/sic-storage-web/sic-storage-web.iml
+/sic-storage-web/target
