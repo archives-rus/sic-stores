@@ -12,25 +12,31 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					items : [Ext.create('Ext.Button', {
 										text : 'Добавить',
 										cls : 'btnAdd',
+                                        height:25,
 										action : 'orgCardAdd'
 									}), Ext.create('Ext.Button', {
 										text : 'Редактировать',
+                                        height:25,
 										cls : 'btnEdit',
 										action : 'orgCardEdit'
 									}), Ext.create('Ext.Button', {
 										text : 'Просмотр',
+                                        height:25,
 										cls : 'btnView',
 										action : 'orgCardView'
 									}), Ext.create('Ext.Button', {
 										text : 'Сохранить',
+                                        height:25,
 										cls : 'btnSave',
 										action : 'orgCardSave'
 									}), Ext.create('Ext.Button', {
 										text : 'Отменить',
+                                        height:25,
 										cls : 'btnCancel',
 										action : 'orgCardCancel'
 									}), Ext.create('Ext.Button', {
 										text : 'Удалить',
+                                        height:25,
 										cls : 'btnDelete',
 										action : 'orgCardDelete'
 									}), '->',
@@ -158,6 +164,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 								items : [Ext.create('Ext.Button', {
 											text : 'Добавить',
 											cls : 'btnAdd',
+                                            height:25,
 											id : 'addStorePlace',
 											action : 'addStorePlace'
 										})]

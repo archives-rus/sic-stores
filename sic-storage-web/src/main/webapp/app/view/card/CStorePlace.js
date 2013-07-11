@@ -153,8 +153,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					//text : 'X',
 					x : '98%',
 					y : 0,
-					height : 20,
-					width : 20
+					height : 25,
+					width : 25
 				});
 
 		me.cbStorageType = Ext.create('Ext.form.field.ComboBox', {
@@ -164,7 +164,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					labelWidth : 140, //me.fieldLabelWidth,
 					store : Ext.create('storeplaces.store.StorageTypeStore'),
 					width : 370,
-					height : 22,
+					height : 25,
 					valueField : 'id',
 					displayField : 'valueFull',
 					editable : false,
