@@ -21,6 +21,10 @@
         <servlet-name>QueryArchStorage</servlet-name>
         <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryArchStorage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaveOrganization</servlet-name>
+        <servlet-class>ru.insoft.archive.sic_storage.servlet.SaveOrganization</servlet-class>
+    </servlet>
   <servlet>
     <description>No description</description>
     <display-name>Authorization servlet</display-name>
@@ -49,6 +53,10 @@
     <servlet-mapping>
         <servlet-name>QueryArchStorage</servlet-name>
         <url-pattern>/servlet/QueryArchStorage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveOrganization</servlet-name>
+        <url-pattern>/servlet/SaveOrganization</url-pattern>
     </servlet-mapping>
   <servlet-mapping>
     <servlet-name>QueryDocuments</servlet-name>

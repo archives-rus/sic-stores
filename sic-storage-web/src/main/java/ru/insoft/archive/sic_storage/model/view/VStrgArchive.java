@@ -1,15 +1,15 @@
 package ru.insoft.archive.sic_storage.model.view;
 
+import ru.insoft.archive.extcommons.json.JsonOut;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import ru.insoft.archive.core_model.EntityMarker;
-
 @Entity
 @Table(name = "V_STRG_ARCHIVE")
-public class VStrgArchive extends EntityMarker 
+public class VStrgArchive implements JsonOut
 {
 	@Id
 	@Column(name = "ID")

@@ -1,7 +1,9 @@
 package ru.insoft.archive.sic_storage.model.table;
 
-import ru.insoft.archive.core_model.EntityMarker;
-import ru.insoft.archive.extcommons.annotation.Additional;
+import ru.insoft.archive.extcommons.entity.HasId;
+import ru.insoft.archive.extcommons.json.JsonExclude;
+import ru.insoft.archive.extcommons.json.JsonIn;
+import ru.insoft.archive.extcommons.json.JsonOut;
 
 import javax.persistence.*;
 
@@ -14,7 +16,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STRG_PLACE_ARCHIVE")
-public class StrgPlaceArchive extends EntityMarker
+public class StrgPlaceArchive implements HasId, JsonIn, JsonOut
 {
     @Id
     @SequenceGenerator(name = "seqPlaceArchive", sequenceName = "SEQ_STRG_PLACE_ARCHIVE", allocationSize = 1)
@@ -22,7 +24,7 @@ public class StrgPlaceArchive extends EntityMarker
     @Column(name = "STRG_PLACE_ARCH_ID")
     private Long id;
 
-    @Additional
+    @JsonExclude
     @Column(name = "ARCHIVE_ID")
     private Long archiveId;
 

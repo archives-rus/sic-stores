@@ -1,5 +1,6 @@
 package ru.insoft.archive.sic_storage.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -12,9 +13,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import ru.insoft.archive.core_model.EntityMarker;
+import ru.insoft.archive.extcommons.ejb.CommonDBHandler;
+import ru.insoft.archive.extcommons.json.JsonOut;
 import ru.insoft.archive.sic_storage.model.table.StrgFund;
+import ru.insoft.archive.sic_storage.model.table.StrgOrganization;
 import ru.insoft.archive.sic_storage.model.table.StrgPlaceArchive;
+import ru.insoft.archive.sic_storage.model.table.StrgPlaceOrg;
 import ru.insoft.archive.sic_storage.model.view.VStrgArchive;
 import ru.insoft.archive.sic_storage.webmodel.FundFinder;
 import ru.insoft.archive.sic_storage.webmodel.FundSearchCriteria;
@@ -25,11 +29,13 @@ public class StorageHandler
 {
 	@Inject
 	EntityManager em;
+    @Inject
+    CommonDBHandler dbHandler;
 	
-	public List<EntityMarker> getArchives()
+	public List<JsonOut> getArchives()
 	{
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<EntityMarker> cq = cb.createQuery(EntityMarker.class);
+		CriteriaQuery<JsonOut> cq = cb.createQuery(JsonOut.class);
 		Root<VStrgArchive> root = cq.from(VStrgArchive.class);
 		return em.createQuery(cq.select(root)).getResultList();
 	}
@@ -63,15 +69,78 @@ public class StorageHandler
         return res;
     }
 
-    public List<EntityMarker> queryArchStorage(Long archiveId)
+    public List<JsonOut> queryArchStorage(Long archiveId)
     {
         if (archiveId == null)
             return null;
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<EntityMarker> cq = cb.createQuery(EntityMarker.class);
+        CriteriaQuery<JsonOut> cq = cb.createQuery(JsonOut.class);
         Root<StrgPlaceArchive> root = cq.from(StrgPlaceArchive.class);
         cq.select(root).where(cb.equal(root.get("archiveId"), archiveId));
         return em.createQuery(cq).getResultList();
+    }
+
+    protected boolean fundHasOrgs(StrgFund fund)
+    {
+        if (fund == null)
+            return true;
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Integer> cq = cb.createQuery(Integer.class);
+        Root<StrgOrganization> root = cq.from(StrgOrganization.class);
+        cq.select(cb.literal(1)).where(cb.equal(root.get("fund"), fund));
+        try
+        {
+            em.createQuery(cq).setMaxResults(1).getSingleResult();
+            return true;
+        }
+        catch (NoResultException e)
+        {
+            return false;
+        }
+    }
+
+    protected boolean archStorageIsBeingUsed(StrgPlaceArchive archStrg)
+    {
+        if (archStrg == null)
+            return true;
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Integer> cq = cb.createQuery(Integer.class);
+        Root<StrgPlaceOrg> root = cq.from(StrgPlaceOrg.class);
+        cq.select(cb.literal(1)).where(cb.equal(root.get("archStrg"), archStrg));
+        try
+        {
+            em.createQuery(cq).setMaxResults(1).getSingleResult();
+            return true;
+        }
+        catch (NoResultException e)
+        {
+            return false;
+        }
+    }
+
+    public StrgOrganization saveOrganization(StrgOrganization newOrg) throws Exception
+    {
+        StrgOrganization oldOrg = null;
+        StrgFund oldFund = null;
+        List<StrgPlaceArchive> oldArchPlaces = null;
+        if (newOrg.getId() != null)
+        {
+            oldOrg = em.find(StrgOrganization.class, newOrg.getId());
+            oldFund = oldOrg.getFund();
+            oldArchPlaces = new ArrayList<StrgPlaceArchive>();
+            for (StrgPlaceOrg orgPlace : oldOrg.getStorage())
+                if (orgPlace.getArchStrg() != null)
+                    oldArchPlaces.add(orgPlace.getArchStrg());
+        }
+        newOrg = (StrgOrganization)dbHandler.insertEntity(newOrg, oldOrg);
+        if (!fundHasOrgs(oldFund))
+            em.remove(oldFund);
+        for (StrgPlaceArchive oldArchPlace : oldArchPlaces)
+            if (!archStorageIsBeingUsed(oldArchPlace))
+                em.remove(oldArchPlace);
+        return newOrg;
     }
 }

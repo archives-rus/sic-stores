@@ -1,6 +1,6 @@
 package ru.insoft.archive.sic_storage.webmodel;
 
-import ru.insoft.archive.core_model.EntityMarker;
+import ru.insoft.archive.extcommons.json.JsonIn;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,7 +9,7 @@ import ru.insoft.archive.core_model.EntityMarker;
  * Time: 15:43
  * To change this template use File | Settings | File Templates.
  */
-public class FundSearchCriteria extends EntityMarker
+public class FundSearchCriteria implements JsonIn
 {
     private Integer num;
     private String prefix;

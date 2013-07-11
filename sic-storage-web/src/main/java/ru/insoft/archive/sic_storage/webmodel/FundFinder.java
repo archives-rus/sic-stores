@@ -1,6 +1,6 @@
 package ru.insoft.archive.sic_storage.webmodel;
 
-import ru.insoft.archive.core_model.EntityMarker;
+import ru.insoft.archive.extcommons.json.JsonOut;
 import ru.insoft.archive.sic_storage.model.table.StrgFund;
 
 /**
@@ -10,7 +10,7 @@ import ru.insoft.archive.sic_storage.model.table.StrgFund;
  * Time: 16:28
  * To change this template use File | Settings | File Templates.
  */
-public class FundFinder extends EntityMarker
+public class FundFinder implements JsonOut
 {
     private Boolean found = false;
     private StrgFund fund;
