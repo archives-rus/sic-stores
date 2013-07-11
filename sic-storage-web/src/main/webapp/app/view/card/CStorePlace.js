@@ -14,7 +14,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	minHeight : 350,
 	height : 'auto',
 	//minWidth : 820,
-	//width : 820,
+	width : 1150,
 	docGridToolBar : null,
 	fieldLabelWidth : 120,
 	cls : 'storePlaceCard',
@@ -270,12 +270,13 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.taDocsContent = Ext.create('Ext.form.field.TextArea', {
 					name : 'contents',
-					labelWidth : me.fieldLabelWidth,
+					//labelWidth : me.fieldLabelWidth,
+                    labelWidth : 140,
 					fieldLabel : 'Состав документов',
 					height : 50,
 					y : me.docGrid.y + me.docGrid.height + 5,
 					x : 5,
-					width : 820 - me.fieldLabelWidth
+					width : 1080 //- me.fieldLabelWidth
 				});
 
 		Ext.applyIf(me, {

@@ -150,7 +150,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		this.placesFieldSet = Ext.create('storeplaces.view.lib.StyledFieldSet',
 				{
 					title : 'Места хранения',
-					width : '100%',
+					width : '98%',
 					height : 420,
 					autoScroll : true,
                     margin: 20,

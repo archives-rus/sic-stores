@@ -30,6 +30,9 @@ label{
     color:#452111;
     margin-left:10px !important;
 }
+.storePlaceCard{
+    margin-bottom: 10px;
+}
 .storePlacesFieldset .x-fieldset-body{
     /*margin: 5px 20px;*/
 }
@@ -53,4 +56,10 @@ label{
     background-image: none;
     background-color: transparent;
 }
-
+.x-btn-default-toolbar-small-over,
+.x-btn-default-toolbar-small-focus{
+    border:none;
+}
+.x-toolbar{
+    height:35px;
+}
