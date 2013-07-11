@@ -1,0 +1,60 @@
+#orgpage-body{
+    padding:10px 30px 0;
+}
+.loginedUserText{
+    margin:0 10px 0 0 !important;
+}
+.x-fieldset-header-text{
+    font:900 16px arial;
+    color:#560101;
+}
+.x-fieldset,
+.x-panel-body-default,
+.x-toolbar-default{
+   /* text-align:center;*/
+    background-image:none;
+    background-color:#EDE4CE;
+    border:none;
+}
+.x-box-layout-ct{
+    /*border-image: url( ../img/menu_border_bot.png);
+    -moz-border-image:url( ../img/menu_border_bot.png);
+    border-bottom: 1px solid;*/
+}
+.orgpage-body{
+    background-color:#EDE4CE;
+}
+.x-form-item-label,
+label{
+    font:14px Arial;
+    color:#452111;
+    margin-left:10px !important;
+}
+.storePlaceCard{
+    margin-bottom: 10px;
+}
+.storePlacesFieldset .x-fieldset-body{
+    /*margin: 5px 20px;*/
+}
+.storePlaceCard label,
+.storePlaceCard .x-form-item-label{
+    color:#000 !important;
+}
+.storePlaceCard .x-panel-body-default{
+    background-color:#F2EDE0;
+    border:1px solid #3F2013;
+}
+.storePlaceCard .x-toolbar-default-docked-top{
+    background-color:#F2EDE0;
+}
+.x-btn-default-small .x-btn-inner,
+.storePlaceCard .x-toolbar-default{
+    color:#957340;
+}
+.x-btn-default-toolbar-small-over,
+.x-btn-default-toolbar-small-focus{
+    border:none;
+}
+.x-toolbar{
+    height:35px;
+}

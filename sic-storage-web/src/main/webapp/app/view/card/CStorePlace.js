@@ -13,8 +13,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	docGrid : null,
 	minHeight : 350,
 	height : 'auto',
-	minWidth : 820,
-	width : 820,
+	//minWidth : 820,
+	width : 1150,
 	docGridToolBar : null,
 	fieldLabelWidth : 120,
 	cls : 'storePlaceCard',
@@ -41,6 +41,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				hideable : false
 			}, {
 				text : 'Вид документа',
+                width:780,
 				dataIndex : 'documentTypeId',
 				editor : Ext.create('Ext.form.field.ComboBox', {
 							store : Ext
@@ -65,6 +66,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				}
 			}, {
 				text : 'Даты',
+                width:170,
 				dataIndex : 'dates',
 				editor : {
 					xtype : 'textfield',
@@ -72,13 +74,14 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				}
 			}, {
 				text : '№ описи',
-				dataIndex : 'series',
+                width:100,
+                dataIndex : 'series',
 				editor : {
 					xtype : 'textfield',
 					allowBlank : false
 				}
 			}, {
-				width : 30,
+				width : 40,
 				xtype : 'actioncolumn',
 				items : [{
 					icon : 'resources/img/emblem-unreadable.png',
@@ -143,25 +146,25 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	},
 
 	initComponent : function() {
-		var x_ = 410;
+		var x_ = 580;
 		var me = this;
 
 		var closeButton = Ext.create('Ext.Button', {
-					text : 'X',
-					x : 800,
+					//text : 'X',
+					x : '98%',
 					y : 0,
-					height : 20,
-					width : 20
+					height : 25,
+					width : 25
 				});
 
 		me.cbStorageType = Ext.create('Ext.form.field.ComboBox', {
 					name : 'storageType',
 					fieldLabel : 'Место хранения',
 					labelSeparator : '',
-					labelWidth : me.fieldLabelWidth,
+					labelWidth : 140, //me.fieldLabelWidth,
 					store : Ext.create('storeplaces.store.StorageTypeStore'),
-					width : 300,
-					height : 22,
+					width : 370,
+					height : 25,
 					valueField : 'id',
 					displayField : 'valueFull',
 					editable : false,
@@ -192,8 +195,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					fieldLabel : 'Название организации',
 					width : me.fieldLabelWidth,
 					height : 46,
-					width : 400,
-					labelWidth : me.fieldLabelWidth,
+					width : 530,
+					labelWidth : 140, //me.fieldLabelWidth,
 					x : 5,
 					y : me.cbStorageType.y + me.cbStorageType.height + 5
 				});
@@ -203,8 +206,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					fieldLabel : 'Количество ед. хр.',
 					labelSeparator : '',
 					height : 22,
-					width : 200,
-					labelWidth : me.fieldLabelWidth,
+					width : 210,
+					labelWidth : 140, //me.fieldLabelWidth,
 					x : 5,
 					y : me.taOrg.y + me.taOrg.height + 5
 				});
@@ -213,10 +216,10 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					name : 'address',
 					fieldLabel : 'Адрес',
 					labelSeparator : '',
-					width : 400,
+					width : 490,
 					height : 22,
-					labelWidth : me.fieldLabelWidth - 50,
-					x : x_,
+                    labelWidth :100,
+					x : 650,
 					y : 25
 				});
 
@@ -226,23 +229,25 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					height : 22,
 					width : 300,
 					labelSeparator : '',
-					labelWidth : me.fieldLabelWidth - 50,
-					x : x_,
+                    labelWidth :100,
+					x : 650,
 					y : me.tfAddr.y + me.tfAddr.height + 15
 				});
 
 		me.yearInterval = Ext.create('storeplaces.view.lib.YearInterval', {
 					fieldLabel : 'Годы',
 					width : 300,
-					labelWidth : me.fieldLabelWidth - 50,
-					x : x_,
+					//labelWidth : me.fieldLabelWidth - 50,
+                    labelWidth :100,
+					x : 650, //x_,
 					y : me.tfPhone.y + me.tfPhone.height + 15
 				});
 
 		me.docGridToolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
-								text : 'Добавить',
-								action : 'addDocRow'
+								//text : 'Добавить',
+								action : 'addDocRow',
+                                cls:'addStr'
 							})]
 				});
 
@@ -265,12 +270,13 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.taDocsContent = Ext.create('Ext.form.field.TextArea', {
 					name : 'contents',
-					labelWidth : me.fieldLabelWidth,
+					//labelWidth : me.fieldLabelWidth,
+                    labelWidth : 140,
 					fieldLabel : 'Состав документов',
 					height : 50,
 					y : me.docGrid.y + me.docGrid.height + 5,
 					x : 5,
-					width : 820 - me.fieldLabelWidth
+					width : 1080 //- me.fieldLabelWidth
 				});
 
 		Ext.applyIf(me, {

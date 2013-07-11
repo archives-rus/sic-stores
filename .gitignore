@@ -14,6 +14,11 @@ sic-storage-ear/.project
 /sic-storage.iml
 /.idea
 /sic-storage-ear/sic-storage-ear.iml
+/classes
+/out
+/web
+/sic-storage-ear/sic-storage-ear.iml
+/sic-storage-ear/target
 /sic-storage-ear/web
 /sic-storage-web/sic-storage-web.iml
 /sic-storage-web/target

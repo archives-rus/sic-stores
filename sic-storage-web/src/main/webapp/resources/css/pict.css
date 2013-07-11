@@ -1,0 +1,62 @@
+.quitButton{
+    background:url( ../img/quitButton.png) no-repeat 0px 3px;
+    margin-left:5px !important;
+}
+.quitButton .x-btn-inner{
+    padding-left:15px !important;
+}
+.x-btn-default-toolbar-small .x-btn-inner,
+.loginedUserText{
+    padding-left:27px;
+    color:#4C3931;
+    font: 14px Arial;
+}
+.btnAdd{
+    background:url( ../img/btnAdd.png) no-repeat;
+    /*margin: 0 0 5px 5px !important;*/
+}
+.btnEdit{
+    background:url( ../img/btnEdit.png) no-repeat;
+}
+.btnView{
+    background:url( ../img/btnView.png) no-repeat;
+}
+.btnSave{
+    background:url( ../img/btnSave.png) no-repeat;
+}
+.btnCancel{
+    background:url( ../img/btnCancel.png) no-repeat;
+}
+.btnDelete{
+    background:url( ../img/btnDelete.png) no-repeat;
+}
+.addStr{
+    background:url( ../img/addStr.png) no-repeat;
+}
+.upStr{
+    background:url( ../img/upStr.png) no-repeat;
+}
+.downStr{
+    background:url( ../img/downStr.png) no-repeat;
+}
+.addStr .x-btn-default-toolbar-small .x-btn-inner,
+.upStr .x-btn-default-toolbar-small .x-btn-inner,
+.downStr .x-btn-default-toolbar-small .x-btn-inner{
+    padding-left:0px;
+    width:20px;
+}
+.x-form-trigger,
+.x-column-header-trigger{
+    background:url( ../img/trigger-arrow.png) no-repeat;
+    background-size: 100%;
+}
+.x-form-trigger-over,
+.x-form-trigger-wrap-focus .x-form-trigger{
+    background:url( ../img/trigger-arrow-over.png) no-repeat;
+    background-size: 100%;
+}
+.x-btn-default-small{
+    background: url("../img/close.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    margin: 7px;
+}
