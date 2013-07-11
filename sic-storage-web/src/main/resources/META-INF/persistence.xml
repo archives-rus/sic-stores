@@ -5,8 +5,6 @@
    <persistence-unit name="EntityManager" transaction-type="JTA">
    	  <jta-data-source>java:jboss/SicDS</jta-data-source>
       <jar-file>../../lib/core-model-${version.core-model}.jar</jar-file>
-
-		<class>ru.insoft.archive.core_model.table.desc.DescriptorGroup</class>
 		
       <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />

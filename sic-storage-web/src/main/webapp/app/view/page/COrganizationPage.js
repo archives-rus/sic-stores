@@ -50,20 +50,22 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										componentCls : 'quitButton',
 										// cls:'quitButton',
 										id : 'quit',
-										width : 100
 									})]
 				});
 
 		var gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
-										text : '+',
-										action : 'namesGridAdd'
+										//text : '+',
+										action : 'namesGridAdd',
+                                        cls:'addStr'
 									}), Ext.create('Ext.Button', {
-										text : '^',
-										action : 'namesGridUp'
+										//text : '^',
+										action : 'namesGridUp',
+                                        cls:'upStr'
 									}), Ext.create('Ext.Button', {
-										text : '˅',
-										action : 'namesGridDown'
+										//text : '˅',
+										action : 'namesGridDown',
+                                        cls:'downStr'
 									})]
 				});
 
@@ -102,14 +104,14 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
 				{
 					title : 'Наименование организации',
-					height : 200,
+					height : 160,
 					items : [gridNames]
 				});
 
 		var tfArchive = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Архив',
 					name : 'archive',
-					width : 350,
+					width : 500,
 					labelWidth : 100
 				});
 
@@ -123,19 +125,21 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		var taFundName = Ext.create('Ext.form.field.TextArea', {
 					fieldLabel : 'Название фонда',
 					name : 'fundName',
-					height : 30,
-					width : '100%'
+					height : 50,
+					width : 690,
+                    labelWidth : 150
 				});
 
 		var tfDates = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Крайние даты фонда',
 					name : 'edgeDates',
-					width : '100%'
+					width : 440,
+                    labelWidth : 150
 				});
 
 		var fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
 					title : 'Фондовая принадлежность',
-					height : 100,
+					height : 150,
 					layout : {
 						type : 'table',
 						columns : 2
@@ -147,8 +151,9 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				{
 					title : 'Места хранения',
 					width : '100%',
-					height : 400,
+					height : 420,
 					autoScroll : true,
+                    margin: 20,
 					items : [Ext.create('Ext.toolbar.Toolbar', {
 								items : [Ext.create('Ext.Button', {
 											text : 'Добавить',
