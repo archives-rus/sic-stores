@@ -150,7 +150,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		var me = this;
 
 		var closeButton = Ext.create('Ext.Button', {
-					text : 'X',
+					//text : 'X',
 					x : '98%',
 					y : 0,
 					height : 20,

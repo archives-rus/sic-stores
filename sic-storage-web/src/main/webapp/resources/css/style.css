@@ -51,11 +51,6 @@ label{
 .storePlaceCard .x-toolbar-default{
     color:#957340;
 }
-.x-btn-default-small{
-    border:none;
-    background-image: none;
-    background-color: transparent;
-}
 .x-btn-default-toolbar-small-over,
 .x-btn-default-toolbar-small-focus{
     border:none;
