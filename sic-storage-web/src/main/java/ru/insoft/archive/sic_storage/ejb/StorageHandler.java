@@ -139,9 +139,10 @@ public class StorageHandler
         newOrg = (StrgOrganization)dbHandler.insertEntity(newOrg, oldOrg);
         if (!fundHasOrgs(oldFund))
             em.remove(oldFund);
-        for (StrgPlaceArchive oldArchPlace : oldArchPlaces)
-            if (!archStorageIsBeingUsed(oldArchPlace))
-                em.remove(oldArchPlace);
+        if (oldArchPlaces != null)
+            for (StrgPlaceArchive oldArchPlace : oldArchPlaces)
+                if (!archStorageIsBeingUsed(oldArchPlace))
+                    em.remove(oldArchPlace);
         Query q = em.createNativeQuery("begin CTX_DDL.SYNC_INDEX('ITXT_STRG_ORG_NAME'); end;");
         q.executeUpdate();
 
