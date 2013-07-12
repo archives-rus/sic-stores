@@ -9,6 +9,7 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -141,6 +142,9 @@ public class StorageHandler
         for (StrgPlaceArchive oldArchPlace : oldArchPlaces)
             if (!archStorageIsBeingUsed(oldArchPlace))
                 em.remove(oldArchPlace);
+        Query q = em.createNativeQuery("begin CTX_DDL.SYNC_INDEX('ITXT_STRG_ORG_NAME'); end;");
+        q.executeUpdate();
+
         return newOrg;
     }
 }
