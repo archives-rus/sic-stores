@@ -39,7 +39,7 @@ public class StrgOrgName implements HasId, JsonIn, JsonOut
     private String subordination;
 
     @Column(name = "EDGE_DATES")
-    private String edgeDates;
+    private String dates;
 
     @Column(name = "SORT_ORDER")
     private Integer sortOrder;
@@ -84,12 +84,12 @@ public class StrgOrgName implements HasId, JsonIn, JsonOut
         this.subordination = subordination;
     }
 
-    public String getEdgeDates() {
-        return edgeDates;
+    public String getDates() {
+        return dates;
     }
 
-    public void setEdgeDates(String edgeDates) {
-        this.edgeDates = edgeDates;
+    public void setDates(String dates) {
+        this.dates = dates;
     }
 
     public Integer getSortOrder() {
