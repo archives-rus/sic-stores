@@ -7,7 +7,7 @@
       <jar-file>../../lib/core-model-${version.core-model}.jar</jar-file>
 		
       <properties>
-        <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+        <property name="hibernate.dialect" value="ru.insoft.archive.sic_storage.SicStorageDialect" />
         <property name="hibernate.archive.autodetection" value="class, hbm"/>
 		<property name="hibernate.hbm2ddl.auto" value="none" />
 		<property name="hibernate.jdbc.batch_size" value="20" />

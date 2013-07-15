@@ -34,6 +34,10 @@ public class StrgPlaceOrg implements HasId, JsonIn, JsonOut
     @JoinColumn(name = "ORGANIZATION_ID")
     private StrgOrganization org;
 
+    @JsonExclude
+    @Column(name = "ORGANIZATION_ID", insertable = false, updatable = false)
+    private Long orgId;
+
     @Column(name = "ORG_NAME")
     private String orgName;
 
@@ -81,6 +85,14 @@ public class StrgPlaceOrg implements HasId, JsonIn, JsonOut
 
     public void setOrg(StrgOrganization org) {
         this.org = org;
+    }
+
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
     }
 
     public String getOrgName() {

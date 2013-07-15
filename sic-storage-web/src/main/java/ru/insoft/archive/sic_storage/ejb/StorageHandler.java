@@ -10,19 +10,19 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.Tuple;
+import javax.persistence.criteria.*;
 
 import ru.insoft.archive.extcommons.ejb.CommonDBHandler;
 import ru.insoft.archive.extcommons.json.JsonOut;
-import ru.insoft.archive.sic_storage.model.table.StrgFund;
-import ru.insoft.archive.sic_storage.model.table.StrgOrganization;
-import ru.insoft.archive.sic_storage.model.table.StrgPlaceArchive;
-import ru.insoft.archive.sic_storage.model.table.StrgPlaceOrg;
+import ru.insoft.archive.extcommons.utils.StringUtils;
+import ru.insoft.archive.sic_storage.model.table.*;
 import ru.insoft.archive.sic_storage.model.view.VStrgArchive;
+import ru.insoft.archive.sic_storage.model.view.VStrgOrgForSearch;
 import ru.insoft.archive.sic_storage.webmodel.FundFinder;
 import ru.insoft.archive.sic_storage.webmodel.FundSearchCriteria;
+import ru.insoft.archive.sic_storage.webmodel.OrgSearchCriteria;
+import ru.insoft.archive.sic_storage.webmodel.OrgSearchResult;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -147,5 +147,71 @@ public class StorageHandler
         q.executeUpdate();
 
         return newOrg;
+    }
+
+    public List<OrgSearchResult> searchOrganization(OrgSearchCriteria criteria, Integer start, Integer limit)
+    {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<OrgSearchResult> cq = cb.createQuery(OrgSearchResult.class);
+        Root<VStrgOrgForSearch> root = cq.from(VStrgOrgForSearch.class);
+        cq.multiselect(root.<Long>get("id"), root.<String>get("name"),
+                root.<String>get("archive"), root.<String>get("fund"),
+                cb.<String>function("get_org_storage_years", String.class, root.<Long>get("id")).alias("dates"));
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        if (criteria.getOrgName() != null)
+            predicates.add(cb.greaterThan(cb.function("contains", Integer.class,
+                    root.get("indexedName"), cb.literal(StringUtils.textRequest(criteria.getOrgName()))), 0));
+        if (criteria.getArchiveId() != null)
+            predicates.add(cb.equal(root.get("archiveId"), criteria.getArchiveId()));
+        if (criteria.getFund() != null && criteria.getFund().getNum() != null)
+        {
+            predicates.add(cb.equal(root.get("fundNum"), criteria.getFund().getNum()));
+            predicates.add(criteria.getFund().getPrefix() == null ?
+                    cb.isNull(root.get("prefix")) :
+                    cb.equal(root.get("prefix"), criteria.getFund().getPrefix()));
+            predicates.add(criteria.getFund().getSuffix() == null ?
+                    cb.isNull(root.get("suffix")) :
+                    cb.equal(root.get("suffix"), criteria.getFund().getSuffix()));
+        }
+        if (criteria.getDocumentTypeId() != null || criteria.getYearFrom() != null)
+        {
+            Subquery<Long> sub = cq.subquery(Long.class);
+            Root<StrgPlaceOrg> subroot = sub.from(StrgPlaceOrg.class);
+            sub.select(subroot.<Long>get("orgId"));
+            List<Predicate> subPredicates = new ArrayList<Predicate>();
+
+            if (criteria.getDocumentTypeId() != null)
+            {
+                Join<StrgPlaceOrg, StrgDocContents> join = subroot.join("documents");
+                subPredicates.add(cb.equal(join.get("documentTypeId"), criteria.getDocumentTypeId()));
+            }
+            if (criteria.getYearFrom() != null && criteria.getYearTo() == null)
+                subPredicates.add(cb.and(
+                        cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom()),
+                        cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearFrom())));
+            if (criteria.getYearFrom() != null && criteria.getYearTo() != null)
+                subPredicates.add(cb.or(
+                        cb.and(
+                                cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom()),
+                                cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearFrom())
+                        ),
+                        cb.and(
+                                cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearTo()),
+                                cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearTo())
+                        ),
+                        cb.and(
+                                cb.lessThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearTo()),
+                                cb.greaterThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom())
+                        )
+                ));
+            sub.where(subPredicates.toArray(new Predicate[0]));
+            predicates.add(cb.in(root.get("id")).value(sub));
+        }
+
+        cq.where(predicates.toArray(new Predicate[0]));
+        cq.orderBy(cb.asc(root.get("name")));
+
+        return em.createQuery(cq).setFirstResult(start).setMaxResults(limit).getResultList();
     }
 }
