@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.*;
 
+import ru.insoft.archive.core_model.table.adm.AdmUser;
 import ru.insoft.archive.extcommons.ejb.CommonDBHandler;
 import ru.insoft.archive.extcommons.json.JsonOut;
 import ru.insoft.archive.extcommons.utils.StringUtils;
@@ -213,5 +214,13 @@ public class StorageHandler
         cq.orderBy(cb.asc(root.get("name")));
 
         return em.createQuery(cq).setFirstResult(start).setMaxResults(limit).getResultList();
+    }
+
+    public StrgOrganization prepareOrg(Long id)
+    {
+        StrgOrganization org = em.find(StrgOrganization.class, id);
+        org.setUserName(em.find(AdmUser.class, org.getModUserId()).getName());
+        dbHandler.initCollection(org.getStorage());
+        return org;
     }
 }

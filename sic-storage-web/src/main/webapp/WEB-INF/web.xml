@@ -29,6 +29,10 @@
         <servlet-name>SearchOrganization</servlet-name>
         <servlet-class>ru.insoft.archive.sic_storage.servlet.SearchOrganization</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QueryOrganization</servlet-name>
+        <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryOrganization</servlet-class>
+    </servlet>
   <servlet>
     <description>No description</description>
     <display-name>Authorization servlet</display-name>
@@ -65,6 +69,10 @@
     <servlet-mapping>
         <servlet-name>SearchOrganization</servlet-name>
         <url-pattern>/servlet/SearchOrganization</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QueryOrganization</servlet-name>
+        <url-pattern>/servlet/QueryOrganization</url-pattern>
     </servlet-mapping>
   <servlet-mapping>
     <servlet-name>QueryDocuments</servlet-name>
