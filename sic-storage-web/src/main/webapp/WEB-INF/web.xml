@@ -33,12 +33,15 @@
         <servlet-name>QueryOrganization</servlet-name>
         <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryOrganization</servlet-class>
     </servlet>
-  <servlet>
-    <description>No description</description>
-    <display-name>Authorization servlet</display-name>
-    <servlet-name>QueryDocuments</servlet-name>
-    <servlet-class>servlet.QueryDocuments</servlet-class>
-  </servlet>
+    <servlet>
+        <servlet-name>QueryOrgNames</servlet-name>
+        <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryOrgNames</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QueryDocuments</servlet-name>
+        <!--<servlet-class>servlet.QueryDocuments</servlet-class>-->
+        <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryDocuments</servlet-class>
+    </servlet>
   <!--<servlet>
     <description>No description</description>
     <servlet-name>DescValuesProvider</servlet-name>
@@ -74,10 +77,14 @@
         <servlet-name>QueryOrganization</servlet-name>
         <url-pattern>/servlet/QueryOrganization</url-pattern>
     </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>QueryDocuments</servlet-name>
-    <url-pattern>/servlet/QueryDocuments</url-pattern>
-  </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QueryOrgNames</servlet-name>
+        <url-pattern>/servlet/QueryOrgNames</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QueryDocuments</servlet-name>
+        <url-pattern>/servlet/QueryDocuments</url-pattern>
+    </servlet-mapping>
 	<filter> 
         <filter-name>AuthFilter</filter-name>
         <filter-class>ru.insoft.archive.extcommons.filter.AuthFilter</filter-class>

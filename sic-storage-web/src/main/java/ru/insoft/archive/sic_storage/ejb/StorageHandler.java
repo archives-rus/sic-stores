@@ -18,8 +18,7 @@ import ru.insoft.archive.extcommons.ejb.CommonDBHandler;
 import ru.insoft.archive.extcommons.json.JsonOut;
 import ru.insoft.archive.extcommons.utils.StringUtils;
 import ru.insoft.archive.sic_storage.model.table.*;
-import ru.insoft.archive.sic_storage.model.view.VStrgArchive;
-import ru.insoft.archive.sic_storage.model.view.VStrgOrgForSearch;
+import ru.insoft.archive.sic_storage.model.view.*;
 import ru.insoft.archive.sic_storage.webmodel.FundFinder;
 import ru.insoft.archive.sic_storage.webmodel.FundSearchCriteria;
 import ru.insoft.archive.sic_storage.webmodel.OrgSearchCriteria;
@@ -216,11 +215,36 @@ public class StorageHandler
         return em.createQuery(cq).setFirstResult(start).setMaxResults(limit).getResultList();
     }
 
-    public StrgOrganization prepareOrg(Long id)
+    public StrgOrganization prepareOrgForEdit(Long id)
     {
         StrgOrganization org = em.find(StrgOrganization.class, id);
         org.setUserName(em.find(AdmUser.class, org.getModUserId()).getName());
         dbHandler.initCollection(org.getStorage());
         return org;
+    }
+
+    public VStrgOrgForView prepareOrgForView(Long id)
+    {
+        VStrgOrgForView org = em.find(VStrgOrgForView.class, id);
+        dbHandler.initCollection(org.getStorage());
+        return org;
+    }
+
+    public List<StrgOrgName> getOrgNames(Long id)
+    {
+        StrgOrganization org = em.find(StrgOrganization.class, id);
+        return dbHandler.initCollection(org.getNames());
+    }
+
+    public List<StrgDocContents> getDocumentsForEdit(Long storageId)
+    {
+        StrgPlaceOrg storage = em.find(StrgPlaceOrg.class, storageId);
+        return dbHandler.initCollection(storage.getDocuments());
+    }
+
+    public List<VStrgDocContents> getDocumentsForView(Long storageId)
+    {
+        VStrgPlaceOrg storage = em.find(VStrgPlaceOrg.class, storageId);
+        return dbHandler.initCollection(storage.getDocuments());
     }
 }
