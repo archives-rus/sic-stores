@@ -24,7 +24,6 @@ public class StrgPlaceArchive implements HasId, JsonIn, JsonOut
     @Column(name = "STRG_PLACE_ARCH_ID")
     private Long id;
 
-    @JsonExclude
     @Column(name = "ARCHIVE_ID")
     private Long archiveId;
 

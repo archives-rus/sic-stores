@@ -21,6 +21,7 @@ import java.util.List;
 @Table(name = "STRG_ORGANIZATION")
 public class StrgOrganization implements HasId, HasUserInfo, JsonIn, JsonOut
 {
+    @JsonExclude
     @Id
     @SequenceGenerator(name = "seqOrganization", sequenceName = "SEQ_STRG_ORGANIZATION", allocationSize = 1)
     @GeneratedValue(generator = "seqOrganization")
