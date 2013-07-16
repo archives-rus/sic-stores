@@ -122,21 +122,26 @@ public class StorageHandler
         }
     }
 
-    public StrgOrganization saveOrganization(StrgOrganization newOrg) throws Exception
+    public StrgOrganization modifyOrganization(String action, Long id, StrgOrganization newOrg) throws Exception
     {
         StrgOrganization oldOrg = null;
         StrgFund oldFund = null;
         List<StrgPlaceArchive> oldArchPlaces = null;
-        if (newOrg.getId() != null)
+        if (id != null)
         {
-            oldOrg = em.find(StrgOrganization.class, newOrg.getId());
+            oldOrg = em.find(StrgOrganization.class, id);
             oldFund = oldOrg.getFund();
             oldArchPlaces = new ArrayList<StrgPlaceArchive>();
             for (StrgPlaceOrg orgPlace : oldOrg.getStorage())
                 if (orgPlace.getArchStrg() != null)
                     oldArchPlaces.add(orgPlace.getArchStrg());
         }
-        newOrg = (StrgOrganization)dbHandler.insertEntity(newOrg, oldOrg);
+
+        if ("SAVE".equals(action))
+            newOrg = (StrgOrganization)dbHandler.insertEntity(newOrg, oldOrg);
+        if ("DELETE".equals(action))
+            em.remove(oldOrg);
+
         if (!fundHasOrgs(oldFund))
             em.remove(oldFund);
         if (oldArchPlaces != null)

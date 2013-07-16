@@ -1,8 +1,6 @@
 package ru.insoft.archive.sic_storage.servlet;
 
-import ru.insoft.archive.extcommons.ejb.CommonDBHandler;
 import ru.insoft.archive.extcommons.servlet.AbstractServlet;
-import ru.insoft.archive.extcommons.webmodel.FailMessage;
 import ru.insoft.archive.sic_storage.ejb.StorageHandler;
 import ru.insoft.archive.sic_storage.model.table.StrgOrganization;
 
@@ -28,11 +26,11 @@ public class SaveOrganization extends AbstractServlet
     protected void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception
     {
         StrgOrganization org = (StrgOrganization)parseEntity(req.getParameter("org"), StrgOrganization.class);
-        org = strg.saveOrganization(org);
+        org = strg.modifyOrganization("SAVE", org.getId(), org);
 
         JsonObjectBuilder bldr = Json.createObjectBuilder();
+        bldr.add("success", true);
         bldr.add("id", org.getId());
-        FailMessage fm = new FailMessage(true, bldr.build().toString());
-        resp.getWriter().write(getJsonForEntity(fm).toString());
+        resp.getWriter().write(bldr.build().toString());
     }
 }
