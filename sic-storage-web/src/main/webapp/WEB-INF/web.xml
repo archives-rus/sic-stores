@@ -42,6 +42,10 @@
         <!--<servlet-class>servlet.QueryDocuments</servlet-class>-->
         <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryDocuments</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteOrganization</servlet-name>
+        <servlet-class>ru.insoft.archive.sic_storage.servlet.DeleteOrganization</servlet-class>
+    </servlet>
   <!--<servlet>
     <description>No description</description>
     <servlet-name>DescValuesProvider</servlet-name>
@@ -84,6 +88,10 @@
     <servlet-mapping>
         <servlet-name>QueryDocuments</servlet-name>
         <url-pattern>/servlet/QueryDocuments</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteOrganization</servlet-name>
+        <url-pattern>/servlet/DeleteOrganization</url-pattern>
     </servlet-mapping>
 	<filter> 
         <filter-name>AuthFilter</filter-name>

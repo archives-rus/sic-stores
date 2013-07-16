@@ -29,7 +29,7 @@ public class StrgOrganization implements HasId, HasUserInfo, JsonIn, JsonOut
     private Long id;
 
     @JsonExclude
-    @OneToMany(mappedBy = "org", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "org", cascade = CascadeType.MERGE)
     @OrderBy("sortOrder")
     private List<StrgOrgName> names;
 
@@ -40,7 +40,7 @@ public class StrgOrganization implements HasId, HasUserInfo, JsonIn, JsonOut
     @JoinColumn(name = "FUND_ID")
     private StrgFund fund;
 
-    @OneToMany(mappedBy = "org", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "org", cascade = CascadeType.MERGE)
     private List<StrgPlaceOrg> storage;
 
     @Column(name = "BUSINESS_TRIPS_INFO")

@@ -57,7 +57,7 @@ public class StrgPlaceOrg implements HasId, JsonIn, JsonOut
     private Integer endYear;
 
     @JsonExclude
-    @OneToMany(mappedBy = "orgStrg", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orgStrg", cascade = CascadeType.MERGE)
     private List<StrgDocContents> documents;
 
     @Column(name = "CONTENTS")
