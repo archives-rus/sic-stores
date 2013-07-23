@@ -7,6 +7,10 @@
 .x-fieldset-header-text{
     font:900 16px arial;
     color:#560101;
+    background:url( ../img/line.png) no-repeat;
+    text-align: center;
+    height: 35px;
+    width: 1200px;
 }
 .x-fieldset,
 .x-panel-body-default,
