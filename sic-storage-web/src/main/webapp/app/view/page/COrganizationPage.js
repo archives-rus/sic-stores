@@ -57,7 +57,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										tooltipType : 'title',
 										componentCls : 'quitButton',
 										// cls:'quitButton',
-										id : 'quit',
+										id : 'quit'
 									})]
 				});
 

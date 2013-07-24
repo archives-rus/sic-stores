@@ -15,7 +15,8 @@
 }
 .x-fieldset,
 .x-panel-body-default,
-.x-toolbar-default{
+.x-toolbar-default,
+.x-body{
    /* text-align:center;*/
     background-image:none;
     background-color:#EDE4CE;
@@ -25,6 +26,7 @@
     /*border-image: url( ../img/menu_border_bot.png);
     -moz-border-image:url( ../img/menu_border_bot.png);
     border-bottom: 1px solid;*/
+
 }
 .orgpage-body{
     background-color:#EDE4CE;
@@ -70,4 +72,7 @@ label{
 }
 #searchgpage{
     text-align:center;
+}
+#searchgpage-body{
+    padding: 5px 40px !important;
 }

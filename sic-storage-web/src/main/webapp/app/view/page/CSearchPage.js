@@ -46,7 +46,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
                 tooltip : 'Выход из системы',
                 tooltipType : 'title',
                 componentCls : 'quitButton',
-                // cls:'quitButton',
+                //cls:'quitButton',
                 id : 'quit'
             })]
     });
@@ -54,35 +54,35 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var tfArchive = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Наименование организации',
             name : 'archive',
-            width : 500,
+            width : 690,
             labelWidth : 200
         });
 
         var tfFondNum = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Виды документов',
             name : 'fund',
-            width : 350,
+            width : 440,
             labelWidth : 200
         });
 
         var taFundName = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Даты',
             name : 'fundName',
-            width : 350,
+            width : 420,
             labelWidth : 200
         });
 
         var tfDates = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Архив',
             name : 'edgeDates',
-            width : 350,
+            width : 460,
             labelWidth : 200
         });
 
         var tfDates2 = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Номер фонда',
             name : 'edgeDates',
-            width : 350,
+            width : 420,
             labelWidth : 200
         });
 
