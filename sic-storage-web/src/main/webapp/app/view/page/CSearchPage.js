@@ -6,29 +6,30 @@ Ext.define('storeplaces.view.page.CSearchPage', {
     id : 'searchgpage',
     initComponent : function() {
     var titlePage = Ext.create('Ext.form.Label', {
-        text : 'Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах'
+        text : 'Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах',
+        cls:'title_search'
     });
 
     var toolBarSearch = Ext.create('Ext.toolbar.Toolbar', {
         items : [Ext.create('Ext.Button', {
             text : 'Поиск',
-            //cls : "btnAdd",
+            cls : "srch",
             height:25,
             action : 'orgCardAdd'
         }), Ext.create('Ext.Button', {
             text : 'Очистить параметры',
             height:25,
-            // cls : 'btnEdit',
+            cls : 'clr',
             action : 'orgCardEdit'
         }), Ext.create('Ext.Button', {
             text : 'Добавить',
             height:25,
-            // cls : 'btnEdit',
+            cls : 'btnAdd',
             action : 'orgCardEdit'
         }),Ext.create('Ext.Button', {
             text : 'Вернуться в главное меню',
             height:25,
-            // cls : 'btnEdit',
+            cls : 'back_main',
             action : 'orgCardEdit'
         }), '->',
 

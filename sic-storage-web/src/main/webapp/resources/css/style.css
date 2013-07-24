@@ -9,6 +9,7 @@
     color:#560101;
     background:url( ../img/line.png) no-repeat;
     text-align: center;
+    padding: 5px 0;
     height: 35px;
     width: 1200px;
 }
@@ -39,6 +40,7 @@ label{
 }
 .storePlacesFieldset .x-fieldset-body{
     /*margin: 5px 20px;*/
+    text-align:left;
 }
 .storePlaceCard label,
 .storePlaceCard .x-form-item-label{
@@ -61,4 +63,11 @@ label{
 }
 .x-toolbar{
     height:35px;
+}
+.title_search{
+    font:bold 18px Arial;
+    text-align: center;
+}
+#searchgpage{
+    text-align:center;
 }

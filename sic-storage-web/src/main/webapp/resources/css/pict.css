@@ -39,6 +39,15 @@
 .downStr{
     background:url( ../img/downStr.png) no-repeat;
 }
+.srch{
+     background:url( ../img/srch.png) no-repeat;
+}
+.clr{
+    background:url( ../img/clr.png) no-repeat;
+}
+.back_main{
+    background:url( ../img/back_main.png) no-repeat;
+}
 .addStr .x-btn-default-toolbar-small .x-btn-inner,
 .upStr .x-btn-default-toolbar-small .x-btn-inner,
 .downStr .x-btn-default-toolbar-small .x-btn-inner{
