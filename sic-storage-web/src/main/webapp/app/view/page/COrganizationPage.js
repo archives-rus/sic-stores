@@ -209,13 +209,14 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 		tfDateOfEdit.setDisabled(true);
 
-		/*Ext.applyIf(this, {
-					items : [toolBar, toolBarName, renamesFieldset, fundFieldset,
+
+		Ext.applyIf(this, {
+					items : [toolBar, renamesFieldset, fundFieldset,
 							this.placesFieldSet, areaFieldSets, tfUser,
 							tfDateOfEdit]
 				});
 
-		this.callParent(arguments); */
+		this.callParent(arguments);
 
 	}
 });
