@@ -6,12 +6,14 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	width : '100%',
 	id : 'orgpage',
 	placesFieldSet : null,
+    gridNames : null,
+    gridToolBar : null,
 	initComponent : function() {
 
 		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
 										text : 'Добавить',
-										cls : 'btnAdd',
+										cls : "btnAdd",
                                         height:25,
 										action : 'orgCardAdd'
 									}), Ext.create('Ext.Button', {
@@ -59,7 +61,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 									})]
 				});
 
-		var gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
+		 gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
 										//text : '+',
 										action : 'namesGridAdd',
@@ -75,7 +77,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 									})]
 				});
 
-		var gridNames = Ext.create('Ext.grid.Panel', {
+		 gridNames = Ext.create('Ext.grid.Panel', {
 					store : Ext.getStore('toreplaces.store.OrgNamesStore'),
 					dockedItems : gridToolBar,
 					forceFit : true,
@@ -107,9 +109,17 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 							}]
 				})
 
+       /* var left =  Ext.create('storeplaces.view.lib.LeftLabel');
+        var right =  Ext.create('storeplaces.view.lib.RightLabel');
+        var toolBarName = Ext.create('Ext.toolbar.Toolbar', {
+            items : [left,
+                Ext.create('Ext.form.Label', {
+                    text : 'Наименование организации и её переименования'
+                }), right]
+        })*/
 		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
 				{
-					title : 'Наименование организации',
+					title : 'Наименование организации и её переименования',
 					height : 160,
 					items : [gridNames]
 				});
@@ -200,7 +210,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		tfDateOfEdit.setDisabled(true);
 
 		Ext.applyIf(this, {
-					items : [toolBar, renamesFieldset, fundFieldset,
+					items : [toolBar, toolBarName, renamesFieldset, fundFieldset,
 							this.placesFieldSet, areaFieldSets, tfUser,
 							tfDateOfEdit]
 				});
