@@ -21,6 +21,6 @@ Ext.define('storeplaces.view.Main', {
 //    })]
 
 	//items:[Ext.create('storeplaces.view.page.COrganizationPage')]
-    items:[Ext.create('storeplaces.view.page.CSearchPage')]
-    //items:[Ext.create('storeplaces.view.page.CLoginPage')]
+    //items:[Ext.create('storeplaces.view.page.CSearchPage')]
+    items:[Ext.create('storeplaces.view.page.CLoginPage')]
 });

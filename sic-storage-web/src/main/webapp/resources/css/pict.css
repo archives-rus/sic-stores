@@ -69,3 +69,18 @@
     border: medium none;
     margin: 7px;
 }
+/*.main_bg .x-panel-body-default*/
+.x-body{
+    background: url("../img/boxes_rats.png") no-repeat scroll 0 0 transparent;  /*крысяяяяяточки*/
+    /*background: url("../img/boxes.png") no-repeat scroll 0 0 transparent;*/
+    background-size: 100% 100%;
+}
+.bg_key{
+    background-color:transparent;
+    background:url( ../img/key.png) 0 50% no-repeat;
+}
+.bg_key .x-btn-inner{
+    font:bold 14px Arial;
+    color:#230F07;
+    text-decoration:underline;
+}

@@ -89,6 +89,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
             title : 'Параметры поиска',
             height : 250,
+            width:'100%',
             layout : {
                 type : 'table',
                 columns : 1

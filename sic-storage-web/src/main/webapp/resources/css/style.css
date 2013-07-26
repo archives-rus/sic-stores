@@ -7,11 +7,19 @@
 .x-fieldset-header-text{
     font:900 16px arial;
     color:#560101;
-    background:url( ../img/line.png) no-repeat;
     text-align: center;
+    width:100%;
+}
+.x-fieldset-header{
+    background:url( ../img/line.png) no-repeat;
+    background-size: 100% 100%;
     padding: 5px 0;
     height: 35px;
-    width: 1200px;
+    width:100%;
+    /*width: 1200px;*/
+}
+.x-fieldset-header span{
+    width:100%;
 }
 .x-fieldset,
 .x-panel-body-default,
@@ -75,4 +83,25 @@ label{
 }
 #searchgpage-body{
     padding: 5px 40px !important;
+}
+/**/
+.tit_log{
+    font:bold 26px Arial;
+    color:#742708;
+    text-shadow:3px 6px 5px #864D2D;
+}
+.log_box .x-box-inner{
+    background:url( ../img/log_box.png) no-repeat;
+    background-size:100% 100%;
+    font:bold 14px Arial;
+    color:#230F07;
+    width:253px !important;
+    height:165px !important;
+}
+.main_bg{
+    height:100% !important;
+}
+.main_bg .x-fieldset,
+.main_bg .x-panel-body-default{
+    background-color: transparent;
 }

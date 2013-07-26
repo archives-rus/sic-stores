@@ -1,0 +1,13 @@
+#searchgpage, #orgpage{
+    background-color: #EDE4CE;
+    min-height: 10000px !important; /*заплатка*/
+}
+.mar{
+    margin:10px 15px 0 !important;
+}
+.lft{
+    left:0 !important;
+}
+.mar_top35{
+    margin-top:35px !important;
+}
