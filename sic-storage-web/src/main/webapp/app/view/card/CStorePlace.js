@@ -11,10 +11,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	taDocsContent : null,
 	yearInterval : null,
 	docGrid : null,
-	minHeight : 350,
+	minHeight : 340,
 	height : 'auto',
 	//minWidth : 820,
-	width : 1150,
+	minWidth : 1150,
+    width : '98%',
 	docGridToolBar : null,
 	fieldLabelWidth : 120,
 	cls : 'storePlaceCard',
@@ -41,7 +42,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				hideable : false
 			}, {
 				text : 'Вид документа',
-                width:780,
+                width:750,
 				dataIndex : 'documentTypeId',
 				editor : Ext.create('Ext.form.field.ComboBox', {
 							store : Ext
@@ -262,7 +263,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 					dockedItems : me.docGridToolBar,
 					y : me.nfCount.y + me.nfCount.height + 5,
-					width : 810,
+					width : 1140,
+                    //width : '80%',
 					height : 150,
 					forceFit : true,
 					columns : me.gridReadOnlyColumns
@@ -273,7 +275,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					//labelWidth : me.fieldLabelWidth,
                     labelWidth : 140,
 					fieldLabel : 'Состав документов',
-					height : 50,
+					height : 40,
 					y : me.docGrid.y + me.docGrid.height + 5,
 					x : 5,
 					width : 1080 //- me.fieldLabelWidth
