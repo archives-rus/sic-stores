@@ -31,10 +31,17 @@
     border:none;
 }
 .x-box-layout-ct{
-    /*border-image: url( ../img/menu_border_bot.png);
-    -moz-border-image:url( ../img/menu_border_bot.png);
-    border-bottom: 1px solid;*/
-
+    border-image: url( ../img/menu_border_bot.png);
+    -moz-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
+    -webkit-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
+    -o-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
+    border-bottom: 1px solid;
+}
+.main_bg .x-box-layout-ct{
+    border-bottom:none !important;
+    -moz-border-image: none;
+    -webkit-border-image: none;
+    -o-border-image: none;
 }
 .orgpage-body{
     background-color:#EDE4CE;
