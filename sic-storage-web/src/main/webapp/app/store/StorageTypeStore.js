@@ -8,6 +8,6 @@ Ext.define('storeplaces.store.StorageTypeStore', {
     storeId:'StoreJournalType',
     data : [
     [1, "Тип хранения один"],
-    [2, "Тип хранения 2"]
+    [2, "Тип хранения два"]
     ]
 });

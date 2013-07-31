@@ -7,7 +7,6 @@ Ext.define('storeplaces.view.Main', {
     height:'100%',
     autoScroll:true,
     xtype: 'app-main',
-
 //    layout: {
 //        type: 'border'
 //    },
@@ -20,7 +19,7 @@ Ext.define('storeplaces.view.Main', {
 //    	id:'loadEditDocsTable'
 //    })]
 
-	//items:[Ext.create('storeplaces.view.page.COrganizationPage')]
+	items:[Ext.create('storeplaces.view.page.COrganizationPage')]
     //items:[Ext.create('storeplaces.view.page.CSearchPage')]
-    items:[Ext.create('storeplaces.view.page.CLoginPage')]
+    //items:[Ext.create('storeplaces.view.page.CLoginPage')]
 });

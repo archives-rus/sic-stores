@@ -1,12 +1,14 @@
 Ext.define('storeplaces.view.page.CSearchPage', {
     extend : 'Ext.form.Panel',
     minWidth : 1024,
-    xtype : 'corgpage',
+    height:1000,
+    xtype : 'csearchpage',
     width : '100%',
     id : 'searchgpage',
+    searchFieldset: null,
     initComponent : function() {
     var titlePage = Ext.create('Ext.form.Label', {
-        text : 'Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах'
+       html : '<center><h3>Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах'
     });
 
     var toolBarSearch = Ext.create('Ext.toolbar.Toolbar', {
@@ -19,7 +21,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             text : 'Очистить параметры',
             height:25,
             // cls : 'btnEdit',
-            action : 'orgCardEdit'
+            action : 'clearSearchParm'
         }), Ext.create('Ext.Button', {
             text : 'Добавить',
             height:25,
@@ -29,7 +31,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             text : 'Вернуться в главное меню',
             height:25,
             // cls : 'btnEdit',
-            action : 'orgCardEdit'
+            action : 'backMain'
         }), '->',
 
             Ext.create('Ext.form.Label', {
@@ -50,49 +52,64 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             })]
     });
 
-        var tfArchive = Ext.create('Ext.form.field.Text', {
+        var tfNameOrg = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Наименование организации',
-            name : 'archive',
+            name : 'nameOrg',
             width : 500,
             labelWidth : 200
         });
 
-        var tfFondNum = Ext.create('Ext.form.field.Text', {
+        var cbTypeDoc = Ext.create('Ext.form.ComboBox',  {
             fieldLabel : 'Виды документов',
-            name : 'fund',
+            //name : 'fund',
+        //   store: 'storeplaces.store.DocTypesStore',
+            store: Ext.getStore('storeplaces.store.DocTypesStore'),
+            queryMode: 'local',
+            displayField: 'name',
+            valueField: 'id',
             width : 350,
             labelWidth : 200
         });
 
-        var taFundName = Ext.create('Ext.form.field.Text', {
-            fieldLabel : 'Даты',
-            name : 'fundName',
-            width : 350,
-            labelWidth : 200
+        var fcDate =  Ext.create('Ext.form.FieldContainer',{
+            layout : {
+                type : 'table',
+                columns : 2
+            },
+            fieldLabel: 'Даты',
+            labelWidth : 180,
+            defaultType: 'datefield',
+            items: [{
+                width: 155,
+                name: 'from_date',
+                labelWidth : 30,
+                fieldLabel :'c:'
+            }, {
+                width: 150,
+                name: 'to_date',
+                labelWidth : 30,
+                fieldLabel : 'по:'
+            }]
         });
 
-        var tfDates = Ext.create('Ext.form.field.Text', {
+
+        var cbArch = Ext.create('Ext.form.ComboBox',  {
             fieldLabel : 'Архив',
             name : 'edgeDates',
             width : 350,
             labelWidth : 200
         });
 
-        var tfDates2 = Ext.create('Ext.form.field.Text', {
-            fieldLabel : 'Номер фонда',
-            name : 'edgeDates',
-            width : 350,
-            labelWidth : 200
-        });
+        var tfNumberFond = Ext.create('storeplaces.view.lib.NumFond');
 
-        var fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+        searchFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
             title : 'Параметры поиска',
             height : 250,
             layout : {
                 type : 'table',
                 columns : 1
             },
-            items : [tfArchive, taFundName, tfFondNum, tfDates, tfDates2]
+            items : [tfNameOrg, cbTypeDoc, fcDate, cbArch, tfNumberFond]
         });
 
         var gridSearch = Ext.create('Ext.grid.Panel', {
@@ -101,6 +118,12 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             width : '100%',
             height : 180,
             autoScroll : true,
+            dockedItems: [{
+                xtype: 'pagingtoolbar',
+               // store: store,   // same store GridPanel is using
+                dock: 'top',
+                displayInfo: true
+            }],
             columns : [{
                 text : 'ИД',
                 dataIndex : 'id',
@@ -125,18 +148,18 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             }]
         });
 
-        var ResultsFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
-            {
-                title : 'Результаты поиска',
-                height : 160,
-                items : [gridSearch]
-            });
+            var ResultsFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
+                {
+                    title : 'Результаты поиска',
+                    height : 160,
+                    items : [gridSearch]
+                });
 
 
-        Ext.applyIf(this, {
-        items : [titlePage, toolBarSearch,fundFieldset,ResultsFieldset]
-    });
+            Ext.applyIf(this, {
+            items : [titlePage, toolBarSearch, searchFieldset,ResultsFieldset]
+        });
 
-    this.callParent(arguments);
+        this.callParent(arguments);
     }
 });

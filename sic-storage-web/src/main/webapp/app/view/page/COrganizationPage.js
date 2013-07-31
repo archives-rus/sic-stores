@@ -1,7 +1,8 @@
 Ext.define('storeplaces.view.page.COrganizationPage', {
 	extend : 'Ext.form.Panel',
-
-	minWidth : 1024,
+    //height:10000,
+    //autoScroll : true,
+	//minWidth : 1024,
 	xtype : 'corgpage',
 	width : '100%',
 	id : 'orgpage',
@@ -9,7 +10,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
     gridNames : null,
     gridToolBar : null,
 	initComponent : function() {
-
 		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
 										text : 'Добавить',
@@ -57,7 +57,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										tooltipType : 'title',
 										componentCls : 'quitButton',
 										// cls:'quitButton',
-										id : 'quit',
+										id : 'quit'
 									})]
 				});
 
@@ -78,8 +78,16 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				});
 
 		 gridNames = Ext.create('Ext.grid.Panel', {
-					store : Ext.getStore('toreplaces.store.OrgNamesStore'),
-					dockedItems : gridToolBar,
+					store : Ext.getStore('storeplaces.store.OrgNamesStore'),
+                    buttonAlign:'center',
+                    dockedItems: [gridToolBar,
+                     {
+                         xtype: 'pagingtoolbar',
+                         // store: store,   // same store GridPanel is using
+                         dock: 'top',
+                         displayInfo: true,
+                         emptyMsg :'нет записей'
+                     }],
 					forceFit : true,
 					width : '100%',
 					height : 180,
@@ -109,14 +117,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 							}]
 				})
 
-       /* var left =  Ext.create('storeplaces.view.lib.LeftLabel');
-        var right =  Ext.create('storeplaces.view.lib.RightLabel');
-        var toolBarName = Ext.create('Ext.toolbar.Toolbar', {
-            items : [left,
-                Ext.create('Ext.form.Label', {
-                    text : 'Наименование организации и её переименования'
-                }), right]
-        })*/
 		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
 				{
 					title : 'Наименование организации и её переименования',
@@ -131,8 +131,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					labelWidth : 100
 				});
 
-		var tfFondNum = Ext.create('Ext.form.field.Text', {
-					fieldLabel : '№ фонда',
+		var tfFondNum = Ext.create('storeplaces.view.lib.NumFond',{
 					name : 'fund',
 					width : 350,
 					labelWidth : 100
@@ -180,6 +179,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										})]
 							})]
 				});
+        this.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
 
 		var areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
 					layout : 'fit',
@@ -210,10 +210,10 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		tfDateOfEdit.setDisabled(true);
 
 		Ext.applyIf(this, {
-					items : [toolBar, renamesFieldset, fundFieldset,
-							this.placesFieldSet, areaFieldSets, tfUser,
-							tfDateOfEdit]
-				});
+            items : [toolBar, renamesFieldset, fundFieldset,
+                this.placesFieldSet, areaFieldSets, tfUser,
+                tfDateOfEdit]
+        });
 
 		this.callParent(arguments);
 

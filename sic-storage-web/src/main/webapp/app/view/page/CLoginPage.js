@@ -1,18 +1,14 @@
 Ext.define('storeplaces.view.page.CLoginPage', {
     extend : 'Ext.form.Panel',
     minWidth : 1024,
-    //xtype : 'corgpage',
-    layout: {
-        type: 'vbox',
-        align : 'center',
-        pack  : 'start'
-    },
+    height : 1000,
+    xtype : 'centerpage',
     width : '100%',
-    //id : 'searchgpage',
+    id : 'enterpage',
     initComponent : function() {
 
      var titlePage = Ext.create('Ext.form.Label', {
-        html : '<center>Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах'
+        html : '<center><h3>Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах'
     });
 
     var login= Ext.create('Ext.form.field.Text', {
@@ -31,29 +27,26 @@ Ext.define('storeplaces.view.page.CLoginPage', {
 
     var LoginFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
         title : 'Вход в систему',
-        //height : 250,
-        autoEl: {tag: 'center'},
-        width:500,
+        width:'100%',
         layout: {
             type: 'vbox',
-            align : 'center',
-            pack  : 'start'
+            align : 'center'
         },
         items : [login, password]
     });
 
-    var enter =   Ext.create('Ext.Button', {
+    var enterBtn =   Ext.create('Ext.Button', {
         text : 'Войти',
         //cls : "btnAdd",
         height:40,
-        //action : 'orgCardAdd'
+        action : 'enterForm'
     });
 
      var toolBarEnter = Ext.create('Ext.toolbar.Toolbar', {
          layout:{
              pack: 'center'
          },
-         items : [enter]
+         items : [enterBtn]
         });
 
     Ext.applyIf(this, {

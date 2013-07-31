@@ -7,6 +7,15 @@ Ext.define('storeplaces.view.Viewport', {
 //    layout: {
 //        type: 'fit'
 //    },
+    items:[Ext.create('storeplaces.view.Main')]
+    /*initComponent : function() {
 
-    items: [Ext.create('storeplaces.view.Main')]
+        var mainLogin = [Ext.create('storeplaces.view.Main')]
+
+        Ext.applyIf(this, {
+            items : [mainLogin]
+        });
+
+        this.callParent(arguments);
+    }    */
 });
