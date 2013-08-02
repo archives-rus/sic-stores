@@ -61,6 +61,18 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 									})]
 				});
 
+         var cardToolBar = Ext.create('Ext.toolbar.Paging', {
+             //store:store,
+             layout:{
+               type: 'hbox',
+               pack:'center'
+             },
+             beforePageText: 'Карточка',
+             afterPageText: 'из {0}',
+             //displayMsg: 'Пользователи {0} - {1} из {2}',
+             //displayInfo: true
+         });
+
 		 gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
 										//text : '+',
@@ -80,14 +92,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		 gridNames = Ext.create('Ext.grid.Panel', {
 					store : Ext.getStore('storeplaces.store.OrgNamesStore'),
                     buttonAlign:'center',
-                    dockedItems: [gridToolBar,
-                     {
-                         xtype: 'pagingtoolbar',
-                         // store: store,   // same store GridPanel is using
-                         dock: 'top',
-                         displayInfo: true,
-                         emptyMsg :'нет записей'
-                     }],
+                    dockedItems: [gridToolBar],
 					forceFit : true,
 					width : '100%',
 					height : 180,
@@ -211,7 +216,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 
 		Ext.applyIf(this, {
-            items : [toolBar, renamesFieldset, fundFieldset,
+            items : [toolBar,cardToolBar, renamesFieldset, fundFieldset,
                 this.placesFieldSet, areaFieldSets, tfUser,
                 tfDateOfEdit]
         });

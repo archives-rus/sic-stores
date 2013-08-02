@@ -63,12 +63,15 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 
         var cbTypeDoc = Ext.create('Ext.form.ComboBox',  {
             fieldLabel : 'Виды документов',
-            //name : 'fund',
+            name : 'typeDocCombo',
         //   store: 'storeplaces.store.DocTypesStore',
-            store: Ext.getStore('storeplaces.store.DocTypesStore'),
-            queryMode: 'local',
+            store:  Ext.create('storeplaces.store.DocTypesStore'),
+            editable : false,
+           // allowBlank : false,
+            queryMode : 'local',
             displayField: 'name',
             valueField: 'id',
+            emptyText : 'Не выбрано',
             width : 350,
             labelWidth : 200
         });
