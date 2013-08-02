@@ -20,7 +20,12 @@ Ext.define('storeplaces.view.Main', {
 //    	id:'loadEditDocsTable'
 //    })]
 
+<<<<<<< HEAD
 	items:[Ext.create('storeplaces.view.page.COrganizationPage')]
     //items:[Ext.create('storeplaces.view.page.CSearchPage')]
+=======
+	//items:[Ext.create('storeplaces.view.page.COrganizationPage')]
+    items:[Ext.create('storeplaces.view.page.CSearchPage')]
+>>>>>>> 1adc03049b97d2b1199e6e76ca724f6f60728c88
     //items:[Ext.create('storeplaces.view.page.CLoginPage')]
 })
