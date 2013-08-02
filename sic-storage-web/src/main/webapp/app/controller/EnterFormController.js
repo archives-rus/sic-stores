@@ -16,7 +16,7 @@ Ext.define('storeplaces.controller.EnterFormController',{
                          var form = tb.up('centerpage');
                          var main = form.up('app-main');
                          main.removeAll();
-                         main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+                         main.add(Ext.create('storeplaces.view.page.CSearchPage'));
                         default:
                             return;
                             break;
