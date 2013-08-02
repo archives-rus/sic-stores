@@ -133,7 +133,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 		var tfFondNum = Ext.create('storeplaces.view.lib.NumFond',{
 					name : 'fund',
-					width : 350,
+					//width : 270,
 					labelWidth : 100
 				});
 

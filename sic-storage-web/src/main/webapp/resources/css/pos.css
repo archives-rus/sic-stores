@@ -1,4 +1,4 @@
-#searchgpage, #orgpage{
+/*#enterpage,*/ #orgpage{
     background-color: #EDE4CE;
     min-height: 10000px !important; /*заплатка*/
 }
@@ -11,3 +11,7 @@
 .mar_top35{
     margin-top:35px !important;
 }
+.mar_auto{
+    margin:auto !important;
+}
+

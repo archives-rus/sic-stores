@@ -1,22 +1,25 @@
 Ext.define('storeplaces.view.lib.NumFond',{
     extend:'Ext.form.FieldContainer',
-    fieldLabel: 'Номер фонда',
-    labelWidth: 200,
-    width:330,
+    fieldLabel: '№ фонда',
+    labelWidth: 70,
+    width:310,
     defaultType: 'textfield',
     layout: 'hbox',
     items:[
         {
             flex: 1,
-            name: 'firstName'
+            name: 'firstName',
+            width:50
         },
         {
             flex: 2,
-            name: 'secondName'
+            name: 'secondName',
+            width:90
         },
         {
             flex: 1,
-            name: 'thirdName'
+            name: 'thirdName',
+            width:50
         }
     ]
 });
