@@ -39,6 +39,15 @@
 .downStr{
     background:url( ../img/downStr.png) no-repeat;
 }
+.srch{
+     background:url( ../img/srch.png) no-repeat;
+}
+.clr{
+    background:url( ../img/clr.png) no-repeat;
+}
+.back_main{
+    background:url( ../img/back_main.png) no-repeat;
+}
 .addStr .x-btn-default-toolbar-small .x-btn-inner,
 .upStr .x-btn-default-toolbar-small .x-btn-inner,
 .downStr .x-btn-default-toolbar-small .x-btn-inner{
@@ -59,4 +68,19 @@
     background: url("../img/close.png") no-repeat scroll 0 0 transparent;
     border: medium none;
     margin: 7px;
+}
+/*.main_bg .x-panel-body-default*/
+.x-body{
+    background: url("../img/boxes_rats.png") no-repeat scroll 0 0 transparent;  /*крысяяяяяточки*/
+    /*background: url("../img/boxes.png") no-repeat scroll 0 0 transparent;*/
+    background-size: 100% 100%;
+}
+.bg_key{
+    background-color:transparent;
+    background:url( ../img/key.png) 0 50% no-repeat;
+}
+.bg_key .x-btn-inner{
+    font:bold 14px Arial;
+    color:#230F07;
+    text-decoration:underline;
 }

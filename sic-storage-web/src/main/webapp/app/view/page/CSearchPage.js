@@ -8,30 +8,32 @@ Ext.define('storeplaces.view.page.CSearchPage', {
     searchFieldset: null,
     initComponent : function() {
     var titlePage = Ext.create('Ext.form.Label', {
-       html : '<center><h3>Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах'
+       html : '<center><h3>Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах',
+        cls:'title_search'
     });
-
     var toolBarSearch = Ext.create('Ext.toolbar.Toolbar', {
         items : [Ext.create('Ext.Button', {
             text : 'Поиск',
-            //cls : "btnAdd",
+            cls : "srch",
             height:25,
             action : 'orgCardAdd'
         }), Ext.create('Ext.Button', {
             text : 'Очистить параметры',
             height:25,
             // cls : 'btnEdit',
-            action : 'clearSearchParm'
+            action : 'clearSearchParm',
+            cls : 'clr'
         }), Ext.create('Ext.Button', {
             text : 'Добавить',
             height:25,
-            // cls : 'btnEdit',
+            cls : 'btnAdd',
             action : 'orgCardEdit'
         }),Ext.create('Ext.Button', {
             text : 'Вернуться в главное меню',
             height:25,
             // cls : 'btnEdit',
-            action : 'backMain'
+            action : 'backMain',
+            cls : 'back_main'
         }), '->',
 
             Ext.create('Ext.form.Label', {
@@ -47,7 +49,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
                 tooltip : 'Выход из системы',
                 tooltipType : 'title',
                 componentCls : 'quitButton',
-                // cls:'quitButton',
+                //cls:'quitButton',
                 id : 'quit'
             })]
     });
@@ -55,7 +57,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var tfNameOrg = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Наименование организации',
             name : 'nameOrg',
-            width : 500,
+            width : 690,
             labelWidth : 200
         });
 
@@ -92,19 +94,34 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             }]
         });
 
+        var taFundName = Ext.create('Ext.form.field.Text', {
+            fieldLabel : 'Даты',
+            name : 'fundName',
+            width : 420,
+            labelWidth : 200
+        });
+
 
         var cbArch = Ext.create('Ext.form.ComboBox',  {
             fieldLabel : 'Архив',
             name : 'edgeDates',
-            width : 350,
+            width : 460,
             labelWidth : 200
         });
 
         var tfNumberFond = Ext.create('storeplaces.view.lib.NumFond');
 
+        var tfDates2 = Ext.create('Ext.form.field.Text', {
+            fieldLabel : 'Номер фонда',
+            name : 'edgeDates',
+            width : 420,
+            labelWidth : 200
+        });
+
         searchFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
             title : 'Параметры поиска',
             height : 250,
+            width:'100%',
             layout : {
                 type : 'table',
                 columns : 1

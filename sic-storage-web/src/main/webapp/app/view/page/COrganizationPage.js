@@ -1,8 +1,7 @@
 Ext.define('storeplaces.view.page.COrganizationPage', {
 	extend : 'Ext.form.Panel',
-    //height:10000,
-    //autoScroll : true,
-	//minWidth : 1024,
+    autoScroll : true,
+	minWidth : 1024,
 	xtype : 'corgpage',
 	width : '100%',
 	id : 'orgpage',
@@ -56,6 +55,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										tooltip : 'Выход из системы',
 										tooltipType : 'title',
 										componentCls : 'quitButton',
+                                        action:'quit',
 										// cls:'quitButton',
 										id : 'quit'
 									})]
@@ -165,7 +165,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		this.placesFieldSet = Ext.create('storeplaces.view.lib.StyledFieldSet',
 				{
 					title : 'Места хранения',
-					width : '98%',
+					width : '100%',
 					height : 420,
 					autoScroll : true,
                     margin: 20,
@@ -208,6 +208,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				});
 
 		tfDateOfEdit.setDisabled(true);
+
 
 		Ext.applyIf(this, {
             items : [toolBar, renamesFieldset, fundFieldset,
