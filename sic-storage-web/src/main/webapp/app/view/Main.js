@@ -20,7 +20,17 @@ Ext.define('storeplaces.view.Main', {
 //    	id:'loadEditDocsTable'
 //    })]
 
+<<<<<<< HEAD
     //items:[Ext.create('storeplaces.view.page.CSearchPage')]
 	//items:[Ext.create('storeplaces.view.page.COrganizationPage')]
     items:[Ext.create('storeplaces.view.page.CLoginPage')]
+=======
+	//items:[Ext.create('storeplaces.view.page.COrganizationPage')]
+    //items:[Ext.create('storeplaces.view.page.CSearchPage')]
+	//items:[Ext.create('storeplaces.view.page.COrganizationPage')]
+    //items:[Ext.create('storeplaces.view.page.CSearchPage')]
+    items:[Ext.create('storeplaces.view.page.CLoginPage')]
+    //items:[Ext.create('storeplaces.view.page.CSearchPage')]
+    //items:[Ext.create('storeplaces.view.page.CLoginPage')]
+>>>>>>> b85b96de8c5c36c4a44236efaa19786fa0985aa8
 })
