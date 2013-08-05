@@ -49,7 +49,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
                 tooltip : 'Выход из системы',
                 tooltipType : 'title',
                 componentCls : 'quitButton',
-                //cls:'quitButton',
+                action: 'quitSerch',
                 id : 'quit'
             })]
     });

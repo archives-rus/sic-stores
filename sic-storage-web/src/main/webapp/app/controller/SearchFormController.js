@@ -22,6 +22,12 @@ Ext.define('storeplaces.controller.SearchFormController',{
                         case 'backMain':
                             //alert(1);
                              //  alert(this.items.items[0].items.items[0].getItemId());
+                        case 'quitSerch':
+                            var tb = btn.up('toolbar');
+                            var form = tb.up('csearchpage');
+                            var main = form.up('container');
+                            main.removeAll();
+                            main.add(Ext.create('storeplaces.view.page.CLoginPage'));
                         default:
                             return;
                             break;
