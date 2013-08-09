@@ -14,6 +14,7 @@ Ext.define('storeplaces.view.lib.NumFond',{
         {
             flex: 2,
             name: 'secondName',
+            maskRe: /[0-9]/,
             width:90
         },
         {

@@ -10,6 +10,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	nfCount : null,
 	taDocsContent : null,
 	yearInterval : null,
+    cbArchive : null,
 	docGrid : null,
 	minHeight : 340,
 	height : 'auto',
@@ -25,13 +26,16 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	docTypeColumnEditor : null,
 	gridReadOnlyColumns : [{
 				text : 'Вид документа',
-				dataIndex : 'documentType'
+				dataIndex : 'documentType',
+                flex:3
 			}, {
 				text : 'Даты',
-				dataIndex : 'dates'
+				dataIndex : 'dates',
+                flex:2
 			}, {
 				text : '№ описи',
-				dataIndex : 'series'
+				dataIndex : 'series',
+                flex:1
 			}],
 
 	gridEditOnlyColumns : [{
@@ -183,6 +187,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					store : Ext.getStore('storeplaces.store.DocTypesStore'),
 					valueField : 'id',
 					displayField : 'name',
+                    disabled:true,
 					blankText : 'Не выбран вид документа',
 					emptyText : 'Не выбран',
 					forceSelection : true,
@@ -193,19 +198,39 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		me.taOrg = Ext.create('Ext.form.field.TextArea', {
 					name : 'orgName',
 					fieldLabel : 'Название организации',
+                    hidden:true,
 					width : me.fieldLabelWidth,
 					height : 46,
+                    disabled:true,
 					width : 530,
 					labelWidth : 140, //me.fieldLabelWidth,
 					x : 5,
 					y : me.cbStorageType.y + me.cbStorageType.height + 5
 				});
 
+        me.cbAcrhive = Ext.create('Ext.form.ComboBox',  {
+                        fieldLabel : 'Архив',
+                        store: Ext.create('storeplaces.store.DocArchiveStore'),
+                        name : 'archiveStoreCard',
+                        editable : false,
+                        // allowBlank : false,
+                        queryMode : 'local',
+                        displayField: 'name',
+                        valueField: 'id',
+                        emptyText : 'Не выбрано',
+                        hidden:true,
+                        width : 300,
+                        labelWidth : 140, //me.fieldLabelWidth,
+                        x : 5,
+                        y : me.cbStorageType.y + me.cbStorageType.height + 5
+        });
+
 		me.nfCount = Ext.create('Ext.form.field.Text', {
 					name : 'documentCount',
 					fieldLabel : 'Количество ед. хр.',
 					labelSeparator : '',
 					height : 22,
+                    disabled:true,
 					width : 210,
 					labelWidth : 140, //me.fieldLabelWidth,
 					x : 5,
@@ -217,6 +242,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					fieldLabel : 'Адрес',
 					labelSeparator : '',
 					width : 490,
+                    disabled:true,
 					height : 22,
                     labelWidth :100,
 					x : 650,
@@ -226,6 +252,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		me.tfPhone = Ext.create('Ext.form.field.Text', {
 					name : 'phone',
 					fieldLabel : 'Телефон',
+                    disabled:true,
 					height : 22,
 					width : 300,
 					labelSeparator : '',
@@ -236,6 +263,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.yearInterval = Ext.create('storeplaces.view.lib.YearInterval', {
 					fieldLabel : 'Годы',
+                    disabled:true,
 					width : 300,
 					//labelWidth : me.fieldLabelWidth - 50,
                     labelWidth :100,
@@ -281,7 +309,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		Ext.applyIf(me, {
-					items : [me.cbStorageType, me.taOrg, me.nfCount, me.tfAddr,
+					items : [me.cbStorageType, me.taOrg, me.cbAcrhive, me.nfCount, me.tfAddr,
 							me.tfPhone, me.yearInterval, closeButton,
 							me.docGrid, me.taDocsContent]
 				});

@@ -16,7 +16,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             text : 'Поиск',
             cls : "srch",
             height:25,
-            action : 'orgCardAdd'
+            action : 'srchBtn'
         }), Ext.create('Ext.Button', {
             text : 'Очистить параметры',
             height:25,
@@ -27,7 +27,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             text : 'Добавить',
             height:25,
             cls : 'btnAdd',
-            action : 'orgCardEdit'
+            action : 'addOrg'
         }),Ext.create('Ext.Button', {
             text : 'Вернуться в главное меню',
             height:25,
@@ -37,7 +37,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         }), '->',
 
             Ext.create('Ext.form.Label', {
-                html : 'Пользователь П.П.',
+                text : 'Пользователь П.П.',
                 baseCls : 'loginedUserText',
                 flex : 0
             }), Ext.create('Ext.toolbar.Separator', {
@@ -64,15 +64,14 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var cbTypeDoc = Ext.create('Ext.form.ComboBox',  {
             fieldLabel : 'Виды документов',
             name : 'typeDocCombo',
-        //   store: 'storeplaces.store.DocTypesStore',
-            store:  Ext.create('storeplaces.store.DocTypesStore'),
+            store: Ext.getStore('storeplaces.store.DocTypesStore'),
             editable : false,
            // allowBlank : false,
             queryMode : 'local',
             displayField: 'name',
             valueField: 'id',
             emptyText : 'Не выбрано',
-            width : 350,
+            width : 352,
             labelWidth : 200
         });
 
@@ -83,16 +82,20 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             },
             fieldLabel: 'Даты',
             labelWidth : 180,
-            defaultType: 'datefield',
+            defaultType: 'textfield',
             items: [{
-                width: 155,
+                width: 65,
                 name: 'from_date',
-                labelWidth : 30,
+                labelWidth : 20,
+                maxLength : 4,
+                maskRe: /[0-9]/,
                 fieldLabel :'c:'
             }, {
-                width: 150,
+                width: 75,
                 name: 'to_date',
                 labelWidth : 30,
+                maxLength : 4,
+                maskRe: /[0-9]/,
                 fieldLabel : 'по:'
             }]
         });
@@ -107,7 +110,14 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 
         var cbArch = Ext.create('Ext.form.ComboBox',  {
             fieldLabel : 'Архив',
-            name : 'edgeDates',
+            store: Ext.getStore('storeplaces.store.DocArchiveStore'),
+            name : 'archiveStore',
+            editable : false,
+            // allowBlank : false,
+            queryMode : 'local',
+            displayField: 'name',
+            valueField: 'id',
+            emptyText : 'Не выбрано',
             width : 460,
             labelWidth : 200
         });
@@ -133,14 +143,14 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         });
 
         var gridSearch = Ext.create('Ext.grid.Panel', {
-           // store : Ext.getStore('toreplaces.store.OrgNamesStore'),
+            store : Ext.getStore('storeplaces.store.GridSearchOrgStore'),
             forceFit : true,
             width : '100%',
-            height : 180,
+            height : 300,
             autoScroll : true,
             dockedItems: [{
                 xtype: 'pagingtoolbar',
-               // store: store,   // same store GridPanel is using
+                store: Ext.getStore('storeplaces.store.GridSearchOrgStore'),
                 dock: 'top',
                 displayInfo: true
             }],
@@ -151,15 +161,15 @@ Ext.define('storeplaces.view.page.CSearchPage', {
                 hideable : false
             }, {
                 text : 'Организация',
-                dataIndex : 'fullName',
+                dataIndex : 'name',
                 flex :3
             }, {
                 text : 'Архив',
-                dataIndex : 'shortName',
+                dataIndex : 'archive',
                 flex :2
             }, {
                 text : 'Фонд',
-                dataIndex : 'subordination',
+                dataIndex : 'fond',
                 flex :1
             }, {
                 text : 'Крайние даты',
@@ -171,7 +181,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             var ResultsFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
                 {
                     title : 'Результаты поиска',
-                    height : 160,
+                    height : 300,
                     items : [gridSearch]
                 });
 

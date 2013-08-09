@@ -2,6 +2,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	extend : 'Ext.form.Panel',
     autoScroll : true,
 	minWidth : 1024,
+    height: '100%',
 	xtype : 'corgpage',
 	width : '100%',
 	id : 'orgpage',
@@ -9,8 +10,10 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
     gridNames : null,
     gridToolBar : null,
 	initComponent : function() {
+        //this.setHeight(600);
 		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
-					items : [Ext.create('Ext.Button', {
+                xtype : 'maintb',
+                items : [Ext.create('Ext.Button', {
 										text : 'Добавить',
 										cls : "btnAdd",
                                         height:25,
@@ -43,7 +46,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 									}), '->',
 
 							Ext.create('Ext.form.Label', {
-										html : 'Пользователь П.П.',
+										text : 'Пользователь П.П.',
 										baseCls : 'loginedUserText',
 										flex : 0
 									}), Ext.create('Ext.toolbar.Separator', {
@@ -68,7 +71,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                pack:'center'
              },
              beforePageText: 'Карточка',
-             afterPageText: 'из {0}',
+             afterPageText: 'из {0}'
              //displayMsg: 'Пользователи {0} - {1} из {2}',
              //displayInfo: true
          });
@@ -129,22 +132,45 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					items : [gridNames]
 				});
 
-		var tfArchive = Ext.create('Ext.form.field.Text', {
+		/*var tfArchive = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Архив',
 					name : 'archive',
 					width : 500,
 					labelWidth : 100
 				});
+        */
+        var cbArchive = Ext.create('Ext.form.ComboBox',  {
+            fieldLabel : 'Архив',
+            store: Ext.create('storeplaces.store.DocArchiveStore'),
+            name : 'archiveStoreOrg',
+            editable : false,
+            // allowBlank : false,
+            queryMode : 'local',
+            displayField: 'name',
+            valueField: 'id',
+            emptyText : 'Не выбрано',
+            width : 450,
+            labelWidth : 100
+        });
 
 		var tfFondNum = Ext.create('storeplaces.view.lib.NumFond',{
 					name : 'fund',
-					//width : 270,
+					width : 290,
 					labelWidth : 100
 				});
+
+        tfFondNum.add(Ext.create('Ext.Button', {
+            text : 'Поиск фонда',
+            id:'srchFund',
+            //cls : "",
+            //height:25,
+            action : 'serchFund'
+        })) ;
 
 		var taFundName = Ext.create('Ext.form.field.TextArea', {
 					fieldLabel : 'Название фонда',
 					name : 'fundName',
+                    disabled: true,
 					height : 50,
 					width : 690,
                     labelWidth : 150
@@ -152,6 +178,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 		var tfDates = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Крайние даты фонда',
+                    disabled: true,
 					name : 'edgeDates',
 					width : 440,
                     labelWidth : 150
@@ -164,7 +191,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 						type : 'table',
 						columns : 2
 					},
-					items : [tfArchive, taFundName, tfFondNum, tfDates]
+					items : [cbArchive, taFundName, tfFondNum, tfDates]
 				});
 
 		this.placesFieldSet = Ext.create('storeplaces.view.lib.StyledFieldSet',
@@ -173,18 +200,20 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					width : '100%',
 					height : 420,
 					autoScroll : true,
-                    margin: 20,
-					items : [Ext.create('Ext.toolbar.Toolbar', {
-								items : [Ext.create('Ext.Button', {
-											text : 'Добавить',
-											cls : 'btnAdd',
-                                            height:25,
-											id : 'addStorePlace',
-											action : 'addStorePlace'
-										})]
-							})]
+                    margin: 20
 				});
+
         this.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
+
+        var tbarStorePlace = Ext.create('Ext.toolbar.Toolbar', {
+            items : [Ext.create('Ext.Button', {
+                text : 'Добавить',
+                cls : 'btnAdd',
+                height:25,
+                id : 'addStorePlace',
+                action : 'addStorePlace'
+            })]
+        });
 
 		var areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
 					layout : 'fit',
@@ -216,7 +245,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 
 		Ext.applyIf(this, {
-            items : [toolBar,cardToolBar, renamesFieldset, fundFieldset,
+            items : [toolBar,cardToolBar, renamesFieldset, fundFieldset,tbarStorePlace,
                 this.placesFieldSet, areaFieldSets, tfUser,
                 tfDateOfEdit]
         });
