@@ -26,6 +26,7 @@ Ext.define('storeplaces.view.page.CLoginPage', {
     var password= Ext.create('Ext.form.field.Text', {
         fieldLabel : 'Пароль',
         name : 'password',
+        inputType : 'password',
         width : 200,
         labelWidth : 100,
         cls:'mar lft'

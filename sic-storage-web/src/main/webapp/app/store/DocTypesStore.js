@@ -1,7 +1,7 @@
 Ext.define('storeplaces.store.DocTypesStore',{
 	extend : 'Ext.data.Store',
 	storeId : 'DocTypesStore',
-	autoLoad:false,
+	autoLoad:true,
 	//fields:['id','name'],
     model: 'storeplaces.model.DocTypesModel',
 	proxy : {
