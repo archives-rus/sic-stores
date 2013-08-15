@@ -1,0 +1,20 @@
+Ext.define('storeplaces.model.GridSearchOrgModel',{
+    extend:'Ext.data.Model',
+    fields:[{
+        name:'id',
+        type:'int'
+    },{
+        name:'name',
+        type:'string'
+    },{
+        name:'archive',
+        type:'string'
+    },{
+        name:'fond',
+        type:'string'
+    },{
+        name:'dates',
+        type:'string'
+    }
+    ]
+})
