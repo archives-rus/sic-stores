@@ -27,5 +27,8 @@ Ext.define('storeplaces.model.StoragePlace',{
 	},{
 		name:'contents',
 		type:'string'
-	}]
+	},{
+        name:'phone',
+        type:'string'
+    }]
 });

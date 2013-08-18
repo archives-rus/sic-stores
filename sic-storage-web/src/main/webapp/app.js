@@ -15,5 +15,6 @@ Ext.application({
     autoCreateViewport: true,
     launch:function(){
     	window.app=this;
+       // window.vp = null;
     }
 });

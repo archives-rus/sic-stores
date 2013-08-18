@@ -1,15 +1,10 @@
 Ext.define('storeplaces.controller.StorePlaceCardController', {
 			extend : 'Ext.app.Controller',
-			refs : [{
-						ref : 'card',
-						selector : 'viewport > app-main > storeplacecard'
-					}],
+			view:['card.CStorePlace'],
 			init : function() {
 				this.control({
-							'button' : {
+							'storeplacecard button' : {
 								click : function(btn, evObj) {
-									console.log('button click');
-									console.info(btn.getItemId());
 									switch (btn.getItemId()) {
 										case 'loadViewDocsTable' :
 											this.loadStorePlaceDocsRead();
@@ -26,25 +21,6 @@ Ext.define('storeplaces.controller.StorePlaceCardController', {
 						});
 			},
 			onLaunch:function(){
-			},
-			
-			getTestStorePlace:function(){
-				var testStorePlace={
-					id:1,
-					storageType:'Тип места хранения тест',
-					archive:'Архив архив',
-					orgName:'Имя организации',
-					address:'тест адрес',
-					phone:'89269269226',
-					documentCount:'25',
-					beginYear:2010,
-					endYear:2013,
-					contents:'Состав документов тестовый текст',
-					getData:function(){
-						return this;
-					}
-				};
-				return testStorePlace;
 			},
 			loadStorePlaceDocsEdit:function(){
 				this.getCard().setReadOnly(false);
@@ -72,8 +48,6 @@ Ext.define('storeplaces.controller.StorePlaceCardController', {
 				}
 			},
 			removeFromDocGrid:function(grid,rowIndex,colIndex){
-				console.info('Main controller');
-				console.info('actioncolumn handler: rowIndex: '+ rowIndex + ', colIndex: ' + colIndex);
 				var rec = grid.getStore().getAt(rowIndex);
 				grid.getStore().remove(rec);
 			}

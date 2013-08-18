@@ -4,7 +4,14 @@ Ext.define('storeplaces.Application', {
     extend: 'Ext.app.Application',
 
     views: [
-       'storeplaces.view.card.CStorePlace'
+       'storeplaces.view.card.CStorePlace',
+        'storeplaces.view.card.CStorePlaceView',
+       'storeplaces.view.page.CLoginPage',
+       'storeplaces.view.page.COrganizationPage',
+        'storeplaces.view.page.CSearchPage',
+        'storeplaces.view.page.COrganizationPageView'
+
+
     ],
 
     controllers: [
@@ -16,6 +23,6 @@ Ext.define('storeplaces.Application', {
 
     stores: [
         'storeplaces.store.StorageTypeStore','storeplaces.store.DocsReadStore','storeplaces.store.GridSearchOrgStore',
-        'storeplaces.store.DocsWriteStore','storeplaces.store.DocTypesStore','storeplaces.store.DocArchiveStore'
+        'storeplaces.store.DocsWriteStore','storeplaces.store.DocTypesStore','storeplaces.store.DocArchiveStore','storeplaces.store.StoragePlaceStore'
     ]
 });

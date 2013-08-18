@@ -3,6 +3,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
     minWidth : 1024,
     height:1000,
     xtype : 'csearchpage',
+    alias: 'widget.searchpage',
     width : '100%',
     id : 'searchgpage',
     searchFieldset: null,
@@ -145,6 +146,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var gridSearch = Ext.create('Ext.grid.Panel', {
             store : Ext.getStore('storeplaces.store.GridSearchOrgStore'),
             forceFit : true,
+            selType: 'rowmodel',
             width : '100%',
             height : 300,
             autoScroll : true,
@@ -184,8 +186,6 @@ Ext.define('storeplaces.view.page.CSearchPage', {
                     height : 300,
                     items : [gridSearch]
                 });
-
-
             Ext.applyIf(this, {
             items : [titlePage, toolBarSearch, searchFieldset,ResultsFieldset]
         });

@@ -2,6 +2,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	extend : 'Ext.form.Panel',
 	layout : 'absolute',
 	xtype : 'storeplacecard',
+    alias: 'widget.storeplacecard',
 	requires : ['Ext.grid.plugin.CellEditing'],
 	cbStorageType : null,
 	tfAddr : null,
@@ -9,6 +10,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	taOrg : null,
 	nfCount : null,
 	taDocsContent : null,
+    cbAddr         :null,
 	yearInterval : null,
     cbArchive : null,
 	docGrid : null,
@@ -152,13 +154,13 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	initComponent : function() {
 		var x_ = 580;
 		var me = this;
-
 		var closeButton = Ext.create('Ext.Button', {
 					//text : 'X',
 					x : '98%',
 					y : 0,
 					height : 25,
-					width : 25
+					width : 25,
+                    action:'deleteCard'
 				});
 
 		me.cbStorageType = Ext.create('Ext.form.field.ComboBox', {
@@ -175,12 +177,38 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					allowBlank : false,
 					queryMode : 'local',
 					validateOnChange : false,
-					name : 'storagePlace',
 					blankText : 'Не выбранo место хранения',
 					emptyText : 'Не выбрано',
 					forceSelection : true,
 					x : 5,
-					y : 25
+					y : 25,
+                    listeners:{
+                       // 'select': getPlaceId()
+                        'select': function(){
+                             if (this.getValue()== 1)
+                                {
+                                    me.cbAcrhive.setVisible(true);
+                                    me.taOrg.setVisible(false);
+                                    me.cbDocTypes.setDisabled(false);
+                                    me.nfCount.setDisabled(false);
+                                  //  me.tfAddr.setDisabled(false);
+                                    me.cbAddr.setDisabled(false);
+                                    me.tfPhone.setDisabled(false);
+                                    me.yearInterval.setDisabled(false);
+                                }
+                                else if (this.getValue()== 2)
+                                 {
+                                     me.cbAcrhive.setVisible(false);
+                                     me.taOrg.setVisible(true);
+                                     me.cbDocTypes.setDisabled(false);
+                                     me.nfCount.setDisabled(false);
+                                    // me.tfAddr.setDisabled(false);
+                                     me.cbAddr.setDisabled(false);
+                                     me.tfPhone.setDisabled(false);
+                                     me.yearInterval.setDisabled(false);
+                                 }
+                        }
+                    }
 				});
 
 		me.cbDocTypes = Ext.create('Ext.form.field.ComboBox', {
@@ -201,12 +229,13 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                     hidden:true,
 					width : me.fieldLabelWidth,
 					height : 46,
-                    disabled:true,
 					width : 530,
 					labelWidth : 140, //me.fieldLabelWidth,
 					x : 5,
 					y : me.cbStorageType.y + me.cbStorageType.height + 5
 				});
+
+        var myStore = Ext.create('storeplaces.store.StoragePlaceStore');
 
         me.cbAcrhive = Ext.create('Ext.form.ComboBox',  {
                         fieldLabel : 'Архив',
@@ -222,7 +251,35 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                         width : 300,
                         labelWidth : 140, //me.fieldLabelWidth,
                         x : 5,
-                        y : me.cbStorageType.y + me.cbStorageType.height + 5
+                        y : me.cbStorageType.y + me.cbStorageType.height + 5,
+                        listeners:{
+                            'select': function(){
+                                var archiveId = this.getValue();
+                                Ext.Ajax.request({
+                                    url: 'servlet/QueryArchStorage',
+                                    params : {
+                                        'archiveId':archiveId
+                                    },
+                                    success: function(action){
+                                       /* var isId  = Ext.decode(action.responseText).id;
+                                        var isArchiveId  = Ext.decode(action.responseText).archiveId;
+                                        var isAddress  = Ext.decode(action.responseText).address;
+                                        var isPhone  = Ext.decode(action.responseText).phone; */
+                                        //  var mass = new Array();
+                                        var mass = Ext.decode(action.responseText);
+                                        myStore.loadData(mass);
+
+                                        //myStore.loadData(mass);
+                                        //mass.forEach( function(item){ alert(item.address); } );
+
+
+                                    },
+                                    failure : function(action) {
+                                        Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                    }
+                                });
+                            }
+                        }
         });
 
 		me.nfCount = Ext.create('Ext.form.field.Text', {
@@ -243,11 +300,34 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					labelSeparator : '',
 					width : 490,
                     disabled:true,
+                    hidden:true,
 					height : 22,
                     labelWidth :100,
 					x : 650,
 					y : 25
 				});
+
+        me.cbAddr = Ext.create('Ext.form.ComboBox', {
+                    fieldLabel : 'Адрес',
+                    store:myStore,
+                   // name : ,
+                    editable : false,
+                    queryMode : 'local',
+                    displayField: 'address',
+                    disabled:true,
+                    valueField: 'phone',
+                    emptyText : 'Не выбрано',
+                   // hidden:true,
+                    width : 490,
+                    labelWidth : 100, //me.fieldLabelWidth,
+                    x : 650,
+                    y : 25,
+                    listeners:{
+                        'select': function(){
+                            me.tfPhone.setValue(this.getValue());
+                        }
+                        }
+                    });
 
 		me.tfPhone = Ext.create('Ext.form.field.Text', {
 					name : 'phone',
@@ -309,7 +389,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		Ext.applyIf(me, {
-					items : [me.cbStorageType, me.taOrg, me.cbAcrhive, me.nfCount, me.tfAddr,
+					items : [me.cbStorageType, me.taOrg, me.cbAcrhive, me.nfCount, me.tfAddr,me.cbAddr,
 							me.tfPhone, me.yearInterval, closeButton,
 							me.docGrid, me.taDocsContent]
 				});

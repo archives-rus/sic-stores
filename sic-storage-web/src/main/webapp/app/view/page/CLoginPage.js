@@ -3,6 +3,7 @@ Ext.define('storeplaces.view.page.CLoginPage', {
     minWidth : 1024,
    // height : 1000,
     xtype : 'centerpage',
+    alias: 'widget.enterpage',
     width : '100%',
     cls:'main_bg',
     id : 'enterpage',

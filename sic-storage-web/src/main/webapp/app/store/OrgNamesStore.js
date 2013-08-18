@@ -1,7 +1,7 @@
 Ext.define('storeplaces.store.OrgNamesStore',{
 	extend : 'Ext.data.Store',
 	storeId : 'OrgNamesStore',
-	autoLoad:true,
+	autoLoad:false,
 	model:'storeplaces.model.OrganizationName',
 	proxy : {
 		type : 'ajax',

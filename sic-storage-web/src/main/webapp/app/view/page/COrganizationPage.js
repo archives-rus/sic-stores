@@ -7,8 +7,15 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	width : '100%',
 	id : 'orgpage',
 	placesFieldSet : null,
+    fundFieldset:null,
+    orgStore : Ext.create('storeplaces.store.OrgNamesStore'),
     gridNames : null,
     gridToolBar : null,
+    loadRecord:function(){
+        var me = this;
+        me.callParent();
+
+    },
 	initComponent : function() {
         //this.setHeight(600);
 		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
@@ -93,7 +100,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				});
 
 		 gridNames = Ext.create('Ext.grid.Panel', {
-					store : Ext.getStore('storeplaces.store.OrgNamesStore'),
+					store : this.orgStore,
                     buttonAlign:'center',
                     dockedItems: [gridToolBar],
 					forceFit : true,
@@ -164,7 +171,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
             id:'srchFund',
             //cls : "",
             //height:25,
-            action : 'serchFund'
+            action : 'srchFund'
         })) ;
 
 		var taFundName = Ext.create('Ext.form.field.TextArea', {
@@ -184,7 +191,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                     labelWidth : 150
 				});
 
-		var fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+		this.fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
 					title : 'Фондовая принадлежность',
 					height : 150,
 					layout : {
@@ -245,7 +252,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 
 		Ext.applyIf(this, {
-            items : [toolBar,cardToolBar, renamesFieldset, fundFieldset,tbarStorePlace,
+            items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,tbarStorePlace,
                 this.placesFieldSet, areaFieldSets, tfUser,
                 tfDateOfEdit]
         });

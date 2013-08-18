@@ -16,12 +16,16 @@ Ext.define('storeplaces.controller.OrgPageController',{
 		this.control({
 			'button':{
 				click:function(btn,eventObj){
-                    if (btn.id == 'srchFund')
+                    if (btn.action == 'srchFund')
                         {
                            var numFund  = btn.up('fieldcontainer');
                            var fs       = numFund.up('fieldset');
                            var main     = fs.up('container');
                         }
+                    else if(btn.action == 'deleteCard'){
+                        var form = btn.up('form');
+                        this.getPage().placesFieldSet.remove(form);
+                    }
                     else{
                         var tb = btn.up('toolbar');
                         var form = tb.up('form');
@@ -33,19 +37,41 @@ Ext.define('storeplaces.controller.OrgPageController',{
 							this.getPage().placesFieldSet.add(place);
                             break;
                         case 'namesGridAdd':
-                            var gridStore =  this.getPage().gridNames.getStore();
-                            gridStore.insert(0, Ext.create('storeplaces.model.OrganizationName'));
+                            this.getPage().orgStore.insert(0, Ext.create('storeplaces.model.OrganizationName'));
                             break;
                         case 'quit':
                             main.removeAll();
                             main.add(Ext.create('storeplaces.view.page.CLoginPage'));
+                            break;
+                        case 'orgCardDelete':
+                            if (this.getPage().orgStore.getCount()==0)
+                            {
+                                alert('Организация не выбрана!');
+                                break;
+                            }
+                            var id = this.getPage().orgStore.getAt(0).get('id');
+                            alert('Удаляем организацию с айди ' + id);
+                           /* Ext.Ajax.request({
+                                url: 'servlet/DeleteOrganization',
+                                params : {
+                                    id:id
+                                },
+                                success: function(action){
+                                    var success = Ext.decode(action.responseText).success;
+                                    main.removeAll();
+                                    main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+                                },
+                                failure : function() {
+                                    Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                }
+                            });*/
                             break;
                         case 'orgCardAdd':
                             main.removeAll();
                             main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
                             break;
                         case 'serchFund':
-                            alert('Поиск нах!');
+                            alert('Поиск');
 
                             var archiveId = fs.items.items[0].getValue();
                             var num    = numFund.items.items[1].getRawValue();

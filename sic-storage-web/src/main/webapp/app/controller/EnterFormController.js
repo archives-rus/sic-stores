@@ -1,22 +1,17 @@
 Ext.define('storeplaces.controller.EnterFormController',{
     extend:'Ext.app.Controller',
-    refs:[
-        {
-            ref:'page',
-            selector:'viewport > container > centerpage'
-        }
-    ],
+    view:['page.CLoginPage'],
     init:function(){
         this.control({
-            'button':{
+            'enterpage button':{
                 click:function(btn,eventObj){
                     switch(btn.action){
                         case 'enterForm':
                             var tb = btn.up('toolbar');
                             var form = tb.up('centerpage');
                             var main = form.up('app-main');
-                            var login    =  this.getPage().items.items[1].items.items[0].getRawValue();
-                            var password =  this.getPage().items.items[1].items.items[1].getRawValue();
+                            var login    =  form.items.items[1].items.items[0].getRawValue();
+                            var password =  form.items.items[1].items.items[1].getRawValue();
 
                               if (login=='admin' && password=='admin')
                                     {
