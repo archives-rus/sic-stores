@@ -40,7 +40,8 @@
     background:url( ../img/downStr.png) no-repeat;
 }
 .srch{
-     background:url( ../img/srch.png) no-repeat;
+     background:url( ../img/srch.png) no-repeat !important;
+    height:24px;
 }
 .clr{
     background:url( ../img/clr.png) no-repeat;
@@ -57,14 +58,14 @@
 .x-form-trigger,
 .x-column-header-trigger{
     background:url( ../img/trigger-arrow.png) no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
 }
 .x-form-trigger-over,
 .x-form-trigger-wrap-focus .x-form-trigger{
     background:url( ../img/trigger-arrow-over.png) no-repeat;
     background-size: 100%;
 }
-.x-btn-default-small{
+.storePlaceCard .x-btn-default-small{
     background: url("../img/close.png") no-repeat scroll 0 0 transparent;
     border: medium none;
     margin: 7px;

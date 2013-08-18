@@ -167,9 +167,9 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				});
 
         tfFondNum.add(Ext.create('Ext.Button', {
-            text : 'Поиск фонда',
+            //text : 'Поиск фонда',
             id:'srchFund',
-            //cls : "",
+            cls : "srch",
             //height:25,
             action : 'srchFund'
         })) ;
