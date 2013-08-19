@@ -22,15 +22,17 @@ Ext.define('storeplaces.controller.OrgPageController',{
                            var fs       = numFund.up('fieldset');
                            var main     = fs.up('container');
                         }
-                    else if(btn.action == 'deleteCard'){
-                        var form = btn.up('form');
-                        this.getPage().placesFieldSet.remove(form);
-                    }
-                    else{
-                        var tb = btn.up('toolbar');
-                        var form = tb.up('form');
-                        var main = form.up('container');
-                    }
+                    else if(btn.action == 'deleteCard')
+                        {
+                            var form = btn.up('form');
+                            this.getPage().placesFieldSet.remove(form);
+                        }
+                    else if(btn.id != 'button-1005')
+                        {
+                            var tb = btn.up('toolbar');
+                            var form = tb.up('form');
+                            var main = form.up('container');
+                        }
 					switch(btn.action){
 						case 'addStorePlace':
 							var place = Ext.create('storeplaces.view.card.CStorePlace');
@@ -68,15 +70,148 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             break;
                         case 'orgCardAdd':
                             main.removeAll();
-                            main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+                            var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
+                            newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
+                            main.add(newOrgPage);
                             break;
-                        case 'serchFund':
-                            alert('Поиск');
+                        case 'orgCardEdit':
+                            var id = form.orgStore.getAt(0).get('id');
+                            main.removeAll();
+                            var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
+                            Ext.Ajax.request({
+                                url: 'servlet/QueryOrgNames',
+                                params : {
+                                    id:id
+                                },
+                                success: function(action){
+                                    var massStore = Ext.decode(action.responseText);
+                                    myEditOrgPage.orgStore.loadData(massStore);
 
-                            var archiveId = fs.items.items[0].getValue();
-                            var num    = numFund.items.items[1].getRawValue();
-                            var prefix = numFund.items.items[0].getRawValue();
-                            var suffix = numFund.items.items[2].getRawValue();
+                                },
+                                failure : function() {
+                                    Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                }
+                            });
+                            Ext.Ajax.request({
+                                url: 'servlet/QueryOrganization',
+                                params : {
+                                    id:id,
+                                    mode:'EDIT'
+                                },
+                                success: function(action){
+                                    var dataArray = Ext.decode(action.responseText);
+                                    var archiveId = Ext.decode(action.responseText).archiveId;
+
+                                    var fundId= Ext.decode(action.responseText).fund.id;
+                                    var fundNum= Ext.decode(action.responseText).fund.num;
+                                    var fundPrefix= Ext.decode(action.responseText).fund.prefix;
+                                    var fundSuffix= Ext.decode(action.responseText).fund.suffix;
+                                    var fundName= Ext.decode(action.responseText).fund.name;
+                                    var fundDates= Ext.decode(action.responseText).fund.dates;
+
+                                    var storage = Ext.decode(action.responseText).storage;
+
+                                    var businessTripsInfo = Ext.decode(action.responseText).businessTripsInfo;
+                                    var rewardsInfo= Ext.decode(action.responseText).rewardsInfo;
+                                    var notes = Ext.decode(action.responseText).notes;
+                                    var userName = Ext.decode(action.responseText).userName;
+                                    var lastUpdateDate = Ext.decode(action.responseText).lastUpdateDate;
+
+                                    var myArchive               =  myEditOrgPage.fundFieldset.items.items[0];
+                                    var myFundName              =  myEditOrgPage.fundFieldset.items.items[1];
+                                    var myFundPrefix            =  myEditOrgPage.fundFieldset.items.items[2].items.items[0];
+                                    var myFundNum               =  myEditOrgPage.fundFieldset.items.items[2].items.items[1];
+                                    var myFundSuffix            =  myEditOrgPage.fundFieldset.items.items[2].items.items[2];
+                                    var myDates                 =  myEditOrgPage.fundFieldset.items.items[3];
+                                    var myBusinessTripsInfo     =  myEditOrgPage.areaFieldSets.items.items[0];
+                                    var myRewardsInfo           =  myEditOrgPage.areaFieldSets.items.items[1];
+                                    var myNotes                 =  myEditOrgPage.areaFieldSets.items.items[2];
+                                    var myUserName              =  myEditOrgPage.tfUser;
+                                    var myLastUpdateDate        =  myEditOrgPage.tfDateOfEdit;
+
+                                    myFundName.setValue(fundName);
+                                    myFundPrefix.setValue(fundPrefix);
+                                    myFundNum.setValue(fundNum);
+                                    myFundSuffix.setValue(fundSuffix);
+                                    myArchive.setValue(archiveId);
+                                    myDates.setValue(fundDates);
+                                    myBusinessTripsInfo.setValue(businessTripsInfo);
+                                    myRewardsInfo.setValue(rewardsInfo);
+                                    myNotes.setValue(notes);
+                                    myUserName.setValue(userName);
+                                    myLastUpdateDate.setValue(lastUpdateDate);
+
+                                    for(var i=0; i<storage.length; i++)
+                                    {
+                                        var idPlace =storage[i].id;   // id места хранения документов
+
+                                        var archInId    = storage[i].archStrg.id; // id места хранения в архиве
+                                        var archId   = storage[i].archStrg.archiveId; //id архива(второй комбо снизу)
+                                        var archAddress = storage[i].archStrg.address
+                                        var archPhone   = storage[i].archStrg.phone
+
+                                        var orgNamePlace =storage[i].orgName;
+                                        var addressPlace =storage[i].address;
+                                        var phonePlace =storage[i].phone;
+                                        var documentCountPlace =storage[i].documentCount;
+                                        var beginYearPlace =storage[i].beginYear;
+                                        var endYearPlace =storage[i].endYear;
+                                        var contentsPlace =storage[i].contents;
+
+                                        var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
+                                        if  (archId=='' || archId==null)
+                                        {
+                                            placeCard.cbStorageType.setValue(2);
+                                            placeCard.taOrg.setValue(orgNamePlace);
+                                            placeCard.tfAddr.setValue(addressPlace);
+
+                                        }
+                                        else
+                                        {
+                                            placeCard.cbStorageType.setValue(1);
+                                            placeCard.cbArchive.setVisible(true);
+                                            placeCard.cbArchive.setValue(archId)
+                                            placeCard.cbAddr.setRawValue(addressPlace);
+                                        }
+                                        placeCard.tfPhone.setValue(phonePlace);
+                                        placeCard.nfCount.setValue(documentCountPlace);
+                                        placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
+                                        placeCard.yearInterval.items.items[2].setValue(endYearPlace);
+                                        placeCard.taDocsContent.setValue(contentsPlace);
+                                        Ext.Ajax.request({
+                                            url: 'servlet/QueryDocuments',
+                                            params : {
+                                                storageId:idPlace,
+                                                mode:'EDIT'
+                                            },
+                                            success: function(action){
+                                                var massStorage = Ext.decode(action.responseText);
+                                                placeCard.docsWriteStore.loadData(massStorage);
+
+                                            },
+                                            failure : function() {
+                                                Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                            }
+                                        });
+                                        myEditOrgPage.placesFieldSet.add(placeCard);
+                                    }
+
+
+                                },
+                                failure : function() {
+                                    Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                }
+                            });
+                            main.add(myEditOrgPage);
+
+                           // main.removeAll();
+                           // main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+                            break;
+                        case 'srchFund':
+                            var archiveId   = fs.items.items[0].getValue();
+                            var num         = numFund.items.items[1].getRawValue();
+                            var prefix      = numFund.items.items[0].getRawValue();
+                            var suffix      = numFund.items.items[2].getRawValue();
                             if (archiveId=='' || archiveId==null || num=='' || prefix=='' || suffix=='')
                             {
                                 alert('Введите архив и номер фонда!');
@@ -85,6 +220,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 if (prefix =='') prefix=null;
                                 if (suffix =='') suffix=null;
                                 num = parseInt(num);
+
                             var fund = { 'num':num,'prefix':prefix,'suffix':suffix};
                                 fund = Ext.encode(fund);
                             var nameFund = fs.items.items[1];

@@ -3,7 +3,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     autoScroll : true,
     minWidth : 1024,
    // height: '100%',
-    height: 900,
+    height: 880,
     xtype : 'corgpage',
     width : '100%',
     id : 'orgpage',
@@ -87,26 +87,9 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             //displayInfo: true
         });
 
-        gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
-            items : [Ext.create('Ext.Button', {
-                //text : '+',
-                action : 'namesGridAdd',
-                cls:'addStr'
-            }), Ext.create('Ext.Button', {
-                //text : '^',
-                action : 'namesGridUp',
-                cls:'upStr'
-            }), Ext.create('Ext.Button', {
-                //text : '˅',
-                action : 'namesGridDown',
-                cls:'downStr'
-            })]
-        });
-
         gridNames = Ext.create('Ext.grid.Panel', {
             store : this.orgStore,
             buttonAlign:'center',
-            dockedItems: [gridToolBar],
             forceFit : true,
             width : '100%',
             height : 180,
@@ -196,17 +179,6 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                 margin: 20
             });
 
-        //this.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
-
-        var tbarStorePlace = Ext.create('Ext.toolbar.Toolbar', {
-            items : [Ext.create('Ext.Button', {
-                text : 'Добавить',
-                cls : 'btnAdd',
-                height:25,
-                id : 'addStorePlace',
-                action : 'addStorePlace'
-            })]
-        });
 
         this.areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
             layout : 'fit',
@@ -241,7 +213,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 
 
         Ext.applyIf(this, {
-            items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,tbarStorePlace,
+            items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,
                 this.placesFieldSet, this.areaFieldSets, this.tfUser,
                 this.tfDateOfEdit]
         });

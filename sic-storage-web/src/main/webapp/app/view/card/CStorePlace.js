@@ -5,6 +5,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
     alias: 'widget.storeplacecard',
 	requires : ['Ext.grid.plugin.CellEditing'],
 	cbStorageType : null,
+    docsWriteStore: Ext.create('storeplaces.store.DocsWriteStore'),
 	tfAddr : null,
 	tfPhone : null,
 	taOrg : null,
@@ -154,6 +155,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	initComponent : function() {
 		var x_ = 580;
 		var me = this;
+        var myStore = Ext.create('storeplaces.store.StoragePlaceStore');
 		var closeButton = Ext.create('Ext.Button', {
 					//text : 'X',
 					x : '98%',
@@ -183,27 +185,34 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					x : 5,
 					y : 25,
                     listeners:{
-                       // 'select': getPlaceId()
-                        'select': function(){
+                        'select': function(combo){
                              if (this.getValue()== 1)
                                 {
-                                    me.cbAcrhive.setVisible(true);
+                                    var value = combo.up('storeplacecard').up('fieldset').up('form').fundFieldset.items.items[0].getValue();
+                                    if (value !=null)
+                                    {
+                                        me.cbArchive.setValue(value);
+                                        me.cbArchive.fireEvent( 'select');
+                                    }
+                                    me.cbArchive.setVisible(true);
                                     me.taOrg.setVisible(false);
+                                    me.cbAddr.setVisible(true);
+                                    me.tfAddr.setVisible(false);
                                     me.cbDocTypes.setDisabled(false);
                                     me.nfCount.setDisabled(false);
-                                  //  me.tfAddr.setDisabled(false);
                                     me.cbAddr.setDisabled(false);
                                     me.tfPhone.setDisabled(false);
                                     me.yearInterval.setDisabled(false);
                                 }
                                 else if (this.getValue()== 2)
                                  {
-                                     me.cbAcrhive.setVisible(false);
+                                     me.cbArchive.setVisible(false);
                                      me.taOrg.setVisible(true);
+                                     me.cbAddr.setVisible(false);
+                                     me.tfAddr.setVisible(true);
                                      me.cbDocTypes.setDisabled(false);
                                      me.nfCount.setDisabled(false);
-                                    // me.tfAddr.setDisabled(false);
-                                     me.cbAddr.setDisabled(false);
+                                     me.tfAddr.setDisabled(false);
                                      me.tfPhone.setDisabled(false);
                                      me.yearInterval.setDisabled(false);
                                  }
@@ -235,9 +244,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					y : me.cbStorageType.y + me.cbStorageType.height + 5
 				});
 
-        var myStore = Ext.create('storeplaces.store.StoragePlaceStore');
 
-        me.cbAcrhive = Ext.create('Ext.form.ComboBox',  {
+        me.cbArchive = Ext.create('Ext.form.ComboBox',  {
                         fieldLabel : 'Архив',
                         store: Ext.create('storeplaces.store.DocArchiveStore'),
                         name : 'archiveStoreCard',
@@ -261,18 +269,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                                         'archiveId':archiveId
                                     },
                                     success: function(action){
-                                       /* var isId  = Ext.decode(action.responseText).id;
-                                        var isArchiveId  = Ext.decode(action.responseText).archiveId;
-                                        var isAddress  = Ext.decode(action.responseText).address;
-                                        var isPhone  = Ext.decode(action.responseText).phone; */
-                                        //  var mass = new Array();
                                         var mass = Ext.decode(action.responseText);
                                         myStore.loadData(mass);
-
-                                        //myStore.loadData(mass);
-                                        //mass.forEach( function(item){ alert(item.address); } );
-
-
                                     },
                                     failure : function(action) {
                                         Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
@@ -364,17 +362,16 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		// });
 
 		me.docGrid = Ext.create('Ext.grid.Panel', {
-					store : Ext.getStore('storeplaces.store.DocsReadStore'),
+					store : me.docsWriteStore,
 					x : 5,
 					plugins : ['cellediting'],
-
 					dockedItems : me.docGridToolBar,
 					y : me.nfCount.y + me.nfCount.height + 5,
 					width : 1140,
                     //width : '80%',
 					height : 150,
 					forceFit : true,
-					columns : me.gridReadOnlyColumns
+					columns : me.gridEditOnlyColumns
 				});
 
 		me.taDocsContent = Ext.create('Ext.form.field.TextArea', {
@@ -389,7 +386,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		Ext.applyIf(me, {
-					items : [me.cbStorageType, me.taOrg, me.cbAcrhive, me.nfCount, me.tfAddr,me.cbAddr,
+					items : [me.cbStorageType,  me.cbArchive,me.cbAc, me.taOrg, me.nfCount, me.tfAddr,me.cbAddr,
 							me.tfPhone, me.yearInterval, closeButton,
 							me.docGrid, me.taDocsContent]
 				});
