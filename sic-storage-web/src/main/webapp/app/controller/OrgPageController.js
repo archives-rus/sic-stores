@@ -74,10 +74,30 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
                             main.add(newOrgPage);
                             break;
+                        case 'backSrchResult':
+                            var oldData = form.oldData;
+                            main.removeAll();
+                            var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
+                            oldSrchPage.getForm().setValues(oldData);
+                            oldSrchPage.FIO.setText(form.FIO.text);
+                            main.add(oldSrchPage);
+                            break;
+                        case 'orgCardView':
+                            var values = form.getForm().getValues();
+                            main.removeAll();
+                            var OrgViewPage = Ext.create('storeplaces.view.page.COrganizationPageView');
+                            OrgViewPage.getForm().setValues(values);
+                            var archive = OrgViewPage.fundFieldset.items.items[0];
+                            var fundNum = OrgViewPage.fundFieldset.items.items[2];
+                            main.add(OrgViewPage);
+                            break;
+                        case 'orgCardCancel':
                         case 'orgCardEdit':
                             var id = form.orgStore.getAt(0).get('id');
+                            var FIO = form.FIO.text;
                             main.removeAll();
                             var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
+                            myEditOrgPage.FIO.setText(FIO);
                             Ext.Ajax.request({
                                 url: 'servlet/QueryOrgNames',
                                 params : {
@@ -129,6 +149,9 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     var myUserName              =  myEditOrgPage.tfUser;
                                     var myLastUpdateDate        =  myEditOrgPage.tfDateOfEdit;
 
+                                    myFundName.setDisabled(false);
+                                    myDates.setDisabled(false);
+
                                     myFundName.setValue(fundName);
                                     myFundPrefix.setValue(fundPrefix);
                                     myFundNum.setValue(fundNum);
@@ -159,11 +182,19 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                         var contentsPlace =storage[i].contents;
 
                                         var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
+                                        placeCard.tfPhone.setDisabled(false);
+                                        placeCard.nfCount.setDisabled(false);
+                                        placeCard.yearInterval.setDisabled(false);
+                                        placeCard.yearInterval.items.items[1].setDisabled(false);
+                                        placeCard.yearInterval.items.items[2].setDisabled(false);
                                         if  (archId=='' || archId==null)
                                         {
                                             placeCard.cbStorageType.setValue(2);
+                                            placeCard.taOrg.setVisible(true);
                                             placeCard.taOrg.setValue(orgNamePlace);
                                             placeCard.tfAddr.setValue(addressPlace);
+                                            placeCard.taOrg.setDisabled(false);
+                                            placeCard.tfAddr.setDisabled(false);
 
                                         }
                                         else
@@ -172,6 +203,9 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                             placeCard.cbArchive.setVisible(true);
                                             placeCard.cbArchive.setValue(archId)
                                             placeCard.cbAddr.setRawValue(addressPlace);
+                                            placeCard.cbArchive.setDisabled(false);
+                                            placeCard.cbAddr.setDisabled(false);
+
                                         }
                                         placeCard.tfPhone.setValue(phonePlace);
                                         placeCard.nfCount.setValue(documentCountPlace);
@@ -203,9 +237,6 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 }
                             });
                             main.add(myEditOrgPage);
-
-                           // main.removeAll();
-                           // main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
                             break;
                         case 'srchFund':
                             var archiveId   = fs.items.items[0].getValue();

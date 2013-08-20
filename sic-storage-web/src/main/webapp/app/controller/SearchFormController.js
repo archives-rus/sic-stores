@@ -8,8 +8,12 @@ Ext.define('storeplaces.controller.SearchFormController',{
                     var id = record.get('id');
                     var form = thiss.up('form');
                     var main = form.up('container');
+                    var oldData = form.getForm().getValues();
+                    var FIO = form.FIO.text;
                     main.removeAll();
                     var myOrgPage = Ext.create('storeplaces.view.page.COrganizationPageView');
+                    myOrgPage.oldData = oldData;
+                    myOrgPage.FIO.setText(FIO);
                     Ext.Ajax.request({
                         url: 'servlet/QueryOrgNames',
                         params : {

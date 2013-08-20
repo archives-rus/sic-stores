@@ -4,6 +4,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	minWidth : 1024,
     //height: '100%',
     height: 880,
+    FIO : null,
 	xtype : 'corgpage',
 	width : '100%',
 	id : 'orgpage',
@@ -12,7 +13,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
     tfUser : null,
     fundFieldset : null,
     tfDateOfEdit : null,
-    orgStore : Ext.create('storeplaces.store.OrgNamesStore'),
+    orgStore : null,
     gridNames : null,
     gridToolBar : null,
     loadRecord:function(){
@@ -22,6 +23,12 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
     },
 	initComponent : function() {
         //this.setHeight(600);
+        this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');
+        this.FIO = Ext.create('Ext.form.Label', {
+            text : '',
+            baseCls : 'loginedUserText',
+            flex : 0
+        });
 		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
                 xtype : 'maintb',
                 items : [Ext.create('Ext.Button', {
@@ -55,12 +62,8 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										cls : 'btnDelete',
 										action : 'orgCardDelete'
 									}), '->',
-
-							Ext.create('Ext.form.Label', {
-										text : 'Пользователь П.П.',
-										baseCls : 'loginedUserText',
-										flex : 0
-									}), Ext.create('Ext.toolbar.Separator', {
+                                        this.FIO,
+							            Ext.create('Ext.toolbar.Separator', {
 										html : '|',
 										id : 'vertSeparator',
 										baseCls : 'vertSeparator'
@@ -106,6 +109,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		 gridNames = Ext.create('Ext.grid.Panel', {
 					store : this.orgStore,
                     buttonAlign:'center',
+                    plugins : ['cellediting'],
                     dockedItems: [gridToolBar],
 					forceFit : true,
 					width : '100%',
@@ -118,16 +122,32 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 								hideable : false
 							}, {
 								text : 'Полное наименование и переименования',
-								dataIndex : 'fullName'
+								dataIndex : 'fullName',
+                                editor : {
+                                    xtype : 'textfield',
+                                    allowBlank : false
+                                }
 							}, {
 								text : 'Краткое наименование',
-								dataIndex : 'shortName'
+								dataIndex : 'shortName',
+                                editor : {
+                                xtype : 'textfield',
+                                allowBlank : false
+                                 }
 							}, {
 								text : 'Подчинённость',
-								dataIndex : 'subordination'
+								dataIndex : 'subordination',
+                                editor : {
+                                    xtype : 'textfield',
+                                    allowBlank : false
+                                }
 							}, {
 								text : 'Даты',
-								dataIndex : 'dates'
+								dataIndex : 'dates',
+                                editor : {
+                                    xtype : 'textfield',
+                                    allowBlank : false
+                                }
 							}, {
 								text : 'Сортировка',
 								dataIndex : 'sortOrder',
@@ -221,12 +241,15 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					layout : 'fit',
 					items : [Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Сведения о загранкомандировках',
+                                        name: 'zagranInfo',
 										labelWidth : 200
 									}), Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Сведения о награждениях',
+                                        name: 'goldInfo',
 										labelWidth : 200
 									}), Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Примечание',
+                                        name: 'noteInfo',
 										labelWidth : 200
 									})]
 				});

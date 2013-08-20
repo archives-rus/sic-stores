@@ -4,7 +4,9 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     minWidth : 1024,
    // height: '100%',
     height: 880,
+    FIO : null,
     xtype : 'corgpage',
+    oldData: null,
     width : '100%',
     id : 'orgpage',
     placesFieldSet : null,
@@ -12,7 +14,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     tfUser:null,
     tfDateOfEdit:null,
     fundFieldset:null,
-    orgStore : Ext.create('storeplaces.store.OrgNamesStore'),
+    orgStore : null,
     gridNames : null,
     gridToolBar : null,
     loadRecord:function(){
@@ -22,6 +24,12 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     },
     initComponent : function() {
         //this.setHeight(600);
+        this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');
+        this.FIO = Ext.create('Ext.form.Label', {
+            text :  '',
+            baseCls : 'loginedUserText',
+            flex : 0
+        });
         var toolBar = Ext.create('Ext.toolbar.Toolbar', {
             xtype : 'maintb',
             items : [Ext.create('Ext.Button', {
@@ -54,13 +62,14 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                 height:25,
                 cls : 'btnDelete',
                 action : 'orgCardDelete'
+            }), Ext.create('Ext.Button', {
+                text : 'Вернуться к результатам поиска',
+                height:25,
+               // cls : 'btnDelete',
+                action : 'backSrchResult'
             }), '->',
-
-                Ext.create('Ext.form.Label', {
-                    text : 'Пользователь П.П.',
-                    baseCls : 'loginedUserText',
-                    flex : 0
-                }), Ext.create('Ext.toolbar.Separator', {
+                 this.FIO,
+                 Ext.create('Ext.toolbar.Separator', {
                     html : '|',
                     id : 'vertSeparator',
                     baseCls : 'vertSeparator'
@@ -184,14 +193,17 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             layout : 'fit',
             items : [Ext.create('Ext.form.field.TextArea', {
                 fieldLabel : 'Сведения о загранкомандировках',
+                name: 'zagranInfo',
                 disabled: true,
                 labelWidth : 200
             }), Ext.create('Ext.form.field.TextArea', {
                 fieldLabel : 'Сведения о награждениях',
                 disabled: true,
+                name: 'goldInfo',
                 labelWidth : 200
             }), Ext.create('Ext.form.field.TextArea', {
                 fieldLabel : 'Примечание',
+                name: 'noteInfo',
                 disabled: true,
                 labelWidth : 200
             })]

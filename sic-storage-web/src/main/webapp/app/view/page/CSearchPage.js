@@ -2,15 +2,23 @@ Ext.define('storeplaces.view.page.CSearchPage', {
     extend : 'Ext.form.Panel',
     minWidth : 1024,
     height:1000,
+    FIO: null,
     xtype : 'csearchpage',
     alias: 'widget.searchpage',
     width : '100%',
     id : 'searchgpage',
     searchFieldset: null,
     initComponent : function() {
+
     var titlePage = Ext.create('Ext.form.Label', {
        html : '<center><h3>Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах',
         cls:'title_search'
+    });
+
+    this.FIO = Ext.create('Ext.form.Label', {
+        text : '',
+        baseCls : 'loginedUserText',
+        flex : 0
     });
     var toolBarSearch = Ext.create('Ext.toolbar.Toolbar', {
         items : [Ext.create('Ext.Button', {
@@ -36,12 +44,8 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             action : 'backMain',
             cls : 'back_main'
         }), '->',
-
-            Ext.create('Ext.form.Label', {
-                text : 'Пользователь П.П.',
-                baseCls : 'loginedUserText',
-                flex : 0
-            }), Ext.create('Ext.toolbar.Separator', {
+            this.FIO,
+             Ext.create('Ext.toolbar.Separator', {
                 html : '|',
                 id : 'vertSeparator',
                 baseCls : 'vertSeparator'
