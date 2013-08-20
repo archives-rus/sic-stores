@@ -5,7 +5,6 @@ Ext.define('storeplaces.controller.SearchFormController',{
        this.control({
              'searchpage grid':{
                  itemdblclick: function(thiss, record, item, index, e, eOpts){
-                    alert('ТРУ!');
                     var id = record.get('id');
                     var form = thiss.up('form');
                     var main = form.up('container');
@@ -79,11 +78,22 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                 var endYearPlace =storage[i].endYear;
                                 var contentsPlace =storage[i].contents;
                                 var placeCard = Ext.create('storeplaces.view.card.CStorePlaceView');
+                                if(storageTypePlace=='В организации')
+                                {
+                                    placeCard.taOrg.setValue(orgNamePlace);
+                                    placeCard.tfArchive.setVisible(false);
+                                    placeCard.taOrg.setVisible(true);
+                                }
+                                else
+                                {
+                                    placeCard.taOrg.setVisible(false);
+                                    placeCard.tfArchive.setValue(archivePlace);
+                                    placeCard.tfArchive.setVisible(true);
+                                }
+
                                 placeCard.tfStorageType.setValue(storageTypePlace);
                                 placeCard.tfAddr.setValue(addressPlace);
                                 placeCard.tfPhone.setValue(phonePlace);
-                                placeCard.taOrg.setValue(orgNamePlace);
-                                placeCard.tfArchive.setValue(archivePlace);
                                 placeCard.nfCount.setValue(documentCountPlace);
                                 placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
                                 placeCard.yearInterval.items.items[2].setValue(endYearPlace);

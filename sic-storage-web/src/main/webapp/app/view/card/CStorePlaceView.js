@@ -108,14 +108,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         this.docReadStore = Ext.create('storeplaces.store.DocsReadStore');
         var x_ = 580;
         var me = this;
-        var closeButton = Ext.create('Ext.Button', {
-            //text : 'X',
-            x : '98%',
-            y : 0,
-            height : 25,
-            width : 25,
-            action:'deleteCard'
-        });
+
         me.tfStorageType = Ext.create('Ext.form.field.Text', {
             name : 'storageType',
             fieldLabel : 'Место хранения',
@@ -157,12 +150,13 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 
         var myStore = Ext.create('storeplaces.store.StoragePlaceStore');
 
-        me.tfArchive = Ext.create('Ext.form.field.Text',  {
+        me.tfArchive = Ext.create('Ext.form.field.TextArea',  {
             fieldLabel : 'Архив',
             disabled: true,
             name : 'archiveStoreCard',
             editable : false,
-            width : 300,
+            height : 40,
+            width : 400,
             labelWidth : 140, //me.fieldLabelWidth,
             x : 5,
             y : me.tfStorageType.y + me.tfStorageType.height + 5
@@ -236,13 +230,6 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
             y : me.tfPhone.y + me.tfPhone.height + 15
         });
 
-        me.docGridToolBar = Ext.create('Ext.toolbar.Toolbar', {
-            items : [Ext.create('Ext.Button', {
-                //text : 'Добавить',
-                action : 'addDocRow',
-                cls:'addStr'
-            })]
-        });
 
         // var cellEditor = Ext.create('Ext.grid.plugin.CellEditing', {
         // clicksToEdit : 2
@@ -251,9 +238,6 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         me.docGrid = Ext.create('Ext.grid.Panel', {
             store : this.docReadStore,
             x : 5,
-            //plugins : ['cellediting'],
-
-            dockedItems : me.docGridToolBar,
             y : me.nfCount.y + me.nfCount.height + 5,
             width : 1120,
             //width : '80%',
@@ -276,7 +260,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 
         Ext.applyIf(me, {
             items : [me.tfStorageType, me.taOrg, me.tfArchive, me.nfCount, me.tfAddr,me.tfAddr,
-                me.tfPhone, me.yearInterval, closeButton,
+                me.tfPhone, me.yearInterval,
                 me.docGrid, me.taDocsContent]
         });
 

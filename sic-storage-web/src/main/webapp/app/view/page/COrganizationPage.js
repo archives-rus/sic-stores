@@ -4,11 +4,15 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	minWidth : 1024,
     //height: '100%',
     minHeight: 500,
+    //height: 880,
 	xtype : 'corgpage',
 	width : '100%',
 	id : 'orgpage',
 	placesFieldSet : null,
-    fundFieldset:null,
+    areaFieldSets : null,
+    tfUser : null,
+    fundFieldset : null,
+    tfDateOfEdit : null,
     orgStore : Ext.create('storeplaces.store.OrgNamesStore'),
     gridNames : null,
     gridToolBar : null,
@@ -140,13 +144,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					items : [gridNames]
 				});
 
-		/*var tfArchive = Ext.create('Ext.form.field.Text', {
-					fieldLabel : 'Архив',
-					name : 'archive',
-					width : 500,
-					labelWidth : 100
-				});
-        */
         var cbArchive = Ext.create('Ext.form.ComboBox',  {
             fieldLabel : 'Архив',
             store: Ext.create('storeplaces.store.DocArchiveStore'),
@@ -211,8 +208,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                     margin: 20
 				});
 
-        this.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
-
         var tbarStorePlace = Ext.create('Ext.toolbar.Toolbar', {
             items : [Ext.create('Ext.Button', {
                 text : 'Добавить',
@@ -223,7 +218,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
             })]
         });
 
-		var areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+		 this.areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
 					layout : 'fit',
 					items : [Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Сведения о загранкомандировках',
@@ -237,25 +232,25 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 									})]
 				});
 
-		var tfUser = Ext.create('Ext.form.field.Text', {
+		this.tfUser = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Имя пользователя',
 					name : 'user'
 				});
 
-		tfUser.setDisabled(true);
+		this.tfUser.setDisabled(true);
 
-		var tfDateOfEdit = Ext.create('Ext.form.field.Text', {
+		this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Дата корректировки',
 					name : 'dateOfEdit'
 				});
 
-		tfDateOfEdit.setDisabled(true);
+		this.tfDateOfEdit.setDisabled(true);
 
 
 		Ext.applyIf(this, {
             items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,tbarStorePlace,
-                this.placesFieldSet, areaFieldSets, tfUser,
-                tfDateOfEdit]
+                this.placesFieldSet, this.areaFieldSets, this.tfUser,
+                this.tfDateOfEdit]
         });
 
 		this.callParent(arguments);
