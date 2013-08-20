@@ -255,7 +255,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 
             dockedItems : me.docGridToolBar,
             y : me.nfCount.y + me.nfCount.height + 5,
-            width : 1140,
+            width : 1120,
             //width : '80%',
             height : 150,
             forceFit : true,

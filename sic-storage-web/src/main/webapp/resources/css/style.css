@@ -1,3 +1,10 @@
+.x-viewport,
+.x-viewport body{
+    overflow:auto;
+}
+.x-form-text{
+    border-color:#4D372E !important;
+}
 #orgpage-body,
 #searchgpage-body{
     padding:10px 30px 0;
@@ -56,6 +63,10 @@ label{
     color:#452111;
     margin-left:10px !important;
 }
+.x-toolbar-text{
+    font:14px Arial;
+    color:#230F07;
+}
 .storePlaceCard{
     margin-bottom: 10px;
     padding-right:20px;
@@ -89,6 +100,13 @@ label{
 .title_search{
     font:bold 18px Arial;
     text-align: center;
+}
+.title_search h3{
+    border-image: url( ../img/tit_bot_search.png);
+    -moz-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    -webkit-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    -o-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    padding-bottom:10px;
 }
 #enterpage{
     text-align:center;

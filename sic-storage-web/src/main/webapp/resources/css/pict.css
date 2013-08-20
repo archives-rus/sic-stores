@@ -85,3 +85,6 @@
     color:#230F07;
     text-decoration:underline;
 }
+.x-tool-img, x-tool-over{
+    background: url("../img/close.png") no-repeat scroll 0 0 transparent !important;
+}

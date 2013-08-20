@@ -2,7 +2,7 @@ Ext.define('storeplaces.view.lib.NumFond',{
     extend:'Ext.form.FieldContainer',
     fieldLabel: '№ фонда',
     labelWidth: 200,
-    width:310,
+    width:400,
     defaultType: 'textfield',
     layout: 'hbox',
     items:[

@@ -3,7 +3,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     autoScroll : true,
     minWidth : 1024,
    // height: '100%',
-    height: 900,
+    minHeight: 500,
     xtype : 'corgpage',
     width : '100%',
     id : 'orgpage',

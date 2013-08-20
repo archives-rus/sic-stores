@@ -9,7 +9,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
     searchFieldset: null,
     initComponent : function() {
     var titlePage = Ext.create('Ext.form.Label', {
-       html : '<center><h3>Справочно-информационная база данных о местах хранения архивных документов по личному составу, государственных, муниципальных и ведомственных архивах',
+       html : '<center><h3>Справочно-информационная база данных о местах хранения архивных документов по личному составу государственных, муниципальных и ведомственных архивах',
         cls:'title_search'
     });
     var toolBarSearch = Ext.create('Ext.toolbar.Toolbar', {
@@ -128,7 +128,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var tfDates2 = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Номер фонда',
             name : 'edgeDates',
-            width : 420,
+            width : 460,
             labelWidth : 200
         });
 
