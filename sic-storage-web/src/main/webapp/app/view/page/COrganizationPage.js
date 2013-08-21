@@ -115,7 +115,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                     dockedItems: [gridToolBar],
 					forceFit : true,
 					width : '100%',
-					height : 105,
+					height : 115,
                     cls:'autoscrl-y',
 					autoScroll : true,
 					columns : [{

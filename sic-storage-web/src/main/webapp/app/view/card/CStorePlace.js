@@ -18,7 +18,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	minHeight : 340,
 	height : 'auto',
 	//width : 1150,
-    width : '97%',
+    width : '98%',
 	docGridToolBar : null,
 	fieldLabelWidth : 120,
 	cls : 'storePlaceCard',
@@ -74,7 +74,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				}
 			}, {
 				text : 'Даты',
-                width:'12%',
+                width:'15%',
 				dataIndex : 'dates',
 				editor : {
 					xtype : 'textfield',
