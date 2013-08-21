@@ -18,10 +18,11 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
     minHeight : 340,
     height : 'auto',
     //width : 1150,
-    width : '98%',
+    width : '97%',
     docGridToolBar : null,
     fieldLabelWidth : 120,
     cls : 'storePlaceCard',
+    margin:'10 15 0 15',
     currentMode : null,
     readOnlyMode : 'READ',
     editOnlyMode : 'EDIT',
@@ -48,7 +49,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         hideable : false
     }, {
         text : 'Вид документа',
-        width:750,
+        width:'70%',
         dataIndex : 'documentTypeId',
         editor : Ext.create('Ext.form.field.ComboBox', {
             store : Ext
@@ -73,7 +74,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         }
     }, {
         text : 'Даты',
-        width:170,
+        width:'15%',
         dataIndex : 'dates',
         editor : {
             xtype : 'textfield',
@@ -81,14 +82,14 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         }
     }, {
         text : '№ описи',
-        width:100,
+        width:'13%',
         dataIndex : 'series',
         editor : {
             xtype : 'textfield',
             allowBlank : false
         }
     }, {
-        width : 40,
+        width : '2%',
         xtype : 'actioncolumn',
         items : [{
             icon : 'resources/img/emblem-unreadable.png',
@@ -223,7 +224,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         me.yearInterval = Ext.create('storeplaces.view.lib.YearInterval', {
             fieldLabel : 'Годы',
             disabled:true,
-            width : 300,
+            width : 310,
             //labelWidth : me.fieldLabelWidth - 50,
             labelWidth :100,
             x : 650, //x_,
@@ -239,6 +240,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
             store : this.docReadStore,
             x : 15,
             y : me.nfCount.y + me.nfCount.height + 5,
+            cls:'mar_right15',
             //width : 1120,
             //width : '80%',
             height : 150,

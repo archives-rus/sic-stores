@@ -199,7 +199,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					name : 'fundName',
                     disabled: true,
 					height : 50,
-					width : 650,
+					width : 620,
                     labelWidth : 150
 				});
 
@@ -244,6 +244,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					layout : 'fit',
 					items : [Ext.create('Ext.form.field.TextArea', {
                                         name: 'zagranInfo',
+                                        fieldLabel : 'Сведения о загранкомандировках',
 										labelWidth : 200,
                                         height:50
 									}), Ext.create('Ext.form.field.TextArea', {

@@ -66,7 +66,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             }), Ext.create('Ext.Button', {
                 text : 'Вернуться к результатам поиска',
                 height:25,
-               // cls : 'btnDelete',
+                cls : 'backToSrch',
                 action : 'backSrchResult'
             }), '->',
                  this.FIO,

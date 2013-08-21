@@ -53,6 +53,12 @@
 .back_main{
     background:url( ../img/back_main.png) no-repeat;
 }
+.backToSrch{
+    background:url( ../img/backToSrch.png) no-repeat 0 50%;
+}
+.x-tbar-loading{
+    background:url( ../img/refresh.png) no-repeat;
+}
 .addStr .x-btn-default-toolbar-small .x-btn-inner,
 .upStr .x-btn-default-toolbar-small .x-btn-inner,
 .downStr .x-btn-default-toolbar-small .x-btn-inner{
