@@ -256,7 +256,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                         valueField: 'id',
                         emptyText : 'Не выбрано',
                         hidden:true,
-                        width : 300,
+                        width : 520,
                         labelWidth : 140, //me.fieldLabelWidth,
                         x : 5,
                         y : me.cbStorageType.y + me.cbStorageType.height + 5,

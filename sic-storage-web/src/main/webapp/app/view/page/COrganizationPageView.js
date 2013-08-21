@@ -3,7 +3,6 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     autoScroll : true,
     minWidth : 1024,
    // height: '100%',
-
     minHeight: 500,
     //height: 880,
     xtype : 'corgpage',
@@ -150,7 +149,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             name : 'fundName',
             disabled: true,
             height : 50,
-            width : 690,
+            width : 650,
             labelWidth : 150
         });
 
@@ -201,14 +200,18 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 
         this.tfUser = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Имя пользователя',
-            name : 'user'
+            name : 'user',
+            cls:'mar_auto brown-font',
+            labelWidth : 150
         });
 
         this.tfUser.setDisabled(true);
 
         this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Дата корректировки',
-            name : 'dateOfEdit'
+            name : 'dateOfEdit',
+            cls:'mar_auto brown-font',
+            labelWidth : 150
         });
 
         this.tfDateOfEdit.setDisabled(true);

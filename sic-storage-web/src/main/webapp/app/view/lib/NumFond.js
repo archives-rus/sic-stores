@@ -1,8 +1,8 @@
 Ext.define('storeplaces.view.lib.NumFond',{
     extend:'Ext.form.FieldContainer',
     fieldLabel: '№ фонда',
-    labelWidth: 200,
-    width:400,
+    width : 390,
+    labelWidth : 195,
     defaultType: 'textfield',
     layout: 'hbox',
     items:[

@@ -237,9 +237,9 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 
         me.docGrid = Ext.create('Ext.grid.Panel', {
             store : this.docReadStore,
-            x : 5,
+            x : 15,
             y : me.nfCount.y + me.nfCount.height + 5,
-            width : 1120,
+            //width : 1120,
             //width : '80%',
             height : 150,
             forceFit : true,

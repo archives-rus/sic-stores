@@ -27,7 +27,8 @@
 .btnCancel{
     background:url( ../img/btnCancel.png) no-repeat;
 }
-.btnDelete{
+.btnDelete,
+.x-action-col-icon{
     background:url( ../img/btnDelete.png) no-repeat;
 }
 .addStr{
@@ -42,6 +43,9 @@
 .srch{
      background:url( ../img/srch.png) no-repeat !important;
     height:24px;
+}
+#orgpage .srch .x-btn-inner-center{
+    width:24px !important;
 }
 .clr{
     background:url( ../img/clr.png) no-repeat;

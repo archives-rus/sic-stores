@@ -72,7 +72,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             displayField: 'name',
             valueField: 'id',
             emptyText : 'Не выбрано',
-            width : 352,
+            width : 580,
             labelWidth : 200
         });
 
@@ -119,7 +119,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             displayField: 'name',
             valueField: 'id',
             emptyText : 'Не выбрано',
-            width : 460,
+            width : 580,
             labelWidth : 200
         });
 
@@ -128,8 +128,8 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var tfDates2 = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Номер фонда',
             name : 'edgeDates',
-            width : 460,
-            labelWidth : 200
+            width : 400,
+            labelWidth : 190
         });
 
         searchFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {

@@ -41,7 +41,7 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 				}
 
 				me.tfFrom = Ext.create('Ext.form.field.Text', {
-							width : 80,
+							width : 100,
 							fieldLabel : 'с',
                             disabled:true,
 							labelWidth : 20,
@@ -52,7 +52,7 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 				items[items.length] = me.tfFrom;
 
 				me.tfTo = Ext.create('Ext.form.field.Text', {
-							width : 90,
+							width : 110,
 							fieldLabel : 'по',
                             disabled:true,
 							labelWidth : 30

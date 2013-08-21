@@ -110,7 +110,8 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                     dockedItems: [gridToolBar],
 					forceFit : true,
 					width : '100%',
-					height : 180,
+					height : 105,
+                    cls:'autoscrl-y',
 					autoScroll : true,
 					columns : [{
 								text : 'ИД',
@@ -140,7 +141,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
 				{
 					title : 'Наименование организации и её переименования',
-					height : 160,
+					height : 150,
 					items : [gridNames]
 				});
 
@@ -154,7 +155,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
             displayField: 'name',
             valueField: 'id',
             emptyText : 'Не выбрано',
-            width : 450,
+            width : 550,
             labelWidth : 100
         });
 
@@ -177,7 +178,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					name : 'fundName',
                     disabled: true,
 					height : 50,
-					width : 690,
+					width : 650,
                     labelWidth : 150
 				});
 
@@ -222,26 +223,33 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					layout : 'fit',
 					items : [Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Сведения о загранкомандировках',
-										labelWidth : 200
+										labelWidth : 200,
+                                        height:50
 									}), Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Сведения о награждениях',
-										labelWidth : 200
+										labelWidth : 200,
+                                        height:50
 									}), Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Примечание',
-										labelWidth : 200
+										labelWidth : 200 ,
+                                        height:50
 									})]
 				});
 
 		this.tfUser = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Имя пользователя',
-					name : 'user'
+					name : 'user',
+                    cls:'mar_auto brown-font',
+                    labelWidth : 150
 				});
 
 		this.tfUser.setDisabled(true);
 
 		this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Дата корректировки',
-					name : 'dateOfEdit'
+					name : 'dateOfEdit',
+                    cls:'mar_auto brown-font',
+                    labelWidth : 150
 				});
 
 		this.tfDateOfEdit.setDisabled(true);
