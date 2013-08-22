@@ -1,4 +1,11 @@
-/*#enterpage,*/ #orgpage{
+.x-fieldset{
+    margin:0 10px !important;
+}
+.x-form-trigger,
+.x-form-trigger-over{
+    height:24px;
+}
+/*#enterpage,*/ #orgpage, #searchgpage{
     background-color: #EDE4CE;
     min-height: 10000px !important; /*заплатка*/
 }
@@ -11,7 +18,17 @@
 .mar_top35{
     margin-top:35px !important;
 }
+.mar_right15{
+    margin-right:15px !important;
+}
 .mar_auto{
     margin:auto !important;
+}
+.height50{
+    height:50px !important;
+}
+.autoscrl-y,
+.x-grid-body{
+    overflow-y:auto;
 }
 

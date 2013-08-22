@@ -1,6 +1,13 @@
+.x-viewport,
+.x-viewport body{
+    overflow:auto;
+}
+.x-form-text{
+    border-color:#4D372E !important;
+}
 #orgpage-body,
 #searchgpage-body{
-    padding:10px 30px 0;
+    padding:10px 20px 0;
 }
 .loginedUserText{
     margin:0 10px 0 0 !important;
@@ -15,7 +22,7 @@
     background:url( ../img/line.png) no-repeat;
     background-size: 100% 100%;
     padding: 5px 0;
-    height: 35px;
+    height: 30px;
     width:100%;
     /*width: 1200px;*/
 }
@@ -50,15 +57,22 @@
 .orgpage-body{
     background-color:#EDE4CE;
 }
+.x-form-item{
+    vertical-align:top;
+}
 .x-form-item-label,
 label{
-    font:14px Arial;
+    font:bold 14px Arial;
     color:#452111;
     margin-left:10px !important;
 }
+.x-toolbar-text{
+    font:14px Arial;
+    color:#230F07;
+}
 .storePlaceCard{
     margin-bottom: 10px;
-    padding-right:20px;
+    /*padding-right:20px;*/
 }
 .storePlacesFieldset .x-fieldset-body{
     /*margin: 5px 20px;*/
@@ -89,6 +103,13 @@ label{
 .title_search{
     font:bold 18px Arial;
     text-align: center;
+}
+.title_search h3{
+    border-image: url( ../img/tit_bot_search.png);
+    -moz-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    -webkit-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    -o-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    padding-bottom:10px;
 }
 #enterpage{
     text-align:center;

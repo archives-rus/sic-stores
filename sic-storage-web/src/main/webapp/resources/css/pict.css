@@ -27,7 +27,8 @@
 .btnCancel{
     background:url( ../img/btnCancel.png) no-repeat;
 }
-.btnDelete{
+.btnDelete,
+.x-action-col-icon{
     background:url( ../img/btnDelete.png) no-repeat;
 }
 .addStr{
@@ -43,11 +44,20 @@
      background:url( ../img/srch.png) no-repeat !important;
     height:24px;
 }
+#orgpage .srch .x-btn-inner-center{
+    width:24px !important;
+}
 .clr{
     background:url( ../img/clr.png) no-repeat;
 }
 .back_main{
     background:url( ../img/back_main.png) no-repeat;
+}
+.backToSrch{
+    background:url( ../img/backToSrch.png) no-repeat 0 50%;
+}
+.x-tbar-loading{
+    background:url( ../img/refresh.png) no-repeat;
 }
 .addStr .x-btn-default-toolbar-small .x-btn-inner,
 .upStr .x-btn-default-toolbar-small .x-btn-inner,
@@ -84,4 +94,7 @@
     font:bold 14px Arial;
     color:#230F07;
     text-decoration:underline;
+}
+.x-tool-img, x-tool-over{
+    background: url("../img/close.png") no-repeat scroll 0 0 transparent !important;
 }

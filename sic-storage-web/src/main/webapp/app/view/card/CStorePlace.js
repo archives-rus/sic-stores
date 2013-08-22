@@ -22,6 +22,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	docGridToolBar : null,
 	fieldLabelWidth : 120,
 	cls : 'storePlaceCard',
+    margin:'10 15 0 15',
 	currentMode : null,
 	readOnlyMode : 'READ',
 	editOnlyMode : 'EDIT',
@@ -48,7 +49,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				hideable : false
 			}, {
 				text : 'Вид документа',
-                width:750,
+                width:'70%',
 				dataIndex : 'documentTypeId',
 				editor : Ext.create('Ext.form.field.ComboBox', {
 							store : Ext
@@ -73,7 +74,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				}
 			}, {
 				text : 'Даты',
-                width:170,
+                width:'15%',
 				dataIndex : 'dates',
 				editor : {
 					xtype : 'textfield',
@@ -81,14 +82,14 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				}
 			}, {
 				text : '№ описи',
-                width:100,
+                width:'13%',
                 dataIndex : 'series',
 				editor : {
 					xtype : 'textfield',
 					allowBlank : false
 				}
 			}, {
-				width : 40,
+				width : '2%',
 				xtype : 'actioncolumn',
                 align:'center',
                 items : [{
@@ -210,7 +211,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                         valueField: 'id',
                         emptyText : 'Не выбрано',
                         hidden:true,
-                        width : 300,
+                        width : 585,
                         labelWidth : 140, //me.fieldLabelWidth,
                         x : 5,
                         y : me.cbStorageType.y + me.cbStorageType.height + 5,
@@ -255,7 +256,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                     hidden:true,
 					height : 22,
                     labelWidth :100,
-					x : 650,
+					x : 610,
 					y : 25
 				});
 
@@ -272,7 +273,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                    // hidden:true,
                     width : 490,
                     labelWidth : 100, //me.fieldLabelWidth,
-                    x : 650,
+                    x : 610,
                     y : 25,
                     listeners:{
                         'select': function(){
@@ -289,17 +290,17 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					width : 300,
 					labelSeparator : '',
                     labelWidth :100,
-					x : 650,
+					x : 610,
 					y : me.tfAddr.y + me.tfAddr.height + 15
 				});
 
 		me.yearInterval = Ext.create('storeplaces.view.lib.YearInterval', {
 					fieldLabel : 'Годы',
                     disabled:true,
-					width : 300,
+					width : 310,
 					//labelWidth : me.fieldLabelWidth - 50,
                     labelWidth :100,
-					x : 650, //x_,
+					x : 610, //x_,
 					y : me.tfPhone.y + me.tfPhone.height + 15
 				});
 
@@ -317,11 +318,12 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.docGrid = Ext.create('Ext.grid.Panel', {
 					store : me.docsWriteStore,
-					x : 5,
+					x : 15,
 					plugins : ['cellediting'],
 					dockedItems : me.docGridToolBar,
 					y : me.nfCount.y + me.nfCount.height + 5,
-					width : 1140,
+                    cls:'mar_right15',
+					width : 1120,
                     //width : '80%',
 					height : 150,
 					forceFit : true,
