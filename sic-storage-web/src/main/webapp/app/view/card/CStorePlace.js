@@ -5,7 +5,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
     alias: 'widget.storeplacecard',
 	requires : ['Ext.grid.plugin.CellEditing'],
 	cbStorageType : null,
-    docsWriteStore: Ext.create('storeplaces.store.DocsWriteStore'),
+    docsWriteStore: null,
 	tfAddr : null,
 	tfPhone : null,
 	taOrg : null,
@@ -91,7 +91,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			}, {
 				width : '2%',
 				xtype : 'actioncolumn',
-				items : [{
+                align:'center',
+                items : [{
 					icon : 'resources/img/emblem-unreadable.png',
 					tooltip : 'Удалить',
 					handler : function(grid, rowIndex, colIndex) {
@@ -105,55 +106,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					}
 				}]
 			}],
-	setReadOnly : function(isReadOnly) {
-		console.log('setReadOnly(): ' + isReadOnly);
-		var me = this;
-		me.cbStorageType.setDisabled(isReadOnly);
-		me.tfAddr.setDisabled(isReadOnly);
-		me.tfPhone.setDisabled(isReadOnly);
-		me.taOrg.setDisabled(isReadOnly);
-		me.nfCount.setDisabled(isReadOnly);
-		me.yearInterval.setDisableed(isReadOnly);
-		me.taDocsContent.setDisabled(isReadOnly);
-
-		var readOnlyCls = 'sic-read-only';
-		if (isReadOnly) {
-			me.currentMode = me.readOnlyMode;
-
-			me.tfAddr.addCls(readOnlyCls);
-			me.cbStorageType.addCls(readOnlyCls);
-			me.tfPhone.addCls(readOnlyCls);
-			me.taOrg.addCls(readOnlyCls);
-			me.nfCount.addCls(readOnlyCls);
-			me.yearInterval.addCls(readOnlyCls);
-
-			me.taDocsContent.addCls(readOnlyCls);
-
-			me.docGrid.removeDocked(me.docGridToolBar, false);
-			me.docGrid.reconfigure(Ext
-							.getStore('storeplaces.store.DocsReadStore'),
-					me.gridReadOnlyColumns);
-
-		} else {
-			me.currentMode = me.editOnlyMode;
-
-			me.tfAddr.removeCls(readOnlyCls);
-			me.cbStorageType.removeCls(readOnlyCls);
-			me.tfPhone.removeCls(readOnlyCls);
-			me.taOrg.removeCls(readOnlyCls);
-			me.nfCount.removeCls(readOnlyCls);
-			me.yearInterval.removeCls(readOnlyCls);
-			me.taDocsContent.removeCls(readOnlyCls);
-
-			me.docGrid.addDocked(me.docGridToolBar);
-			me.docGrid.reconfigure(Ext
-							.getStore('storeplaces.store.DocsWriteStore'),
-					me.gridEditOnlyColumns);
-		}
-
-	},
-
 	initComponent : function() {
+        this.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
 		var x_ = 580;
 		var me = this;
         var myStore = Ext.create('storeplaces.store.StoragePlaceStore');

@@ -9,6 +9,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
     taOrg : null,
     nfCount : null,
     docReadStore:null,
+    docsWriteStore: null,
     taDocsContent : null,
     cbAddr         :null,
     yearInterval : null,
@@ -58,6 +59,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
             displayField : 'name',
             blankText : 'Не выбран вид документа',
             emptyText : 'Не выбран',
+            disabled : true,
             forceSelection : true,
             validateOnChange : false
         }),
@@ -88,25 +90,10 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
             xtype : 'textfield',
             allowBlank : false
         }
-    }, {
-        width : '2%',
-        xtype : 'actioncolumn',
-        items : [{
-            icon : 'resources/img/emblem-unreadable.png',
-            tooltip : 'Удалить',
-            handler : function(grid, rowIndex, colIndex) {
-                if (window.app) {
-                    window.app
-                        .getController('storeplaces.controller.StorePlaceCardController')
-                        .removeFromDocGrid(grid, rowIndex, colIndex);
-                } else {
-                    console.log('window app is undefined!');
-                }
-            }
-        }]
     }],
     initComponent : function() {
         this.docReadStore = Ext.create('storeplaces.store.DocsReadStore');
+        this.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
         var x_ = 580;
         var me = this;
 

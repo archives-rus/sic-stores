@@ -9,15 +9,15 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     xtype : 'corgpage',
     oldData: null,
     width : '100%',
-    id : 'orgpage',
+    id : 'orgpageview',
     placesFieldSet : null,
     areaFieldSets:null,
-    tfUser:null,
-    tfDateOfEdit:null,
     fundFieldset:null,
     orgStore : null,
     gridNames : null,
     gridToolBar : null,
+    tfDateOfEdit : null,
+    tfUser : null,
     loadRecord:function(){
         var me = this;
         me.callParent();
@@ -46,6 +46,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             }), Ext.create('Ext.Button', {
                 text : 'Просмотр',
                 height:25,
+                hidden:true,
                 cls : 'btnView',
                 action : 'orgCardView'
             }), Ext.create('Ext.Button', {
@@ -55,6 +56,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                 action : 'orgCardSave'
             }), Ext.create('Ext.Button', {
                 text : 'Отменить',
+                hidden:true,
                 height:25,
                 cls : 'btnCancel',
                 action : 'orgCardCancel'
@@ -72,7 +74,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                  this.FIO,
                  Ext.create('Ext.toolbar.Separator', {
                     html : '|',
-                    id : 'vertSeparator',
+                    //id : 'vertSeparator',
                     baseCls : 'vertSeparator'
                 }), Ext.create('Ext.Button', {
                     text : 'Выход',
@@ -81,7 +83,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                     componentCls : 'quitButton',
                     action:'quit',
                     // cls:'quitButton',
-                    id : 'quit'
+                    //id : 'quit'
                 })]
         });
 
