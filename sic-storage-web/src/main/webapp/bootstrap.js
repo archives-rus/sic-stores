@@ -6,7 +6,7 @@
  */
 Ext.Loader.addClassPathMappings({
   "storeplaces": "app",
-  " Ext.Msg": "ext/src/window/MessageBox.js",
+  "Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext": "ext/src",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
   "storeplaces.Application": "app/application.js"

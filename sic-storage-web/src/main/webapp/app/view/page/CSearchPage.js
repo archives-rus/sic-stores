@@ -47,7 +47,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             this.FIO,
              Ext.create('Ext.toolbar.Separator', {
                 html : '|',
-                id : 'vertSeparator',
+                //id : 'vertSeparator',
                 baseCls : 'vertSeparator'
             }), Ext.create('Ext.Button', {
                 text : 'Выход',
@@ -55,7 +55,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
                 tooltipType : 'title',
                 componentCls : 'quitButton',
                 action: 'quitSerch',
-                id : 'quit'
+                //id : 'quit'
             })]
     });
 

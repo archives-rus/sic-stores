@@ -7,7 +7,8 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
     FIO : null,
 	xtype : 'corgpage',
 	width : '100%',
-	id : 'orgpage',
+    oldData: null,
+	//id : 'orgpage',
 	placesFieldSet : null,
     areaFieldSets : null,
     tfUser : null,
@@ -65,7 +66,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                                         this.FIO,
 							            Ext.create('Ext.toolbar.Separator', {
 										html : '|',
-										id : 'vertSeparator',
+										//id : 'vertSeparator',
 										baseCls : 'vertSeparator'
 									}), Ext.create('Ext.Button', {
 										text : 'Выход',
@@ -74,7 +75,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										componentCls : 'quitButton',
                                         action:'quit',
 										// cls:'quitButton',
-										id : 'quit'
+										//id : 'quit'
 									})]
 				});
 
@@ -153,7 +154,19 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 								dataIndex : 'sortOrder',
 								hidden : true,
 								hideable : false
-							}]
+							},
+                            {
+                                width : 40,
+                                xtype : 'actioncolumn',
+                                align:'center',
+                                items : [{
+                                    icon : 'resources/img/emblem-unreadable.png',
+                                    tooltip : 'Удалить',
+                                    handler : function(grid, rowIndex, colIndex) {
+                                       grid.getStore().remove(grid.getStore().getAt(rowIndex));
+                                    }
+                                }]
+                            }]
 				})
 
 		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
@@ -185,7 +198,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
         tfFondNum.add(Ext.create('Ext.Button', {
             //text : 'Поиск фонда',
-            id:'srchFund',
+           // id:'srchFund',
             cls : "srch",
             //height:25,
             action : 'srchFund'
@@ -232,7 +245,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                 text : 'Добавить',
                 cls : 'btnAdd',
                 height:25,
-                id : 'addStorePlace',
+               // id : 'addStorePlace',
                 action : 'addStorePlace'
             })]
         });
@@ -256,14 +269,14 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 		this.tfUser = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Имя пользователя',
-					name : 'user'
+					name : 'user2'
 				});
 
 		this.tfUser.setDisabled(true);
 
 		this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
 					fieldLabel : 'Дата корректировки',
-					name : 'dateOfEdit'
+					name : 'dateOfEdit2'
 				});
 
 		this.tfDateOfEdit.setDisabled(true);

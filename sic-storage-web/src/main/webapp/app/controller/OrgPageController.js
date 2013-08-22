@@ -32,6 +32,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var tb = btn.up('toolbar');
                             var form = tb.up('form');
                             var main = form.up('container');
+                            var vp = main.up('viewport');
+                            var buffer = vp.items.items[1];
                         }
 					switch(btn.action){
 						case 'addStorePlace':
@@ -42,8 +44,31 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             this.getPage().orgStore.insert(0, Ext.create('storeplaces.model.OrganizationName'));
                             break;
                         case 'quit':
+                            Ext.Ajax.request({
+                                url: 'servlet/Auth',
+                                params : {
+                                    action:'logout'
+                                },
+                                success: function(action){
+                                    var isSuccess = Ext.decode(action.responseText).success;
+                                    var isMsg = Ext.decode(action.responseText).msg;
+                                    // if (isSuccess == 'true')
+                                    // {
+                                    main.removeAll();
+                                    Ext.getStore('storeplaces.store.GridSearchOrgStore').removeAll();
+                                    main.add(Ext.create('storeplaces.view.page.CLoginPage'));
+                                    // }
+                                },
+                                failure : function(action) {
+                                    Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                }
+                            });
+                            break;
+                        case 'editToView':
+                            break;
+                        case 'viewToEdit':
                             main.removeAll();
-                            main.add(Ext.create('storeplaces.view.page.CLoginPage'));
+                            main.add(buffer.items.items[0]);
                             break;
                         case 'orgCardDelete':
                             if (this.getPage().orgStore.getCount()==0)
@@ -83,21 +108,91 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             main.add(oldSrchPage);
                             break;
                         case 'orgCardView':
+                            buffer.add(form);
                             var values = form.getForm().getValues();
+                            var FIO = form.FIO.text;
+                            var oldData = form.oldData;
+                            var archive = form.fundFieldset.items.items[0].getRawValue();
+                            var prefix =  form.fundFieldset.items.items[2].items.items[0].getRawValue();
+                            var numfond = form.fundFieldset.items.items[2].items.items[1].getRawValue();
+                            var suffix =  form.fundFieldset.items.items[2].items.items[2].getRawValue();
+                            var fundNum = prefix+'-'+numfond+'-'+suffix;
+                            var nameUser = form.tfUser.getRawValue();
+                            var editDate = form.tfDateOfEdit.getRawValue();
+                            var oldOrgStoreData = form.orgStore.getRange();
+                            var countCard =  form.placesFieldSet.items.getCount();
+                            var massCard = new Array();
+                            for(var i=0; i<countCard; i++)
+                            {
+                                var card = form.placesFieldSet.items.items[i];
+                                massCard.push(card);
+                            }
                             main.removeAll();
                             var OrgViewPage = Ext.create('storeplaces.view.page.COrganizationPageView');
                             OrgViewPage.getForm().setValues(values);
-                            var archive = OrgViewPage.fundFieldset.items.items[0];
-                            var fundNum = OrgViewPage.fundFieldset.items.items[2];
+                            OrgViewPage.oldData = oldData;
+                            OrgViewPage.FIO.setText(FIO);
+                            OrgViewPage.tfUser.setValue(nameUser);
+                            OrgViewPage.tfDateOfEdit.setValue(editDate);
+                            OrgViewPage.orgStore.loadData(oldOrgStoreData);
+                            for(var j=0; j<massCard.length; j++)
+                            {
+                                  var oldCard = massCard[j];
+                                  var newCard = Ext.create('storeplaces.view.card.CStorePlaceView');
+
+                                  var oldStorageType = oldCard.cbStorageType.getRawValue();
+                                    newCard.tfStorageType.setValue(oldStorageType);
+                                    if(oldStorageType=='В архиве')
+                                    {
+                                        var oldArchive  = oldCard.cbArchive.getRawValue();
+                                        var oldAddress  = oldCard.cbAddr.getRawValue();
+                                        newCard.taOrg.setVisible(false);
+                                        newCard.tfArchive.setVisible(true);
+                                        newCard.tfArchive.setValue(oldArchive);
+                                        newCard.tfAddr.setValue(oldAddress);
+                                    }
+                                    else if (oldStorageType=='В организации')
+                                    {
+                                        var oldOrgName  = oldCard.taOrg.getRawValue();
+                                        var oldAddress  = oldCard.tfAddr.getRawValue();
+                                        newCard.taOrg.setVisible(true);
+                                        newCard.tfArchive.setVisible(false);
+                                        newCard.taOrg.setValue(oldOrgName);
+                                        newCard.tfAddr.setValue(oldAddress);
+                                    }
+                                  var oldPhone          = oldCard.tfPhone.getRawValue();
+                                    newCard.tfPhone.setValue(oldPhone);
+                                  var oldDocumentCount  = oldCard.nfCount.getRawValue();
+                                    newCard.nfCount.setValue(oldDocumentCount);
+                                  var oldBeginYear      = oldCard.yearInterval.items.items[1].getRawValue();
+                                    newCard.yearInterval.items.items[1].setValue(oldBeginYear);
+                                  var oldEndYear        = oldCard.yearInterval.items.items[2].getRawValue();
+                                    newCard.yearInterval.items.items[2].setValue(oldEndYear);
+                                  var oldContents       = oldCard.taDocsContent.getRawValue();
+                                    newCard.taDocsContent.setValue(oldContents);
+                                  var oldPlaceStoreData = oldCard.docsWriteStore.getRange();
+                                     newCard.docGrid.reconfigure( newCard.docsWriteStore, newCard.gridEditOnlyColumns);
+                                     newCard.docsWriteStore.loadData(oldPlaceStoreData);
+
+                                OrgViewPage.placesFieldSet.add(newCard);
+                            }
+                            OrgViewPage.items.items[0].items.items[1].action = 'viewToEdit';
+                            var archivePage = OrgViewPage.fundFieldset.items.items[0];
+                            var fundNumPage = OrgViewPage.fundFieldset.items.items[2];
+                            archivePage.setRawValue(archive);
+                            fundNumPage.setRawValue(fundNum);
                             main.add(OrgViewPage);
                             break;
                         case 'orgCardCancel':
                         case 'orgCardEdit':
+                            buffer.removeAll();
                             var id = form.orgStore.getAt(0).get('id');
                             var FIO = form.FIO.text;
+                            var oldData = form.oldData;
                             main.removeAll();
                             var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
                             myEditOrgPage.FIO.setText(FIO);
+                            myEditOrgPage.oldData = oldData;
                             Ext.Ajax.request({
                                 url: 'servlet/QueryOrgNames',
                                 params : {
