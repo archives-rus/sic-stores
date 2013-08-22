@@ -8,20 +8,5 @@ Ext.define('storeplaces.view.Main', {
     //height:200,
     autoScroll:true,
     xtype: 'app-main',
-    //alias: 'widget.appMain',
-//    layout: {
-//        type: 'border'
-//    },
-
-//    items: [Ext.create('storeplaces.view.card.CStorePlace'),Ext.create('Ext.Button',{
-//    	text:'Режим чтения',
-//    	id:'loadViewDocsTable'
-//    }),Ext.create('Ext.Button',{
-//    	text:'Режим редактирования',
-//    	id:'loadEditDocsTable'
-//    })]
-
-    //items:[Ext.create('storeplaces.view.page.CSearchPage')]
-	//items:[Ext.create('storeplaces.view.page.COrganizationPage')]
     items:[Ext.create('storeplaces.view.page.CLoginPage')]
 })

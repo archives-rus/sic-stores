@@ -52,8 +52,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                 width:'70%',
 				dataIndex : 'documentTypeId',
 				editor : Ext.create('Ext.form.field.ComboBox', {
-							store : Ext
-									.create('storeplaces.store.DocTypesStore'),
+							store : Ext.create('storeplaces.store.DocTypesStore'),
 							valueField : 'id',
 							displayField : 'name',
 							blankText : 'Не выбран вид документа',

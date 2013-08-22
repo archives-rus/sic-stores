@@ -75,7 +75,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										tooltip : 'Выход из системы',
 										tooltipType : 'title',
 										componentCls : 'quitButton',
-                                        action:'quit',
+                                        action:'quit'
 										// cls:'quitButton',
 										//id : 'quit'
 									})]
@@ -200,10 +200,8 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				});
 
         tfFondNum.add(Ext.create('Ext.Button', {
-            //text : 'Поиск фонда',
-           // id:'srchFund',
+            width:50,
             cls : "srch",
-            //height:25,
             action : 'srchFund'
         })) ;
 
@@ -248,7 +246,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                 text : 'Добавить',
                 cls : 'btnAdd',
                 height:25,
-               // id : 'addStorePlace',
                 action : 'addStorePlace'
             })]
         });

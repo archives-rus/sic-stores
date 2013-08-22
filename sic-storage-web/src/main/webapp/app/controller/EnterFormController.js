@@ -1,7 +1,11 @@
 Ext.define('storeplaces.controller.EnterFormController',{
     extend:'Ext.app.Controller',
     view:['page.CLoginPage'],
-    init:function(){
+    require:[
+        'Ext.window.MessageBox',
+        'Ext.tip.*'
+    ],
+init:function(){
         this.control({
             'enterpage button':{
                 click:function(btn,eventObj){
@@ -22,7 +26,8 @@ Ext.define('storeplaces.controller.EnterFormController',{
                                         userName.setText('Админ Админов');
                                         main.add(schPage);
                                     }
-                              else Ext.Msg.alert('Внимание', 'Неправильный логин/пароль');
+                              else  Ext.example.msg('Внимание', 'Неправильный логин/пароль!');//Ext.Msg.alert('Внимание', 'Неправильный логин/пароль');
+
 
                             /*Ext.Ajax.request({
                                 url: 'servlet/Auth',

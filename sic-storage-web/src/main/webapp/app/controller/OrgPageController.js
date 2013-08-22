@@ -41,7 +41,14 @@ Ext.define('storeplaces.controller.OrgPageController',{
 							this.getPage().placesFieldSet.add(place);
                             break;
                         case 'namesGridAdd':
-                            this.getPage().orgStore.insert(0, Ext.create('storeplaces.model.OrganizationName'));
+                            this.getPage().orgStore.insert( this.getPage().orgStore.getCount(), Ext.create('storeplaces.model.OrganizationName'));
+                            break; addDocRow
+                        case 'addDocRow':
+                            var gridTb = btn.up('toolbar');
+                            var gridPlace = gridTb.up('grid');
+                            var count = gridPlace.getStore().getCount();
+                            if (count ==null) count = 0;
+                            gridPlace.getStore().insert(count, Ext.create('storeplaces.model.DocTableEntryWrite'));
                             break;
                         case 'quit':
                             Ext.Ajax.request({

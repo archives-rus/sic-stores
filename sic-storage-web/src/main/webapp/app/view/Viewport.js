@@ -1,5 +1,6 @@
 Ext.define('storeplaces.view.Viewport', {
     extend: 'Ext.container.Viewport',
+    autoScroll:true,
     requires:[
 
     ],
