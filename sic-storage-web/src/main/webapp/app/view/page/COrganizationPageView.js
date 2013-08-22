@@ -187,7 +187,8 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             {
                 title : 'Места хранения',
                 width : '100%',
-                height : 420,
+                height : 370,
+                cls:'noscrl-x',
                 autoScroll : true,
                 margin: 20
             });
@@ -199,17 +200,20 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                 fieldLabel : 'Сведения о загранкомандировках',
                 name: 'zagranInfo',
                 disabled: true,
-                labelWidth : 200
+                labelWidth : 200,
+                height:25
             }), Ext.create('Ext.form.field.TextArea', {
                 fieldLabel : 'Сведения о награждениях',
                 disabled: true,
                 name: 'goldInfo',
-                labelWidth : 200
+                labelWidth : 200,
+                height:25,
             }), Ext.create('Ext.form.field.TextArea', {
                 fieldLabel : 'Примечание',
                 name: 'noteInfo',
                 disabled: true,
-                labelWidth : 200
+                labelWidth : 200,
+                height:25
             })]
         });
 
