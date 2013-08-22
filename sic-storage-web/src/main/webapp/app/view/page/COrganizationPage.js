@@ -273,19 +273,23 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 									})]
 				});
 
-		this.tfUser = Ext.create('Ext.form.field.Text', {
-					fieldLabel : 'Имя пользователя',
-					name : 'user'
-				});
+        this.tfUser = Ext.create('Ext.form.field.Text', {
+            fieldLabel : 'Имя пользователя',
+            name : 'user',
+            cls:'mar_auto brown-font',
+            labelWidth : 150
+        });
 
-		this.tfUser.setDisabled(true);
+        this.tfUser.setDisabled(true);
 
-		this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
-					fieldLabel : 'Дата корректировки',
-					name : 'dateOfEdit'
-				});
+        this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
+            fieldLabel : 'Дата корректировки',
+            name : 'dateOfEdit',
+            cls:'mar_auto brown-font',
+            labelWidth : 150
+        });
 
-		this.tfDateOfEdit.setDisabled(true);
+        this.tfDateOfEdit.setDisabled(true);
 
 
 		Ext.applyIf(this, {

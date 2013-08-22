@@ -9,9 +9,8 @@ Ext.define('storeplaces.Application', {
        'storeplaces.view.page.CLoginPage',
        'storeplaces.view.page.COrganizationPage',
         'storeplaces.view.page.CSearchPage',
-        'storeplaces.view.page.COrganizationPageView',
-        'storeplaces.view.page.ViewToEditPage',
-        'storeplaces.view.page.EditToViewPage'
+        'storeplaces.view.page.COrganizationPageView'
+
 
 
     ],
