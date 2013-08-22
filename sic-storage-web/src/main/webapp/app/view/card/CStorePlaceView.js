@@ -15,7 +15,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
     cbArchive : null,
     tfArchive : null,
     docGrid : null,
-    minHeight : 340,
+    minHeight : 320,
     height : 'auto',
     //width : 1150,
     width : '97%',
@@ -242,8 +242,8 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
             y : me.nfCount.y + me.nfCount.height + 5,
             cls:'mar_right15',
             //width : 1120,
-            //width : '80%',
-            height : 150,
+            width : '98%',
+            height : 135,
             forceFit : true,
             columns : me.gridReadOnlyColumns
         });

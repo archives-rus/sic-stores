@@ -31,4 +31,6 @@
 .x-grid-body{
     overflow-y:auto;
 }
-
+.noscrl-x .x-fieldset-body{
+    overflow-x:hidden !important;
+}

@@ -225,7 +225,8 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				{
 					title : 'Места хранения',
 					width : '100%',
-					height : 420,
+					height : 370,
+                    cls:'noscrl-x',
 					autoScroll : true,
                     margin: 20
 				});
