@@ -11,6 +11,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	width : '100%',
     oldData: null,
 	//id : 'orgpage',
+    cls:'pad10-20-0',
 	placesFieldSet : null,
     areaFieldSets : null,
     tfUser : null,
@@ -129,28 +130,32 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 								dataIndex : 'fullName',
                                 editor : {
                                     xtype : 'textfield',
-                                    allowBlank : false
+                                    allowBlank : false,
+                                    width:'40%'
                                 }
 							}, {
 								text : 'Краткое наименование',
 								dataIndex : 'shortName',
                                 editor : {
-                                xtype : 'textfield',
-                                allowBlank : false
+                                    xtype : 'textfield',
+                                    allowBlank : false,
+                                    width:'28%'
                                  }
 							}, {
 								text : 'Подчинённость',
 								dataIndex : 'subordination',
                                 editor : {
                                     xtype : 'textfield',
-                                    allowBlank : false
+                                    allowBlank : false,
+                                    width:'15%'
                                 }
 							}, {
 								text : 'Даты',
 								dataIndex : 'dates',
                                 editor : {
                                     xtype : 'textfield',
-                                    allowBlank : false
+                                    allowBlank : false,
+                                    width:'15%'
                                 }
 							}, {
 								text : 'Сортировка',
@@ -159,7 +164,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 								hideable : false
 							},
                             {
-                                width : 40,
+                                width : '2%',
                                 xtype : 'actioncolumn',
                                 align:'center',
                                 items : [{
