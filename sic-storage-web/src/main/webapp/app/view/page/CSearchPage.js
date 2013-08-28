@@ -123,7 +123,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             displayField: 'name',
             valueField: 'id',
             emptyText : 'Не выбрано',
-            width : 580,
+            width : 690,
             labelWidth : 200
         });
 

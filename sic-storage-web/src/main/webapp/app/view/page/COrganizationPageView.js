@@ -7,6 +7,8 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     xtype : 'corgpage',
     oldData: null,
     width : '100%',
+    id : 'orgpageview',
+    /*cls:'pad10-20-0',*/
     idFund: null,
     idCard: null,
     placesFieldSet : null,
@@ -110,16 +112,20 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                 hideable : false
             }, {
                 text : 'Полное наименование и переименования',
-                dataIndex : 'fullName'
+                dataIndex : 'fullName',
+                width:'40%'
             }, {
                 text : 'Краткое наименование',
-                dataIndex : 'shortName'
+                dataIndex : 'shortName',
+                width:'30%'
             }, {
                 text : 'Подчинённость',
-                dataIndex : 'subordination'
+                dataIndex : 'subordination',
+                width:'15%'
             }, {
                 text : 'Даты',
-                dataIndex : 'dates'
+                dataIndex : 'dates',
+                width:'15%'
             }, {
                 text : 'Сортировка',
                 dataIndex : 'sortOrder',
