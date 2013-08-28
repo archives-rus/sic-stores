@@ -2,14 +2,13 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     extend : 'Ext.form.Panel',
     autoScroll : true,
     minWidth : 1024,
-   // height: '100%',
     minHeight: 500,
-    //height: 880,
     FIO : null,
     xtype : 'corgpage',
     oldData: null,
     width : '100%',
-    id : 'orgpageview',
+    idFund: null,
+    idCard: null,
     placesFieldSet : null,
     areaFieldSets:null,
     fundFieldset:null,
@@ -24,7 +23,6 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 
     },
     initComponent : function() {
-        //this.setHeight(600);
         this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');
         this.FIO = Ext.create('Ext.form.Label', {
             text :  '',
@@ -81,9 +79,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                     tooltip : 'Выход из системы',
                     tooltipType : 'title',
                     componentCls : 'quitButton',
-                    action:'quit',
-                    // cls:'quitButton',
-                    //id : 'quit'
+                    action:'quit'
                 })]
         });
 

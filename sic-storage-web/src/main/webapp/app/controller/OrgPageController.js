@@ -40,6 +40,31 @@ Ext.define('storeplaces.controller.OrgPageController',{
 							var place = Ext.create('storeplaces.view.card.CStorePlace');
 							this.getPage().placesFieldSet.add(place);
                             break;
+                        case 'namesGridUp':
+                            var form    = btn.up('toolbar').up('gridpanel').up('fieldset').up('form');
+                            var sm      = form.gridNames.getSelectionModel();
+                            var record  = sm.getSelection()[0];
+                            if (record == null) break;
+                            var index   = form.gridNames.getStore().indexOf(record);
+                            if (index != 0)
+                            {
+                                form.gridNames.getStore().remove(record, true);
+                                form.gridNames.getStore().insert(index-1, record);
+                            }
+                            break;
+                        case 'namesGridDown':
+                            var form    = btn.up('toolbar').up('gridpanel').up('fieldset').up('form');
+                            var maxIndex   = form.gridNames.getStore().getCount()-1;
+                            var sm      = form.gridNames.getSelectionModel();
+                            var record  = sm.getSelection()[0];
+                            if (record == null) break;
+                            var index   = form.gridNames.getStore().indexOf(record);
+                            if (index!=maxIndex)
+                            {
+                                form.gridNames.getStore().remove(record, true);
+                                form.gridNames.getStore().insert(index+1, record);
+                            }
+                            break;
                         case 'namesGridAdd':
                             this.getPage().orgStore.insert( this.getPage().orgStore.getCount(), Ext.create('storeplaces.model.OrganizationName'));
                             break; addDocRow
@@ -101,8 +126,10 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             });*/
                             break;
                         case 'orgCardAdd':
+                            var FIO = form.FIO.text;
                             main.removeAll();
                             var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
+                            newOrgPage.FIO.setText(FIO);
                             newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
                             main.add(newOrgPage);
                             break;
@@ -114,10 +141,135 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             oldSrchPage.FIO.setText(form.FIO.text);
                             main.add(oldSrchPage);
                             break;
+                        case 'orgCardSave':
+                            var modelsOrg = form.orgStore.getRange();
+                            var names = new Array();
+                            for(var i=0; i<modelsOrg.length; i++)
+                            {
+                                names.push(modelsOrg[i].getData());
+                            }
+                            var idOrg  = form.idCard;
+                            var idFund = form.idFund;
+                            var businessTripsInfoSave = form.areaFieldSets.items.items[0].getRawValue();
+                                if  (businessTripsInfoSave=='') businessTripsInfoSave=null;
+                            var rewardsInfoSave = form.areaFieldSets.items.items[1].getRawValue();
+                                if  (rewardsInfoSave=='') rewardsInfoSave=null;
+                            var notesSave                   = form.areaFieldSets.items.items[2].getRawValue();
+                                if  (notesSave=='') notesSave=null;
+                            var idArch                  = form.fundFieldset.items.items[0].getValue();
+                            var prefix                  = form.fundFieldset.items.items[2].items.items[0].getRawValue();
+                                if  (prefix=='') prefix=null;
+                            var numFund                 = form.fundFieldset.items.items[2].items.items[1].getRawValue();
+                                numFund = parseInt(numFund);
+                            var suffix                  = form.fundFieldset.items.items[2].items.items[2].getRawValue();
+                                if  (suffix=='') suffix=null;
+                            var nameFund                = form.fundFieldset.items.items[1].getRawValue();
+                                if  (nameFund=='') nameFund=null;
+                            var datesFund               = form.fundFieldset.items.items[3].getRawValue();
+                                if  (datesFund=='') datesFund=null;
+                            var fund = {
+                                    'id':idFund,
+                                    'archiveId':idArch,
+                                    'num':numFund,
+                                    'prefix':prefix,
+                                    'suffix':suffix,
+                                    'name':nameFund,
+                                    'dates':datesFund
+                             };
+                            var myCards = form.placesFieldSet.items.items;
+                            var storage     = new Array();
+                            var documents   = new Array();
+
+                            for(var j=0; j<myCards.length; j++)
+                            {
+                                var dataCard        = myCards[j];
+                                var idPlace         = dataCard.idPlace;
+                                var idArchStorage   = dataCard.idArchStorage;
+                                var phone           = dataCard.tfPhone.getRawValue();
+                                    if  (phone=='') phone=null;
+                                var documentCount   = dataCard.nfCount.getRawValue();
+                                documentCount = parseInt(documentCount);
+                                var orgName         = dataCard.taOrg.getRawValue();
+
+                                if  (orgName)
+                                {
+                                    var address  = dataCard.tfAddr.getRawValue();
+                                        if  (address=='') address=null;
+                                    var archStrg = null;
+                                }
+                                else
+                                {
+                                    orgName = null;
+                                    var address     = dataCard.cbAddr.getRawValue();
+                                         if  (address=='') address=null;
+                                    var idArchiveCb = dataCard.cbArchive.getValue();
+                                    var archStrg =
+                                    {
+                                        'id'       :   idArchStorage,
+                                        'archiveId':   idArchiveCb,
+                                        'address'  :   address,
+                                        'phone'    :   phone
+                                    };
+                                }
+
+                                var beginYear       = dataCard.yearInterval.items.items[1].getRawValue();
+                                beginYear = parseInt(beginYear);
+                                var endYear         = dataCard.yearInterval.items.items[2].getRawValue();
+                                endYear = parseInt(endYear);
+                                var modelsCard      = dataCard.docsWriteStore.getRange();
+
+                                for(var i=0; i<modelsCard.length; i++)
+                                {
+                                    documents.push(modelsCard[i].getData());
+                                }
+                                var contents        = dataCard.taDocsContent.getRawValue();
+                                    if  (contents=='') contents=null;
+
+                                var card ={
+                                    'id'            : idPlace,
+                                    'archStrg'      : archStrg,
+                                    'orgName'       : orgName,
+                                    'address'       : address,
+                                    'phone'         : phone,
+                                    'documentCount' : documentCount,
+                                    'beginYear'     : beginYear,
+                                    'endYear'       : endYear,
+                                    'documents'     : documents,
+                                    'contents'      : contents
+                                }
+                                storage.push(card);
+                            }
+                            var org = {
+                                'id':idOrg,
+                                'names':names,
+                                'archiveId':idArch,
+                                'fund':fund,
+                                'storage':storage,
+                                'businessTripsInfo': businessTripsInfoSave,
+                                'rewardsInfo': rewardsInfoSave,
+                                'notes': notesSave
+                            };
+                            org = Ext.encode(org);
+
+                            Ext.Ajax.request({
+                                url: 'servlet/SaveOrganization',
+                                params : {
+                                    org:org
+                                },
+                                success: function(action){
+                                    var id = Ext.decode(action.responseText).id;
+                                    alert('Организация с айди'+id+'сохранена');
+                                },
+                                failure : function() {
+                                    Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                }
+                            });
+                            break;
                         case 'orgCardView':
                             buffer.add(form);
                             var values = form.getForm().getValues();
                             var FIO = form.FIO.text;
+                            var idFund = form.idFund;
                             var oldData = form.oldData;
                             var archive = form.fundFieldset.items.items[0].getRawValue();
                             var prefix =  form.fundFieldset.items.items[2].items.items[0].getRawValue();
@@ -138,6 +290,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var OrgViewPage = Ext.create('storeplaces.view.page.COrganizationPageView');
                             OrgViewPage.getForm().setValues(values);
                             OrgViewPage.oldData = oldData;
+                            OrgViewPage.idFund = idFund;
                             OrgViewPage.FIO.setText(FIO);
                             OrgViewPage.tfUser.setValue(nameUser);
                             OrgViewPage.tfDateOfEdit.setValue(editDate);
@@ -146,7 +299,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             {
                                   var oldCard = massCard[j];
                                   var newCard = Ext.create('storeplaces.view.card.CStorePlaceView');
-
+                                      newCard.idPalace      = oldCard.idPalace;
+                                      newCard.idArchStorage = oldCard.idArchStorage;
                                   var oldStorageType = oldCard.cbStorageType.getRawValue();
                                     newCard.tfStorageType.setValue(oldStorageType);
                                     if(oldStorageType=='В архиве')
@@ -193,13 +347,14 @@ Ext.define('storeplaces.controller.OrgPageController',{
                         case 'orgCardCancel':
                         case 'orgCardEdit':
                             buffer.removeAll();
-                            var id = form.orgStore.getAt(0).get('id');
+                            var id = form.idCard;
                             var FIO = form.FIO.text;
                             var oldData = form.oldData;
                             main.removeAll();
                             var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
                             myEditOrgPage.FIO.setText(FIO);
                             myEditOrgPage.oldData = oldData;
+                            myEditOrgPage.idCard = id;
                             Ext.Ajax.request({
                                 url: 'servlet/QueryOrgNames',
                                 params : {
@@ -265,15 +420,19 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     myNotes.setValue(notes);
                                     myUserName.setValue(userName);
                                     myLastUpdateDate.setValue(lastUpdateDate);
-
+                                    myEditOrgPage.idFund = fundId;
                                     for(var i=0; i<storage.length; i++)
                                     {
                                         var idPlace =storage[i].id;   // id места хранения документов
-
-                                        var archInId    = storage[i].archStrg.id; // id места хранения в архиве
-                                        var archId   = storage[i].archStrg.archiveId; //id архива(второй комбо снизу)
-                                        var archAddress = storage[i].archStrg.address
-                                        var archPhone   = storage[i].archStrg.phone
+                                        var archStrg    = storage[i].archStrg;
+                                        if  (archStrg)
+                                        {
+                                            var archInId    = storage[i].archStrg.id; // id места хранения в архиве
+                                            var archId      = storage[i].archStrg.archiveId; //id архива(второй комбо снизу)
+                                            var archAddress = storage[i].archStrg.address
+                                            var archPhone   = storage[i].archStrg.phone
+                                        }
+                                        else  archStrg==null;
 
                                         var orgNamePlace =storage[i].orgName;
                                         var addressPlace =storage[i].address;
@@ -284,6 +443,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                         var contentsPlace =storage[i].contents;
 
                                         var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
+                                        placeCard.idPlace = idPlace;
+                                        placeCard.idArchStorage = archInId;
                                         placeCard.tfPhone.setDisabled(false);
                                         placeCard.nfCount.setDisabled(false);
                                         placeCard.yearInterval.setDisabled(false);
@@ -303,7 +464,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                         {
                                             placeCard.cbStorageType.setValue(1);
                                             placeCard.cbArchive.setVisible(true);
-                                            placeCard.cbArchive.setValue(archId)
+                                            placeCard.cbArchive.setValue(archId);
                                             placeCard.cbAddr.setRawValue(addressPlace);
                                             placeCard.cbArchive.setDisabled(false);
                                             placeCard.cbAddr.setDisabled(false);
@@ -329,6 +490,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                                 Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
                                             }
                                         });
+
                                         myEditOrgPage.placesFieldSet.add(placeCard);
                                     }
 
@@ -369,7 +531,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     var isFound  = Ext.decode(action.responseText).found;
                                     if (isFound==false)
                                     {
-                                        alert('Фонда не найдены!');
+                                        Ext.example.msg('Внимание!', 'Фонд не найден!');
                                         nameFund.enable();
                                         datesFund.enable();
                                     }

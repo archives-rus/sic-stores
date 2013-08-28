@@ -1,13 +1,9 @@
 Ext.define('storeplaces.view.Viewport', {
     extend: 'Ext.container.Viewport',
     autoScroll:true,
-    requires:[
-
-    ],
-
-//    layout: {
-//        type: 'fit'
-//    },
+    layout: {
+        type: 'fit'
+       },
     items:[Ext.create('storeplaces.view.Main'),Ext.create('storeplaces.view.Buffer')]
     /*initComponent : function() {
         window.vp = this;

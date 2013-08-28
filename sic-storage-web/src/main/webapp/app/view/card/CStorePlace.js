@@ -15,6 +15,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	yearInterval : null,
     cbArchive : null,
 	docGrid : null,
+    idPlace: null,
+    idArchStorage: null,
 	minHeight : 320,
 	height : 'auto',
 	//width : 1150,

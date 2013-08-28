@@ -13,6 +13,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                     main.removeAll();
                     var myOrgPage = Ext.create('storeplaces.view.page.COrganizationPageView');
                     myOrgPage.oldData = oldData;
+                    myOrgPage.idCard = id;
                     myOrgPage.FIO.setText(FIO);
                     Ext.Ajax.request({
                         url: 'servlet/QueryOrgNames',
@@ -82,6 +83,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                 var endYearPlace =storage[i].endYear;
                                 var contentsPlace =storage[i].contents;
                                 var placeCard = Ext.create('storeplaces.view.card.CStorePlaceView');
+                                placeCard.idPlace = idPlace;
                                 if(storageTypePlace=='В организации')
                                 {
                                     placeCard.taOrg.setValue(orgNamePlace);
@@ -163,12 +165,9 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                 success: function(action){
                                     var isSuccess = Ext.decode(action.responseText).success;
                                     var isMsg = Ext.decode(action.responseText).msg;
-                                   // if (isSuccess == 'true')
-                                   // {
                                         main.removeAll();
                                         main.add(Ext.create('storeplaces.view.page.CLoginPage'));
                                         Ext.getStore('storeplaces.store.GridSearchOrgStore').removeAll();
-                                   // }
                                 },
                                 failure : function(action) {
                                     Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
@@ -176,8 +175,12 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             });
                             break;
                         case 'addOrg':
+                            var FIO = form.FIO.text;
                             main.removeAll();
-                            main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+                            var newForm = Ext.create('storeplaces.view.page.COrganizationPage');
+                            newForm.FIO.setText(FIO);
+                            newForm.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
+                            main.add(newForm);
                             break;
                         case 'srchBtn':
                             var iorgName = orgName.getRawValue();
@@ -207,7 +210,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             gridSearchOrgStore.load({params:{
                                  criteria:criteria,
                                 'start':0,
-                                'limit':10
+                                'limit':2
                             }});
                             break;
                         default:

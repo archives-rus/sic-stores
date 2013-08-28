@@ -17,19 +17,7 @@ init:function(){
                             var login    =  form.items.items[1].items.items[0].getRawValue();
                             var password =  form.items.items[1].items.items[1].getRawValue();
 
-                              if (login=='admin' && password=='admin')
-                                    {
-                                        main.removeAll();
-                                        var schPage = Ext.create('storeplaces.view.page.CSearchPage');
-                                        var tb = schPage.down('toolbar');
-                                        var userName = tb.down('label');
-                                        userName.setText('Админ Админов');
-                                        main.add(schPage);
-                                    }
-                              else  Ext.example.msg('Внимание', 'Неправильный логин/пароль!');//Ext.Msg.alert('Внимание', 'Неправильный логин/пароль');
-
-
-                            /*Ext.Ajax.request({
+                            Ext.Ajax.request({
                                 url: 'servlet/Auth',
                                 params : {
                                     action:'login',
@@ -39,21 +27,22 @@ init:function(){
                                 success: function(action){
                                     var isSuccess = Ext.decode(action.responseText).success;
                                     var isMsg = Ext.decode(action.responseText).msg;
-                                    if (isSuccess == 'true')
+                                    if (isSuccess == true)
                                     {
                                          main.removeAll();
                                          var schPage = Ext.create('storeplaces.view.page.CSearchPage');
                                          var tb = schPage.down('toolbar');
                                          var userName = tb.down('label');
-                                         userName.setText('isMsg);
+                                         userName.setText(isMsg);
                                          main.add(schPage);
+                                         Ext.example.msg('Доброго времени суток', isMsg);
                                     }
-                                    else Ext.Msg.alert('Внимание', isMsg);
+                                    else  Ext.example.msg('Внимание!', isMsg);
                                 },
                                 failure : function(action) {
                                     Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
                                 }
-                            });*/
+                            });
                             break;
                         case 'enterForm':
 

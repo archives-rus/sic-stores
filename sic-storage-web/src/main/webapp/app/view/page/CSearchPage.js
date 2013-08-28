@@ -1,7 +1,7 @@
 Ext.define('storeplaces.view.page.CSearchPage', {
     extend : 'Ext.form.Panel',
     minWidth : 1024,
-    height:1000,
+    minWidth : 500,
     FIO: null,
     xtype : 'csearchpage',
     alias: 'widget.searchpage',

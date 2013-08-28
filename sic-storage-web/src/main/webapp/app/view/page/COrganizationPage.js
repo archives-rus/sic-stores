@@ -4,13 +4,13 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	minWidth : 1024,
     //height: '100%',
     minHeight: 500,
-    //height: 880,
-    height: 880,
+   // height: 880,
     FIO : null,
+    idFund: null,
+    idCard: null,
 	xtype : 'corgpage',
 	width : '100%',
     oldData: null,
-	//id : 'orgpage',
 	placesFieldSet : null,
     areaFieldSets : null,
     tfUser : null,
@@ -93,29 +93,29 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
              //displayInfo: true
          });
 
-		 gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
+        this.gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
 										//text : '+',
 										action : 'namesGridAdd',
                                         cls:'addStr'
 									}), Ext.create('Ext.Button', {
 										//text : '^',
-										action : 'namesGridUp',
+										action : 'namesGridDown',
                                         cls:'upStr'
 									}), Ext.create('Ext.Button', {
 										//text : '˅',
-										action : 'namesGridDown',
+										action : 'namesGridUp',
                                         cls:'downStr'
 									})]
 				});
 
-		 gridNames = Ext.create('Ext.grid.Panel', {
+		this.gridNames = Ext.create('Ext.grid.Panel', {
 					store : this.orgStore,
                     buttonAlign:'center',
                     plugins : ['cellediting'],
-                    dockedItems: [gridToolBar],
+                    dockedItems: [this.gridToolBar],
 					forceFit : true,
-					width : '100%',
+                    width : '100%',
 					height : 115,
                     cls:'autoscrl-y',
 					autoScroll : true,
@@ -176,7 +176,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				{
 					title : 'Наименование организации и её переименования',
 					height : 150,
-					items : [gridNames]
+					items :[ this.gridNames]
 				});
 
         var cbArchive = Ext.create('Ext.form.ComboBox',  {
@@ -200,7 +200,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				});
 
         tfFondNum.add(Ext.create('Ext.Button', {
-            width:50,
+            width:30,
             cls : "srch",
             action : 'srchFund'
         })) ;
