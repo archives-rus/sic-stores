@@ -1,11 +1,13 @@
 .brown-font .x-form-text{
     color:#452111;
+    opacity:1;
 }
 .x-item-disabled .x-form-item-label,
 #orgpageview .x-item-disabled .x-form-field{
     opacity:1;
 }
-#orgpageview .x-item-disabled .x-form-field{
+#orgpageview .x-item-disabled .x-form-field,
+.dis-style .x-form-field{
     background:none;
     border:none;
 }
