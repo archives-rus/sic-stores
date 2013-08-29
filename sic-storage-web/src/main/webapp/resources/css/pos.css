@@ -10,7 +10,7 @@
 .x-form-trigger-over{
     height:24px;
 }
-/*#enterpage,*/ #orgpage, #searchgpage{
+/*#enterpage,*/ #orgpage, #searchgpage, #orgpageview{
     background-color: #EDE4CE;
     min-height: 10000px !important; /*заплатка*/
 }
