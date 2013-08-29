@@ -12,7 +12,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	xtype : 'corgpage',
 	width : '100%',
     oldData: null,
-	//id : 'orgpage',
+	id : 'orgpage',
     cls:'pad10-20-0',
 	placesFieldSet : null,
     areaFieldSets : null,

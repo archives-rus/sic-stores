@@ -2,10 +2,10 @@
     color:#452111;
 }
 .x-item-disabled .x-form-item-label,
-.x-item-disabled .x-form-field{
+#orgpageview .x-item-disabled .x-form-field{
     opacity:1;
 }
-.x-item-disabled .x-form-field{
+#orgpageview .x-item-disabled .x-form-field{
     background:none;
     border:none;
 }

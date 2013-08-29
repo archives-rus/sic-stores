@@ -25,7 +25,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
     docGridToolBar : null,
     fieldLabelWidth : 120,
     cls : 'storePlaceCard',
-    margin:'10 15 0 15',
+    margin:'10 15 10 15',
     currentMode : null,
     readOnlyMode : 'READ',
     editOnlyMode : 'EDIT',
