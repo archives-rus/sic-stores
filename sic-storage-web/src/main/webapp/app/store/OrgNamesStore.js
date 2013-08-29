@@ -7,7 +7,8 @@ Ext.define('storeplaces.store.OrgNamesStore',{
 		type : 'ajax',
 		url:'servlet/QueryOrgNames',
 		reader : {
-			type : 'json'
-		}
+			type : 'json',
+		   totalProperty: 'results'
+        }
 	}
 });
