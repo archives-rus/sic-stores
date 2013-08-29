@@ -10,18 +10,32 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.Tuple;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 import ru.insoft.archive.core_model.table.adm.AdmUser;
 import ru.insoft.archive.extcommons.ejb.CommonDBHandler;
 import ru.insoft.archive.extcommons.json.JsonOut;
 import ru.insoft.archive.extcommons.utils.StringUtils;
-import ru.insoft.archive.sic_storage.model.table.*;
-import ru.insoft.archive.sic_storage.model.view.*;
+import ru.insoft.archive.sic_storage.model.table.StrgDocContents;
+import ru.insoft.archive.sic_storage.model.table.StrgFund;
+import ru.insoft.archive.sic_storage.model.table.StrgOrgName;
+import ru.insoft.archive.sic_storage.model.table.StrgOrganization;
+import ru.insoft.archive.sic_storage.model.table.StrgPlaceArchive;
+import ru.insoft.archive.sic_storage.model.table.StrgPlaceOrg;
+import ru.insoft.archive.sic_storage.model.view.VStrgArchive;
+import ru.insoft.archive.sic_storage.model.view.VStrgDocContents;
+import ru.insoft.archive.sic_storage.model.view.VStrgOrgForSearch;
+import ru.insoft.archive.sic_storage.model.view.VStrgOrgForView;
+import ru.insoft.archive.sic_storage.model.view.VStrgPlaceOrg;
 import ru.insoft.archive.sic_storage.webmodel.FundFinder;
 import ru.insoft.archive.sic_storage.webmodel.FundSearchCriteria;
 import ru.insoft.archive.sic_storage.webmodel.OrgSearchCriteria;
+import ru.insoft.archive.sic_storage.webmodel.OrgSearchInfo;
 import ru.insoft.archive.sic_storage.webmodel.OrgSearchResult;
 
 @Stateless
@@ -153,17 +167,11 @@ public class StorageHandler
 
         return newOrg;
     }
-
-    public List<OrgSearchResult> searchOrganization(OrgSearchCriteria criteria, Integer start, Integer limit)
+    
+    protected <T>Predicate[] getSearchPredicates(CriteriaBuilder cb, CriteriaQuery<T> cq, 
+    		Root<VStrgOrgForSearch> root, OrgSearchCriteria criteria)
     {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<OrgSearchResult> cq = cb.createQuery(OrgSearchResult.class);
-        Root<VStrgOrgForSearch> root = cq.from(VStrgOrgForSearch.class);
-        cq.multiselect(root.<Long>get("id"), root.<String>get("name"),
-                root.<String>get("archive"), root.<String>get("fund"),
-                cb.<String>function("get_org_storage_years", String.class, root.<Long>get("id")).alias("dates"));
-
-        List<Predicate> predicates = new ArrayList<Predicate>();
+    	List<Predicate> predicates = new ArrayList<Predicate>();
         if (criteria.getOrgName() != null)
             predicates.add(cb.greaterThan(cb.function("contains", Integer.class,
                     root.get("indexedName"), cb.literal(StringUtils.textRequest(criteria.getOrgName()))), 0));
@@ -213,11 +221,35 @@ public class StorageHandler
             sub.where(subPredicates.toArray(new Predicate[0]));
             predicates.add(cb.in(root.get("id")).value(sub));
         }
+        return predicates.toArray(new Predicate[0]);
+    }
 
-        cq.where(predicates.toArray(new Predicate[0]));
-        cq.orderBy(cb.asc(root.get("name")));
+    public OrgSearchInfo searchOrganization(OrgSearchCriteria criteria, Integer start, Integer limit)
+    {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cntQuery = cb.createQuery(Long.class);
+        Root<VStrgOrgForSearch> cntRoot = cntQuery.from(VStrgOrgForSearch.class);
+        cntQuery.select(cb.count(cntRoot));
+        cntQuery.where(getSearchPredicates(cb, cntQuery, cntRoot, criteria));
+        
+        OrgSearchInfo osi = new OrgSearchInfo();
+        osi.setResults(em.createQuery(cntQuery).getSingleResult().intValue());
+        if (osi.getResults() <= start)
+        	osi.setValues(new ArrayList<OrgSearchResult>());
+        else
+        {
+        	CriteriaQuery<OrgSearchResult> valQuery = cb.createQuery(OrgSearchResult.class);
+        	Root<VStrgOrgForSearch> valRoot = valQuery.from(VStrgOrgForSearch.class);
+ 	        valQuery.multiselect(valRoot.<Long>get("id"), valRoot.<String>get("name"),
+ 	        		valRoot.<String>get("archive"), valRoot.<String>get("fund"),
+                cb.<String>function("get_org_storage_years", String.class, valRoot.<Long>get("id")).alias("dates"));
+ 	        valQuery.where(getSearchPredicates(cb, valQuery, valRoot, criteria));
+ 	        valQuery.orderBy(cb.asc(valRoot.get("name")));
+ 	        osi.setValues(em.createQuery(valQuery)
+ 	        		.setFirstResult(start).setMaxResults(limit).getResultList());
+        }
 
-        return em.createQuery(cq).setFirstResult(start).setMaxResults(limit).getResultList();
+        return osi;
     }
 
     public StrgOrganization prepareOrgForEdit(Long id)

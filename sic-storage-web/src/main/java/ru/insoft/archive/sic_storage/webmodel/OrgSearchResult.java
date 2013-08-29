@@ -1,7 +1,6 @@
 package ru.insoft.archive.sic_storage.webmodel;
 
 import ru.insoft.archive.extcommons.json.JsonOut;
-import ru.insoft.archive.sic_storage.model.view.VStrgOrgForSearch;
 
 /**
  * Created with IntelliJ IDEA.
