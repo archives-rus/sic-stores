@@ -67,7 +67,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             break;
                         case 'namesGridAdd':
                             this.getPage().orgStore.insert( this.getPage().orgStore.getCount(), Ext.create('storeplaces.model.OrganizationName'));
-                            break; addDocRow
+                            break;
                         case 'addDocRow':
                             var gridTb = btn.up('toolbar');
                             var gridPlace = gridTb.up('grid');
@@ -87,6 +87,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     // if (isSuccess == 'true')
                                     // {
                                     main.removeAll();
+                                    buffer.removeAll();
                                     Ext.getStore('storeplaces.store.GridSearchOrgStore').removeAll();
                                     main.add(Ext.create('storeplaces.view.page.CLoginPage'));
                                     // }
@@ -96,20 +97,19 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 }
                             });
                             break;
-                        case 'editToView':
-                            break;
                         case 'viewToEdit':
                             main.removeAll();
                             main.add(buffer.items.items[0]);
                             break;
                         case 'orgCardDelete':
-                            if (this.getPage().orgStore.getCount()==0)
-                            {
-                                alert('Организация не выбрана!');
-                                break;
-                            }
-                            var id = this.getPage().orgStore.getAt(0).get('id');
+                            var id = form.idCard;
+                            if (id==null)
+                             {
+                                 alert('Организация не создана');
+                                 break;
+                             }
                             alert('Удаляем организацию с айди ' + id);
+
                            /* Ext.Ajax.request({
                                 url: 'servlet/DeleteOrganization',
                                 params : {
@@ -125,17 +125,22 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 }
                             });*/
                             break;
+                        case 'newCancel':
                         case 'orgCardAdd':
-                            var FIO = form.FIO.text;
+                            var FIO     = form.FIO.text;
+                            var oldData = form.oldData;
                             main.removeAll();
                             var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
                             newOrgPage.FIO.setText(FIO);
+                            newOrgPage.oldData = oldData;
+                            newOrgPage.items.items[0].items.items[4].action = 'newCancel';
                             newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
                             main.add(newOrgPage);
                             break;
                         case 'backSrchResult':
                             var oldData = form.oldData;
                             main.removeAll();
+                            buffer.removeAll();
                             var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
                             oldSrchPage.getForm().setValues(oldData);
                             oldSrchPage.FIO.setText(form.FIO.text);
@@ -154,7 +159,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 if  (businessTripsInfoSave=='') businessTripsInfoSave=null;
                             var rewardsInfoSave = form.areaFieldSets.items.items[1].getRawValue();
                                 if  (rewardsInfoSave=='') rewardsInfoSave=null;
-                            var notesSave                   = form.areaFieldSets.items.items[2].getRawValue();
+                            var notesSave                = form.areaFieldSets.items.items[2].getRawValue();
                                 if  (notesSave=='') notesSave=null;
                             var idArch                  = form.fundFieldset.items.items[0].getValue();
                             var prefix                  = form.fundFieldset.items.items[2].items.items[0].getRawValue();
@@ -267,20 +272,21 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             break;
                         case 'orgCardView':
                             buffer.add(form);
-                            var values = form.getForm().getValues();
-                            var FIO = form.FIO.text;
-                            var idFund = form.idFund;
-                            var oldData = form.oldData;
-                            var archive = form.fundFieldset.items.items[0].getRawValue();
-                            var prefix =  form.fundFieldset.items.items[2].items.items[0].getRawValue();
-                            var numfond = form.fundFieldset.items.items[2].items.items[1].getRawValue();
-                            var suffix =  form.fundFieldset.items.items[2].items.items[2].getRawValue();
-                            var fundNum = prefix+'-'+numfond+'-'+suffix;
-                            var nameUser = form.tfUser.getRawValue();
-                            var editDate = form.tfDateOfEdit.getRawValue();
+                            var values          = form.getForm().getValues();
+                            var FIO             = form.FIO.text;
+                            var idFund          = form.idFund;
+                            var oldData         = form.oldData;
+                            var archive         = form.fundFieldset.items.items[0].getRawValue();
+                            var prefix          = form.fundFieldset.items.items[2].items.items[0].getRawValue();
+                            var numfond         = form.fundFieldset.items.items[2].items.items[1].getRawValue();
+                            var suffix          = form.fundFieldset.items.items[2].items.items[2].getRawValue();
+                            var fundNum         = prefix+'-'+numfond+'-'+suffix;
+                            var nameUser        = form.tfUser.getRawValue();
+                            var editDate        = form.tfDateOfEdit.getRawValue();
                             var oldOrgStoreData = form.orgStore.getRange();
-                            var countCard =  form.placesFieldSet.items.getCount();
-                            var massCard = new Array();
+                            var countCard       = form.placesFieldSet.items.getCount();
+                            var massCard        = new Array();
+
                             for(var i=0; i<countCard; i++)
                             {
                                 var card = form.placesFieldSet.items.items[i];
@@ -518,7 +524,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
 
                             var fund = { 'num':num,'prefix':prefix,'suffix':suffix};
                                 fund = Ext.encode(fund);
-                            var nameFund = fs.items.items[1];
+                            var nameFund =  fs.items.items[1];
                             var datesFund = fs.items.items[3];
 
                             Ext.Ajax.request({

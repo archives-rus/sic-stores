@@ -154,6 +154,9 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             width : '100%',
             height : 300,
             autoScroll : true,
+           /* viewConfig :{
+                loadMask:false
+            },*/
             dockedItems: [{
                 xtype: 'pagingtoolbar',
                 store: Ext.getStore('storeplaces.store.GridSearchOrgStore'),

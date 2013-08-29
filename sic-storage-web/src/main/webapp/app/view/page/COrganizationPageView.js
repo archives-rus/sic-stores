@@ -222,26 +222,33 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
         this.tfUser = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Имя пользователя',
             name : 'user',
-            cls:'mar_auto brown-font',
+            disabled : true,
+            //cls:'mar_auto brown-font dis-style',
             labelWidth : 150
         });
-
-        this.tfUser.setDisabled(true);
 
         this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Дата корректировки',
             name : 'dateOfEdit',
-            cls:'mar_auto brown-font',
+            disabled : true,
+            //cls:'mar_auto brown-font dis-style',
             labelWidth : 150
         });
 
-        this.tfDateOfEdit.setDisabled(true);
+        var userDate = Ext.create('Ext.container.Container', {
+            layout: {
+                type  : 'hbox',
+                align : 'middle',
+                pack : 'center'
+            },
+            items : [this.tfUser,  this.tfDateOfEdit]
+
+        });
 
 
         Ext.applyIf(this, {
             items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,
-                this.placesFieldSet, this.areaFieldSets, this.tfUser,
-                this.tfDateOfEdit]
+                this.placesFieldSet, this.areaFieldSets, userDate]
         });
 
         this.callParent(arguments);

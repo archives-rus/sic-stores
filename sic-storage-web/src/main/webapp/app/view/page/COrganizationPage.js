@@ -12,7 +12,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	xtype : 'corgpage',
 	width : '100%',
     oldData: null,
-	id : 'orgpage',
     cls:'pad10-20-0',
 	placesFieldSet : null,
     areaFieldSets : null,
@@ -46,6 +45,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 										text : 'Редактировать',
                                         height:25,
 										cls : 'btnEdit',
+                                        hidden:true,
 										action : 'orgCardEdit'
 									}), Ext.create('Ext.Button', {
 										text : 'Просмотр',
@@ -281,26 +281,32 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
         this.tfUser = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Имя пользователя',
             name : 'user',
-            cls:'mar_auto brown-font dis-style',
+            disabled : true,
+            //cls:'mar_auto brown-font dis-style',
             labelWidth : 150
         });
-
-        this.tfUser.setDisabled(true);
 
         this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Дата корректировки',
             name : 'dateOfEdit',
-            cls:'mar_auto brown-font dis-style',
+            disabled : true,
+            //cls:'mar_auto brown-font dis-style',
             labelWidth : 150
         });
 
-        this.tfDateOfEdit.setDisabled(true);
+        var userDate = Ext.create('Ext.container.Container', {
+            layout: {
+                type  : 'hbox',
+                align : 'middle',
+                pack : 'center'
+            },
+            items : [this.tfUser,  this.tfDateOfEdit]
 
+        });
 
 		Ext.applyIf(this, {
             items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,tbarStorePlace,
-                this.placesFieldSet, this.areaFieldSets, this.tfUser,
-                this.tfDateOfEdit]
+                this.placesFieldSet, this.areaFieldSets, userDate]
         });
 
 		this.callParent(arguments);

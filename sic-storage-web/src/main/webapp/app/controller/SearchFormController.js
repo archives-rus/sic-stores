@@ -5,15 +5,15 @@ Ext.define('storeplaces.controller.SearchFormController',{
        this.control({
              'searchpage grid':{
                  itemdblclick: function(thiss, record, item, index, e, eOpts){
-                    var id = record.get('id');
-                    var form = thiss.up('form');
-                    var main = form.up('container');
+                    var id      = record.get('id');
+                    var form    = thiss.up('form');
+                    var main    = form.up('container');
                     var oldData = form.getForm().getValues();
-                    var FIO = form.FIO.text;
+                    var FIO     = form.FIO.text;
                     main.removeAll();
-                    var myOrgPage = Ext.create('storeplaces.view.page.COrganizationPageView');
-                    myOrgPage.oldData = oldData;
-                    myOrgPage.idCard = id;
+                    var myOrgPage       = Ext.create('storeplaces.view.page.COrganizationPageView');
+                    myOrgPage.oldData   = oldData;
+                    myOrgPage.idCard    = id;
                     myOrgPage.FIO.setText(FIO);
                     Ext.Ajax.request({
                         url: 'servlet/QueryOrgNames',
@@ -36,29 +36,29 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             mode:'VIEW'
                         },
                         success: function(action){
-                            var dataArray = Ext.decode(action.responseText);
-                            var archive = Ext.decode(action.responseText).archive;
-                            var fund= Ext.decode(action.responseText).fund;
-                            var fundName = Ext.decode(action.responseText).fundName;
-                            var edgeDates = Ext.decode(action.responseText).edgeDates;
+                            var dataArray   = Ext.decode(action.responseText);
+                            var archive     = Ext.decode(action.responseText).archive;
+                            var fund        = Ext.decode(action.responseText).fund;
+                            var fundName    = Ext.decode(action.responseText).fundName;
+                            var edgeDates   = Ext.decode(action.responseText).edgeDates;
 
-                            var storage = Ext.decode(action.responseText).storage;
+                            var storage     = Ext.decode(action.responseText).storage;
 
-                            var businessTripsInfo = Ext.decode(action.responseText).businessTripsInfo;
-                            var rewardsInfo= Ext.decode(action.responseText).rewardsInfo;
-                            var notes = Ext.decode(action.responseText).notes;
-                            var userName = Ext.decode(action.responseText).userName;
-                            var lastUpdateDate = Ext.decode(action.responseText).lastUpdateDate;
+                            var businessTripsInfo   = Ext.decode(action.responseText).businessTripsInfo;
+                            var rewardsInfo         = Ext.decode(action.responseText).rewardsInfo;
+                            var notes               = Ext.decode(action.responseText).notes;
+                            var userName            = Ext.decode(action.responseText).userName;
+                            var lastUpdateDate      = Ext.decode(action.responseText).lastUpdateDate;
 
-                            var myArchive =  myOrgPage.fundFieldset.items.items[0];
-                            var myFundName = myOrgPage.fundFieldset.items.items[1];
-                            var myFundNum =  myOrgPage.fundFieldset.items.items[2];
-                            var myDates =  myOrgPage.fundFieldset.items.items[3];
+                            var myArchive           =  myOrgPage.fundFieldset.items.items[0];
+                            var myFundName          =  myOrgPage.fundFieldset.items.items[1];
+                            var myFundNum           =  myOrgPage.fundFieldset.items.items[2];
+                            var myDates             =  myOrgPage.fundFieldset.items.items[3];
                             var myBusinessTripsInfo =  myOrgPage.areaFieldSets.items.items[0];
-                            var myRewardsInfo = myOrgPage.areaFieldSets.items.items[1];
-                            var myNotes =  myOrgPage.areaFieldSets.items.items[2];
-                            var myUserName =  myOrgPage.tfUser;
-                            var myLastUpdateDate =  myOrgPage.tfDateOfEdit;
+                            var myRewardsInfo       =  myOrgPage.areaFieldSets.items.items[1];
+                            var myNotes             =  myOrgPage.areaFieldSets.items.items[2];
+                            var myUserName          =  myOrgPage.tfUser;
+                            var myLastUpdateDate    =  myOrgPage.tfDateOfEdit;
 
                             myFundName.setValue(fundName);
                             myFundNum.setValue(fund);
@@ -72,18 +72,19 @@ Ext.define('storeplaces.controller.SearchFormController',{
 
                             for(var i=0; i<storage.length; i++)
                             {
-                                var idPlace =storage[i].id;
-                                var storageTypePlace =storage[i].storageType;
-                                var archivePlace =storage[i].archive;
-                                var orgNamePlace =storage[i].orgName;
-                                var addressPlace =storage[i].address;
-                                var phonePlace =storage[i].phone;
-                                var documentCountPlace =storage[i].documentCount;
-                                var beginYearPlace =storage[i].beginYear;
-                                var endYearPlace =storage[i].endYear;
-                                var contentsPlace =storage[i].contents;
-                                var placeCard = Ext.create('storeplaces.view.card.CStorePlaceView');
-                                placeCard.idPlace = idPlace;
+                                var idPlace             =storage[i].id;
+                                var storageTypePlace    =storage[i].storageType;
+                                var archivePlace        =storage[i].archive;
+                                var orgNamePlace        =storage[i].orgName;
+                                var addressPlace        =storage[i].address;
+                                var phonePlace          =storage[i].phone;
+                                var documentCountPlace  =storage[i].documentCount;
+                                var beginYearPlace      =storage[i].beginYear;
+                                var endYearPlace        =storage[i].endYear;
+                                var contentsPlace       =storage[i].contents;
+
+                                var placeCard  = Ext.create('storeplaces.view.card.CStorePlaceView');
+                                    placeCard.idPlace = idPlace;
                                 if(storageTypePlace=='В организации')
                                 {
                                     placeCard.taOrg.setValue(orgNamePlace);
@@ -175,10 +176,13 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             });
                             break;
                         case 'addOrg':
-                            var FIO = form.FIO.text;
+                            var FIO     = form.FIO.text;
+                            var oldData = form.getForm().getValues();
                             main.removeAll();
                             var newForm = Ext.create('storeplaces.view.page.COrganizationPage');
                             newForm.FIO.setText(FIO);
+                            newForm.oldData = oldData;
+                            newForm.items.items[0].items.items[4].action = 'newCancel';
                             newForm.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
                             main.add(newForm);
                             break;
@@ -189,14 +193,14 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             var iyearFrom= yearFrom.getRawValue();
                                 if (iyearFrom=='') iyearFrom = null;
                             var iyearTo  = yearTo.getRawValue();
-                             if (iyearTo=='') iyearTo = null;
+                                if (iyearTo=='') iyearTo = null;
                             var iarchive = archive.getValue();
                             var iprefix  = prefix.getRawValue();
-                             if (iprefix=='') iprefix = null;
+                                 if (iprefix=='') iprefix = null;
                             var inum     = num.getValue();
-                             if (inum=='') inum = null;
+                                if (inum=='') inum = null;
                             var isuffix  = suffix.getRawValue();
-                             if (isuffix=='') isuffix = null; ;
+                                if (isuffix=='') isuffix = null; ;
 
                             var criteria = {'orgName':iorgName,
                                             'documentTypeId':idocumentType,
@@ -207,8 +211,9 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                             };
                             criteria = Ext.encode(criteria);
                             var gridSearchOrgStore = Ext.getStore('storeplaces.store.GridSearchOrgStore');
-                            gridSearchOrgStore.load({params:{
-                                 criteria:criteria,
+                            gridSearchOrgStore.getProxy().extraParams = {'criteria':criteria};
+                                gridSearchOrgStore.load({ params:{
+                                'criteria':criteria,
                                 'start':0,
                                 'limit':2
                             }});

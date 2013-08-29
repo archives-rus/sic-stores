@@ -8,7 +8,9 @@ Ext.define('storeplaces.store.GridSearchOrgStore',{
         type : 'ajax',
         url:'servlet/SearchOrganization',
         reader : {
-            type : 'json'
+            type : 'json',
+            root :'values',
+            totalProperty : 'results'
         }
     },
     listeners: {
