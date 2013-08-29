@@ -39,18 +39,12 @@
     </servlet>
     <servlet>
         <servlet-name>QueryDocuments</servlet-name>
-        <!--<servlet-class>servlet.QueryDocuments</servlet-class>-->
         <servlet-class>ru.insoft.archive.sic_storage.servlet.QueryDocuments</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteOrganization</servlet-name>
         <servlet-class>ru.insoft.archive.sic_storage.servlet.DeleteOrganization</servlet-class>
     </servlet>
-  <!--<servlet>
-    <description>No description</description>
-    <servlet-name>DescValuesProvider</servlet-name>
-    <servlet-class>servlet.DescValuesProvider</servlet-class>
-  </servlet>-->
 
 
     <servlet-mapping>
