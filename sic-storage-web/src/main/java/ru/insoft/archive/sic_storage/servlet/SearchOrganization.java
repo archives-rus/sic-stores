@@ -1,16 +1,13 @@
 package ru.insoft.archive.sic_storage.servlet;
 
-import ru.insoft.archive.extcommons.json.JsonOut;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import ru.insoft.archive.extcommons.servlet.AbstractServlet;
 import ru.insoft.archive.sic_storage.ejb.StorageHandler;
 import ru.insoft.archive.sic_storage.webmodel.OrgSearchCriteria;
-import ru.insoft.archive.sic_storage.webmodel.OrgSearchResult;
-
-import javax.inject.Inject;
-import javax.persistence.Tuple;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import ru.insoft.archive.sic_storage.webmodel.OrgSearchInfo;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,7 +28,7 @@ public class SearchOrganization extends AbstractServlet
         Integer start = Integer.valueOf(req.getParameter(startParamKey));
         Integer limit = Integer.valueOf(req.getParameter(limitParamKey));
 
-        List<OrgSearchResult> orgList = strg.searchOrganization(criteria, start, limit);
-        resp.getWriter().write(getJsonEntitiesList(orgList).toString());
+        OrgSearchInfo orgList = strg.searchOrganization(criteria, start, limit);
+        resp.getWriter().write(getJsonForEntity(orgList).toString());
     }
 }

@@ -12,7 +12,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	xtype : 'corgpage',
 	width : '100%',
     oldData: null,
-	//id : 'orgpage',
+	id : 'orgpage',
     cls:'pad10-20-0',
 	placesFieldSet : null,
     areaFieldSets : null,
@@ -281,7 +281,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
         this.tfUser = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Имя пользователя',
             name : 'user',
-            cls:'mar_auto brown-font',
+            cls:'mar_auto brown-font dis-style',
             labelWidth : 150
         });
 
@@ -290,7 +290,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
         this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
             fieldLabel : 'Дата корректировки',
             name : 'dateOfEdit',
-            cls:'mar_auto brown-font',
+            cls:'mar_auto brown-font dis-style',
             labelWidth : 150
         });
 
