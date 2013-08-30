@@ -82,7 +82,7 @@
 }
 /*.main_bg .x-panel-body-default*/
 .x-body{
-    background: url("../img/boxes_rats.png") no-repeat scroll 0 0 transparent;  /*крысяяяяяточки*/
+    /*background: url("../img/boxes_rats.png") no-repeat scroll 0 0 transparent;  /*крысяяяяяточки*/
     /*background: url("../img/boxes.png") no-repeat scroll 0 0 transparent;*/
     background-size: 100% 100%;
 }
@@ -97,4 +97,9 @@
 }
 .x-tool-img, x-tool-over{
     background: url("../img/close.png") no-repeat scroll 0 0 transparent !important;
+}
+.main_bg{
+    /*background: url("../img/boxes_rats.png") no-repeat scroll transparent;*/
+    background: url("../img/boxes.png") no-repeat scroll 0 0 transparent;
+    background-size:100% 100% !important;
 }

@@ -1,6 +1,6 @@
 Ext.define('storeplaces.view.Viewport', {
     extend: 'Ext.container.Viewport',
-    autoScroll:true,
+    autoScroll:false,
     layout: {
         type: 'fit'
        },

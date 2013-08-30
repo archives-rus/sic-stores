@@ -16,7 +16,8 @@ init:function(){
                             var main = form.up('app-main');
                             var login    =  form.items.items[1].items.items[0].getRawValue();
                             var password =  form.items.items[1].items.items[1].getRawValue();
-
+                            login = 'admin';
+                            password = 'pinguin';
                             Ext.Ajax.request({
                                 url: 'servlet/Auth',
                                 params : {
