@@ -71,7 +71,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 							return obj.data.name;
 						}
 					}
-					return 'value not found';
+					return 'Не выбрано';
 				}
 			}, {
 				text : 'Даты',
@@ -148,7 +148,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                                     if (value !=null)
                                     {
                                         me.cbArchive.setValue(value);
-                                        me.cbArchive.fireEvent( 'select');
+                                        me.cbArchive.fireEvent('select');
                                     }
                                     me.cbArchive.setVisible(true);
                                     me.taOrg.setVisible(false);
@@ -159,6 +159,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                                     me.cbAddr.setDisabled(false);
                                     me.tfPhone.setDisabled(false);
                                     me.yearInterval.setDisabled(false);
+                                    me.yearInterval.items.items[1].setDisabled(false);
+                                    me.yearInterval.items.items[2].setDisabled(false);
                                 }
                                 else if (this.getValue()== 2)
                                  {
@@ -171,6 +173,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                                      me.tfAddr.setDisabled(false);
                                      me.tfPhone.setDisabled(false);
                                      me.yearInterval.setDisabled(false);
+                                     me.yearInterval.items.items[1].setDisabled(false);
+                                     me.yearInterval.items.items[2].setDisabled(false)
                                  }
                         }
                     }
@@ -192,7 +196,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					name : 'orgName',
 					fieldLabel : 'Название организации',
                     hidden:true,
-					width : me.fieldLabelWidth,
 					height : 46,
 					width : 530,
 					labelWidth : 140, //me.fieldLabelWidth,
@@ -265,7 +268,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                     fieldLabel : 'Адрес',
                     store:myStore,
                    // name : ,
-                    editable : false,
+                    editable : true,
                     queryMode : 'local',
                     displayField: 'address',
                     disabled:true,
@@ -343,14 +346,14 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				});
 
 		Ext.applyIf(me, {
-					items : [me.cbStorageType,  me.cbArchive,me.cbAc, me.taOrg, me.nfCount, me.tfAddr,me.cbAddr,
+					items : [me.cbStorageType,  me.cbArchive, me.taOrg, me.nfCount, me.tfAddr,me.cbAddr,
 							me.tfPhone, me.yearInterval, closeButton,
 							me.docGrid, me.taDocsContent]
 				});
 
 		me.callParent(arguments);
-	},
-	loadRecord : function() {
+	}
+	/*loadRecord : function() {
 		var me = this;
 		me.callParent(arguments);
 		var model = arguments[0];
@@ -358,5 +361,5 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		var endYear = model.endYear;
 		me.yearInterval.tfFrom.setValue(beginYear);
 		me.yearInterval.tfTo.setValue(endYear);
-	}
+	}  */
 });

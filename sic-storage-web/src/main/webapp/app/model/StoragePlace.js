@@ -1,6 +1,6 @@
 Ext.define('storeplaces.model.StoragePlace',{
 	extend:'Ext.data.Model',
-	fields:[{
+	fields:[/*{
 		name:'id',
 		type:'int'
 	},{
@@ -12,10 +12,13 @@ Ext.define('storeplaces.model.StoragePlace',{
 	},{
 		name:'orgName',
 		type:'string'
-	},{
+	},*/{
 		name:'address',
 		type:'string'
 	},{
+        name:'phone',
+        type:'string'
+    }/*{
 		name:'documentCount',
 		type:'string'
 	},{
@@ -30,5 +33,5 @@ Ext.define('storeplaces.model.StoragePlace',{
 	},{
         name:'phone',
         type:'string'
-    }]
+    }*/]
 });

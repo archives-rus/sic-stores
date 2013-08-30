@@ -9,14 +9,7 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 			fieldLabel : null,
 			labelWidth : null,
 			tfFrom : null,
-//			style:{
-//				backgroundColor:'red'
-//			},
 			tfTo : null,
-			setDisableed:function(isEnabled){
-				this.tfFrom.setDisabled(isEnabled);
-				this.tfTo.setDisabled(isEnabled);
-			},
 			addCls:function(cls){
 				this.callParent(arguments);
 				this.tfFrom.addCls(cls);
@@ -43,8 +36,8 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 				me.tfFrom = Ext.create('Ext.form.field.Text', {
 							width : 100,
 							fieldLabel : 'с',
-                            disabled:true,
 							labelWidth : 20,
+                            disabled : true,
                             margin : '0 0px 0 -10px',
 							height:22
 						});
@@ -54,8 +47,8 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 				me.tfTo = Ext.create('Ext.form.field.Text', {
 							width : 110,
 							fieldLabel : 'по',
-                            disabled:true,
-							labelWidth : 30
+                            disabled : true,
+                            labelWidth : 30
 						});
 
 				items[items.length] = me.tfTo;
