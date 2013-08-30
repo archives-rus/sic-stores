@@ -10,16 +10,6 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 			labelWidth : null,
 			tfFrom : null,
 			tfTo : null,
-			addCls:function(cls){
-				this.callParent(arguments);
-				this.tfFrom.addCls(cls);
-				this.tfTo.addCls(cls);
-			},
-			removeCls:function(cls){
-				this.callParent(arguments);
-				this.tfFrom.removeCls(cls)
-				this.tfTo.removeCls(cls);
-				},
 			initComponent : function() {
 				var me = this;
 				var items = new Array();

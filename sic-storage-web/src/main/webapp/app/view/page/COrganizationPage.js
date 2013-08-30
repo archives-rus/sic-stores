@@ -1,11 +1,8 @@
 Ext.define('storeplaces.view.page.COrganizationPage', {
 	extend : 'Ext.form.Panel',
-    autoScroll : true,
+ //   autoScroll : true,
 	minWidth : 1024,
-    //height: '100%',
     minHeight: 500,
-    //height: 880,
-    height: 880,
     FIO : null,
     idFund: null,
     idCard: null,
@@ -21,11 +18,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
     orgStore : null,
     gridNames : null,
     gridToolBar : null,
-    loadRecord:function(){
-        var me = this;
-        me.callParent();
-
-    },
 	initComponent : function() {
         //this.setHeight(600);
         this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');

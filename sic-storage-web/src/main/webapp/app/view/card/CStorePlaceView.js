@@ -256,14 +256,5 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         });
 
         me.callParent(arguments);
-    },
-    loadRecord : function() {
-        var me = this;
-        me.callParent(arguments);
-        var model = arguments[0];
-        var beginYear = model.beginYear;
-        var endYear = model.endYear;
-        me.yearInterval.tfFrom.setValue(beginYear);
-        me.yearInterval.tfTo.setValue(endYear);
     }
 });

@@ -1,5 +1,6 @@
 Ext.define('storeplaces.view.page.CSearchPage', {
     extend : 'Ext.form.Panel',
+    autoScroll : false,
     minWidth : 1024,
     minWidth : 500,
     FIO: null,
@@ -155,8 +156,10 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             height : 300,
             autoScroll : true,
            /* viewConfig :{
-                loadMask:false
-            },*/
+                loadMask:false,
+                autoScroll : true,
+                height:500
+            },  */
             dockedItems: [{
                 xtype: 'pagingtoolbar',
                 store: Ext.getStore('storeplaces.store.GridSearchOrgStore'),

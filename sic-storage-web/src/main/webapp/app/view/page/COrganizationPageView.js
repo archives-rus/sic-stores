@@ -1,14 +1,15 @@
 Ext.define('storeplaces.view.page.COrganizationPageView', {
     extend : 'Ext.form.Panel',
-    autoScroll : true,
+ //   autoScroll : false,
     minWidth : 1024,
     minHeight: 500,
+    height: 890,
     FIO : null,
     xtype : 'corgpage',
     oldData: null,
     width : '100%',
     id : 'orgpageview',
-    /*cls:'pad10-20-0',*/
+    cls:'pad10-20-0',
     idFund: null,
     idCard: null,
     placesFieldSet : null,
@@ -19,11 +20,6 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     gridToolBar : null,
     tfDateOfEdit : null,
     tfUser : null,
-    loadRecord:function(){
-        var me = this;
-        me.callParent();
-
-    },
     initComponent : function() {
         this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');
         this.FIO = Ext.create('Ext.form.Label', {

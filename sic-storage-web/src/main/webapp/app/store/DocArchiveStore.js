@@ -3,7 +3,6 @@ Ext.define('storeplaces.store.DocArchiveStore',{
     storeId : 'DocArchiveStore',
     autoLoad:true,
     fields:['id','name'],
-    //model: 'storeplaces.model.DocTypesModel',
     proxy : {
         type : 'ajax',
         url:'servlet/DescValuesProvider',
