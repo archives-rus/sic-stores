@@ -151,6 +151,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var names = new Array();
                             for(var i=0; i<modelsOrg.length; i++)
                             {
+                                modelsOrg[i].set( 'sortOrder', i+1)
                                 names.push(modelsOrg[i].getData());
                             }
                             var idOrg  = form.idCard;
@@ -262,8 +263,10 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     org:org
                                 },
                                 success: function(action){
-                                    var id = Ext.decode(action.responseText).id;
-                                    alert('Организация с айди'+id+'сохранена');
+                                    var idOrg = Ext.decode(action.responseText).id;
+                                    form.idCard = idOrg;
+
+                                    alert('Организация с айди'+idOrg+'сохранена');
                                 },
                                 failure : function() {
                                     Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
