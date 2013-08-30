@@ -9,8 +9,5 @@ Ext.define('storeplaces.store.OrgNamesStore',{
 		reader : {
 			type : 'json'
         }
-	},
-    listeners : {
-
-    }
+	}
 });

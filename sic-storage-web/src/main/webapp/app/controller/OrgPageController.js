@@ -209,6 +209,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     var address     = dataCard.cbAddr.getRawValue();
                                          if  (address=='') address=null;
                                     var idArchiveCb = dataCard.cbArchive.getValue();
+
                                     var archStrg =
                                     {
                                         'id'       :   idArchStorage,
