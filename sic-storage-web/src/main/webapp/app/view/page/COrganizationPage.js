@@ -1,6 +1,6 @@
 Ext.define('storeplaces.view.page.COrganizationPage', {
 	extend : 'Ext.form.Panel',
- //   autoScroll : true,
+   // autoScroll : true,
 	minWidth : 1024,
     minHeight: 500,
     FIO : null,
@@ -9,7 +9,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	xtype : 'corgpage',
 	width : '100%',
     oldData: null,
-    cls:'pad10-20-0',
+    cls:'pad10-20',
 	placesFieldSet : null,
     areaFieldSets : null,
     tfUser : null,

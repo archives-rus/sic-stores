@@ -1,7 +1,7 @@
 #searchgpage-body,
-.pad10-20-0 > .x-panel-body,
+.pad10-20 > .x-panel-body,
 #orgpageview-body{
-    padding:10px 20px 0;
+    padding:10px 20px;
 }
 .x-fieldset{
     margin:0 10px !important;
@@ -12,7 +12,6 @@
 }
 /*#enterpage,*/ #orgpage, #searchgpage, #orgpageview{
     background-color: #EDE4CE;
-    min-height: 10000px !important; /*заплатка*/
 }
 .mar{
     margin:10px 15px 0 !important;
