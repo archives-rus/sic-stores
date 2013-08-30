@@ -223,7 +223,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             fieldLabel : 'Имя пользователя',
             name : 'user',
             disabled : true,
-            cls:'mar_auto brown-font dis-style',
+            cls:'brown-font dis-style',
             labelWidth : 150
         });
 
@@ -231,7 +231,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             fieldLabel : 'Дата корректировки',
             name : 'dateOfEdit',
             disabled : true,
-            cls:'mar_auto brown-font dis-style',
+            cls:'brown-font dis-style',
             labelWidth : 150
         });
 
