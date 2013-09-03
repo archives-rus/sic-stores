@@ -79,13 +79,10 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 success: function(action){
                                     var isSuccess = Ext.decode(action.responseText).success;
                                     var isMsg = Ext.decode(action.responseText).msg;
-                                    // if (isSuccess == 'true')
-                                    // {
                                     main.removeAll();
                                     buffer.removeAll();
                                     Ext.getStore('storeplaces.store.GridSearchOrgStore').removeAll();
                                     main.add(Ext.create('storeplaces.view.page.CLoginPage'));
-                                    // }
                                 },
                                 failure : function(action) {
                                     Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
