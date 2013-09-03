@@ -47,7 +47,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	gridEditOnlyColumns : [{
 				text : 'ИД',
 				dataIndex : 'id',
-				hidden : true,
+				//hidden : true,
 				hideable : false
 			}, {
 				text : 'Вид документа',
@@ -162,7 +162,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                                     me.yearInterval.items.items[1].setDisabled(false);
                                     me.yearInterval.items.items[2].setDisabled(false);
                                 }
-                                else if (this.getValue()== 2)
+                             else  if (this.getValue()== 2)
                                  {
                                      me.cbArchive.setVisible(false);
                                      me.taOrg.setVisible(true);

@@ -2,7 +2,9 @@ Ext.define('storeplaces.model.OrganizationName',{
 	extend:'Ext.data.Model',
 	fields:[{
 		name:'id',
-		type:'int'
+		type:'int',
+        defaultValue : null,
+        convert : null
 	},{
 		name:'fullName',
 		type:'string'

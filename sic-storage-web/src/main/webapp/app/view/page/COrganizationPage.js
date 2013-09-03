@@ -21,6 +21,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	initComponent : function() {
         //this.setHeight(600);
         this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');
+
         this.FIO = Ext.create('Ext.form.Label', {
             text : '',
             baseCls : 'loginedUserText',
@@ -117,7 +118,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					columns : [{
 								text : 'ИД',
 								dataIndex : 'id',
-								hidden : true,
+								//hidden : true,
 								hideable : false
 							}, {
 								text : 'Полное наименование и переименования',
@@ -256,17 +257,17 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                                         name: 'zagranInfo',
                                         fieldLabel : 'Сведения о загранкомандировках',
 										labelWidth : 200,
-                                        height:50
+                                        height:33
 									}), Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Сведения о награждениях',
                                         name: 'goldInfo',
 										labelWidth : 200,
-                                        height:50
+                                        height:33
 									}), Ext.create('Ext.form.field.TextArea', {
 										fieldLabel : 'Примечание',
                                         name: 'noteInfo',
 										labelWidth : 200,
-                                        height:50
+                                        height:33
 									})]
 				});
 
