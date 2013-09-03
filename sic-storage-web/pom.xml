@@ -19,7 +19,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.ext-commons>0.0.1-SNAPSHOT</version.ext-commons>
+        <version.ext-commons>0.0.2-SNAPSHOT</version.ext-commons>
         <version.core-model>0.0.1-SNAPSHOT</version.core-model>
         <version.jboss-spec>3.0.2.Final</version.jboss-spec>
         <version.cdi-api>1.0-SP4</version.cdi-api>
