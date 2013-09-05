@@ -1,6 +1,6 @@
 Ext.define('storeplaces.store.DocsWriteStore',{
 	extend : 'Ext.data.Store',
-	storeId : 'DocsWriteStore',
+	//storeId : 'DocsWriteStore',
 	autoLoad:false,
 	model : 'storeplaces.model.DocTableEntryWrite',
 	proxy : {

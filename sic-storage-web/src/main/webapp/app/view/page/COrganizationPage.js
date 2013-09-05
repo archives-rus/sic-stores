@@ -118,7 +118,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					columns : [{
 								text : 'ИД',
 								dataIndex : 'id',
-								//hidden : true,
+								hidden : true,
 								hideable : false
 							}, {
 								text : 'Полное наименование и переименования',

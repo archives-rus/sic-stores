@@ -47,7 +47,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	gridEditOnlyColumns : [{
 				text : 'ИД',
 				dataIndex : 'id',
-				//hidden : true,
+				hidden : true,
 				hideable : false
 			}, {
 				text : 'Вид документа',
@@ -63,9 +63,9 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 							validateOnChange : false
 						}),
 				renderer : function(value) {
-					var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor
-							.getStore();
-					for (var i = 0; i < editorComboStore.getCount(); i++) {
+					//var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor.getStore();  //не работает после сохранения!
+                    var editorComboStore = Ext.getStore('storeplaces.store.DocTypesStore');
+					for ( var i = 0; i < editorComboStore.getCount(); i++) {
 						var obj = editorComboStore.getAt(i);
 						if (obj.data.id == value) {
 							return obj.data.name;
@@ -327,8 +327,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					dockedItems : me.docGridToolBar,
 					y : me.nfCount.y + me.nfCount.height + 5,
                     cls:'mar_right15',
-					//width : 1120,
-                    //width : '80%',
 					height : 135,
 					forceFit : true,
 					columns : me.gridEditOnlyColumns
