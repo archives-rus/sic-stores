@@ -110,6 +110,35 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     var success = Ext.decode(action.responseText).success;
                                     main.removeAll();
                                     main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+                                    Ext.Msg.alert('Внимание', 'Организация удалена!');
+                                },
+                                failure : function() {
+                                    Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                }
+                            });
+                            break;
+                        case 'orgCardDeleteView':
+                            var id = form.idCard;
+                            if (id==null)
+                            {
+                                Ext.Msg.alert('Внимание', 'Организация не создана!');
+                                break;
+                            }
+                            Ext.Ajax.request({
+                                url: 'servlet/DeleteOrganization',
+                                params : {
+                                    id:id
+                                },
+                                success: function(action){
+                                    var success = Ext.decode(action.responseText).success;
+                                    var newPage         =  parseInt(form.cardToolBar.items.items[4].getValue()) - 1;
+                                    var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
+                                    Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
+                                    var id  = cardsStoreAll.getAt(newPage-1).get('id');
+                                    window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+                                    Ext.getStore('storeplaces.store.CardsStore').reload();
+                                    Ext.getStore('storeplaces.store.CardsStore').reload();
+                                    Ext.Msg.alert('Внимание', 'Организация удалена!');
                                 },
                                 failure : function() {
                                     Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
@@ -127,15 +156,6 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             newOrgPage.items.items[0].items.items[4].action = 'newCancel';
                             newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
                             main.add(newOrgPage);
-                            break;
-                        case 'backSrchResult':
-                            var oldData = form.oldData;
-                            main.removeAll();
-                            buffer.removeAll();
-                            var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
-                            oldSrchPage.getForm().setValues(oldData);
-                            oldSrchPage.FIO.setText(form.FIO.text);
-                            main.add(oldSrchPage);
                             break;
                         case 'orgCardSave':
                             var modelsOrg = form.orgStore.getRange();

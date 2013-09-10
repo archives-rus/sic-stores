@@ -18,19 +18,35 @@ Ext.define('storeplaces.view.page.CLoginPage', {
 
     var login= Ext.create('Ext.form.field.Text', {
         fieldLabel : 'Логин',
+        emptyText : 'login',
         name : 'login',
         width : 200,
         labelWidth : 100,
-        cls:'mar lft'
+        cls:'mar lft',
+        validator : function(){
+            if (this.getValue() =='')
+            {
+                return 'Логин не может быть пустым';
+            }
+            else return true;
+        }
     });
 
     var password= Ext.create('Ext.form.field.Text', {
         fieldLabel : 'Пароль',
+        emptyText : 'password',
         name : 'password',
         inputType : 'password',
         width : 200,
         labelWidth : 100,
-        cls:'mar lft'
+        cls:'mar lft',
+        validator : function(){
+            if (this.getValue() =='')
+            {
+                return 'Пароль не может быть пустым';
+            }
+            else return true;
+        }
     });
 
     var LoginFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
