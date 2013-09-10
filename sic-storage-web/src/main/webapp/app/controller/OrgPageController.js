@@ -131,13 +131,26 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 },
                                 success: function(action){
                                     var success = Ext.decode(action.responseText).success;
-                                    var newPage         =  parseInt(form.cardToolBar.items.items[4].getValue()) - 1;
                                     var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
-                                    Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
-                                    var id  = cardsStoreAll.getAt(newPage-1).get('id');
-                                    window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
-                                    Ext.getStore('storeplaces.store.CardsStore').reload();
-                                    Ext.getStore('storeplaces.store.CardsStore').reload();
+                                    if (cardsStoreAll.getCount() == 1)
+                                    {
+                                        var oldData = form.oldData;
+                                        main.removeAll();
+                                        buffer.removeAll();
+                                        var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
+                                        oldSrchPage.getForm().setValues(oldData);
+                                        oldSrchPage.FIO.setText(form.FIO.text);
+                                        main.add(oldSrchPage);
+                                    }
+                                    else
+                                    {
+                                        var newPage         =  parseInt(form.cardToolBar.items.items[4].getValue()) - 1;
+                                        Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
+                                        var id  = cardsStoreAll.getAt(newPage-1).get('id');
+                                        window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+                                        Ext.getStore('storeplaces.store.CardsStore').reload();
+                                        Ext.getStore('storeplaces.store.CardsStore').reload();
+                                    }
                                     Ext.Msg.alert('Внимание', 'Организация удалена!');
                                 },
                                 failure : function() {
@@ -157,7 +170,43 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
                             main.add(newOrgPage);
                             break;
+                        case 'backSrchResult':
+                           var oldData = form.oldData;
+                           main.removeAll();
+                           buffer.removeAll();
+                           var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
+                           oldSrchPage.getForm().setValues(oldData);
+                           oldSrchPage.FIO.setText(form.FIO.text);
+                           main.add(oldSrchPage);
+                           break;
                         case 'orgCardSave':
+                            var  Card = form.placesFieldSet.items.items[0];
+                            var orgName  = Card.taOrg.getRawValue();
+                            if  (orgName)
+                            {
+                                place   = Card.taOrg.getValue();    //tf
+                                addres  = Card.tfAddr.getValue();
+                            }
+                            else
+                            {
+                                place    = Card.cbArchive.getValue(); //combo
+                                addres   = Card.cbAddr.getValue();    //combo
+                            }
+
+                            if ( form.fundFieldset.items.items[0].getValue() == null || form.gridNames.getStore().getCount()==0 ||
+                                 Card.cbDocTypes == null || place == '' || addres =='' || Card.docsWriteStore.getCount() == 0)
+                            {
+                                Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации, архив и место хранения!');
+                                break;
+                            }
+
+                            if (form.fundFieldset.items.items[2].items.items[1].getRawValue() != '' && form.fundFieldset.items.items[1].getRawValue() == '' )
+                            {
+                                Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название фонда!');
+                                break;
+                            }
+
+
                             var modelsOrg = form.orgStore.getRange();
                             var names = new Array();
                             for(var i=0; i<modelsOrg.length; i++)
@@ -177,22 +226,40 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var prefix                  = form.fundFieldset.items.items[2].items.items[0].getRawValue();
                                 if  (prefix=='') prefix=null;
                             var numFund                 = form.fundFieldset.items.items[2].items.items[1].getRawValue();
-                                numFund = parseInt(numFund);
                             var suffix                  = form.fundFieldset.items.items[2].items.items[2].getRawValue();
                                 if  (suffix=='') suffix=null;
                             var nameFund                = form.fundFieldset.items.items[1].getRawValue();
                                 if  (nameFund=='') nameFund=null;
                             var datesFund               = form.fundFieldset.items.items[3].getRawValue();
                                 if  (datesFund=='') datesFund=null;
+
+                               /*  if(numFund == '') {
+                                     numFund  = null;
+                                     var fund =null;
+                                 }
+                                 else{
+                                     numFund = parseInt(numFund);
+                                     var fund = {
+                                         'id':idFund,
+                                         'archiveId':idArch,
+                                         'num':numFund,
+                                         'prefix':prefix,
+                                         'suffix':suffix,
+                                         'name':nameFund,
+                                         'dates':datesFund
+                                     };
+                                 } */
+                            numFund = parseInt(numFund);
                             var fund = {
-                                    'id':idFund,
-                                    'archiveId':idArch,
-                                    'num':numFund,
-                                    'prefix':prefix,
-                                    'suffix':suffix,
-                                    'name':nameFund,
-                                    'dates':datesFund
-                             };
+                                'id':idFund,
+                                'archiveId':idArch,
+                                'num':numFund,
+                                'prefix':prefix,
+                                'suffix':suffix,
+                                'name':nameFund,
+                                'dates':datesFund
+                            };
+
                             var myCards = form.placesFieldSet.items.items;
                             var storage     = new Array();
                             var documents   = new Array();
@@ -535,9 +602,9 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var num         = numFund.items.items[1].getRawValue();
                             var prefix      = numFund.items.items[0].getRawValue();
                             var suffix      = numFund.items.items[2].getRawValue();
-                            if (archiveId=='' || archiveId==null || num=='' || prefix=='' || suffix=='')
+                            if (archiveId=='' || archiveId==null || num==''/* || prefix=='' || suffix==''*/)
                             {
-                                Ext.Msg.alert('Внимание', 'Для поиска необходимо ввсети ахив и номер фонда');
+                                Ext.Msg.alert('Внимание', 'Для поиска необходимо ввсети архив и номер фонда');
                                 break;
                             }
                                 if (prefix =='') prefix=null;
