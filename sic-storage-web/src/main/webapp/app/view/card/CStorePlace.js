@@ -128,7 +128,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					labelWidth : 140, //me.fieldLabelWidth,
 					store : Ext.create('storeplaces.store.StorageTypeStore'),
 					width : 370,
-					height : 25,
+					height : 22,
 					valueField : 'id',
 					displayField : 'valueFull',
 					editable : false,
