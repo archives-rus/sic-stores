@@ -28,6 +28,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var vp = main.up('viewport');
                             var buffer = vp.items.items[1];
                         }
+
 					switch(btn.action){
 						case 'addStorePlace':
 							var place = Ext.create('storeplaces.view.card.CStorePlace');
@@ -97,12 +98,10 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var id = form.idCard;
                             if (id==null)
                              {
-                                 alert('Организация не создана');
+                                 Ext.Msg.alert('Внимание', 'Организация не создана!');
                                  break;
                              }
-                            alert('Удаляем организацию с айди ' + id);
-
-                           /* Ext.Ajax.request({
+                           Ext.Ajax.request({
                                 url: 'servlet/DeleteOrganization',
                                 params : {
                                     id:id
@@ -115,7 +114,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 failure : function() {
                                     Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
                                 }
-                            });*/
+                            });
                             break;
                         case 'newCancel':
                         case 'orgCardAdd':
@@ -518,7 +517,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var suffix      = numFund.items.items[2].getRawValue();
                             if (archiveId=='' || archiveId==null || num=='' || prefix=='' || suffix=='')
                             {
-                                alert('Введите архив и номер фонда!');
+                                Ext.Msg.alert('Внимание', 'Для поиска необходимо ввсети ахив и номер фонда');
                                 break;
                             }
                                 if (prefix =='') prefix=null;
@@ -713,7 +712,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             success: function(action){
                                 var massStorage = Ext.decode(action.responseText);
                                 placeCard.docsWriteStore.loadData(massStorage);
-                                alert('Организация сохранена');
+                                Ext.Msg.alert('Внимание', 'Организация сохранена!');
                             },
                             failure : function() {
                                 Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');

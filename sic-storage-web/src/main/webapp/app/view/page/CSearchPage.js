@@ -9,6 +9,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
     width : '100%',
     id : 'searchgpage',
     searchFieldset: null,
+    pagingTb : null,
     initComponent : function() {
 
     var titlePage = Ext.create('Ext.form.Label', {
@@ -21,6 +22,14 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         baseCls : 'loginedUserText',
         flex : 0
     });
+
+    this.pagingTb = Ext.create('Ext.toolbar.Paging', {
+        store: Ext.getStore('storeplaces.store.GridSearchOrgStore'),
+        dock: 'top',
+        displayInfo: true
+    });
+
+
     var toolBarSearch = Ext.create('Ext.toolbar.Toolbar', {
         items : [Ext.create('Ext.Button', {
             text : 'Поиск',
@@ -155,17 +164,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             width : '100%',
             height : 300,
             autoScroll : true,
-           /* viewConfig :{
-                loadMask:false,
-                autoScroll : true,
-                height:500
-            },  */
-            dockedItems: [{
-                xtype: 'pagingtoolbar',
-                store: Ext.getStore('storeplaces.store.GridSearchOrgStore'),
-                dock: 'top',
-                displayInfo: true
-            }],
+            dockedItems: [this.pagingTb],
             columns : [{
                 text : 'ИД',
                 dataIndex : 'id',

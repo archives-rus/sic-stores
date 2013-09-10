@@ -11,15 +11,19 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
     cls:'pad10-20',
     idFund: null,
     idCard: null,
+    cardNum : null,
+    searchCriteria : null,
     placesFieldSet : null,
-    areaFieldSets:null,
-    fundFieldset:null,
+    areaFieldSets : null,
+    fundFieldset : null,
     orgStore : null,
     gridNames : null,
+    cardToolBar : null,
     gridToolBar : null,
     tfDateOfEdit : null,
     tfUser : null,
     initComponent : function() {
+        var  me = this;
         this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');
         this.FIO = Ext.create('Ext.form.Label', {
             text :  '',
@@ -46,6 +50,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                 action : 'orgCardView'
             }), Ext.create('Ext.Button', {
                 text : 'Сохранить',
+                hidden: true,
                 height:25,
                 cls : 'btnSave',
                 action : 'orgCardSave'
@@ -80,17 +85,50 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
                 })]
         });
 
-        var cardToolBar = Ext.create('Ext.toolbar.Paging', {
-            //store:store,
+        this.cardToolBar = Ext.create('Ext.toolbar.Paging', {
+            store:Ext.getStore('storeplaces.store.CardsStore'),
             layout:{
                 type: 'hbox',
                 pack:'center'
             },
             beforePageText: 'Карточка',
-            afterPageText: 'из {0}'
-            //displayMsg: 'Пользователи {0} - {1} из {2}',
-            //displayInfo: true
+            afterPageText: 'из {0}',
+            moveFirst : function(){
+                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
+                Ext.getStore('storeplaces.store.CardsStore').loadPage(1);
+                var id = cardsStoreAll.getAt(0).get('id');
+                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+            },
+            movePrevious : function(){
+                var newPage         =  parseInt(this.items.items[4].getValue()) - 1;
+                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
+                Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
+                var id  = cardsStoreAll.getAt(newPage-1).get('id');
+                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+            },
+            moveNext : function(){
+                var newPage         =  parseInt(this.items.items[4].getValue()) + 1;
+                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
+                Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
+                var id  = cardsStoreAll.getAt(newPage-1).get('id');
+                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+            },
+            moveLast : function(){
+                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
+                var total           =  Ext.getStore('storeplaces.store.CardsStore').totalCount;
+                Ext.getStore('storeplaces.store.CardsStore').loadPage(total);
+                var id  = cardsStoreAll.getAt(total-1).get('id');
+                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+            },
+            doRefresh : function(){
+                var page  =  parseInt(this.items.items[4].getValue());
+                Ext.getStore('storeplaces.store.CardsStore').loadPage(page);
+                var id  = me.idCard;
+                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+            }
         });
+
+        this.cardToolBar.items.items[4].setValue(this.cardNum);
 
         gridNames = Ext.create('Ext.grid.Panel', {
             store : this.orgStore,
@@ -242,7 +280,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 
 
         Ext.applyIf(this, {
-            items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,
+            items : [toolBar,this.cardToolBar, renamesFieldset, this.fundFieldset,
                 this.placesFieldSet, this.areaFieldSets, userDate]
         });
 

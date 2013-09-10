@@ -77,18 +77,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 									})]
 				});
 
-         var cardToolBar = Ext.create('Ext.toolbar.Paging', {
-             //store:store,
-             layout:{
-               type: 'hbox',
-               pack:'center'
-             },
-             beforePageText: 'Карточка',
-             afterPageText: 'из {0}'
-             //displayMsg: 'Пользователи {0} - {1} из {2}',
-             //displayInfo: true
-         });
-
         this.gridToolBar = Ext.create('Ext.toolbar.Toolbar', {
 					items : [Ext.create('Ext.Button', {
 										//text : '+',
@@ -298,7 +286,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
         });
 
 		Ext.applyIf(this, {
-            items : [toolBar,cardToolBar, renamesFieldset, this.fundFieldset,tbarStorePlace,
+            items : [toolBar, renamesFieldset, this.fundFieldset,tbarStorePlace,
                 this.placesFieldSet, this.areaFieldSets, userDate]
         });
 

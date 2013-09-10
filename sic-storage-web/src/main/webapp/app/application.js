@@ -19,11 +19,12 @@ Ext.define('storeplaces.Application', {
         'storeplaces.controller.StorePlaceCardController',
         'storeplaces.controller.OrgPageController',
         'storeplaces.controller.EnterFormController',
-        'storeplaces.controller.SearchFormController'
+        'storeplaces.controller.SearchFormController',
+        'storeplaces.controller.OrgPageFunc'
     ],
 
     stores: [
-        'storeplaces.store.StorageTypeStore','storeplaces.store.DocsReadStore','storeplaces.store.GridSearchOrgStore',
+        'storeplaces.store.StorageTypeStore','storeplaces.store.DocsReadStore','storeplaces.store.GridSearchOrgStore', 'storeplaces.store.CardsStore', 'storeplaces.store.CardsStoreAll',
         'storeplaces.store.DocsWriteStore','storeplaces.store.DocTypesStore','storeplaces.store.DocArchiveStore','storeplaces.store.StoragePlaceStore'
     ]
 });

@@ -1,20 +1,28 @@
 Ext.define('storeplaces.controller.SearchFormController',{
     extend:'Ext.app.Controller',
     views: ['page.CSearchPage'],
+    searchCriteria : null,
     init:function(){
        this.control({
              'searchpage grid':{
                  itemdblclick: function(thiss, record, item, index, e, eOpts){
-                    var id      = record.get('id');
-                    var form    = thiss.up('form');
-                    var main    = form.up('container');
-                    var oldData = form.getForm().getValues();
-                    var FIO     = form.FIO.text;
+                    var id          = record.get('id');
+                    var form        = thiss.up('form');
+                    var main        = form.up('container');
+                    var oldData     = form.getForm().getValues();
+                    var FIO         = form.FIO.text;
+                    var pageSearch  = parseInt(form.pagingTb.items.items[4].getValue());
+                    var cardNum     = parseInt((2*(pageSearch-1)+1) + index);
                     main.removeAll();
                     var myOrgPage       = Ext.create('storeplaces.view.page.COrganizationPageView');
                     myOrgPage.oldData   = oldData;
                     myOrgPage.idCard    = id;
                     myOrgPage.FIO.setText(FIO);
+                    var criteria = this.searchCriteria;
+                    criteria = Ext.encode(criteria);
+                    var cardsStorePaging    = Ext.getStore('storeplaces.store.CardsStore');
+                    cardsStorePaging.getProxy().extraParams = {'criteria':criteria};
+                    cardsStorePaging.loadPage(cardNum,{ params:{ 'start':cardNum }});
                     Ext.Ajax.request({
                         url: 'servlet/QueryOrgNames',
                         params : {
@@ -155,7 +163,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             searchFieldset.items.items[4].items.each(function (item) {item.reset ()});
                             break;
                         case 'backMain':
-                            alert(1);
+                            Ext.Msg.alert('Внимание', 'Переход в главное меню!');
                             break;
                         case 'quitSerch':
                             Ext.Ajax.request({
@@ -187,6 +195,10 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             main.add(newForm);
                             break;
                         case 'srchBtn':
+                            if(Ext.getStore('storeplaces.store.GridSearchOrgStore').getCount() != 0)
+                            {
+                                Ext.getStore('storeplaces.store.GridSearchOrgStore').removeAll();
+                            }
                             var iorgName = orgName.getRawValue();
                                 if (iorgName=='') iorgName = null;
                             var idocumentType = documentType.getValue();
@@ -209,14 +221,18 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                             'archiveId':iarchive,
                                             'fund': {'num':inum,'prefix':iprefix,'suffix':isuffix}
                                             };
+                            this.searchCriteria =  criteria;
                             criteria = Ext.encode(criteria);
-                            var gridSearchOrgStore = Ext.getStore('storeplaces.store.GridSearchOrgStore');
+                            var gridSearchOrgStore  = Ext.getStore('storeplaces.store.GridSearchOrgStore');
+                            var cardsStoreAll       = Ext.getStore('storeplaces.store.CardsStoreAll');
                             gridSearchOrgStore.getProxy().extraParams = {'criteria':criteria};
-                                gridSearchOrgStore.load({ params:{
+                            gridSearchOrgStore.load({ params:{
                                 'criteria':criteria,
                                 'start':0,
                                 'limit':2
                             }});
+                           gridSearchOrgStore.loadPage(1,{ params:{'start':0,'limit':2}});
+                           cardsStoreAll.load({ params:{'criteria':criteria}});
                             break;
                         default:
                             return;
