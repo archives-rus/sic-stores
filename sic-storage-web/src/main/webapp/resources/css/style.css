@@ -34,13 +34,13 @@
     background-color:#EDE4CE;
     border:none;
 }
-.x-box-layout-ct{
+/*.x-box-layout-ct{
     border-image: url( ../img/menu_border_bot.png);
     -moz-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
     -webkit-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
     -o-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
     border-bottom: 1px solid;
-}
+}*/
 .main_bg .x-box-layout-ct{
     border-bottom:none !important;
     -moz-border-image: none;
@@ -94,7 +94,7 @@ label{
     border:none;
 }
 .x-toolbar{
-    height:35px;
+    /*height:35px;*/
 }
 .title_search{
     font:bold 18px Arial;
