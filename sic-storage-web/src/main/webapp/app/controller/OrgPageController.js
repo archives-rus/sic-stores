@@ -90,10 +90,10 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 }
                             });
                             break;
-                        case 'viewToEdit':
+                       /* case 'viewToEdit':
                             main.removeAll();
                             main.add(buffer.items.items[0]);
-                            break;
+                            break;      */
                         case 'orgCardDelete':
                             var id = form.idCard;
                             if (id==null)
@@ -142,6 +142,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                         var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
                                         oldSrchPage.getForm().setValues(oldData);
                                         oldSrchPage.FIO.setText(form.FIO.text);
+                                       // oldSrchPage.items.items[1].items.items[0].fireEvent('click');
                                         main.add(oldSrchPage);
                                     }
                                     else if (thisPage == 1)
@@ -174,6 +175,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             var oldData = form.oldData;
                             main.removeAll();
                             var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
+                            newOrgPage.items.items[0].items.items[2].action = 'viewNew';
                             newOrgPage.FIO.setText(FIO);
                             newOrgPage.oldData = oldData;
                             newOrgPage.items.items[0].items.items[4].action = 'newCancel';
@@ -188,6 +190,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                            oldSrchPage.getForm().setValues(oldData);
                            oldSrchPage.FIO.setText(form.FIO.text);
                            main.add(oldSrchPage);
+                          // oldSrchPage.items.items[1].items.items[0].fireEvent('click');
                            break;
                         case 'orgCardSave':
                             var  Card = form.placesFieldSet.items.items[0];
@@ -355,6 +358,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             });
                             break;
                         case 'orgCardView':
+                            var pTb = false;
+                        case 'orgCardView':
                             buffer.add(form);
                             var values          = form.getForm().getValues();
                             var FIO             = form.FIO.text;
@@ -379,6 +384,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             }
                             main.removeAll();
                             var OrgViewPage = Ext.create('storeplaces.view.page.COrganizationPageView');
+                            if (pTb ==false)  OrgViewPage.cardToolBar.removeAll();
                             OrgViewPage.getForm().setValues(values);
                             OrgViewPage.oldData = oldData;
                             OrgViewPage.idFund = idFund;
