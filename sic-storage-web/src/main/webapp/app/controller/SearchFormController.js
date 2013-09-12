@@ -22,7 +22,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                     criteria = Ext.encode(criteria);
                     var cardsStorePaging    = Ext.getStore('storeplaces.store.CardsStore');
                     cardsStorePaging.getProxy().extraParams = {'criteria':criteria};
-                    cardsStorePaging.loadPage(cardNum,{ params:{ 'start':cardNum }});
+                    cardsStorePaging.loadPage(cardNum);
                     Ext.Ajax.request({
                         url: 'servlet/QueryOrgNames',
                         params : {

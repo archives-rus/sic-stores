@@ -19,3 +19,13 @@
 .x-item-disabled .x-form-trigger{
 
 }
+.x-window-default,
+.x-message-box .x-window-body,
+.x-window-header-default-top{
+	background-color: #F5E0D0;
+}
+.x-window-default,
+.x-window-default .x-btn-default-small{
+	border-color: #3F2013;
+}
+#msg-div{}
