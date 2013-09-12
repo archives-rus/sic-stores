@@ -267,24 +267,23 @@ Ext.define("storeplaces.view.card.CStorePlace", {
         me.cbAddr = Ext.create('Ext.form.ComboBox', {
                     fieldLabel : 'Адрес',
                     store:myStore,
-                   // name : ,
                     editable : true,
                     queryMode : 'local',
                     displayField: 'address',
                     disabled:true,
-                    valueField: 'phone',
+                    valueField: 'id',
                     emptyText : 'Не выбрано',
-                   // hidden:true,
                     width : 490,
-                    labelWidth : 100, //me.fieldLabelWidth,
+                    labelWidth : 100,
                     x : 610,
                     y : 25,
                     listeners:{
-                        'select': function(){
-                            me.tfPhone.setValue(this.getValue());
+                        'select': function(combo, records, eOpts){
+                            var phone =  records[0].data.phone;
+                            me.tfPhone.setValue(phone);
                         }
-                        }
-                    });
+                    }
+        });
 
 		me.tfPhone = Ext.create('Ext.form.field.Text', {
 					name : 'phone',

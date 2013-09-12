@@ -130,8 +130,10 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     id:id
                                 },
                                 success: function(action){
-                                    var success = Ext.decode(action.responseText).success;
-                                    var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
+                                    var success         = Ext.decode(action.responseText).success;
+                                    var cardsStore      = Ext.getStore('storeplaces.store.CardsStore');
+                                    var cardsStoreAll   = Ext.getStore('storeplaces.store.CardsStoreAll');
+                                    var thisPage        = form.cardToolBar.items.items[4].getValue();
                                     if (cardsStoreAll.getCount() == 1)
                                     {
                                         var oldData = form.oldData;
@@ -142,14 +144,22 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                         oldSrchPage.FIO.setText(form.FIO.text);
                                         main.add(oldSrchPage);
                                     }
+                                    else if (thisPage == 1)
+                                    {
+                                        cardsStore.loadPage(1);
+                                        var id  = cardsStoreAll.getAt(1).get('id');
+                                        window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+                                        cardsStore.reload();
+                                        cardsStoreAll.reload();
+                                    }
                                     else
                                     {
-                                        var newPage         =  parseInt(form.cardToolBar.items.items[4].getValue()) - 1;
-                                        Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
+                                        var newPage =  parseInt(form.cardToolBar.items.items[4].getValue()) - 1;
+                                        cardsStore.loadPage(newPage);
                                         var id  = cardsStoreAll.getAt(newPage-1).get('id');
                                         window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
-                                        Ext.getStore('storeplaces.store.CardsStore').reload();
-                                        Ext.getStore('storeplaces.store.CardsStore').reload();
+                                        cardsStore.reload();
+                                        cardsStoreAll.reload();
                                     }
                                     Ext.Msg.alert('Внимание', 'Организация удалена!');
                                 },
@@ -194,7 +204,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             }
 
                             if ( form.fundFieldset.items.items[0].getValue() == null || form.gridNames.getStore().getCount()==0 ||
-                                 Card.cbDocTypes == null || place == '' || addres =='' || Card.docsWriteStore.getCount() == 0)
+                                 Card.cbDocTypes == null || place == '' || addres =='' )
                             {
                                 Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации, архив и место хранения!');
                                 break;
@@ -232,12 +242,11 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 if  (nameFund=='') nameFund=null;
                             var datesFund               = form.fundFieldset.items.items[3].getRawValue();
                                 if  (datesFund=='') datesFund=null;
-
-                               /*  if(numFund == '') {
+                                if(numFund == '') {
                                      numFund  = null;
                                      var fund =null;
                                  }
-                                 else{
+                                 else {
                                      numFund = parseInt(numFund);
                                      var fund = {
                                          'id':idFund,
@@ -248,17 +257,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                          'name':nameFund,
                                          'dates':datesFund
                                      };
-                                 } */
-                            numFund = parseInt(numFund);
-                            var fund = {
-                                'id':idFund,
-                                'archiveId':idArch,
-                                'num':numFund,
-                                'prefix':prefix,
-                                'suffix':suffix,
-                                'name':nameFund,
-                                'dates':datesFund
-                            };
+                                 }
 
                             var myCards = form.placesFieldSet.items.items;
                             var storage     = new Array();
@@ -266,9 +265,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
 
                             for(var j=0; j<myCards.length; j++)
                             {
-                                var dataCard        = myCards[j];
-                                var idPlace         = dataCard.idPlace;
-                                var idArchStorage   = dataCard.idArchStorage;
+                                var dataCard            = myCards[j];
+                                var idPlace             = dataCard.idPlace;
                                 var phone           = dataCard.tfPhone.getRawValue();
                                     if  (phone=='') phone=null;
                                 var documentCount   = dataCard.nfCount.getRawValue();
@@ -286,8 +284,9 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     orgName = null;
                                     var address     = dataCard.cbAddr.getRawValue();
                                          if  (address=='') address=null;
-                                    var idArchiveCb = dataCard.cbArchive.getValue();
-
+                                    var idArchiveCb     = dataCard.cbArchive.getValue();
+                                    var idArchStorage   = dataCard.cbAddr.getValue();
+                                        idArchStorage = parseInt(idArchStorage);
                                     var archStrg =
                                     {
                                         'id'       :   idArchStorage,
@@ -430,7 +429,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
 
                                 OrgViewPage.placesFieldSet.add(newCard);
                             }
-                            OrgViewPage.items.items[0].items.items[1].action = 'viewToEdit';
+                           // OrgViewPage.items.items[0].items.items[1].action = 'viewToEdit';
                             var archivePage = OrgViewPage.fundFieldset.items.items[0];
                             var fundNumPage = OrgViewPage.fundFieldset.items.items[2];
                             archivePage.setRawValue(archive);
@@ -471,13 +470,17 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 success: function(action){
                                     var dataArray = Ext.decode(action.responseText);
                                     var archiveId = Ext.decode(action.responseText).archiveId;
-
-                                    var fundId= Ext.decode(action.responseText).fund.id;
-                                    var fundNum= Ext.decode(action.responseText).fund.num;
-                                    var fundPrefix= Ext.decode(action.responseText).fund.prefix;
-                                    var fundSuffix= Ext.decode(action.responseText).fund.suffix;
-                                    var fundName= Ext.decode(action.responseText).fund.name;
-                                    var fundDates= Ext.decode(action.responseText).fund.dates;
+                                    var fund      = Ext.decode(action.responseText).fund;
+                                    if(fund)
+                                    {
+                                        var fundId= Ext.decode(action.responseText).fund.id;
+                                        var fundNum= Ext.decode(action.responseText).fund.num;
+                                        var fundPrefix= Ext.decode(action.responseText).fund.prefix;
+                                        var fundSuffix= Ext.decode(action.responseText).fund.suffix;
+                                        var fundName= Ext.decode(action.responseText).fund.name;
+                                        var fundDates= Ext.decode(action.responseText).fund.dates;
+                                        myEditOrgPage.idFund = fundId;
+                                    }
 
                                     var storage = Ext.decode(action.responseText).storage;
 
@@ -513,7 +516,6 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     myNotes.setValue(notes);
                                     myUserName.setValue(userName);
                                     myLastUpdateDate.setValue(lastUpdateDate);
-                                    myEditOrgPage.idFund = fundId;
                                     for(var i=0; i<storage.length; i++)
                                     {
                                         var idPlace =storage[i].id;   // id места хранения документов
@@ -659,8 +661,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
 		});
         var reloadMain = function(id,FIO,oldData,main)
         {
-            /*var myMask = new Ext.LoadMask(Ext.getBody(), {msg:"Сохранение..."});
-            myMask.show();    */
+            var myMask = new Ext.LoadMask(Ext.getBody(), {msg:"Сохранение..."});
+            myMask.show();
             main.removeAll();
             var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
             myEditOrgPage.FIO.setText(FIO);
@@ -689,13 +691,17 @@ Ext.define('storeplaces.controller.OrgPageController',{
                 success: function(action){
                     var dataArray = Ext.decode(action.responseText);
                     var archiveId = Ext.decode(action.responseText).archiveId;
-
-                    var fundId= Ext.decode(action.responseText).fund.id;
-                    var fundNum= Ext.decode(action.responseText).fund.num;
-                    var fundPrefix= Ext.decode(action.responseText).fund.prefix;
-                    var fundSuffix= Ext.decode(action.responseText).fund.suffix;
-                    var fundName= Ext.decode(action.responseText).fund.name;
-                    var fundDates= Ext.decode(action.responseText).fund.dates;
+                    var fund      = Ext.decode(action.responseText).fund;
+                    if (fund)
+                    {
+                        var fundId= Ext.decode(action.responseText).fund.id;
+                        var fundNum= Ext.decode(action.responseText).fund.num;
+                        var fundPrefix= Ext.decode(action.responseText).fund.prefix;
+                        var fundSuffix= Ext.decode(action.responseText).fund.suffix;
+                        var fundName= Ext.decode(action.responseText).fund.name;
+                        var fundDates= Ext.decode(action.responseText).fund.dates;
+                        myEditOrgPage.idFund = fundId;
+                    }
 
                     var storage = Ext.decode(action.responseText).storage;
 
@@ -731,20 +737,19 @@ Ext.define('storeplaces.controller.OrgPageController',{
                     myNotes.setValue(notes);
                     myUserName.setValue(userName);
                     myLastUpdateDate.setValue(lastUpdateDate);
-                    myEditOrgPage.idFund = fundId;
 
                     for(var i=0; i<storage.length; i++)
                     {
                         var idPlace     = storage[i].id;   // id места хранения документов
                         var archStrg    = storage[i].archStrg;
-                        if  (archStrg)
+                        if (archStrg)
                         {
                             var archInId    = storage[i].archStrg.id; // id места хранения в архиве
                             var archId      = storage[i].archStrg.archiveId; //id архива(второй комбо снизу)
                             var archAddress = storage[i].archStrg.address
                             var archPhone   = storage[i].archStrg.phone
                         }
-                        else  archStrg==null;
+                        else  archStrg == null;
 
                         var orgNamePlace =storage[i].orgName;
                         var addressPlace =storage[i].address;
@@ -799,6 +804,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             success: function(action){
                                 var massStorage = Ext.decode(action.responseText);
                                 placeCard.docsWriteStore.loadData(massStorage);
+                                myMask.hide();
                                 Ext.Msg.alert('Внимание', 'Организация сохранена!');
                             },
                             failure : function() {

@@ -128,6 +128,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
             }
         });
 
+        //this.cardToolBar.items.items[4].disable();
         this.cardToolBar.items.items[4].setValue(this.cardNum);
 
         gridNames = Ext.create('Ext.grid.Panel', {
