@@ -162,6 +162,7 @@ public class StorageHandler
             for (StrgPlaceArchive oldArchPlace : oldArchPlaces)
                 if (!archStorageIsBeingUsed(oldArchPlace))
                     em.remove(oldArchPlace);
+        em.flush();
         Query q = em.createNativeQuery("begin CTX_DDL.SYNC_INDEX('ITXT_STRG_ORG_NAME'); end;");
         q.executeUpdate();
 
