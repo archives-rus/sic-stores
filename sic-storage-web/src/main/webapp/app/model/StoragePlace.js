@@ -7,9 +7,12 @@ Ext.define('storeplaces.model.StoragePlace',{
 		name:'storageType',
 		type:'string'
 	},{
-		name:'archive',
-		type:'string'
+		name:'archiveId',
+		type:'int'
 	},{
+        name:'archive',
+        type:'string'
+    },{
 		name:'orgName',
 		type:'string'
 	},{
