@@ -111,26 +111,26 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 							}, {
 								text : 'Полное наименование и переименования',
 								dataIndex : 'fullName',
+                                width:'40%',
                                 editor : {
                                     xtype : 'textfield',
-                                    allowBlank : false,
-                                    width:'40%'
+                                    allowBlank : false
                                 }
 							}, {
 								text : 'Краткое наименование',
 								dataIndex : 'shortName',
+                                width:'28%',
                                 editor : {
                                     xtype : 'textfield',
-                                    allowBlank : false,
-                                    width:'28%'
+                                    allowBlank : false
                                  }
 							}, {
 								text : 'Подчинённость',
 								dataIndex : 'subordination',
+                                width:'15%',
                                 editor : {
                                     xtype : 'textfield',
-                                    allowBlank : false,
-                                    width:'15%'
+                                    allowBlank : false
                                 }
 							}, {
 								text : 'Даты',
