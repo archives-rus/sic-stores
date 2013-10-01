@@ -14,7 +14,6 @@ Ext.define('storeplaces.controller.OrgPageFunc',{
         //var tb = btn.up('toolbar');
         var form =  this.getPage();
         var main =  form.up('container');
-        main.removeAll();
 
         var oldData = form.oldData;
         var FIO     = form.FIO.text;

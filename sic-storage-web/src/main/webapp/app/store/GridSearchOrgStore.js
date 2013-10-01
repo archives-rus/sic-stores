@@ -15,7 +15,7 @@ Ext.define('storeplaces.store.GridSearchOrgStore',{
     },
     listeners: {
         'load':function(store) {
-            if (store.getCount()==0) Ext.Msg.alert('Внимание', 'Организации не найдены!');
+            if (store.getCount()==0 && store.currentPage != 0) Ext.Msg.alert('Внимание', 'Организации не найдены!');
         }
     }
 });

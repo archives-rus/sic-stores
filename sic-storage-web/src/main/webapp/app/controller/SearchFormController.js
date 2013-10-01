@@ -156,16 +156,20 @@ Ext.define('storeplaces.controller.SearchFormController',{
 
                     switch(btn.action){
                         case 'clearSearchParm':
-                            searchFieldset.items.items[0].reset();
+                            form.pagingTb.getStore().removeAll();
+                            main.removeAll();
+                            var schPage = Ext.create('storeplaces.view.page.CSearchPage');
+                            main.add(schPage);
+                          /*  searchFieldset.items.items[0].reset();
                             searchFieldset.items.items[1].reset();
                             searchFieldset.items.items[2].items.each(function (item) {item.reset ()});
                             searchFieldset.items.items[3].reset();
-                            searchFieldset.items.items[4].items.each(function (item) {item.reset ()});
+                            searchFieldset.items.items[4].items.each(function (item) {item.reset ()});*/
                             break;
                         case 'backMain':
                             Ext.Msg.alert('Внимание', 'Переход в главное меню!');
                             break;
-                        case 'quitSerch':
+                        case 'quitSearch':
                             Ext.Ajax.request({
                                 url: 'servlet/Auth',
                                 params : {
@@ -195,6 +199,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             main.add(newForm);
                             break;
                         case 'srchBtn':
+
                             if(Ext.getStore('storeplaces.store.GridSearchOrgStore').getCount() != 0)
                             {
                                 Ext.getStore('storeplaces.store.GridSearchOrgStore').removeAll();
@@ -203,14 +208,15 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                 if (iorgName=='') iorgName = null;
                             var idocumentType = documentType.getValue();
                             var iyearFrom= yearFrom.getRawValue();
-                                if (iyearFrom=='') iyearFrom = null;
+                                iyearFrom = parseInt(iyearFrom);
                             var iyearTo  = yearTo.getRawValue();
-                                if (iyearTo=='') iyearTo = null;
+                                iyearTo = parseInt(iyearTo);
                             var iarchive = archive.getValue();
+                                 if (iarchive=='') iarchive = null;
                             var iprefix  = prefix.getRawValue();
                                  if (iprefix=='') iprefix = null;
-                            var inum     = num.getValue();
-                                if (inum=='') inum = null;
+                            var inum    = num.getRawValue();
+                                 inum = parseInt(inum);
                             var isuffix  = suffix.getRawValue();
                                 if (isuffix=='') isuffix = null; ;
 
@@ -220,7 +226,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                             'yearTo': iyearTo,
                                             'archiveId':iarchive,
                                             'fund': {'num':inum,'prefix':iprefix,'suffix':isuffix}
-                                            };
+                            };
                             this.searchCriteria =  criteria;
                             criteria = Ext.encode(criteria);
                             var gridSearchOrgStore  = Ext.getStore('storeplaces.store.GridSearchOrgStore');

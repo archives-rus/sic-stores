@@ -10,7 +10,7 @@ Ext.define('storeplaces.model.GridSearchOrgModel',{
         name:'archive',
         type:'string'
     },{
-        name:'fond',
+        name:'fund',
         type:'string'
     },{
         name:'dates',

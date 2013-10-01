@@ -180,7 +180,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
                 flex :2
             }, {
                 text : 'Фонд',
-                dataIndex : 'fond',
+                dataIndex : 'fund',
                 flex :1
             }, {
                 text : 'Крайние даты',

@@ -3,6 +3,8 @@ Ext.define('storeplaces.model.DocTableEntryWrite',{
 	fields:[{
 		name:'id',
 		type:'int'
+       /* defaultValue : null,
+        convert : null*/
 	},{
 		name:'documentTypeId',
 		type:'int'

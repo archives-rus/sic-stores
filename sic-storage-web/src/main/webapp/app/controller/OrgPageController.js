@@ -33,6 +33,9 @@ Ext.define('storeplaces.controller.OrgPageController',{
 						case 'addStorePlace':
 							var place = Ext.create('storeplaces.view.card.CStorePlace');
 							this.getPage().placesFieldSet.add(place);
+                          //  this.getPage().placesFieldSet.getEl().scroll('b',Infinity);
+                            var d =  this.getPage().placesFieldSet.body.dom;
+                            d.scrollTop = 99999;
                             break;
                         case 'namesGridUp':
                             var form    = btn.up('toolbar').up('gridpanel').up('fieldset').up('form');
@@ -205,9 +208,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 place    = Card.cbArchive.getValue(); //combo
                                 addres   = Card.cbAddr.getValue();    //combo
                             }
-
                             if ( form.fundFieldset.items.items[0].getValue() == null || form.gridNames.getStore().getCount()==0 ||
-                                 Card.cbDocTypes == null || place == '' || addres =='' )
+                                 Card.cbDocTypes == null || place == '' || addres == '' || place==null || addres==null)
                             {
                                 Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации, архив и место хранения!');
                                 break;
@@ -264,17 +266,18 @@ Ext.define('storeplaces.controller.OrgPageController',{
 
                             var myCards = form.placesFieldSet.items.items;
                             var storage     = new Array();
-                            var documents   = new Array();
+
 
                             for(var j=0; j<myCards.length; j++)
                             {
+                                var documents           = new Array();
                                 var dataCard            = myCards[j];
                                 var idPlace             = dataCard.idPlace;
-                                var phone           = dataCard.tfPhone.getRawValue();
-                                    if  (phone=='') phone=null;
-                                var documentCount   = dataCard.nfCount.getRawValue();
-                                documentCount = parseInt(documentCount);
-                                var orgName         = dataCard.taOrg.getRawValue();
+                                var phone               = dataCard.tfPhone.getRawValue();
+                                   if (phone=='') phone = null;
+                                var documentCount       = dataCard.nfCount.getRawValue();
+                                    documentCount       = parseInt(documentCount);
+                                var orgName             = dataCard.taOrg.getRawValue();
 
                                 if  (orgName)
                                 {
@@ -300,9 +303,9 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 }
 
                                 var beginYear       = dataCard.yearInterval.items.items[1].getRawValue();
-                                beginYear = parseInt(beginYear);
+                                    beginYear = parseInt(beginYear);
                                 var endYear         = dataCard.yearInterval.items.items[2].getRawValue();
-                                endYear = parseInt(endYear);
+                                    endYear = parseInt(endYear);
                                 var modelsCard      = dataCard.docsWriteStore.getRange();
 
                                 for(var i=0; i<modelsCard.length; i++)
@@ -313,7 +316,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 }
 
                                 var contents        = dataCard.taDocsContent.getRawValue();
-                                    if  (contents=='') contents=null;
+                                    if  (contents=='') contents = null;
 
                                 var card ={
                                     'id'            : idPlace,

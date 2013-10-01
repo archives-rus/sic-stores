@@ -164,8 +164,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
                                 }
                              else  if (this.getValue()== 2)
                                  {
+                                    // var value_org = combo.up('storeplacecard').up('fieldset').up('form').fundFieldset.items.items[0].getValue();
+                                     var value_org = combo.up('storeplacecard').up('fieldset').up('form').gridNames.getStore().getAt(0).get('fullName');
                                      me.cbArchive.setVisible(false);
                                      me.taOrg.setVisible(true);
+                                     me.taOrg.setValue(value_org);
                                      me.cbAddr.setVisible(false);
                                      me.tfAddr.setVisible(true);
                                      me.cbDocTypes.setDisabled(false);
@@ -336,6 +339,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					//labelWidth : me.fieldLabelWidth,
                     labelWidth : 140,
 					fieldLabel : 'Состав документов',
+                    disabled : true,
 					height : 40,
 					y : me.docGrid.y + me.docGrid.height + 5,
 					x : 5,
