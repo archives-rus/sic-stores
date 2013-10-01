@@ -38,4 +38,6 @@
 .noscrl-x .x-fieldset-body{
     overflow-x:hidden !important;
 }
-
+.width480{
+	width:480px !important;
+}
