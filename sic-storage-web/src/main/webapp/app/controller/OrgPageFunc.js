@@ -119,10 +119,11 @@ Ext.define('storeplaces.controller.OrgPageFunc',{
                             storageId:idPlace,
                             mode:'VIEW'
                         },
-                        success: function(action){
+                        pc : placeCard,
+                        success: function(action, opts){
+                            var placeCard = opts.pc;
                             var massStorage = Ext.decode(action.responseText);
-                            placeCard.docReadStore.loadData(massStorage);
-
+                            placeCard.docGrid.getStore().loadData(massStorage);
                         },
                         failure : function() {
                             Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');

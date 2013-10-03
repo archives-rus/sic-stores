@@ -60,13 +60,19 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
                                         height:25,
 										cls : 'btnDelete',
 										action : 'orgCardDelete'
-									}), '->',
+									}), Ext.create('Ext.Button', {
+                                        text : 'Вернуться к результатам поиска',
+                                        height:25,
+                                        cls : 'backToSrch',
+                                        action : 'backSrchResult'
+                                    }),
+                                        '->',
                                         this.FIO,
 							            Ext.create('Ext.toolbar.Separator', {
 										html : '|',
-										//id : 'vertSeparator',
 										baseCls : 'vertSeparator'
-									}), Ext.create('Ext.Button', {
+									}),
+                                        Ext.create('Ext.Button', {
 										text : 'Выход',
 										tooltip : 'Выход из системы',
 										tooltipType : 'title',

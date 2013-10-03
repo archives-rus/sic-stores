@@ -59,12 +59,13 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 							displayField : 'name',
 							blankText : 'Не выбран вид документа',
 							emptyText : 'Не выбран',
-							forceSelection : true,
-							validateOnChange : false
+						   	forceSelection : true,
+						    //validateOnChange : false
 						}),
-				renderer : function(value) {
-					//var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor.getStore();  //не работает после сохранения!
+				renderer : function(value,store) {
+                    //var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor.getStore();  //не работает после сохранения!
                     var editorComboStore = Ext.getStore('storeplaces.store.DocTypesStore');
+                    console.log(editorComboStore);
 					for ( var i = 0; i < editorComboStore.getCount(); i++) {
 						var obj = editorComboStore.getAt(i);
 						if (obj.data.id == value) {
@@ -108,9 +109,9 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				}]
 			}],
 	initComponent : function() {
-        this.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
 		var x_ = 580;
 		var me = this;
+        me.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
         var myStore = Ext.create('storeplaces.store.StoragePlaceStore');
 		var closeButton = Ext.create('Ext.Button', {
 					//text : 'X',

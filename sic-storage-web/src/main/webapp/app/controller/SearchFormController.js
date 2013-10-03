@@ -80,6 +80,8 @@ Ext.define('storeplaces.controller.SearchFormController',{
 
                             for(var i=0; i<storage.length; i++)
                             {
+                                var placeCard  = Ext.create('storeplaces.view.card.CStorePlaceView');
+                                var num = i+1;
                                 var idPlace             =storage[i].id;
                                 var storageTypePlace    =storage[i].storageType;
                                 var archivePlace        =storage[i].archive;
@@ -91,8 +93,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                 var endYearPlace        =storage[i].endYear;
                                 var contentsPlace       =storage[i].contents;
 
-                                var placeCard  = Ext.create('storeplaces.view.card.CStorePlaceView');
-                                    placeCard.idPlace = idPlace;
+                                placeCard.idPlace = idPlace;
                                 if(storageTypePlace=='В организации')
                                 {
                                     placeCard.taOrg.setValue(orgNamePlace);
@@ -113,15 +114,18 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                 placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
                                 placeCard.yearInterval.items.items[2].setValue(endYearPlace);
                                 placeCard.taDocsContent.setValue(contentsPlace);
+
                                 Ext.Ajax.request({
                                     url: 'servlet/QueryDocuments',
                                     params : {
                                         storageId:idPlace,
                                         mode:'VIEW'
                                     },
-                                    success: function(action){
+                                    pc : placeCard,
+                                    success: function(action, opts){
+                                        var placeCard = opts.pc;
                                         var massStorage = Ext.decode(action.responseText);
-                                        placeCard.docReadStore.loadData(massStorage);
+                                        placeCard.docGrid.getStore().loadData(massStorage);
 
                                     },
                                     failure : function() {
@@ -130,8 +134,6 @@ Ext.define('storeplaces.controller.SearchFormController',{
                                 });
                                 myOrgPage.placesFieldSet.add(placeCard);
                             }
-
-
                         },
                         failure : function() {
                             Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
@@ -157,14 +159,11 @@ Ext.define('storeplaces.controller.SearchFormController',{
                     switch(btn.action){
                         case 'clearSearchParm':
                             form.pagingTb.getStore().removeAll();
+                            var FIO = form.FIO.text;
                             main.removeAll();
                             var schPage = Ext.create('storeplaces.view.page.CSearchPage');
+                            schPage.FIO.setText(FIO);
                             main.add(schPage);
-                          /*  searchFieldset.items.items[0].reset();
-                            searchFieldset.items.items[1].reset();
-                            searchFieldset.items.items[2].items.each(function (item) {item.reset ()});
-                            searchFieldset.items.items[3].reset();
-                            searchFieldset.items.items[4].items.each(function (item) {item.reset ()});*/
                             break;
                         case 'backMain':
                             Ext.Msg.alert('Внимание', 'Переход в главное меню!');

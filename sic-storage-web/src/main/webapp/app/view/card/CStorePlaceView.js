@@ -94,8 +94,8 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         }
     }],
     initComponent : function() {
-        this.docReadStore = Ext.create('storeplaces.store.DocsReadStore');
-        this.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
+     //   this.docReadStore = Ext.create('storeplaces.store.DocsReadStore');
+      //  this.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
         var x_ = 580;
         var me = this;
 
@@ -226,7 +226,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
         // });
 
         me.docGrid = Ext.create('Ext.grid.Panel', {
-            store : this.docReadStore,
+            store : Ext.create('storeplaces.store.DocsReadStore'),
             x : 15,
             y : me.nfCount.y + me.nfCount.height + 5,
             cls:'mar_right15',

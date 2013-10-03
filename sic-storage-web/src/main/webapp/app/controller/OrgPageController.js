@@ -266,7 +266,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
 
                             var myCards = form.placesFieldSet.items.items;
                             var storage     = new Array();
-
+                           // var documents           = new Array();
 
                             for(var j=0; j<myCards.length; j++)
                             {
@@ -306,7 +306,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     beginYear = parseInt(beginYear);
                                 var endYear         = dataCard.yearInterval.items.items[2].getRawValue();
                                     endYear = parseInt(endYear);
-                                var modelsCard      = dataCard.docsWriteStore.getRange();
+                                var modelsCard      = dataCard.docGrid.getStore().getRange();
 
                                 for(var i=0; i<modelsCard.length; i++)
                                 {
@@ -432,9 +432,9 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     newCard.yearInterval.items.items[2].setValue(oldEndYear);
                                   var oldContents       = oldCard.taDocsContent.getRawValue();
                                     newCard.taDocsContent.setValue(oldContents);
-                                  var oldPlaceStoreData = oldCard.docsWriteStore.getRange();
-                                     newCard.docGrid.reconfigure( newCard.docsWriteStore, newCard.gridEditOnlyColumns);
-                                     newCard.docsWriteStore.loadData(oldPlaceStoreData);
+                                  var oldPlaceStoreData = oldCard.docGrid.getStore().getRange();
+                                     newCard.docGrid.reconfigure( newCard.docGrid.getStore(), newCard.gridEditOnlyColumns);
+                                     newCard.docGrid.getStore().loadData(oldPlaceStoreData);
 
                                 OrgViewPage.placesFieldSet.add(newCard);
                             }
@@ -480,6 +480,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     var dataArray = Ext.decode(action.responseText);
                                     var archiveId = Ext.decode(action.responseText).archiveId;
                                     var fund      = Ext.decode(action.responseText).fund;
+
                                     if(fund)
                                     {
                                         var fundId= Ext.decode(action.responseText).fund.id;
@@ -527,6 +528,7 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     myLastUpdateDate.setValue(lastUpdateDate);
                                     for(var i=0; i<storage.length; i++)
                                     {
+                                        var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
                                         var idPlace =storage[i].id;   // id места хранения документов
                                         var archStrg    = storage[i].archStrg;
                                         if  (archStrg)
@@ -546,7 +548,6 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                         var endYearPlace =storage[i].endYear;
                                         var contentsPlace =storage[i].contents;
 
-                                        var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
                                         placeCard.idPlace = idPlace;
                                         placeCard.idArchStorage = archInId;
                                         placeCard.tfPhone.setDisabled(false);
@@ -581,15 +582,18 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                         placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
                                         placeCard.yearInterval.items.items[2].setValue(endYearPlace);
                                         placeCard.taDocsContent.setValue(contentsPlace);
+
                                         Ext.Ajax.request({
                                             url: 'servlet/QueryDocuments',
                                             params : {
                                                 storageId:idPlace,
                                                 mode:'EDIT'
                                             },
-                                            success: function(action){
+                                            pc : placeCard,
+                                            success: function(action,opts){
+                                                placeCard = opts.pc;
                                                 var massStorage = Ext.decode(action.responseText);
-                                                placeCard.docsWriteStore.loadData(massStorage);
+                                                placeCard.docGrid.getStore().loadData(massStorage);
 
                                             },
                                             failure : function() {
@@ -804,15 +808,18 @@ Ext.define('storeplaces.controller.OrgPageController',{
                         placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
                         placeCard.yearInterval.items.items[2].setValue(endYearPlace);
                         placeCard.taDocsContent.setValue(contentsPlace);
+
                         Ext.Ajax.request({
                             url: 'servlet/QueryDocuments',
                             params : {
                                 storageId:idPlace,
                                 mode:'EDIT'
                             },
-                            success: function(action){
+                            pc : placeCard,
+                            success: function(action, opts){
+                                var placeCard = opts.pc;
                                 var massStorage = Ext.decode(action.responseText);
-                                placeCard.docsWriteStore.loadData(massStorage);
+                                placeCard.docGrid.getStore().loadData(massStorage);
                                 myMask.hide();
                                 Ext.Msg.alert('Внимание', 'Организация сохранена!');
                             },
@@ -820,9 +827,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                 Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
                             }
                         });
-
                         myEditOrgPage.placesFieldSet.add(placeCard);
-                    }
+                   }
 
 
                 },
