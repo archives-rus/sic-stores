@@ -57,15 +57,13 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             this.FIO,
              Ext.create('Ext.toolbar.Separator', {
                 html : '|',
-                //id : 'vertSeparator',
                 baseCls : 'vertSeparator'
             }), Ext.create('Ext.Button', {
                 text : 'Выход',
                 tooltip : 'Выход из системы',
                 tooltipType : 'title',
                 componentCls : 'quitButton',
-                action: 'quitSerch',
-                //id : 'quit'
+                action: 'quitSearch'
             })]
     });
 
@@ -160,9 +158,11 @@ Ext.define('storeplaces.view.page.CSearchPage', {
         var gridSearch = Ext.create('Ext.grid.Panel', {
             store : Ext.getStore('storeplaces.store.GridSearchOrgStore'),
             forceFit : true,
+            autoScroll:true,
+            columnLines :true,
+            rowLines : true,
             selType: 'rowmodel',
             width : '100%',
-            height : 300,
             autoScroll : true,
             dockedItems: [this.pagingTb],
             columns : [{
@@ -192,7 +192,6 @@ Ext.define('storeplaces.view.page.CSearchPage', {
             var ResultsFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
                 {
                     title : 'Результаты поиска',
-                    height : 300,
                     items : [gridSearch]
                 });
             Ext.applyIf(this, {

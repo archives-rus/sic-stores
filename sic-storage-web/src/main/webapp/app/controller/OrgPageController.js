@@ -196,32 +196,61 @@ Ext.define('storeplaces.controller.OrgPageController',{
                           // oldSrchPage.items.items[1].items.items[0].fireEvent('click');
                            break;
                         case 'orgCardSave':
-                            var  Card = form.placesFieldSet.items.items[0];
-                            var orgName  = Card.taOrg.getRawValue();
-                            if  (orgName)
+                            if (form.gridNames.getStore().getCount()==0)
                             {
-                                place   = Card.taOrg.getValue();    //tf
-                                addres  = Card.tfAddr.getValue();
-                            }
-                            else
-                            {
-                                place    = Card.cbArchive.getValue(); //combo
-                                addres   = Card.cbAddr.getValue();    //combo
-                            }
-                            if ( form.fundFieldset.items.items[0].getValue() == null || form.gridNames.getStore().getCount()==0 ||
-                                 Card.cbDocTypes == null || place == '' || addres == '' || place==null || addres==null)
-                            {
-                                Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации, архив и место хранения!');
+                                Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить наименование организации!');
                                 break;
                             }
-
+                            else if (form.fundFieldset.items.items[0].getValue() == null)
+                            {
+                                Ext.Msg.alert('Внимание', 'Для сохранения необходимо выбать архив в фондовой принадлежности!');
+                                break;
+                            }
                             if (form.fundFieldset.items.items[2].items.items[1].getRawValue() != '' && form.fundFieldset.items.items[1].getRawValue() == '' )
                             {
                                 Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название фонда!');
                                 break;
                             }
+                            if ( form.placesFieldSet.items.items.length==0)
+                            {
+                                Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить хотя бы одно место хранения!');
+                                break;
+                            }
 
+                            for (var i=0; i<form.placesFieldSet.items.items.length; i++)
+                            {
+                                var Card = form.placesFieldSet.items.items[i];
+                                var orgName  = Card.taOrg.getRawValue();
+                                var ps  = Card.cbStorageType.getValue();
+                                if  (ps==2)
+                                    {
+                                        place   = orgName;    //tf
+                                        addres  = Card.tfAddr.getValue();
+                                    }
+                                else
+                                    {
+                                        place    = Card.cbArchive.getValue(); //combo
+                                        addres   = Card.cbAddr.getValue();    //combo
+                                    }
 
+                                if (ps== null)
+                                {
+                                    Ext.Msg.alert('Внимание', 'Для сохранения необходимо выбрать место хранения!');
+                                    break;
+                                }
+                                else if (place == '')
+                                {
+                                    Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации места хранения!');
+                                    break;
+                                }
+
+                                if (addres == null || addres =='')
+                                    {
+                                        Ext.Msg.alert('Внимание', 'Для сохранения необходимо выбрать заполнить адрес места хранения!');
+                                        break;
+                                    }
+
+                            }
                             var modelsOrg = form.orgStore.getRange();
                             var names = new Array();
                             for(var i=0; i<modelsOrg.length; i++)
@@ -356,7 +385,8 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                     reloadMain(idOrg,FIO,oldData,main);
                                 },
                                 failure : function() {
-                                    Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                   // Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+                                   // Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить место хранения, архив и адрес в каждой карточке!');
                                 }
                             });
                             break;
@@ -819,6 +849,16 @@ Ext.define('storeplaces.controller.OrgPageController',{
                             success: function(action, opts){
                                 var placeCard = opts.pc;
                                 var massStorage = Ext.decode(action.responseText);
+                                placeCard.docGrid.getStore().removeAll();
+                                placeCard.docGrid.columns[1].editor = Ext.create('Ext.form.field.ComboBox', {
+                                    store : Ext.create('storeplaces.store.DocTypesStore'),
+                                    valueField : 'id',
+                                    displayField : 'name',
+                                    blankText : 'Не выбран вид документа',
+                                    emptyText : 'Не выбран',
+                                    forceSelection : true,
+                                    validateOnChange : false
+                                });
                                 placeCard.docGrid.getStore().loadData(massStorage);
                                 myMask.hide();
                                 Ext.Msg.alert('Внимание', 'Организация сохранена!');

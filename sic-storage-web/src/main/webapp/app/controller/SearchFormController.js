@@ -12,7 +12,8 @@ Ext.define('storeplaces.controller.SearchFormController',{
                     var oldData     = form.getForm().getValues();
                     var FIO         = form.FIO.text;
                     var pageSearch  = parseInt(form.pagingTb.items.items[4].getValue());
-                    var cardNum     = parseInt((2*(pageSearch-1)+1) + index);
+                    var size        = Ext.getStore('storeplaces.store.GridSearchOrgStore').pageSize;
+                    var cardNum     = parseInt((size*(pageSearch-1)+1) + index);
                     main.removeAll();
                     var myOrgPage       = Ext.create('storeplaces.view.page.COrganizationPageView');
                     myOrgPage.oldData   = oldData;
@@ -234,9 +235,9 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             gridSearchOrgStore.load({ params:{
                                 'criteria':criteria,
                                 'start':0,
-                                'limit':2
+                                'limit':gridSearchOrgStore.pageSize
                             }});
-                           gridSearchOrgStore.loadPage(1,{ params:{'start':0,'limit':2}});
+                           gridSearchOrgStore.loadPage(1,{ params:{'start':0,'limit':gridSearchOrgStore.pageSize}});
                            cardsStoreAll.load({ params:{'criteria':criteria}});
                             break;
                         default:

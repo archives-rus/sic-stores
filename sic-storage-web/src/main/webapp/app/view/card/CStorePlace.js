@@ -60,12 +60,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 							blankText : 'Не выбран вид документа',
 							emptyText : 'Не выбран',
 						   	forceSelection : true,
-						    //validateOnChange : false
+						    validateOnChange : false
 						}),
 				renderer : function(value,store) {
                     //var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor.getStore();  //не работает после сохранения!
                     var editorComboStore = Ext.getStore('storeplaces.store.DocTypesStore');
-                    console.log(editorComboStore);
 					for ( var i = 0; i < editorComboStore.getCount(); i++) {
 						var obj = editorComboStore.getAt(i);
 						if (obj.data.id == value) {

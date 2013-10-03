@@ -2,7 +2,7 @@ Ext.define('storeplaces.store.GridSearchOrgStore',{
     extend : 'Ext.data.Store',
     storeId : 'GridSearchOrgStore',
     autoLoad:false,
-    pageSize: 2,
+    pageSize: 10,
     model:'storeplaces.model.GridSearchOrgModel',
     proxy : {
         type : 'ajax',
