@@ -32,8 +32,16 @@ Ext.define('storeplaces.controller.OrgPageController',{
 					switch(btn.action){
 						case 'addStorePlace':
 							var place = Ext.create('storeplaces.view.card.CStorePlace');
-							this.getPage().placesFieldSet.add(place);
-                          //  this.getPage().placesFieldSet.getEl().scroll('b',Infinity);
+                            place.docGrid.columns[1].editor = Ext.create('Ext.form.field.ComboBox', {
+                                store : Ext.create('storeplaces.store.DocTypesStore'),
+                                valueField : 'id',
+                                displayField : 'name',
+                                blankText : 'Не выбран вид документа',
+                                emptyText : 'Не выбран',
+                                forceSelection : true,
+                                validateOnChange : false
+                            });
+                            this.getPage().placesFieldSet.add(place);
                             var d =  this.getPage().placesFieldSet.body.dom;
                             d.scrollTop = 99999;
                             break;
@@ -622,6 +630,15 @@ Ext.define('storeplaces.controller.OrgPageController',{
                                             pc : placeCard,
                                             success: function(action,opts){
                                                 placeCard = opts.pc;
+                                                placeCard.docGrid.columns[1].editor = Ext.create('Ext.form.field.ComboBox', {
+                                                    store : Ext.create('storeplaces.store.DocTypesStore'),
+                                                    valueField : 'id',
+                                                    displayField : 'name',
+                                                    blankText : 'Не выбран вид документа',
+                                                    emptyText : 'Не выбран',
+                                                    forceSelection : true,
+                                                    validateOnChange : false
+                                                });
                                                 var massStorage = Ext.decode(action.responseText);
                                                 placeCard.docGrid.getStore().loadData(massStorage);
 
