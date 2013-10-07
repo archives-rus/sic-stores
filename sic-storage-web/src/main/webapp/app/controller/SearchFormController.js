@@ -207,6 +207,7 @@ Ext.define('storeplaces.controller.SearchFormController',{
                             var iorgName = orgName.getRawValue();
                                 if (iorgName=='') iorgName = null;
                             var idocumentType = documentType.getValue();
+                                if (idocumentType=='') idocumentType = null;
                             var iyearFrom= yearFrom.getRawValue();
                                 iyearFrom = parseInt(iyearFrom);
                             var iyearTo  = yearTo.getRawValue();
