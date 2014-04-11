@@ -2,6 +2,7 @@ Ext.define('storeplaces.Application', {
     name: 'storeplaces',
 
     extend: 'Ext.app.Application',
+    requires: ['storeplaces.store.DocTypesStore'],
 
     views: [
        'storeplaces.view.card.CStorePlace',
