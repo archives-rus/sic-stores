@@ -1,5 +1,6 @@
 package ru.insoft.archive.sic_storage.model.view;
 
+import java.io.Serializable;
 import ru.insoft.archive.extcommons.json.JsonOut;
 
 import javax.persistence.Column;
@@ -9,12 +10,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "V_STRG_ARCHIVE")
-public class VStrgArchive implements JsonOut
-{
+public class VStrgArchive implements JsonOut, Serializable {
+
 	@Id
 	@Column(name = "ID")
 	private Long id;
-	
+
 	@Column(name = "NAME")
 	private String name;
 

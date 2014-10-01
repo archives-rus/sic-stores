@@ -1,7 +1,7 @@
 {
   "sources": {
     "theme.html.tpl.merge": {
-      "79e5bc8b4cebd921ec602e9a67c0493c70d2d5ce": "eJydVFFv0zAQfs+vuPkJEE66wQPqkr6UIUBITLQ88Ogm18arEwffNW017b/PTsLWjSKmWlGi+LvvvvPns9Ozj9+n81/XV1ByZSZReiZlBABT2+ydXpUMr/LXcDE6v5D+9S6GGdZ5qeBLnceRlJ4w8EpUxSQwIWXNBidXO4avM5iXWCF8Vq5GojTpsT6uQlZelhuJvze6zcTU1ow1y/m+QQF5/5cJxh0nQeYSvLQj5Ozn/JP8ICZRn2ioGb5ZVYAyBlxI6LAAo+s1gaoLoNzphqmLC3V3xAD7YJMJ4r1BKhFZAHv5QTUnElA6XGYCd6pqDMbdVDIk6LMeMm5Uq/pZAeTyTMRx4p/bpVMVbq1bXysu7xIfKgts4xsSkzTpCS/PubCWiZ1qnvGP2MElwszoHJ031OFxH14g6bAu0P1fL9hfqVovkXhwvrSO880JmoN1jcrXaoX0A82jeRz6Si4UYUKKKBm2J/mjfaKzp0g+LPBEzXxDbKuj1nZt2WcKI97qYoUsw9FQuvZ7evuAhVEpt9L1GM5Hze7yCeKJXI7h/egvpLGkWVvP8gdBsW7xKW5bdEtjt2NoNemFOYDvosfKdpK6LpPsa0B++08E3jwr2nqzNe991YeZu+Unw/rT5OB6Wdhi743qPgHp7p972o53iQ\u003d\u003d"
+      "8865d5dd462e8fe127bbe970f5e10803ed934755": "eJx1kk1P3DAQhu/5FYNPbYWThfaAliSXLaitKlGJ5cDR6wwbU8d27WlIVPHfsZOULqD6kCh+/H5M5PLo89Vme/vjAlrqdJ2VR5xnALCxbvRq3xK8k+/hdHVyyuPjYw7XaGQr4KuRecZ5FCy6FkVTJyWUpEhjfTEQfLuGbYsdwhfhDYZQFjObz3VIIsaS4/jrt+ortrGG0BDfjg4ZyPmrYoQDFSnmHGK0D0jVzfaSn7E6m42WzvDdigaE1uCToccGtDI/AwjTQJBeOQrTudR7EiYcD+uKBRo1hhaRGFCMX1JlCAxaj3cVw0F0TmM+bRWLwex6qLgXvZh3GQQvK7azlgJ54fL7wOqymOHf6lPubJZW/qCaPRJPswtl0MOfZ5ZWJ/xemTWcrNxw/oJEIbVr+LR6Q5wNipSNqjipINXjS2579HfaPqyhV0Ht9AF+zP41G3jQSqLnFDsgHf+XwIdXpa0TUtEYWx86T+MXy/xlcXB/drYZ44+aXolMF+wJ4QDDMA\u003d\u003d"
     },
     "config.rb.tpl.merge": {
       "33f446bd02c3fd24eb27891582eff6a2e789796b": "eJxLLi2KT8ksUrBVcMvMSdUDMvMSc1M14uPdPH1c4+M1ufJLSwpKS+KLSypzUoGqrPJSi0tSU7gALskTcA\u003d\u003d"
@@ -38,6 +38,9 @@
     },
     "package.properties.merge": {
       "c6c1fb2fb1dda28480ad0f6e5caffc9b97d196ae": "eJytkUFygzAMRfc5hSZsOxygM11223aRCwgsQBNH8tiCTG5fGWjDAcLOsnjvS27g45XfqYHLxAUGjgQp68KBCqCALpSzHyApi8GgGQINOEeDBTNjF73PKywUgAUclLC/4kjt3lda5yXKxlRat1BZDXsFMBOoxAfwLWk2p9wnEuhmjoFldF512kRw3sFnIFk4q9xIrD013vLz5B2y2P9EhtcqZc1sj3WmTXCI5gWrYZy2xomKwTFV/hSvP5XN+fV9+Xzftjb7SDoc+jClWJmmIGi80N9SwnbVe1HlDUTdWfNvt1togpGEMkYoLP1K7tVfIHKXfeVU/S9+/V9rlbyW"
+    },
+    "development.properties.merge": {
+      "c45c602c9b6f6f73cace183e9f0bf09c00a3ccf6": "eJytkUuOAjEMBfec4one9w24wyy4QFDc0xbBjhyTEbcfp0F89mRny6l6liccvvl2E44rNyxcCNW0c6aGJNBOZlGgKotjUUOmJV2LoyfjdCoxFx0WymBBgJyas/zOj7k2B6+SOVObw0JtMzw6SEZQKTfwpap5UP5WEpyuXHJQgjecvhL2mToVrRcS34Oks6mMYt5NMfbzYr7l8edWns5DzGrst22vu+QtXjR8BAraFqloyoEZAT7l28cW3i9f4R+b7pUs"
     }
   },
   "targets": {
@@ -95,7 +98,7 @@
     },
     "sass/example/theme.html": {
       "source": "theme.html.tpl.merge",
-      "version": "79e5bc8b4cebd921ec602e9a67c0493c70d2d5ce",
+      "version": "8865d5dd462e8fe127bbe970f5e10803ed934755",
       "parameters": {
         "viewNamespace": "storeplaces.view",
         "frameworkName": "ext",
@@ -326,6 +329,32 @@
     ".sencha/app/package.properties": {
       "source": "package.properties.merge",
       "version": "c6c1fb2fb1dda28480ad0f6e5caffc9b97d196ae",
+      "parameters": {
+        "viewNamespace": "storeplaces.view",
+        "frameworkName": "ext",
+        "frameworkPath": "ext",
+        "senchadir": ".sencha",
+        "controllerFileName": "Main",
+        "appModels": "",
+        "viewFileName": "Main",
+        "appControllers": "",
+        "appViews": "",
+        "uniqueId": "227d0b7e-53b0-4b00-ab94-8fbb350d46e5",
+        "appName": "storeplaces",
+        "modelNamespace": "storeplaces.model",
+        "controllerName": "Main",
+        "viewName": "Main",
+        "themeName": "default",
+        "packagesRelPath": "ext/packages",
+        "name": "storeplaces",
+        "controllerNamespace": "storeplaces.controller",
+        "library": "all",
+        "appStores": ""
+      }
+    },
+    ".sencha/app/development.properties": {
+      "source": "development.properties.merge",
+      "version": "c45c602c9b6f6f73cace183e9f0bf09c00a3ccf6",
       "parameters": {
         "viewNamespace": "storeplaces.view",
         "frameworkName": "ext",

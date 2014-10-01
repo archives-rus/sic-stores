@@ -6,7 +6,7 @@ import javax.persistence.PersistenceContext;
 
 public class PersistenceResources {
 
-	@PersistenceContext(unitName = "EntityManager")
+	@PersistenceContext(unitName = "StorageEntityManager")
 	@Produces
 	EntityManager em;
 }

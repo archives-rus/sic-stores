@@ -1,70 +1,73 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<!--
+	  <parent>
+		<groupId>ru.insoft.archive</groupId>
+		<artifactId>sic-storage</artifactId>
+		<version>0.0.1</version>
+		<relativePath>..</relativePath>
+	  </parent>
+	-->
+	<groupId>ru.insoft.archive</groupId>
+	<artifactId>sic-storage-web</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>sic-storage-web</name>
+	<!--<url>http://maven.apache.org</url>-->
 
-  <parent>
-    <groupId>ru.insoft.archive</groupId>
-    <artifactId>sic-storage</artifactId>
-    <version>0.0.1</version>
-	<relativePath>..</relativePath>
-  </parent>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.jboss-spec>3.0.2.Final</version.jboss-spec>
+		<version.cdi-api>1.0-SP4</version.cdi-api>
+		<version.hibernate>4.0.1.Final</version.hibernate>
+	</properties>
+	<!--
+		<repositories>
+			<repository>
+				<id>repository.jboss.org</id>
+				<name>JBoss Repository</name>
+				<url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+			</repository>
+		</repositories>
+	-->
+	<dependencies>
+		<dependency>
+			<groupId>ru.insoft.archive</groupId>
+			<artifactId>ext-commons</artifactId>
+			<version>0.1.0</version>
+			<scope>provided</scope>
+		</dependency>
 
-  <groupId>ru.insoft.archive</groupId>
-  <artifactId>sic-storage-web</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-
-  <name>sic-storage-web</name>
-  <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.ext-commons>0.0.2-SNAPSHOT</version.ext-commons>
-        <version.core-model>0.0.1-SNAPSHOT</version.core-model>
-        <version.jboss-spec>3.0.2.Final</version.jboss-spec>
-        <version.cdi-api>1.0-SP4</version.cdi-api>
-        <version.hibernate>4.0.1.Final</version.hibernate>
-    </properties>
-    
-    <repositories>
-		<repository>
-			<id>repository.jboss.org</id>
-			<name>JBoss Repository</name>
-			<url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-		</repository>
-	</repositories>
-
-    <dependencies>
-        <dependency>
-        	<groupId>ru.insoft.archive</groupId>
-        	<artifactId>ext-commons</artifactId>
-        	<version>${version.ext-commons}</version>
-        </dependency>
-        
-        <dependency>
+		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-6.0</artifactId>
 			<version>${version.jboss-spec}</version>
 			<scope>provided</scope>
 			<type>pom</type>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>javax.enterprise</groupId>
-		    <artifactId>cdi-api</artifactId>
-		    <version>${version.cdi-api}</version>
-		    <scope>provided</scope>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>${version.cdi-api}</version>
+			<scope>provided</scope>
 		</dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${version.hibernate}</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-    
-    <!-- <build>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${version.hibernate}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.6.Final</version>
+		</dependency>
+	</dependencies>
+
+	<!-- <build>
 		<defaultGoal>package</defaultGoal>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
@@ -79,16 +82,35 @@
 			</plugin>
 		</plugins>
 	</build> -->
-	
+
 	<build>
-		<finalName>sic-storage</finalName>
-		<plugins>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-		</plugins>
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<configuration>
+						<version>3.0</version>
+						<packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib/</classpathPrefix>
+							</manifest>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
