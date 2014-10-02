@@ -8,7 +8,7 @@
 		<jar-file>qq-0.0.1-SNAPSHOT.ear/qq-ejb-0.0.1-SNAPSHOT.jar</jar-file>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			<property name="hibernate.dialect" value="ru.insoft.archive.sic_storage.SicStorageDialect"/>
 			<property name="hibernate.jdbc.batch_size" value="20"/>
 			<property name="hibernate.show_sql" value="false"/>
 			<property name="hibernate.format_sql" value="false"/>
