@@ -9,113 +9,121 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created with IntelliJ IDEA.
- * User: melnikov
- * Date: 12.07.13
- * Time: 17:47
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: melnikov Date: 12.07.13 Time: 17:47 To
+ * change this template use File | Settings | File Templates.
  */
 @Entity
 @Table(name = "V_STRG_ORG_FOR_SEARCH")
-public class VStrgOrgForSearch
-{
-    @Id
-    @Column(name = "ORGANIZATION_ID")
-    private Long id;
+public class VStrgOrgForSearch {
 
-    @Column(name = "FULL_NAME")
-    private String name;
+	@Id
+	@Column(name = "ORG_NAME_ID")
+	private Long id;
 
-    @Column(name = "ARCHIVE_ID")
-    private Long archiveId;
+	@Column(name = "ORGANIZATION_ID")
+	private Long orgId;
 
-    @Column(name = "NOTES")
-    private String indexedName;
+	@Column(name = "FULL_NAME")
+	private String name;
 
-    @Column(name = "ARCHIVE_NAME")
-    private String archive;
+	@Column(name = "ARCHIVE_ID")
+	private Long archiveId;
 
-    @Column(name = "FUND_NUM")
-    private Integer fundNum;
+	@Column(name = "NOTES")
+	private String indexedName;
 
-    @Column(name = "PREFIX")
-    private String prefix;
+	@Column(name = "ARCHIVE_NAME")
+	private String archive;
 
-    @Column(name = "SUFFIX")
-    private String suffix;
+	@Column(name = "FUND_NUM")
+	private Integer fundNum;
 
-    @Column(name = "FUND_NUMBER_FULL")
-    private String fund;
+	@Column(name = "PREFIX")
+	private String prefix;
 
-    public Long getId() {
-        return id;
-    }
+	@Column(name = "SUFFIX")
+	private String suffix;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Column(name = "FUND_NUMBER_FULL")
+	private String fund;
 
-    public String getName() {
-        return name;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getArchiveId() {
-        return archiveId;
-    }
+	public Long getOrgId() {
+		return orgId;
+	}
 
-    public void setArchiveId(Long archiveId) {
-        this.archiveId = archiveId;
-    }
+	public void setOrgId(Long orgId) {
+		this.orgId = orgId;
+	}
 
-    public String getIndexedName() {
-        return indexedName;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setIndexedName(String indexedName) {
-        this.indexedName = indexedName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getArchive() {
-        return archive;
-    }
+	public Long getArchiveId() {
+		return archiveId;
+	}
 
-    public void setArchive(String archive) {
-        this.archive = archive;
-    }
+	public void setArchiveId(Long archiveId) {
+		this.archiveId = archiveId;
+	}
 
-    public Integer getFundNum() {
-        return fundNum;
-    }
+	public String getIndexedName() {
+		return indexedName;
+	}
 
-    public void setFundNum(Integer fundNum) {
-        this.fundNum = fundNum;
-    }
+	public void setIndexedName(String indexedName) {
+		this.indexedName = indexedName;
+	}
 
-    public String getPrefix() {
-        return prefix;
-    }
+	public String getArchive() {
+		return archive;
+	}
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+	public void setArchive(String archive) {
+		this.archive = archive;
+	}
 
-    public String getSuffix() {
-        return suffix;
-    }
+	public Integer getFundNum() {
+		return fundNum;
+	}
 
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
+	public void setFundNum(Integer fundNum) {
+		this.fundNum = fundNum;
+	}
 
-    public String getFund() {
-        return fund;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    public void setFund(String fund) {
-        this.fund = fund;
-    }
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+
+	public String getSuffix() {
+		return suffix;
+	}
+
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
+
+	public String getFund() {
+		return fund;
+	}
+
+	public void setFund(String fund) {
+		this.fund = fund;
+	}
 }

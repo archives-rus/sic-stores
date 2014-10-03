@@ -1,31 +1,38 @@
 Ext.define('storeplaces.Application', {
-    name: 'storeplaces',
+	name: 'storeplaces',
+	extend: 'Ext.app.Application',
+	requires: [
+		'storeplaces.view.Main',
+		'storeplaces.view.Buffer',
+		'storeplaces.view.lib.NumFond',
+		'storeplaces.view.lib.StyledFieldSet',
+		'storeplaces.store.DocArchiveStore',
+		'storeplaces.store.DocTypesStore',
+		'storeplaces.store.OrgNamesStore',
+		'storeplaces.store.CardsStoreAll',
+		'storeplaces.store.CardsStore',
+		'storeplaces.store.GridSearchOrgStore'
+	],
+	views: [
+		'storeplaces.view.card.CStorePlace',
+		'storeplaces.view.card.CStorePlaceView',
+		'storeplaces.view.page.CLoginPage',
+		'storeplaces.view.page.COrganizationPage',
+		'storeplaces.view.page.CSearchPage',
+		'storeplaces.view.page.COrganizationPageView'
 
-    extend: 'Ext.app.Application',
-    requires: ['storeplaces.store.DocTypesStore'],
-
-    views: [
-       'storeplaces.view.card.CStorePlace',
-        'storeplaces.view.card.CStorePlaceView',
-       'storeplaces.view.page.CLoginPage',
-       'storeplaces.view.page.COrganizationPage',
-        'storeplaces.view.page.CSearchPage',
-        'storeplaces.view.page.COrganizationPageView'
 
 
-
-    ],
-
-    controllers: [
-        'storeplaces.controller.StorePlaceCardController',
-        'storeplaces.controller.OrgPageController',
-        'storeplaces.controller.EnterFormController',
-        'storeplaces.controller.SearchFormController',
-        'storeplaces.controller.OrgPageFunc'
-    ],
-
-    stores: [
-        'storeplaces.store.StorageTypeStore','storeplaces.store.DocsReadStore','storeplaces.store.GridSearchOrgStore', 'storeplaces.store.CardsStore', 'storeplaces.store.CardsStoreAll',
-        'storeplaces.store.DocsWriteStore','storeplaces.store.DocTypesStore','storeplaces.store.DocArchiveStore','storeplaces.store.StoragePlaceStore'
-    ]
+	],
+	controllers: [
+		'storeplaces.controller.StorePlaceCardController',
+		'storeplaces.controller.OrgPageController',
+		'storeplaces.controller.EnterFormController',
+		'storeplaces.controller.SearchFormController',
+		'storeplaces.controller.OrgPageFunc'
+	],
+	stores: [
+		'storeplaces.store.StorageTypeStore', 'storeplaces.store.DocsReadStore',
+		'storeplaces.store.DocsWriteStore', 'storeplaces.store.StoragePlaceStore'
+	]
 });

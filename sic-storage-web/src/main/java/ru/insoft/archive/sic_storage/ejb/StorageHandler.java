@@ -217,7 +217,7 @@ public class StorageHandler {
 				));
 			}
 			sub.where(subPredicates.toArray(new Predicate[0]));
-			predicates.add(cb.in(root.get("id")).value(sub));
+			predicates.add(cb.in(root.get("orgId")).value(sub));
 		}
 		return predicates.toArray(new Predicate[0]);
 	}
@@ -236,9 +236,11 @@ public class StorageHandler {
 		} else {
 			CriteriaQuery<OrgSearchResult> valQuery = cb.createQuery(OrgSearchResult.class);
 			Root<VStrgOrgForSearch> valRoot = valQuery.from(VStrgOrgForSearch.class);
-			valQuery.multiselect(valRoot.<Long>get("id"), valRoot.<String>get("name"),
-				valRoot.<String>get("archive"), valRoot.<String>get("fund"),
-				cb.<String>function("get_org_storage_years", String.class, valRoot.<Long>get("id")).alias("dates"));
+			valQuery.multiselect(valRoot.<Long>get("id"), valRoot.<Long>get("orgId"),
+				valRoot.<String>get("name"), valRoot.<String>get("archive"),
+				valRoot.<String>get("fund"),
+				cb.<String>function("get_org_storage_years", String.class,
+					valRoot.<Long>get("orgId")).alias("dates"));
 			valQuery.where(getSearchPredicates(cb, valQuery, valRoot, criteria));
 			valQuery.orderBy(cb.asc(valRoot.get("name")));
 			osi.setValues(em.createQuery(valQuery)

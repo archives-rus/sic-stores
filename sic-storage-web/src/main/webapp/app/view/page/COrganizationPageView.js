@@ -1,291 +1,301 @@
 Ext.define('storeplaces.view.page.COrganizationPageView', {
-    extend : 'Ext.form.Panel',
-  //  autoScroll : true,
-    minWidth : 1024,
-    minHeight: 500,
-    FIO : null,
-    xtype : 'corgpage',
-    oldData: null,
-    width : '100%',
-    id : 'orgpageview',
-    cls:'pad10-20',
-    idFund: null,
-    idCard: null,
-    cardNum : null,
-    searchCriteria : null,
-    placesFieldSet : null,
-    areaFieldSets : null,
-    fundFieldset : null,
-    orgStore : null,
-    gridNames : null,
-    cardToolBar : null,
-    gridToolBar : null,
-    tfDateOfEdit : null,
-    tfUser : null,
-    initComponent : function() {
-        var  me = this;
-        this.orgStore =  Ext.create('storeplaces.store.OrgNamesStore');
-        this.FIO = Ext.create('Ext.form.Label', {
-            text :  '',
-            baseCls : 'loginedUserText',
-            flex : 0
-        });
-        var toolBar = Ext.create('Ext.toolbar.Toolbar', {
-            xtype : 'maintb',
-            items : [Ext.create('Ext.Button', {
-                text : 'Добавить',
-                cls : "btnAdd",
-                height:25,
-                action : 'orgCardAdd'
-            }), Ext.create('Ext.Button', {
-                text : 'Редактировать',
-                height:25,
-                cls : 'btnEdit',
-                action : 'orgCardEdit'
-            }), Ext.create('Ext.Button', {
-                text : 'Просмотр',
-                height:25,
-                hidden:true,
-                cls : 'btnView',
-                action : 'orgCardView'
-            }), Ext.create('Ext.Button', {
-                text : 'Сохранить',
-                hidden: true,
-                height:25,
-                cls : 'btnSave',
-                action : 'orgCardSave'
-            }), Ext.create('Ext.Button', {
-                text : 'Отменить',
-                hidden:true,
-                height:25,
-                cls : 'btnCancel',
-                action : 'orgCardCancel'
-            }), Ext.create('Ext.Button', {
-                text : 'Удалить',
-                height:25,
-                cls : 'btnDelete',
-                action : 'orgCardDeleteView'
-            }), Ext.create('Ext.Button', {
-                text : 'Вернуться к результатам поиска',
-                height:25,
-                cls : 'backToSrch',
-                action : 'backSrchResult'
-            }), '->',
-                 this.FIO,
-                 Ext.create('Ext.toolbar.Separator', {
-                    html : '|',
-                    //id : 'vertSeparator',
-                    baseCls : 'vertSeparator'
-                }), Ext.create('Ext.Button', {
-                    text : 'Выход',
-                    tooltip : 'Выход из системы',
-                    tooltipType : 'title',
-                    componentCls : 'quitButton',
-                    action:'quit'
-                })]
-        });
+	extend: 'Ext.form.Panel',
+	requires: [
+		'storeplaces.view.lib.YearInterval'
+	],
+	minWidth: 1024,
+	minHeight: 500,
+	FIO: null,
+	oldData: null,
+	width: '100%',
+	id: 'orgpageview',
+	cls: 'pad10-20',
+	idFund: null,
+	idCard: null,
+	cardNum: null,
+	searchCriteria: null,
+	placesFieldSet: null,
+	areaFieldSets: null,
+	fundFieldset: null,
+	orgStore: null,
+	gridNames: null,
+	cardToolBar: null,
+	gridToolBar: null,
+	tfDateOfEdit: null,
+	tfUser: null,
+	initComponent: function() {
+		var me = this;
+		me.orgStore = Ext.getStore('OrgNamesStore');
+		me.FIO = Ext.create('Ext.form.Label', {
+			text: '',
+			baseCls: 'loginedUserText',
+			flex: 0
+		});
+		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
+			xtype: 'maintb',
+			items: [{
+					xtype: 'button',
+					text: 'Добавить',
+					cls: "btnAdd",
+					height: 25,
+					action: 'orgCardAdd'
+				},
+				{
+					xtype: 'button',
+					text: 'Редактировать',
+					height: 25,
+					cls: 'btnEdit',
+					action: 'orgCardEdit'
+				},
+				{
+					xtype: 'button',
+					text: 'Просмотр',
+					height: 25,
+					hidden: true,
+					cls: 'btnView',
+					action: 'orgCardView'
+				},
+				{
+					xtype: 'button',
+					text: 'Сохранить',
+					hidden: true,
+					height: 25,
+					cls: 'btnSave',
+					action: 'orgCardSave'
+				},
+				{
+					xtype: 'button',
+					text: 'Отменить',
+					hidden: true,
+					height: 25,
+					cls: 'btnCancel',
+					action: 'orgCardCancel'
+				},
+				{
+					xtype: 'button',
+					text: 'Удалить',
+					height: 25,
+					cls: 'btnDelete',
+					action: 'orgCardDeleteView'
+				},
+				{
+					xtype: 'button',
+					text: 'Вернуться к результатам поиска',
+					height: 25,
+					cls: 'backToSrch',
+					action: 'backSrchResult'
+				}, '->',
+				me.FIO,
+				Ext.create('Ext.toolbar.Separator', {
+					html: '|',
+					//id : 'vertSeparator',
+					baseCls: 'vertSeparator'
+				}),
+				{
+					xtype: 'button',
+					text: 'Выход',
+					tooltip: 'Выход из системы',
+					tooltipType: 'title',
+					componentCls: 'quitButton',
+					action: 'quit'
+				}]
+		});
 
-        this.cardToolBar = Ext.create('Ext.toolbar.Paging', {
-            store:Ext.getStore('storeplaces.store.CardsStore'),
-            layout:{
-                type: 'hbox',
-                pack:'center'
-            },
-            beforePageText: 'Карточка',
-            afterPageText: 'из {0}',
-            moveFirst : function(){
-                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
-                Ext.getStore('storeplaces.store.CardsStore').loadPage(1);
-                var id = cardsStoreAll.getAt(0).get('id');
-                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
-            },
-            movePrevious : function(){
-                var newPage         =  parseInt(this.items.items[4].getValue()) - 1;
-                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
-                Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
-                var id  = cardsStoreAll.getAt(newPage-1).get('id');
-                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
-            },
-            moveNext : function(){
-                var newPage         =  parseInt(this.items.items[4].getValue()) + 1;
-                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
-                Ext.getStore('storeplaces.store.CardsStore').loadPage(newPage);
-                var id  = cardsStoreAll.getAt(newPage-1).get('id');
-                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
-            },
-            moveLast : function(){
-                var cardsStoreAll   =  Ext.getStore('storeplaces.store.CardsStoreAll');
-                var total           =  Ext.getStore('storeplaces.store.CardsStore').totalCount;
-                Ext.getStore('storeplaces.store.CardsStore').loadPage(total);
-                var id  = cardsStoreAll.getAt(total-1).get('id');
-                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
-            },
-            doRefresh : function(){
-                var page  =  parseInt(this.items.items[4].getValue());
-                Ext.getStore('storeplaces.store.CardsStore').loadPage(page);
-                var id  = me.idCard;
-                window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
-            }
-        });
+		var cardStore = Ext.getStore('CardsStore'),
+				cardStoreAll = Ext.getStore('CardsStoreAll'),
+				orgPageFunc = window.app.getController('storeplaces.controller.OrgPageFunc');
+		me.cardToolBar = Ext.create('Ext.toolbar.Paging', {
+			store: cardStore,
+			layout: {
+				type: 'hbox',
+				pack: 'center'
+			},
+			beforePageText: 'Карточка',
+			afterPageText: 'из {0}',
+			moveFirst: function() {
+				cardStore.loadPage(1);
+				orgPageFunc.moveNext(cardStoreAll.getAt(0).get('orgId'));
+			},
+			movePrevious: function() {
+				var newPage = parseInt(this.items.getAt(4).getValue()) - 1;
+				cardStore.loadPage(newPage);
+				orgPageFunc.moveNext(cardStoreAll.getAt(newPage - 1).get('orgId'));
+			},
+			moveNext: function() {
+				var newPage = parseInt(this.items.getAt(4).getValue()) + 1;
+				cardStore.loadPage(newPage);
+				orgPageFunc.moveNext(cardStoreAll.getAt(newPage - 1).get('orgId'));
+			},
+			moveLast: function() {
+				var total = cardStore.totalCount;
+				cardStore.loadPage(total);
+				orgPageFunc.moveNext(cardStoreAll.getAt(total - 1).get('orgId'));
+			},
+			doRefresh: function() {
+				var page = parseInt(this.items.getAt(4).getValue());
+				cardStore.loadPage(page);
+				orgPageFunc.moveNext(me.idCard);
+			}
+		});
 
-        this.cardToolBar.items.items[4].disable();
-        this.cardToolBar.items.items[4].setValue(this.cardNum);
+		me.cardToolBar.items.getAt(4).disable();
+		me.cardToolBar.items.getAt(4).setValue(me.cardNum);
 
-        gridNames = Ext.create('Ext.grid.Panel', {
-            store : this.orgStore,
-            buttonAlign:'center',
-            forceFit : true,
-            width : '100%',
-            height : 115,
-            cls:'autoscrl-y',
-            autoScroll : true,
-            columns : [{
-                text : 'ИД',
-                dataIndex : 'id',
-                hidden : true,
-                hideable : false
-            }, {
-                text : 'Полное наименование и переименования',
-                dataIndex : 'fullName',
-                width:'40%'
-            }, {
-                text : 'Краткое наименование',
-                dataIndex : 'shortName',
-                width:'30%'
-            }, {
-                text : 'Подчинённость',
-                dataIndex : 'subordination',
-                width:'15%'
-            }, {
-                text : 'Даты',
-                dataIndex : 'dates',
-                width:'15%'
-            }, {
-                text : 'Сортировка',
-                dataIndex : 'sortOrder',
-                hidden : true,
-                hideable : false
-            }]
-        })
+		me.gridNames = Ext.create('Ext.grid.Panel', {
+			store: me.orgStore,
+			buttonAlign: 'center',
+			forceFit: true,
+			width: '100%',
+			height: 115,
+			cls: 'autoscrl-y',
+			autoScroll: true,
+			columns: [{
+					text: 'ИД',
+					dataIndex: 'id',
+					hidden: true,
+					hideable: false
+				}, {
+					text: 'Полное наименование и переименования',
+					dataIndex: 'fullName',
+					width: '40%'
+				}, {
+					text: 'Краткое наименование',
+					dataIndex: 'shortName',
+					width: '30%'
+				}, {
+					text: 'Подчинённость',
+					dataIndex: 'subordination',
+					width: '15%'
+				}, {
+					text: 'Даты',
+					dataIndex: 'dates',
+					width: '15%'
+				}, {
+					text: 'Сортировка',
+					dataIndex: 'sortOrder',
+					hidden: true,
+					hideable: false
+				}]
+		})
 
-        var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
-            {
-                title : 'Наименование организации и её переименования',
-                height : 150,
-                items : [gridNames]
-            });
+		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
+				{
+					title: 'Наименование организации и её переименования',
+					height: 150,
+					items: [me.gridNames]
+				});
 
-        var tfArchive = Ext.create('Ext.form.field.Text', {
-         fieldLabel : 'Архив',
-         name : 'archive',
-         disabled: true,
-         width : 500,
-         labelWidth : 100
-         });
-
-
-        var tfFondNum = Ext.create('Ext.form.field.Text', {
-            fieldLabel : '№ фонда',
-            name : 'fund',
-            disabled: true,
-            width : 310,
-            labelWidth : 100
-        });
-
-        var taFundName = Ext.create('Ext.form.field.TextArea', {
-            fieldLabel : 'Название фонда',
-            name : 'fundName',
-            disabled: true,
-            height : 50,
-            width : 650,
-            labelWidth : 150
-        });
-
-        var tfDates = Ext.create('Ext.form.field.Text', {
-            fieldLabel : 'Крайние даты фонда',
-            disabled: true,
-            name : 'edgeDates',
-            width : 440,
-            labelWidth : 150
-        });
-
-        this.fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
-            title : 'Фондовая принадлежность',
-            height : 150,
-            layout : {
-                type : 'table',
-                columns : 2
-            },
-            items : [tfArchive, taFundName, tfFondNum, tfDates]
-        });
-
-        this.placesFieldSet = Ext.create('storeplaces.view.lib.StyledFieldSet',
-            {
-                title : 'Места хранения',
-                width : '100%',
-                height : 370,
-                cls:'noscrl-x',
-                autoScroll : true,
-                margin: 20
-            });
+		var tfArchive = Ext.create('Ext.form.field.Text', {
+			fieldLabel: 'Архив',
+			name: 'archive',
+			disabled: true,
+			width: 500,
+			labelWidth: 100
+		});
 
 
-        this.areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
-            layout : 'fit',
-            items : [Ext.create('Ext.form.field.TextArea', {
-                fieldLabel : 'Сведения о загранкомандировках',
-                name: 'zagranInfo',
-                disabled: true,
-                labelWidth : 200,
-                height:25
-            }), Ext.create('Ext.form.field.TextArea', {
-                fieldLabel : 'Сведения о награждениях',
-                disabled: true,
-                name: 'goldInfo',
-                labelWidth : 200,
-                height:25,
-            }), Ext.create('Ext.form.field.TextArea', {
-                fieldLabel : 'Примечание',
-                name: 'noteInfo',
-                disabled: true,
-                labelWidth : 200,
-                height:25
-            })]
-        });
+		var tfFondNum = Ext.create('Ext.form.field.Text', {
+			fieldLabel: '№ фонда',
+			name: 'fund',
+			disabled: true,
+			width: 310,
+			labelWidth: 100
+		});
 
-        this.tfUser = Ext.create('Ext.form.field.Text', {
-            fieldLabel : 'Имя пользователя',
-            name : 'user',
-            disabled : true,
-            cls:'brown-font dis-style',
-            labelWidth : 150
-        });
+		var taFundName = Ext.create('Ext.form.field.TextArea', {
+			fieldLabel: 'Название фонда',
+			name: 'fundName',
+			disabled: true,
+			height: 50,
+			width: 650,
+			labelWidth: 150
+		});
 
-        this.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
-            fieldLabel : 'Дата корректировки',
-            name : 'dateOfEdit',
-            disabled : true,
-            cls:'brown-font dis-style',
-            labelWidth : 150
-        });
+		var tfDates = Ext.create('Ext.form.field.Text', {
+			fieldLabel: 'Крайние даты фонда',
+			disabled: true,
+			name: 'edgeDates',
+			width: 440,
+			labelWidth: 150
+		});
 
-        var userDate = Ext.create('Ext.container.Container', {
-            layout: {
-                type  : 'hbox',
-                align : 'middle',
-                pack : 'center'
-            },
-            items : [this.tfUser,  this.tfDateOfEdit]
+		me.fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+			title: 'Фондовая принадлежность',
+			height: 150,
+			layout: {
+				type: 'table',
+				columns: 2
+			},
+			items: [tfArchive, taFundName, tfFondNum, tfDates]
+		});
 
-        });
+		me.placesFieldSet = Ext.create('storeplaces.view.lib.StyledFieldSet',
+				{
+					title: 'Места хранения',
+					width: '100%',
+					height: 370,
+					cls: 'noscrl-x',
+					autoScroll: true,
+					margin: 20
+				});
 
 
-        Ext.applyIf(this, {
-            items : [toolBar,this.cardToolBar, renamesFieldset, this.fundFieldset,
-                this.placesFieldSet, this.areaFieldSets, userDate]
-        });
+		me.areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+			layout: 'fit',
+			items: [Ext.create('Ext.form.field.TextArea', {
+					fieldLabel: 'Сведения о загранкомандировках',
+					name: 'zagranInfo',
+					disabled: true,
+					labelWidth: 200,
+					height: 25
+				}), Ext.create('Ext.form.field.TextArea', {
+					fieldLabel: 'Сведения о награждениях',
+					disabled: true,
+					name: 'goldInfo',
+					labelWidth: 200,
+					height: 25,
+				}), Ext.create('Ext.form.field.TextArea', {
+					fieldLabel: 'Примечание',
+					name: 'noteInfo',
+					disabled: true,
+					labelWidth: 200,
+					height: 25
+				})]
+		});
 
-        this.callParent(arguments);
+		me.tfUser = Ext.create('Ext.form.field.Text', {
+			fieldLabel: 'Имя пользователя',
+			name: 'user',
+			disabled: true,
+			cls: 'brown-font dis-style',
+			labelWidth: 150
+		});
 
-    }
+		me.tfDateOfEdit = Ext.create('Ext.form.field.Text', {
+			fieldLabel: 'Дата корректировки',
+			name: 'dateOfEdit',
+			disabled: true,
+			cls: 'brown-font dis-style',
+			labelWidth: 150
+		});
+
+		var userDate = Ext.create('Ext.container.Container', {
+			layout: {
+				type: 'hbox',
+				align: 'middle',
+				pack: 'center'
+			},
+			items: [me.tfUser, me.tfDateOfEdit]
+
+		});
+
+
+		Ext.applyIf(me, {
+			items: [toolBar, me.cardToolBar, renamesFieldset, me.fundFieldset,
+				me.placesFieldSet, me.areaFieldSets, userDate]
+		});
+
+		me.callParent(arguments);
+
+	}
 });
