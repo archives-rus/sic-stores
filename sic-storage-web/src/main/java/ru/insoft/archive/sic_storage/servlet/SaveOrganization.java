@@ -11,26 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created with IntelliJ IDEA.
- * User: melnikov
- * Date: 10.07.13
- * Time: 13:03
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: melnikov Date: 10.07.13 Time: 13:03 To
+ * change this template use File | Settings | File Templates.
  */
-public class SaveOrganization extends AbstractServlet
-{
-    @Inject
-    StorageHandler strg;
+public class SaveOrganization extends AbstractServlet {
 
-    @Override
-    protected void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception
-    {
-        StrgOrganization org = (StrgOrganization)parseEntity(req.getParameter("org"), StrgOrganization.class);
-        org = strg.modifyOrganization("SAVE", org.getId(), org);
+	@Inject
+	StorageHandler strg;
 
-        JsonObjectBuilder bldr = Json.createObjectBuilder();
-        bldr.add("success", true);
-        bldr.add("id", org.getId());
-        resp.getWriter().write(bldr.build().toString());
-    }
+	@Override
+	protected void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		StrgOrganization org = (StrgOrganization) parseEntity(req.getParameter("org"), StrgOrganization.class);
+		org = strg.modifyOrganization("SAVE", org.getId(), org);
+
+		JsonObjectBuilder bldr = Json.createObjectBuilder();
+		bldr.add("success", true);
+		bldr.add("id", org.getId());
+		resp.getWriter().write(bldr.build().toString());
+	}
 }

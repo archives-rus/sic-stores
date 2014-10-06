@@ -30,24 +30,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		var toolBar = create('Ext.toolbar.Toolbar', {
 			xtype: 'maintb',
 			items: [
-				/*
-				 create('Ext.Button', {
-				 text: 'Добавить',
-				 cls: "btnAdd",
-				 height: 25,
-				 action: 'orgCardAdd'
-				 }), create('Ext.Button', {
-				 text: 'Редактировать',
-				 height: 25,
-				 cls: 'btnEdit',
-				 hidden: true,
-				 action: 'orgCardEdit'
-				 }), create('Ext.Button', {
-				 text: 'Просмотр',
-				 height: 25,
-				 cls: 'btnView',
-				 action: 'orgCardView'
-				 }),*/
 				create('Ext.Button', {
 					text: 'Сохранить',
 					height: 25,
@@ -59,17 +41,13 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					cls: 'btnCancel',
 					action: 'orgCardCancel'
 				}),
-				/*create('Ext.Button', {
-				 text: 'Удалить',
-				 height: 25,
-				 cls: 'btnDelete',
-				 action: 'orgCardDelete'
-				 }), create('Ext.Button', {
-				 text: 'Вернуться к результатам поиска',
-				 height: 25,
-				 cls: 'backToSrch',
-				 action: 'backSrchResult'
-				 }),*/
+				create('Ext.Button', {
+					text: 'Вернуться к результатам поиска',
+					height: 25,
+					cls: 'backToSrch',
+					action: 'backSrchResult',
+					hidden: true
+				}),
 				'->',
 				me.FIO,
 				create('Ext.toolbar.Separator', {

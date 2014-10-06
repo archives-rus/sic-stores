@@ -190,7 +190,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							var oldData = form.oldData;
 							main.removeAll();
 							var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
-							newOrgPage.items.items[0].items.items[2].action = 'viewNew';
+//							newOrgPage.items.items[0].items.items[2].action = 'viewNew';
+							newOrgPage.items.getAt(0).items.getAt(2).hidden = false;
 							newOrgPage.FIO.setText(FIO);
 							newOrgPage.oldData = oldData;
 							newOrgPage.items.items[0].items.items[4].action = 'newCancel';

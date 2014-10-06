@@ -43,7 +43,7 @@ import ru.insoft.archive.sic_storage.webmodel.OrgSearchResult;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class StorageHandler {
 
-	@PersistenceContext(unitName = "StorageEntityManager")
+	@PersistenceContext(unitName = "SicEntityManager")
 	EntityManager em;
 	@Inject
 	CommonDBHandler dbHandler;
