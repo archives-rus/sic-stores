@@ -8,7 +8,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 	init: function() {
 		this.control({
 			'button': {
-				click: function(btn, eventObj) {
+				click: function myfn(btn, eventObj) {
 					if (btn.action == 'srchFund')
 					{
 						var numFund = btn.up('fieldcontainer');
@@ -391,7 +391,9 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									var idOrg = Ext.decode(action.responseText).id;
 									form.idCard = idOrg;
 									var FIO = form.FIO.text;
-									reloadMain(idOrg, FIO, oldData, main);
+									btn.action = 'orgCardView';
+									myfn(btn);
+//									reloadMain(idOrg, FIO, oldData, main);
 								},
 								failure: function() {
 									// Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');

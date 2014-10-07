@@ -1,12 +1,19 @@
 package ru.insoft.archive.sic_storage.ejb;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -19,7 +26,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
 import ru.insoft.archive.core_model.table.adm.AdmUser;
-import ru.insoft.archive.extcommons.ejb.CommonDBHandler;
+import ru.insoft.archive.extcommons.entity.HasId;
+import ru.insoft.archive.extcommons.entity.HasUserInfo;
 import ru.insoft.archive.extcommons.json.JsonOut;
 import ru.insoft.archive.extcommons.utils.StringUtils;
 import ru.insoft.archive.sic_storage.model.table.StrgDocContents;
@@ -45,8 +53,10 @@ public class StorageHandler {
 
 	@PersistenceContext(unitName = "SicEntityManager")
 	EntityManager em;
-	@Inject
-	CommonDBHandler dbHandler;
+	@Resource
+	private EJBContext ejbContext;
+	@Resource
+	private javax.ejb.SessionContext context;
 
 	public List<JsonOut> getArchives() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -143,7 +153,7 @@ public class StorageHandler {
 		}
 
 		if ("SAVE".equals(action)) {
-			newOrg = (StrgOrganization) dbHandler.insertEntity(newOrg, oldOrg);
+			newOrg = (StrgOrganization) insertEntity(newOrg, oldOrg);
 		}
 		if ("DELETE".equals(action)) {
 			em.remove(oldOrg);
@@ -253,28 +263,145 @@ public class StorageHandler {
 	public StrgOrganization prepareOrgForEdit(Long id) {
 		StrgOrganization org = em.find(StrgOrganization.class, id);
 		org.setUserName(em.find(AdmUser.class, org.getModUserId()).getName());
-		dbHandler.initCollection(org.getStorage());
+		initCollection(org.getStorage());
 		return org;
 	}
 
 	public VStrgOrgForView prepareOrgForView(Long id) {
 		VStrgOrgForView org = em.find(VStrgOrgForView.class, id);
-		dbHandler.initCollection(org.getStorage());
+		initCollection(org.getStorage());
 		return org;
 	}
 
 	public List<StrgOrgName> getOrgNames(Long id) {
 		StrgOrganization org = em.find(StrgOrganization.class, id);
-		return dbHandler.initCollection(org.getNames());
+		return initCollection(org.getNames());
 	}
 
 	public List<StrgDocContents> getDocumentsForEdit(Long storageId) {
 		StrgPlaceOrg storage = em.find(StrgPlaceOrg.class, storageId);
-		return dbHandler.initCollection(storage.getDocuments());
+		return initCollection(storage.getDocuments());
 	}
 
 	public List<VStrgDocContents> getDocumentsForView(Long storageId) {
 		VStrgPlaceOrg storage = em.find(VStrgPlaceOrg.class, storageId);
-		return dbHandler.initCollection(storage.getDocuments());
+		return initCollection(storage.getDocuments());
+	}
+
+	/**
+	 * Добавляет в таблицу новую сущность, которая реализует интерфейс
+	 * {@code HasId}. Если oldEntity не равен null, то производится обновление
+	 * существующей записи.
+	 *
+	 * @param newEntity новая сущность
+	 * @param oldEntity старая сущность (можеть быть null)
+	 * @return новая сущность в случае успешной вставки
+	 * @throws Exception в случае ошибки
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public HasId insertEntity(HasId newEntity, HasId oldEntity)
+		throws Exception {
+		try {
+			if (oldEntity == null && newEntity.getId() != null) {
+				oldEntity = em.find(newEntity.getClass(), newEntity.getId());
+			}
+
+			if (HasUserInfo.class.isAssignableFrom(newEntity.getClass())) {
+				AdmUser user = getUser();
+				if (user == null) {
+					throw new Exception("Not authorized user");
+				}
+				HasUserInfo newEntityWithUser = (HasUserInfo) newEntity;
+				newEntityWithUser.setModUserId(user.getId());
+				newEntityWithUser.setLastUpdateDate(new Date());
+				if (newEntity.getId() == null) {
+					newEntityWithUser.setAddUserId(newEntityWithUser
+						.getModUserId());
+					newEntityWithUser.setInsertDate(newEntityWithUser
+						.getLastUpdateDate());
+				} else {
+					HasUserInfo oldEntityWithUser = (HasUserInfo) oldEntity;
+					newEntityWithUser.setAddUserId(oldEntityWithUser
+						.getAddUserId());
+					newEntityWithUser.setInsertDate(oldEntityWithUser
+						.getInsertDate());
+				}
+			}
+
+			if (oldEntity != null) {
+				for (Field f : newEntity.getClass().getDeclaredFields()) {
+					if (List.class.equals(f.getType())) {
+						Type[] tt = ((ParameterizedType) f.getGenericType())
+							.getActualTypeArguments();
+						if (tt.length > 0 && HasId.class.isAssignableFrom((Class<?>) tt[0])) {
+							f.setAccessible(true);
+							List<HasId> oldLst = (List<HasId>) f.get(oldEntity);
+							List<HasId> newLst = (List<HasId>) f.get(newEntity);
+							for (HasId oldVal : oldLst) {
+								Integer index = null;
+								Object oldId = oldVal.getId();
+								// Ищем значение из старых в новом списке
+								// Эквивалентными считаются два значения с одинаковым ID
+								for (int i = 0; i < newLst.size(); i++) {
+									if (oldId != null && oldId.equals(
+										newLst.get(i).getId())) {
+										index = i;
+										break;
+									}
+								}
+								if (index == null) {
+									// Если такого значения нет в новом списке то удаляем
+									// его из базы
+									em.remove(oldVal);
+								} else {
+									// Если такое значение есть, то вставляем его новый эквивалент
+									// в базу
+									newLst.set(index, insertEntity(newLst.get(index), oldVal));
+								}
+							}
+						}
+					}
+				}
+			}
+
+			newEntity = em.merge(newEntity);
+			return newEntity;
+		} catch (Exception e) {
+			context.setRollbackOnly();
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * Получает данные из таблицы для связанных полей с аттрибутом
+	 * {@code fetch = FetchType.LAZY}. Используется для получения данных в одной
+	 * транзакции.
+	 *
+	 * @param <T> тип данных, которые будет содержать коллекция (должен быть
+	 * сущностью)
+	 * @param col коллекция
+	 * @return иницализированна коллекция
+	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public <T> List<T> initCollection(List<T> col) {
+		col.iterator();
+		return col;
+	}
+
+	/**
+	 * Возвращает текущего пользователя системы
+	 *
+	 * @return пользователь, который работает с системой в данный момент
+	 */
+	public AdmUser getUser() {
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<AdmUser> cq = cb.createQuery(AdmUser.class);
+		Root<AdmUser> root = cq.from(AdmUser.class);
+		String userName = ejbContext.getCallerPrincipal().getName();
+		cq.where(cb.equal(cb.upper(root.<String>get("login")), userName.toUpperCase()));
+		AdmUser user = (AdmUser) em.createQuery(cq).getResultList().get(0);
+		return user;
 	}
 }

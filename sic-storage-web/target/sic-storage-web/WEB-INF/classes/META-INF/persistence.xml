@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="StorageEntityManager" transaction-type="JTA">
+	<persistence-unit name="SicEntityManager" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/SicDS</jta-data-source>
-
+		<!-- Корректный путь должен быть именно таким. Если меняются версии - править руками версию ramdoc-ear & core-model !-->
+		<!--    <jar-file>qq-0.0.1-SNAPSHOT.ear/lib/core-model-0.1.2.jar</jar-file>
+		<jar-file>qq-0.0.1-SNAPSHOT.ear/qq-ejb-0.0.1-SNAPSHOT.jar</jar-file> -->
 		<class>ru.insoft.archive.core_model.table.adm.AdmAccessRule</class>
 		<class>ru.insoft.archive.core_model.table.adm.AdmEmployee</class>
 		<class>ru.insoft.archive.core_model.table.adm.AdmGroup</class>
@@ -30,6 +32,7 @@
 		<class>ru.insoft.archive.sic_storage.model.view.VStrgOrgForSearch</class>
 		<class>ru.insoft.archive.sic_storage.model.view.VStrgOrgForView</class>
 		<class>ru.insoft.archive.sic_storage.model.view.VStrgPlaceOrg</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="ru.insoft.archive.sic_storage.SicStorageDialect"/>
 			<property name="hibernate.jdbc.batch_size" value="20"/>
