@@ -16,6 +16,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -84,7 +85,7 @@ public class StorageHandler {
 			StrgFund fund = em.createQuery(cq).getSingleResult();
 			res.setFound(true);
 			res.setFund(fund);
-		} catch (NoResultException e) {
+		} catch (NoResultException | NonUniqueResultException e) {
 
 		}
 

@@ -253,7 +253,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 					disabled: true,
 					name: 'goldInfo',
 					labelWidth: 200,
-					height: 25,
+					height: 25
 				}), Ext.create('Ext.form.field.TextArea', {
 					fieldLabel: 'Примечание',
 					name: 'noteInfo',

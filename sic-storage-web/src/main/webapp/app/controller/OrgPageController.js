@@ -391,9 +391,9 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									var idOrg = Ext.decode(action.responseText).id;
 									form.idCard = idOrg;
 									var FIO = form.FIO.text;
-									btn.action = 'orgCardView';
-									myfn(btn);
-//									reloadMain(idOrg, FIO, oldData, main);
+//									btn.action = 'orgCardView';
+//									myfn(btn);
+									reloadMain(idOrg, FIO, oldData, main);
 								},
 								failure: function() {
 									// Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');

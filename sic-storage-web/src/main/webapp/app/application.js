@@ -33,6 +33,6 @@ Ext.define('storeplaces.Application', {
 	],
 	stores: [
 		'storeplaces.store.StorageTypeStore', 'storeplaces.store.DocsReadStore',
-		'storeplaces.store.DocsWriteStore', 'storeplaces.store.StoragePlaceStore'
+		'storeplaces.store.DocsWriteStore'
 	]
 });

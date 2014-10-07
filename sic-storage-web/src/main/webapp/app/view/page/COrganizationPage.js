@@ -21,8 +21,9 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	initComponent: function() {
 		var me = this,
 				create = Ext.create;
-		this.orgStore = Ext.getStore('OrgNamesStore');
-		this.FIO = create('Ext.form.Label', {
+		me.orgStore = Ext.getStore('OrgNamesStore');
+		me.orgStore.load();
+		me.FIO = create('Ext.form.Label', {
 			text: '',
 			baseCls: 'loginedUserText',
 			flex: 0

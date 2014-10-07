@@ -13,7 +13,6 @@ Ext.define('storeplaces.controller.SearchFormController', {
 				decode = Ext.decode,
 				create = Ext.create,
 				getStore = Ext.getStore,
-				myPage = me.getPage(),
 				gridSearchOrgSt = getStore('GridSearchOrgStore');
 		me.control({
 			'searchpage grid': {
@@ -154,7 +153,8 @@ Ext.define('storeplaces.controller.SearchFormController', {
 			},
 			'searchpage  button': {
 				click: function(btn, eventObj) {
-					var sItems = myPage.searchFieldset.items,
+					var myPage = me.getPage(),
+							sItems = myPage.searchFieldset.items,
 							orgName = sItems.getAt(0),
 							documentType = sItems.getAt(1),
 							dItems = sItems.getAt(2).items,
@@ -182,30 +182,14 @@ Ext.define('storeplaces.controller.SearchFormController', {
 						case 'quitSearch':
 							storeplaces.userStore.removeAll(true);
 							window.location = "/qq-web/Auth?action=logout&redirect=1";
-							/*
-							 Ext.Ajax.request({
-							 url: 'servlet/Auth',
-							 params : {
-							 action:'logout'
-							 },
-							 success: function(action){
-							 var isSuccess = decode(action.responseText).success;
-							 var isMsg = decode(action.responseText).msg;
-							 main.removeAll();
-							 main.add(create('storeplaces.view.page.CLoginPage'));
-							 getStore('GridSearchOrgStore').removeAll();
-							 },
-							 failure : function(action) {
-							 Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
-							 }
-							 });
-							 */
 							break;
 						case 'addOrg':
-							var FIO = form.FIO.text;
-							var oldData = form.getForm().getValues();
+							var FIO = myPage.FIO.text;
+							var oldData = myPage.getForm().getValues();
 							main.removeAll();
 							var newForm = create('storeplaces.view.page.COrganizationPage');
+							newForm.items.getAt(0).items.getAt(2).show();
+							newForm.items.getAt(0).items.getAt(1).hide();
 							newForm.FIO.setText(FIO);
 							newForm.oldData = oldData;
 							newForm.items.items[0].items.items[4].action = 'newCancel';

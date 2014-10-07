@@ -1892,7 +1892,9 @@ Ext.ClassManager.addNameAliasMappings({
   "storeplaces.store.DocsWriteStore": [],
   "storeplaces.store.GridSearchOrgStore": [],
   "storeplaces.store.OrgNamesStore": [],
-  "storeplaces.store.StoragePlaceStore": [],
+  "storeplaces.store.StoragePlaceStore": [
+    "StoragePlaceStore"
+  ],
   "storeplaces.store.StorageTypeStore": [],
   "storeplaces.view.Buffer": [
     "widget.buffer"
@@ -1904,9 +1906,7 @@ Ext.ClassManager.addNameAliasMappings({
   "storeplaces.view.card.CStorePlace": [
     "widget.storeplacecard"
   ],
-  "storeplaces.view.card.CStorePlaceView": [
-    "widget.storeplacecard"
-  ],
+  "storeplaces.view.card.CStorePlaceView": [],
   "storeplaces.view.lib.NumFond": [],
   "storeplaces.view.lib.StyledFieldSet": [],
   "storeplaces.view.lib.YearInterval": [],
@@ -1917,11 +1917,8 @@ Ext.ClassManager.addNameAliasMappings({
   "storeplaces.view.page.COrganizationPage": [
     "widget.corgpage"
   ],
-  "storeplaces.view.page.COrganizationPageView": [
-    "widget.corgpage"
-  ],
+  "storeplaces.view.page.COrganizationPageView": [],
   "storeplaces.view.page.CSearchPage": [
-    "widget.csearchpage",
     "widget.searchpage"
   ]
 });

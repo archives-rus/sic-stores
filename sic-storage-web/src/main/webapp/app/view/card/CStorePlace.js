@@ -4,7 +4,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	xtype: 'storeplacecard',
 	requires: [
 		'Ext.grid.plugin.CellEditing',
-		'storeplaces.store.DocTypesStore'
+		'storeplaces.store.DocTypesStore',
+		'storeplaces.store.StoragePlaceStore'
 	],
 	cbStorageType: null,
 	docsWriteStore: null,
@@ -111,7 +112,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		var x_ = 580;
 		var me = this;
 		me.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
-		var myStore = Ext.create('storeplaces.store.StoragePlaceStore');
 		var closeButton = Ext.create('Ext.Button', {
 			//text : 'X',
 			x: '98%',
@@ -232,7 +232,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 						},
 						success: function(action) {
 							var mass = Ext.decode(action.responseText);
-							myStore.loadData(mass);
+							Ext.getStore('StoragePlaceStore').loadData(mass);
 						},
 						failure: function(action) {
 							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
@@ -269,7 +269,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.cbAddr = Ext.create('Ext.form.ComboBox', {
 			fieldLabel: 'Адрес',
-			store: myStore,
+			store: Ext.getStore('StoragePlaceStore'),
 			editable: true,
 			queryMode: 'local',
 			displayField: 'address',

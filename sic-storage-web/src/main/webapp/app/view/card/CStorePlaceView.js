@@ -134,7 +134,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			y: me.tfStorageType.y + me.tfStorageType.height + 5
 		});
 
-		var myStore = Ext.create('storeplaces.store.StoragePlaceStore');
+		var myStore = Ext.getStore('StoragePlaceStore');
 
 		me.tfArchive = Ext.create('Ext.form.field.TextArea', {
 			fieldLabel: 'Архив',
