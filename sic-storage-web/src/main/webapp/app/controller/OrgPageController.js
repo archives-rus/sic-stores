@@ -6,27 +6,26 @@ Ext.define('storeplaces.controller.OrgPageController', {
 			selector: 'viewport > container > corgpage'
 		}],
 	init: function() {
-		this.control({
+		var msg = Ext.Msg,
+				me = this;
+		me.control({
 			'button': {
 				click: function myfn(btn, eventObj) {
-					if (btn.action == 'srchFund')
-					{
-						var numFund = btn.up('fieldcontainer');
-						var fs = numFund.up('fieldset');
-						var main = fs.up('container');
+					if (btn.action == 'srchFund') {
+						var numFund = btn.up('fieldcontainer'),
+								fs = numFund.up('fieldset'),
+								main = fs.up('container');
 					}
-					else if (btn.action == 'deleteCard')
-					{
+					else if (btn.action == 'deleteCard') {
 						var form = btn.up('form');
-						this.getPage().placesFieldSet.remove(form);
+						me.getPage().placesFieldSet.remove(form);
 					}
-					else if (btn.id != 'button-1005')
-					{
-						var tb = btn.up('toolbar');
-						var form = tb.up('form');
-						var main = form.up('container');
-						var vp = main.up('viewport');
-						var buffer = vp.items.items[1];
+					else if (btn.id != 'button-1005') {
+						var tb = btn.up('toolbar'),
+								form = tb.up('form'),
+								main = form.up('container'),
+								vp = main.up('viewport'),
+								buffer = vp.items.items[1];
 					}
 
 					switch (btn.action) {
@@ -101,7 +100,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									main.add(Ext.create('storeplaces.view.page.CLoginPage'));
 								},
 								failure: function(action) {
-									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							break;
@@ -113,7 +112,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							var id = form.idCard;
 							if (id == null)
 							{
-								Ext.Msg.alert('Внимание', 'Организация не создана!');
+								msg.alert('Внимание', 'Организация не создана!');
 								break;
 							}
 							Ext.Ajax.request({
@@ -125,10 +124,10 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									var success = Ext.decode(action.responseText).success;
 									main.removeAll();
 									main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
-									Ext.Msg.alert('Внимание', 'Организация удалена!');
+									msg.alert('Внимание', 'Организация удалена!');
 								},
 								failure: function() {
-									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							break;
@@ -136,7 +135,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							var id = form.idCard;
 							if (id == null)
 							{
-								Ext.Msg.alert('Внимание', 'Организация не создана!');
+								msg.alert('Внимание', 'Организация не создана!');
 								break;
 							}
 							Ext.Ajax.request({
@@ -177,10 +176,10 @@ Ext.define('storeplaces.controller.OrgPageController', {
 										cardsStore.reload();
 										cardsStoreAll.reload();
 									}
-									Ext.Msg.alert('Внимание', 'Организация удалена!');
+									msg.alert('Внимание', 'Организация удалена!');
 								},
 								failure: function() {
-									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							break;
@@ -191,7 +190,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							main.removeAll();
 							var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
 //							newOrgPage.items.items[0].items.items[2].action = 'viewNew';
-							newOrgPage.items.getAt(0).items.getAt(2).hidden = false;
+							newOrgPage.items.getAt(0).items.getAt(2).hide();
 							newOrgPage.FIO.setText(FIO);
 							newOrgPage.oldData = oldData;
 							newOrgPage.items.items[0].items.items[4].action = 'newCancel';
@@ -210,84 +209,84 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							break;
 						case 'orgCardSave':
 							if (form.gridNames.getStore().getCount() === 0) {
-								Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить наименование организации!');
+								msg.alert('Внимание', 'Для сохранения необходимо заполнить наименование организации!');
+								break;
+							} else if (form.fundFieldset.items.items[0].getValue() === null) {
+								msg.alert('Внимание', 'Для сохранения необходимо выбать архив в фондовой принадлежности!');
 								break;
 							}
-							else if (form.fundFieldset.items.items[0].getValue() === null) {
-								Ext.Msg.alert('Внимание', 'Для сохранения необходимо выбать архив в фондовой принадлежности!');
-								break;
-							}
-							if (form.fundFieldset.items.items[2].items.items[1].getRawValue() != '' &&
+							if (form.fundFieldset.items.items[2].items.items[1].getRawValue() !== '' &&
 									form.fundFieldset.items.items[1].getRawValue() === '') {
-								Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название фонда!');
+								msg.alert('Внимание', 'Для сохранения необходимо заполнить название фонда!');
 								break;
 							}
 							if (form.placesFieldSet.items.items.length === 0) {
-								Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить хотя бы одно место хранения!');
+								msg.alert('Внимание', 'Для сохранения необходимо заполнить хотя бы одно место хранения!');
 								break;
 							}
 
-							for (var i = 0; i < form.placesFieldSet.items.items.length; i++)
-							{
-								var Card = form.placesFieldSet.items.items[i],
-										orgName = Card.taOrg.getRawValue(),
-										ps = Card.cbStorageType.getValue(),
+							var crdError = false;
+							form.placesFieldSet.items.each(function(Card) {
+								var ps = Card.cbStorageType.getValue(),
 										addres;
 								if (ps == 2) {
-									place = orgName;    //tf
+									place = Card.taOrg.getRawValue();    //tf
 									addres = Card.tfAddr.getValue();
 								} else {
 									place = Card.cbArchive.getValue(); //combo
 									addres = Card.cbAddr.getValue();    //combo
 								}
-
-								if (ps == null) {
-									Ext.Msg.alert('Внимание', 'Для сохранения необходимо выбрать место хранения!');
-									break;
+								if (ps === null) {
+									msg.alert('Внимание', 'Для сохранения необходимо выбрать место хранения!');
+									crdError = true;
+									return false;
 								}
 								else if (place == '') {
-									Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации места хранения!');
-									break;
+									msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации места хранения!');
+									crdError = true;
+									return false;
 								}
 
-								if (addres == null || addres == '') {
-									Ext.Msg.alert('Внимание', 'Для сохранения необходимо выбрать заполнить адрес места хранения!');
-									break;
+								if (addres === null || addres === '') {
+									msg.alert('Внимание', 'Для сохранения необходимо выбрать заполнить адрес места хранения!');
+									crdError = true;
+									return false;
 								}
+							});
+							if (crdError)
+								break;
 
-							}
-							var modelsOrg = form.orgStore.getRange();
-							var names = new Array();
-							for (var i = 0; i < modelsOrg.length; i++) {
-								modelsOrg[i].set('sortOrder', i + 1)
-								names.push(modelsOrg[i].getData());
-							}
+							var names = [];
+							form.orgStore.getRange().forEach(function(record, i) {
+								record.set('sortOrder', i + 1);
+								names.push(record.getData());
+							});
 							var idOrg = form.idCard;
 							var idFund = form.idFund;
 							var businessTripsInfoSave = form.areaFieldSets.items.items[0].getRawValue();
-							if (businessTripsInfoSave == '')
+							if (businessTripsInfoSave === '')
 								businessTripsInfoSave = null;
 							var rewardsInfoSave = form.areaFieldSets.items.items[1].getRawValue();
-							if (rewardsInfoSave == '')
+							if (rewardsInfoSave === '')
 								rewardsInfoSave = null;
 							var notesSave = form.areaFieldSets.items.items[2].getRawValue();
-							if (notesSave == '')
+							if (notesSave === '')
 								notesSave = null;
 							var idArch = form.fundFieldset.items.items[0].getValue();
 							var prefix = form.fundFieldset.items.items[2].items.items[0].getRawValue();
-							if (prefix == '')
+							if (prefix === '')
 								prefix = null;
 							var numFund = form.fundFieldset.items.items[2].items.items[1].getRawValue();
 							var suffix = form.fundFieldset.items.items[2].items.items[2].getRawValue();
-							if (suffix == '')
+							if (suffix === '')
 								suffix = null;
 							var nameFund = form.fundFieldset.items.items[1].getRawValue();
-							if (nameFund == '')
+							if (nameFund === '')
 								nameFund = null;
 							var datesFund = form.fundFieldset.items.items[3].getRawValue();
-							if (datesFund == '')
+							if (datesFund === '')
 								datesFund = null;
-							if (numFund == '') {
+							if (numFund === '') {
 								numFund = null;
 								var fund = null;
 							} else {
@@ -303,16 +302,16 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								};
 							}
 
-							var myCards = form.placesFieldSet.items.items;
-							var storage = new Array();
-							// var documents           = new Array();
+							var myCards = form.placesFieldSet.items.items,
+									storage = [],
+									newaddresses = [];
 
 							for (var j = 0; j < myCards.length; j++) {
 								var documents = new Array();
 								var dataCard = myCards[j];
 								var idPlace = dataCard.idPlace;
 								var phone = dataCard.tfPhone.getRawValue();
-								if (phone == '')
+								if (phone === '')
 									phone = null;
 								var documentCount = dataCard.nfCount.getRawValue();
 								documentCount = parseInt(documentCount);
@@ -320,8 +319,9 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 								if (orgName) {
 									var address = dataCard.tfAddr.getRawValue();
-									if (address == '')
+									if (address == '') {
 										address = null;
+									}
 									var archStrg = null;
 								} else {
 									orgName = null;
@@ -330,6 +330,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 										address = null;
 									var idArchiveCb = dataCard.cbArchive.getValue();
 									var idArchStorage = dataCard.cbAddr.getValue();
+//									console.log(dataCard.cbAddr.getStore().getById(idArchStorage));
 									idArchStorage = parseInt(idArchStorage);
 									var archStrg = {
 										'id': idArchStorage,
@@ -337,6 +338,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 										'address': address,
 										'phone': phone
 									};
+//									if (idArchStorage === null)
+//										newaddresses.push(address);
 								}
 
 								var beginYear = dataCard.yearInterval.items.items[1].getRawValue();
@@ -380,8 +383,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								'rewardsInfo': rewardsInfoSave,
 								'notes': notesSave
 							};
+//							console.log(org);
 							org = Ext.encode(org);
-
 							Ext.Ajax.request({
 								url: 'servlet/SaveOrganization',
 								params: {
@@ -391,13 +394,11 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									var idOrg = Ext.decode(action.responseText).id;
 									form.idCard = idOrg;
 									var FIO = form.FIO.text;
-//									btn.action = 'orgCardView';
-//									myfn(btn);
 									reloadMain(idOrg, FIO, oldData, main);
 								},
 								failure: function() {
-									// Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
-									// Ext.Msg.alert('Внимание', 'Для сохранения необходимо заполнить место хранения, архив и адрес в каждой карточке!');
+									// msg.alert('Ошибка', 'Ошибка базы данных!');
+									// msg.alert('Внимание', 'Для сохранения необходимо заполнить место хранения, архив и адрес в каждой карточке!');
 								}
 							});
 							break;
@@ -504,7 +505,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 								},
 								failure: function() {
-									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							Ext.Ajax.request({
@@ -644,7 +645,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 											},
 											failure: function() {
-												Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+												msg.alert('Ошибка', 'Ошибка базы данных!');
 											}
 										});
 
@@ -654,28 +655,24 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 								},
 								failure: function() {
-									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							main.add(myEditOrgPage);
 							break;
 						case 'srchFund':
-							var archiveId = fs.items.items[0].getValue();
-							var num = numFund.items.items[1].getRawValue();
-							var prefix = numFund.items.items[0].getRawValue();
-							var suffix = numFund.items.items[2].getRawValue();
-							if (archiveId == '' || archiveId == null || num == ''/* || prefix=='' || suffix==''*/)
-							{
-								Ext.Msg.alert('Внимание', 'Для поиска необходимо ввсети архив и номер фонда');
+							var archiveId = fs.items.items[0].getValue(),
+									numItems = numFund.items,
+									num = numItems.getAt(1).getRawValue();
+							if (archiveId == '' || archiveId == null || num == '') {
+								msg.alert('Внимание', 'Для поиска необходимо ввсети архив и номер фонда');
 								break;
 							}
-							if (prefix == '')
-								prefix = null;
-							if (suffix == '')
-								suffix = null;
 							num = parseInt(num);
 
-							var fund = {'num': num, 'prefix': prefix, 'suffix': suffix};
+							var fund = {num: num,
+								prefix: numItems.getAt(0).getRawValue() || null,
+								suffix: numItems.getAt(2).getRawValue() || null};
 							fund = Ext.encode(fund);
 							var nameFund = fs.items.items[1];
 							var datesFund = fs.items.items[3];
@@ -687,29 +684,22 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									'fund': fund
 								},
 								success: function(action) {
-									var isFound = Ext.decode(action.responseText).found;
-									if (isFound == false)
-									{
+									var answer = Ext.decode(action.responseText);
+									if (answer.found == false) {
 										Ext.example.msg('Внимание!', 'Фонд не найден!');
 										nameFund.enable();
 										datesFund.enable();
-									}
-									else
-									{
-										var isName = Ext.decode(action.responseText).fund.name;
-										var isId = Ext.decode(action.responseText).fund.id;
-										var isNum = Ext.decode(action.responseText).fund.num;
-										var isPrefix = Ext.decode(action.responseText).fund.prefix;
-										var isSuffix = Ext.decode(action.responseText).fund.suffix;
-										var isDates = Ext.decode(action.responseText).fund.dates;
-										nameFund.setValue(isName);
-										datesFund.setValue(isDates);
+									} else {
+										var fond = answer.fund;
+										nameFund.setValue(fond.name);
+										datesFund.setValue(fond.dates);
 										nameFund.enable();
 										datesFund.enable();
+										me.getPage().idFund = fond.id;
 									}
 								},
 								failure: function(action) {
-									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							break;
@@ -741,7 +731,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 				},
 				failure: function() {
-					Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+					msg.alert('Ошибка', 'Ошибка базы данных!');
 				}
 			});
 			Ext.Ajax.request({
@@ -881,10 +871,10 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								});
 								placeCard.docGrid.getStore().loadData(massStorage);
 								myMask.hide();
-								Ext.Msg.alert('Внимание', 'Организация сохранена!');
+								msg.alert('Внимание', 'Организация сохранена!');
 							},
 							failure: function() {
-								Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+								msg.alert('Ошибка', 'Ошибка базы данных!');
 							}
 						});
 						myEditOrgPage.placesFieldSet.add(placeCard);
@@ -893,7 +883,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 				},
 				failure: function() {
-					Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+					msg.alert('Ошибка', 'Ошибка базы данных!');
 				}
 			});
 			main.add(myEditOrgPage);
