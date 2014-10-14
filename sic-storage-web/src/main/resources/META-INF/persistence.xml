@@ -42,7 +42,7 @@
 			<property name="hibernate.cache.use_query_cache" value="false"/>
 			<property name="hibernate.cache.use_second_level_cache" value="false"/>
 			<property name="hibernate.generate_statistics" value="false"/>
-			<property name="hibernate.current_session_contexkt_class" value="thread"/>
+			<property name="hibernate.current_session_context_class" value="thread"/>
 		</properties>
 	</persistence-unit>
 </persistence>
