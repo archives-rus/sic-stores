@@ -1,0 +1,140 @@
+.x-viewport,
+.x-viewport body{
+    /*overflow:auto;*/
+}
+.x-form-text{
+    border-color:#4D372E !important;
+}
+.loginedUserText{
+    margin:0 10px 0 0 !important;
+}
+.x-fieldset-header-text{
+    font:900 16px arial;
+    color:#560101;
+    text-align: center;
+    width:100%;
+}
+.x-fieldset-header{
+    background:url( ../img/line.png) no-repeat;
+    background-size: 100% 100%;
+    padding: 5px 0;
+    height: 30px;
+    width:100%;
+    /*width: 1200px;*/
+}
+.x-fieldset-header span{
+    width:100%;
+}
+.x-fieldset,
+.x-panel-body-default,
+.x-toolbar-default,
+.x-body{
+   /* text-align:center;*/
+    background-image:none;
+    background-color:#EDE4CE;
+    border:none;
+}
+/*.x-box-layout-ct{
+    border-image: url( ../img/menu_border_bot.png);
+    -moz-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
+    -webkit-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
+    -o-border-image:url( ../img/menu_border_bot.png) 0 1 10 10 stretch stretch;
+    border-bottom: 1px solid;
+}*/
+.main_bg .x-box-layout-ct{
+    border-bottom:none !important;
+    -moz-border-image: none;
+    -webkit-border-image: none;
+    -o-border-image: none;
+}
+.x-abs-layout-item{
+    border:none !important;
+}
+.orgpage-body{
+    background-color:#EDE4CE;
+}
+.x-form-item{
+    vertical-align:top;
+}
+.x-form-item-label,
+label{
+    font:bold 14px Arial;
+    color:#452111;
+    margin-left:10px !important;
+}
+.x-toolbar-text{
+    font:14px Arial;
+    color:#230F07;
+}
+.storePlaceCard{
+    margin-bottom: 10px;
+    /*padding-right:20px;*/
+}
+.storePlacesFieldset .x-fieldset-body{
+    /*margin: 5px 20px;*/
+    text-align:left;
+}
+.storePlaceCard label,
+.storePlaceCard .x-form-item-label{
+    color:#000 !important;
+}
+.storePlaceCard .x-panel-body-default{
+    background-color:#F2EDE0;
+    border:1px solid #3F2013;
+}
+.storePlaceCard .x-toolbar-default-docked-top{
+    background-color:#F2EDE0;
+}
+.x-btn-default-small .x-btn-inner,
+.storePlaceCard .x-toolbar-default{
+    color:#957340;
+}
+.x-btn-default-toolbar-small-over,
+.x-btn-default-toolbar-small-focus{
+    border:none;
+}
+.x-toolbar{
+    /*height:35px;*/
+}
+.title_search{
+    font:bold 18px Arial;
+    text-align: center;
+}
+.title_search h3{
+    border-image: url( ../img/tit_bot_search.png);
+    -moz-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    -webkit-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    -o-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
+    padding-bottom:10px;
+}
+#enterpage{
+    text-align:center;
+    background-color: transparent;
+}
+#enterpage-body{
+    padding: 5px 40px !important;
+    background-color: transparent;
+}
+/**/
+.tit_log{
+    font:bold 26px Arial;
+    color:#742708;
+    text-shadow:3px 6px 5px #864D2D;
+    display: inline-block;
+}
+.log_box .x-box-inner{
+    background:url( ../img/log_box.png) no-repeat;
+    background-size:100% 100%;
+    font:bold 14px Arial;
+    color:#230F07;
+    width:253px !important;
+    height:165px !important;
+}
+.main_bg{
+    height:100% !important;
+}
+.main_bg .x-fieldset,
+.main_bg .x-panel-body-default,
+.main_bg .x-box-layout-ct{
+    background-color: transparent;
+}

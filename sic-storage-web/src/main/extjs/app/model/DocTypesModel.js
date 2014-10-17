@@ -1,0 +1,10 @@
+Ext.define('storeplaces.model.DocTypesModel',{
+    extend:'Ext.data.Model',
+    fields:[{
+        name:'id',
+        type:'int'
+    },{
+        name:'name',
+        type:'string'
+    }]
+});
