@@ -10,14 +10,14 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 	width: '100%',
 	id: 'searchgpage',
 	searchFieldset: null,
-	initComponent: function() {
+	initComponent: function () {
 		var me = this,
 				create = Ext.create,
 				storeId = 'GridSearchOrgStore',
 				titlePage = create('Ext.form.Label', {
 					html: '<center><h3>Справочно-информационная ' +
 							'база данных о местах хранения архивных документов по ' +
-							'личному составу государственных, муниципальных и ' +
+							'личному составу в государственных, муниципальных и ' +
 							'ведомственных архивах',
 					cls: 'title_search'
 				});
@@ -27,8 +27,6 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 			baseCls: 'loginedUserText',
 			flex: 0
 		});
-
-
 
 		var toolBarSearch = create('Ext.toolbar.Toolbar', {
 			items: [create('Ext.Button', {
