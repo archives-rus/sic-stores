@@ -1,2 +1,0 @@
-# places-theme - Read Me
-
