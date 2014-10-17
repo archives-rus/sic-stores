@@ -36,3 +36,4 @@ Ext.define('storeplaces.Application', {
 		'storeplaces.store.DocsWriteStore'
 	]
 });
+

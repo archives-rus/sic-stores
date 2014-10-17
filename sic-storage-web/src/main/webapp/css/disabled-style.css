@@ -1,0 +1,31 @@
+.brown-font .x-form-text{
+    color:#452111;
+    opacity:1;
+}
+.x-item-disabled .x-form-item-label,
+#orgpageview .x-item-disabled .x-form-field{
+    opacity:1;
+}
+#orgpageview .x-item-disabled .x-form-field,
+.dis-style .x-form-field{
+    background:none;
+    border:none;
+}
+.x-mask{
+    background-color:transparent;
+}
+.x-item-disabled .x-form-display-field,
+.x-item-disabled .x-form-cb-label,
+.x-item-disabled .x-form-trigger{
+
+}
+.x-window-default,
+.x-message-box .x-window-body,
+.x-window-header-default-top{
+	background-color: #F5E0D0;
+}
+.x-window-default,
+.x-window-default .x-btn-default-small{
+	border-color: #3F2013;
+}
+#msg-div{}
