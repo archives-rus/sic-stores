@@ -20,9 +20,6 @@ Ext.define('storeplaces.Application', {
 		'storeplaces.view.page.COrganizationPage',
 		'storeplaces.view.page.CSearchPage',
 		'storeplaces.view.page.COrganizationPageView'
-
-
-
 	],
 	controllers: [
 		'storeplaces.controller.StorePlaceCardController',
@@ -36,4 +33,5 @@ Ext.define('storeplaces.Application', {
 		'storeplaces.store.DocsWriteStore'
 	]
 });
+
 

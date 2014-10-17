@@ -14,7 +14,6 @@
 	<security-role>
 		<role-name>*</role-name>
 	</security-role>
-
 	<servlet>
 		<description>No description</description>
 		<display-name>Authorization servlet</display-name>

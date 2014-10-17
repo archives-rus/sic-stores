@@ -64,7 +64,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				forceSelection: true,
 				validateOnChange: false
 			}),
-			renderer: function(value, store) {
+			renderer: function (value, store) {
 				var editorComboStore = Ext.getStore('DocTypesStore');
 				for (var i = 0; i < editorComboStore.getCount(); i++) {
 					var obj = editorComboStore.getAt(i);
@@ -95,9 +95,9 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			xtype: 'actioncolumn',
 			align: 'center',
 			items: [{
-					icon: 'resources/img/emblem-unreadable.png',
+					icon: 'img/emblem-unreadable.png',
 					tooltip: 'Удалить',
-					handler: function(grid, rowIndex, colIndex) {
+					handler: function (grid, rowIndex, colIndex) {
 						if (window.app) {
 							window.app
 									.getController('storeplaces.controller.StorePlaceCardController')
@@ -108,7 +108,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					}
 				}]
 		}],
-	initComponent: function() {
+	initComponent: function () {
 		var x_ = 580;
 		var me = this;
 		me.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
@@ -141,7 +141,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			x: 5,
 			y: 25,
 			listeners: {
-				'select': function(combo) {
+				'select': function (combo) {
 					if (this.getValue() == 1)
 					{
 						var value = combo.up('storeplacecard').up('fieldset').up('form').fundFieldset.items.items[0].getValue();
@@ -223,18 +223,18 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			x: 5,
 			y: me.cbStorageType.y + me.cbStorageType.height + 5,
 			listeners: {
-				'select': function() {
+				'select': function () {
 					var archiveId = this.getValue();
 					Ext.Ajax.request({
 						url: 'servlet/QueryArchStorage',
 						params: {
 							'archiveId': archiveId
 						},
-						success: function(action) {
+						success: function (action) {
 							var mass = Ext.decode(action.responseText);
 							Ext.getStore('StoragePlaceStore').loadData(mass);
 						},
-						failure: function(action) {
+						failure: function (action) {
 							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 						}
 					});
@@ -281,7 +281,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			x: 610,
 			y: 25,
 			listeners: {
-				'select': function(combo, records, eOpts) {
+				'select': function (combo, records, eOpts) {
 					var phone = records[0].data.phone;
 					me.tfPhone.setValue(phone);
 				}

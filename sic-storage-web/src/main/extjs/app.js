@@ -1,11 +1,9 @@
-
 Ext.application({
-    name: 'storeplaces',
+	name: 'storeplaces',
+	extend: 'storeplaces.Application',
+	autoCreateViewport: true,
+	launch: function () {
+		window.app = this;
+	}
 
-    extend: 'storeplaces.Application',
-
-    autoCreateViewport: true,
-    launch:function(){
-    	window.app=this;
-    }
 });

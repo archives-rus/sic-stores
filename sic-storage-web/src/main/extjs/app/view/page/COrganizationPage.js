@@ -18,7 +18,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	orgStore: null,
 	gridNames: null,
 	gridToolBar: null,
-	initComponent: function() {
+	initComponent: function () {
 		var me = this,
 				create = Ext.create;
 		me.orgStore = Ext.getStore('OrgNamesStore');
@@ -138,9 +138,9 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					xtype: 'actioncolumn',
 					align: 'center',
 					items: [{
-							icon: 'resources/img/emblem-unreadable.png',
+							icon: 'img/emblem-unreadable.png',
 							tooltip: 'Удалить',
-							handler: function(grid, rowIndex, colIndex) {
+							handler: function (grid, rowIndex, colIndex) {
 								grid.getStore().remove(grid.getStore().getAt(rowIndex));
 							}
 						}]
