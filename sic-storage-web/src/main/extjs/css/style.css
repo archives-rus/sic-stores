@@ -106,6 +106,7 @@ label{
     -webkit-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
     -o-border-image:url( ../img/tit_bot_search.png) 0 1 10 10 stretch stretch;
     padding-bottom:10px;
+	border-bottom:2px solid;
 }
 #enterpage{
     text-align:center;
