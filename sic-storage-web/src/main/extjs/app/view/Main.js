@@ -53,3 +53,13 @@ Ext.define('storeplaces.view.Main', {
 	}
 });
 
+Ext.Ajax.on('requestexception', function (conn, response) {
+	if (response.status === 403) {
+		try {
+			storeplaces.userStore.removeAll(true);
+		} catch (e) {
+
+		}
+		window.location = "/qq-web/Auth?action=logout&redirect=1";
+	}
+});

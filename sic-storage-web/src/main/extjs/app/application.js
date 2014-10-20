@@ -11,7 +11,8 @@ Ext.define('storeplaces.Application', {
 		'storeplaces.store.OrgNamesStore',
 		'storeplaces.store.CardsStoreAll',
 		'storeplaces.store.CardsStore',
-		'storeplaces.store.GridSearchOrgStore'
+		'storeplaces.store.GridSearchOrgStore',
+		'storeplaces.store.StorageTypeStore'
 	],
 	views: [
 		'storeplaces.view.card.CStorePlace',
@@ -29,7 +30,7 @@ Ext.define('storeplaces.Application', {
 		'storeplaces.controller.OrgPageFunc'
 	],
 	stores: [
-		'storeplaces.store.StorageTypeStore', 'storeplaces.store.DocsReadStore',
+		'storeplaces.store.DocsReadStore',
 		'storeplaces.store.DocsWriteStore'
 	]
 });
