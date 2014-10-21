@@ -91,7 +91,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 				type: 'table',
 				columns: 2
 			},
-			fieldLabel: 'Даты',
+			fieldLabel: 'Годы',
 			labelWidth: 180,
 			defaultType: 'textfield',
 			items: [{
@@ -185,7 +185,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 					dataIndex: 'fund',
 					flex: 1
 				}, {
-					text: 'Крайние даты',
+					text: 'Годы',
 					dataIndex: 'dates',
 					flex: 1
 				}]
