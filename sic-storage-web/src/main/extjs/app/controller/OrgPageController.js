@@ -356,26 +356,26 @@ Ext.define('storeplaces.controller.OrgPageController', {
 										}
 										return null;
 									})(),
-									'orgName': orgName,
-									'address': address,
-									'phone': archStrg.phone || null,
-									'documentCount': documentCount,
-									'beginYear': beginYear,
-									'endYear': endYear,
-									'documents': documents,
-									'contents': contents
+									orgName: orgName,
+									address: address,
+									phone: archStrg.phone || null,
+									documentCount: documentCount,
+									beginYear: beginYear,
+									endYear: endYear,
+									documents: documents,
+									contents: contents
 								}
 								storage.push(card);
 							}
 							var org = {
-								'id': idOrg,
-								'names': names,
-								'archiveId': idArch,
-								'fund': fund,
-								'storage': storage,
-								'businessTripsInfo': businessTripsInfoSave,
-								'rewardsInfo': rewardsInfoSave,
-								'notes': notesSave
+								id: idOrg,
+								names: names,
+								archiveId: idArch,
+								fund: fund,
+								storage: storage,
+								businessTripsInfo: businessTripsInfoSave,
+								rewardsInfo: rewardsInfoSave,
+								notes: notesSave
 							};
 							org = Ext.encode(org);
 							Ext.Ajax.request({
@@ -490,150 +490,108 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							myEditOrgPage.oldData = oldData;
 							myEditOrgPage.idCard = id;
 							Ext.Ajax.request({
-								url: 'servlet/QueryOrgNames',
-								params: {
-									id: id
-								},
+								url: 'servlet/QueryOrgNames?id=' + id,
 								success: function (action) {
-									var massStore = Ext.decode(action.responseText);
-									myEditOrgPage.orgStore.loadData(massStore);
+									myEditOrgPage.orgStore.loadData(
+											Ext.decode(action.responseText));
 								},
 								failure: function () {
 									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							Ext.Ajax.request({
-								url: 'servlet/QueryOrganization',
-								params: {
-									id: id,
-									mode: 'EDIT'
-								},
+								url: 'servlet/QueryOrganization?mode=EDIT&id=' + id,
 								success: function (action) {
-									var dataArray = Ext.decode(action.responseText);
-									var archiveId = Ext.decode(action.responseText).archiveId;
-									var fund = Ext.decode(action.responseText).fund;
-									if (fund)
-									{
-										var fundId = Ext.decode(action.responseText).fund.id;
-										var fundNum = Ext.decode(action.responseText).fund.num;
-										var fundPrefix = Ext.decode(action.responseText).fund.prefix;
-										var fundSuffix = Ext.decode(action.responseText).fund.suffix;
-										var fundName = Ext.decode(action.responseText).fund.name;
-										var fundDates = Ext.decode(action.responseText).fund.dates;
-										myEditOrgPage.idFund = fundId;
+									var dataArray = Ext.decode(action.responseText),
+											fund = dataArray.fund,
+											fundFieldset = myEditOrgPage.fundFieldset.items,
+											myFundName = fundFieldset.items[1],
+											myDates = fundFieldset.items[3],
+											areaFieldSets = myEditOrgPage.areaFieldSets.items;
+
+									if (fund) {
+										myEditOrgPage.idFund = fund.id;
+										fundFieldset.items[2].items.items[1].setValue(fund.num);
+										myFundName.setValue(fund.name);
+										myDates.setValue(fund.dates);
+										fundFieldset.items[2].items.items[0].setValue(fund.prefix);
+										fundFieldset.items[2].items.items[2].setValue(fund.suffix);
 									}
 
-									var storage = Ext.decode(action.responseText).storage;
-									var businessTripsInfo = Ext.decode(action.responseText).businessTripsInfo;
-									var rewardsInfo = Ext.decode(action.responseText).rewardsInfo;
-									var notes = Ext.decode(action.responseText).notes;
-									var userName = Ext.decode(action.responseText).userName;
-									var lastUpdateDate = Ext.decode(action.responseText).lastUpdateDate;
-									var myArchive = myEditOrgPage.fundFieldset.items.items[0];
-									var myFundName = myEditOrgPage.fundFieldset.items.items[1];
-									var myFundPrefix = myEditOrgPage.fundFieldset.items.items[2].items.items[0];
-									var myFundNum = myEditOrgPage.fundFieldset.items.items[2].items.items[1];
-									var myFundSuffix = myEditOrgPage.fundFieldset.items.items[2].items.items[2];
-									var myDates = myEditOrgPage.fundFieldset.items.items[3];
-									var myBusinessTripsInfo = myEditOrgPage.areaFieldSets.items.items[0];
-									var myRewardsInfo = myEditOrgPage.areaFieldSets.items.items[1];
-									var myNotes = myEditOrgPage.areaFieldSets.items.items[2];
-									var myUserName = myEditOrgPage.tfUser;
-									var myLastUpdateDate = myEditOrgPage.tfDateOfEdit;
 									myFundName.setDisabled(false);
 									myDates.setDisabled(false);
-									myFundName.setValue(fundName);
-									myFundPrefix.setValue(fundPrefix);
-									myFundNum.setValue(fundNum);
-									myFundSuffix.setValue(fundSuffix);
-									myArchive.setValue(archiveId);
-									myDates.setValue(fundDates);
-									myBusinessTripsInfo.setValue(businessTripsInfo);
-									myRewardsInfo.setValue(rewardsInfo);
-									myNotes.setValue(notes);
-									myUserName.setValue(userName);
-									myLastUpdateDate.setValue(lastUpdateDate);
-									for (var i = 0; i < storage.length; i++)
-									{
-										var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
-										var idPlace = storage[i].id; // id места хранения документов
-										var archStrg = storage[i].archStrg;
-										if (archStrg)
-										{
-											var archInId = storage[i].archStrg.id; // id места хранения в архиве
-											var archId = storage[i].archStrg.archiveId; //id архива(второй комбо снизу)
-											var archAddress = storage[i].archStrg.address
-											var archPhone = storage[i].archStrg.phone
+
+									fundFieldset.items[0].setValue(dataArray.archiveId);
+									areaFieldSets.items[0].setValue(dataArray.businessTripsInfo);
+									areaFieldSets.items[1].setValue(dataArray.rewardsInfo);
+									areaFieldSets.items[2].setValue(dataArray.notes);
+									myEditOrgPage.tfUser.setValue(dataArray.userName);
+									myEditOrgPage.tfDateOfEdit.setValue(dataArray.lastUpdateDate);
+
+									function showWidget(w, v) {
+										w.setVisible(true);
+										w.setValue(v);
+										w.setDisabled(false);
+									}
+
+									dataArray.storage.forEach(function (card) {
+										var placeCard = Ext.create('storeplaces.view.card.CStorePlace'),
+												cbAddr = placeCard.cbAddr,
+												tfPhone = placeCard.tfPhone,
+												nfCount = placeCard.nfCount,
+												yearInterval = placeCard.yearInterval,
+												archStrg = card.archStrg || null;
+										if (archStrg) {
+											placeCard.idArchStorage = archStrg.id;
+											if (!archStrg.archiveId) {
+												placeCard.cbStorageType.setValue(2);
+												cbAddr.setVisible(false);
+
+												showWidget(placeCard.taOrg, card.orgName)
+												showWidget(placeCard.tfAddr, card.address)
+
+											} else {
+												placeCard.cbStorageType.setValue(1);
+
+												showWidget(placeCard.cbArchive, archStrg.archiveId);
+
+												cbAddr.setRawValue(card.address);
+												cbAddr.setDisabled(false);
+											}
+
 										}
-										else
-											archStrg == null;
-										var orgNamePlace = storage[i].orgName;
-										var addressPlace = storage[i].address;
-										var phonePlace = storage[i].phone;
-										var documentCountPlace = storage[i].documentCount;
-										var beginYearPlace = storage[i].beginYear;
-										var endYearPlace = storage[i].endYear;
-										var contentsPlace = storage[i].contents;
-										placeCard.idPlace = idPlace;
-										placeCard.idArchStorage = archInId;
-										placeCard.tfPhone.setDisabled(false);
-										placeCard.nfCount.setDisabled(false);
-										placeCard.yearInterval.setDisabled(false);
-										placeCard.yearInterval.items.items[1].setDisabled(false);
-										placeCard.yearInterval.items.items[2].setDisabled(false);
-										if (archId == '' || archId == null)
-										{
-											placeCard.cbStorageType.setValue(2);
-											placeCard.taOrg.setVisible(true);
-											placeCard.tfAddr.setVisible(true);
-											placeCard.cbAddr.setVisible(false);
-											placeCard.taOrg.setValue(orgNamePlace);
-											placeCard.tfAddr.setValue(addressPlace);
-											placeCard.taOrg.setDisabled(false);
-											placeCard.tfAddr.setDisabled(false);
-										}
-										else
-										{
-											placeCard.cbStorageType.setValue(1);
-											placeCard.cbArchive.setVisible(true);
-											placeCard.cbArchive.setValue(archId);
-											placeCard.cbAddr.setRawValue(addressPlace);
-											placeCard.cbArchive.setDisabled(false);
-											placeCard.cbAddr.setDisabled(false);
-										}
-										placeCard.tfPhone.setValue(phonePlace);
-										placeCard.nfCount.setValue(documentCountPlace);
-										placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
-										placeCard.yearInterval.items.items[2].setValue(endYearPlace);
-										placeCard.taDocsContent.setValue(contentsPlace);
-										Ext.Ajax.request({
-											url: 'servlet/QueryDocuments',
-											params: {
-												storageId: idPlace,
-												mode: 'EDIT'
-											},
-											pc: placeCard,
-											success: function (action, opts) {
-												placeCard = opts.pc;
-												placeCard.docGrid.columns[1].editor = Ext.create('Ext.form.field.ComboBox', {
-													store: 'DocTypesStore',
-													valueField: 'id',
-													displayField: 'name',
-													blankText: 'Не выбран вид документа',
-													emptyText: 'Не выбран',
-													forceSelection: true,
-													validateOnChange: false
+										placeCard.idPlace = card.id; // id места хранения документов
+										[tfPhone, nfCount, yearInterval].forEach(
+												function (v) {
+													v.setDisabled(false);
 												});
-												var massStorage = Ext.decode(action.responseText);
-												placeCard.docGrid.getStore().loadData(massStorage);
+
+										tfPhone.setValue(card.phone);
+										nfCount.setValue(card.documentCount);
+										yearInterval.setValue(card.beginYear, card.endYear);
+										placeCard.taDocsContent.setValue(card.contents);
+
+										Ext.Ajax.request({
+											url: 'servlet/QueryDocuments?mode=EDIT&storageId=' + card.id,
+											success: function (action) {
+												placeCard.docGrid.columns[1].editor = Ext.create(
+														'Ext.form.field.ComboBox', {
+															store: 'DocTypesStore',
+															valueField: 'id',
+															displayField: 'name',
+															blankText: 'Не выбран вид документа',
+															emptyText: 'Не выбран',
+															forceSelection: true,
+															validateOnChange: false
+														});
+												placeCard.docGrid.getStore().loadData(Ext.decode(action.responseText));
 											},
 											failure: function () {
 												msg.alert('Ошибка', 'Ошибка базы данных!');
 											}
 										});
 										myEditOrgPage.placesFieldSet.add(placeCard);
-									}
-
+									});
 
 								},
 								failure: function () {
@@ -700,10 +658,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 			myEditOrgPage.oldData = oldData;
 			myEditOrgPage.idCard = id;
 			Ext.Ajax.request({
-				url: 'servlet/QueryOrgNames',
-				params: {
-					id: id
-				},
+				url: 'servlet/QueryOrgNames?id=' + id,
 				success: function (action) {
 					var massStore = Ext.decode(action.responseText);
 					myEditOrgPage.orgStore.loadData(massStore);
@@ -713,66 +668,54 @@ Ext.define('storeplaces.controller.OrgPageController', {
 				}
 			});
 			Ext.Ajax.request({
-				url: 'servlet/QueryOrganization',
-				params: {
-					id: id,
-					mode: 'EDIT'
-				},
+				url: 'servlet/QueryOrganization?mode=EDIT&id=' + id,
 				success: function (action) {
-					var dataArray = Ext.decode(action.responseText);
-					var archiveId = Ext.decode(action.responseText).archiveId;
-					var fund = Ext.decode(action.responseText).fund;
-					if (fund)
-					{
-						var fundId = Ext.decode(action.responseText).fund.id;
-						var fundNum = Ext.decode(action.responseText).fund.num;
-						var fundPrefix = Ext.decode(action.responseText).fund.prefix;
-						var fundSuffix = Ext.decode(action.responseText).fund.suffix;
-						var fundName = Ext.decode(action.responseText).fund.name;
-						var fundDates = Ext.decode(action.responseText).fund.dates;
-						myEditOrgPage.idFund = fundId;
+					var dataArray = Ext.decode(action.responseText),
+							archiveId = dataArray.archiveId,
+							fund = dataArray.fund,
+							storage = dataArray.storage,
+							businessTripsInfo = dataArray.businessTripsInfo,
+							rewardsInfo = dataArray.rewardsInfo,
+							notes = dataArray.notes,
+							userName = dataArray.userName,
+							lastUpdateDate = dataArray.lastUpdateDate,
+							fundFieldset = myEditOrgPage.fundFieldset.items,
+							myArchive = fundFieldset.items[0],
+							myFundNumber = fundFieldset.items[2].items,
+							myDates = fundFieldset.items[3],
+							areaFieldSets = myEditOrgPage.areaFieldSets.items,
+							myBusinessTripsInfo = areaFieldSets.items[0],
+							myRewardsInfo = areaFieldSets.items[1],
+							myNotes = areaFieldSets.items[2],
+							myUserName = myEditOrgPage.tfUser,
+							myLastUpdateDate = myEditOrgPage.tfDateOfEdit,
+							myFundName = fundFieldset.items[1];
+
+					if (fund) {
+						myFundNumber.items[1].setValue(fund.num);
+						myFundNumber.items[0].setValue(fund.prefix);
+						myFundNumber.items[2].setValue(fund.suffix);
+						myFundName.setValue(fund.name);
+						myDates.setValue(fund.dates);
+						myEditOrgPage.idFund = fund.id;
 					}
 
-					var storage = Ext.decode(action.responseText).storage;
-					var businessTripsInfo = Ext.decode(action.responseText).businessTripsInfo;
-					var rewardsInfo = Ext.decode(action.responseText).rewardsInfo;
-					var notes = Ext.decode(action.responseText).notes;
-					var userName = Ext.decode(action.responseText).userName;
-					var lastUpdateDate = Ext.decode(action.responseText).lastUpdateDate;
-					var myArchive = myEditOrgPage.fundFieldset.items.items[0];
-					var myFundName = myEditOrgPage.fundFieldset.items.items[1];
-					var myFundPrefix = myEditOrgPage.fundFieldset.items.items[2].items.items[0];
-					var myFundNum = myEditOrgPage.fundFieldset.items.items[2].items.items[1];
-					var myFundSuffix = myEditOrgPage.fundFieldset.items.items[2].items.items[2];
-					var myDates = myEditOrgPage.fundFieldset.items.items[3];
-					var myBusinessTripsInfo = myEditOrgPage.areaFieldSets.items.items[0];
-					var myRewardsInfo = myEditOrgPage.areaFieldSets.items.items[1];
-					var myNotes = myEditOrgPage.areaFieldSets.items.items[2];
-					var myUserName = myEditOrgPage.tfUser;
-					var myLastUpdateDate = myEditOrgPage.tfDateOfEdit;
 					myFundName.setDisabled(false);
 					myDates.setDisabled(false);
-					myFundName.setValue(fundName);
-					myFundPrefix.setValue(fundPrefix);
-					myFundNum.setValue(fundNum);
-					myFundSuffix.setValue(fundSuffix);
+
 					myArchive.setValue(archiveId);
-					myDates.setValue(fundDates);
+
 					myBusinessTripsInfo.setValue(businessTripsInfo);
 					myRewardsInfo.setValue(rewardsInfo);
 					myNotes.setValue(notes);
 					myUserName.setValue(userName);
 					myLastUpdateDate.setValue(lastUpdateDate);
-					for (var i = 0; i < storage.length; i++)
-					{
+					for (var i = 0; i < storage.length; i++) {
 						var idPlace = storage[i].id; // id места хранения документов
 						var archStrg = storage[i].archStrg;
-						if (archStrg)
-						{
+						if (archStrg) {
 							var archInId = storage[i].archStrg.id; // id места хранения в архиве
 							var archId = storage[i].archStrg.archiveId; //id архива(второй комбо снизу)
-							var archAddress = storage[i].archStrg.address
-							var archPhone = storage[i].archStrg.phone
 						}
 						else
 							archStrg == null;
@@ -791,8 +734,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 						placeCard.yearInterval.setDisabled(false);
 						placeCard.yearInterval.items.items[1].setDisabled(false);
 						placeCard.yearInterval.items.items[2].setDisabled(false);
-						if (archId == '' || archId == null)
-						{
+						if (archId == '' || archId == null) {
 							placeCard.cbStorageType.setValue(2);
 							placeCard.taOrg.setVisible(true);
 							placeCard.tfAddr.setVisible(true);
@@ -801,9 +743,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							placeCard.tfAddr.setValue(addressPlace);
 							placeCard.taOrg.setDisabled(false);
 							placeCard.tfAddr.setDisabled(false);
-						}
-						else
-						{
+						} else {
 							placeCard.cbStorageType.setValue(1);
 							placeCard.cbArchive.setVisible(true);
 							placeCard.cbArchive.setValue(archId);
@@ -817,15 +757,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 						placeCard.yearInterval.items.items[2].setValue(endYearPlace);
 						placeCard.taDocsContent.setValue(contentsPlace);
 						Ext.Ajax.request({
-							url: 'servlet/QueryDocuments',
-							params: {
-								storageId: idPlace,
-								mode: 'EDIT'
-							},
-							pc: placeCard,
-							success: function (action, opts) {
-								var placeCard = opts.pc;
-								var massStorage = Ext.decode(action.responseText);
+							url: 'servlet/QueryDocuments?mode=EDIT&storageId=' + idPlace,
+							success: function (action) {
 								placeCard.docGrid.getStore().removeAll();
 								placeCard.docGrid.columns[1].editor = Ext.create('Ext.form.field.ComboBox', {
 									store: 'DocTypesStore',
@@ -836,7 +769,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									forceSelection: true,
 									validateOnChange: false
 								});
-								placeCard.docGrid.getStore().loadData(massStorage);
+								placeCard.docGrid.getStore().loadData(Ext.decode(action.responseText));
 								myMask.hide();
 							},
 							failure: function () {
