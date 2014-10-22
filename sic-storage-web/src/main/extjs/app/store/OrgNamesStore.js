@@ -1,7 +1,6 @@
 Ext.define('storeplaces.store.OrgNamesStore', {
 	extend: 'Ext.data.Store',
-	storeId: 'OrgNamesStore',
-	singleton: true,
+	alias: 'OrgNamesStore',
 	autoLoad: false,
 	model: 'storeplaces.model.OrganizationName',
 	proxy: {

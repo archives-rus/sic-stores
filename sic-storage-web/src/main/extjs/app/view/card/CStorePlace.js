@@ -143,15 +143,13 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			x: 5,
 			y: 25,
 			listeners: {
-				'select': function (combo) {
-					if (this.getValue() == 1)
-					{
-						var value = combo.up('storeplacecard').up('fieldset').up('form').fundFieldset.items.items[0].getValue();
-						if (value != null)
-						{
+				change: function (combo, v) {
+					var form = combo.up('storeplacecard').up('fieldset').up('form');
+					if (v === 1) {
+						var value = form.fundFieldset.items.items[0].getValue();
+						if (value !== null)
 							me.cbArchive.setValue(value);
-							me.cbArchive.fireEvent('select');
-						}
+
 						me.cbArchive.setVisible(true);
 						me.taOrg.setVisible(false);
 						me.cbAddr.setVisible(true);
@@ -161,23 +159,28 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 						me.cbAddr.setDisabled(false);
 						me.tfPhone.setDisabled(false);
 						me.yearInterval.setDisabled(false);
-						me.yearInterval.items.items[1].setDisabled(false);
-						me.yearInterval.items.items[2].setDisabled(false);
-					} else if (this.getValue() == 2) {
-						// var value_org = combo.up('storeplacecard').up('fieldset').up('form').fundFieldset.items.items[0].getValue();
-						var value_org = combo.up('storeplacecard').up('fieldset').up('form').gridNames.getStore().getAt(0).get('fullName');
-						me.cbArchive.setVisible(false);
+					} else if (v === 2) {
+						var org = form.gridNames.getStore().getAt(0);
+						if (!org) {
+							Ext.Msg.alert("Ошибка", 'Для выбора этого пункта необходимо заполнить '
+									+ 'таблицу "Наименование организации и её переименования"');
+							combo.clearValue();
+							return;
+						}
+						me.taOrg.setValue(org.get('fullName'));
 						me.taOrg.setVisible(true);
-						me.taOrg.setValue(value_org);
-						me.cbAddr.setVisible(false);
+
 						me.tfAddr.setVisible(true);
+						me.tfAddr.setDisabled(false);
+
+						me.cbArchive.setVisible(false);
+						me.cbAddr.setVisible(false);
 						me.cbDocTypes.setDisabled(false);
 						me.nfCount.setDisabled(false);
-						me.tfAddr.setDisabled(false);
 						me.tfPhone.setDisabled(false);
 						me.yearInterval.setDisabled(false);
-						me.yearInterval.items.items[1].setDisabled(false);
-						me.yearInterval.items.items[2].setDisabled(false)
+					} else {
+						me.clear();
 					}
 				}
 			}
@@ -360,5 +363,18 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		});
 
 		me.callParent(arguments);
+	},
+	clear: function () {
+		var me = this;
+		me.taOrg.hide();
+		me.cbArchive.hide();
+		me.nfCount.setDisabled(true);
+		me.cbDocTypes.setDisabled(true);
+		me.tfPhone.setDisabled(true);
+		me.yearInterval.setDisabled(true);
+		me.cbAddr.show();
+		me.cbAddr.setDisabled(true);
+		me.tfAddr.hide();
+		me.tfAddr.setDisabled(true);
 	}
 });

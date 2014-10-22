@@ -212,90 +212,61 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							// oldSrchPage.items.items[1].items.items[0].fireEvent('click');
 							break;
 						case 'orgCardSave':
-							if (form.gridNames.getStore().getCount() === 0) {
-								msg.alert('Внимание', 'Для сохранения необходимо заполнить наименование организации!');
-								break;
-							} else if (form.fundFieldset.items.items[0].getValue() === null) {
-								msg.alert('Внимание', 'Для сохранения необходимо выбать архив в фондовой принадлежности!');
-								break;
-							}
-							if (form.fundFieldset.items.items[2].items.items[1].getRawValue() !== '' &&
-									form.fundFieldset.items.items[1].getRawValue() === '') {
-								msg.alert('Внимание', 'Для сохранения необходимо заполнить название фонда!');
-								break;
-							}
-							if (form.placesFieldSet.items.items.length === 0) {
-								msg.alert('Внимание', 'Для сохранения необходимо заполнить хотя бы одно место хранения!');
-								break;
-							}
+							var errMessages = [];
+							if (form.gridNames.getStore().getCount() === 0)
+								errMessages.push('заполнить наименование организации');
+							if (form.fundFieldset.items.items[0].getValue() === null)
+								errMessages.push('выбать архив в фондовой принадлежности');
 
-							var crdError = false;
+							if (form.fundFieldset.items.items[2].items.items[1].getRawValue() !== '' &&
+									form.fundFieldset.items.items[1].getRawValue() === '')
+								errMessages.push('заполнить название фонда');
+							if (form.placesFieldSet.items.items.length === 0)
+								errMessages.push('заполнить хотя бы одно место хранения');
+
 							form.placesFieldSet.items.each(function (Card) {
 								var ps = Card.cbStorageType.getValue(),
 										addres;
-								if (ps == 2) {
+								if (ps === 2) {
 									place = Card.taOrg.getRawValue(); //tf
 									addres = Card.tfAddr.getValue();
 								} else {
 									place = Card.cbArchive.getValue(); //combo
 									addres = Card.cbAddr.getValue(); //combo
 								}
-								if (ps === null) {
-									msg.alert('Внимание', 'Для сохранения необходимо выбрать место хранения!');
-									crdError = true;
-									return false;
-								}
-								else if (place == '') {
-									msg.alert('Внимание', 'Для сохранения необходимо заполнить название организации места хранения!');
-									crdError = true;
-									return false;
-								}
+								if (ps === null)
+									errMessages.push('выбрать место хранения');
+								else if (place === '')
+									errMessages.push('заполнить название организации места хранения');
 
-								if (addres === null || addres === '') {
-									msg.alert('Внимание', 'Для сохранения необходимо выбрать заполнить адрес места хранения!');
-									crdError = true;
-									return false;
-								}
+								addres || errMessages.push('выбрать / заполнить адрес места хранения');
 							});
-							if (crdError)
+
+							if (errMessages.length) {
+								msg.alert("Внимание", "<p>Для сохранения необходимо:<ul><li>" + errMessages.join('<li>'));
 								break;
+							}
 							var names = [];
 							form.orgStore.getRange().forEach(function (record, i) {
 								record.set('sortOrder', i + 1);
 								names.push(record.getData());
 							});
-							var idOrg = form.idCard;
-							var idFund = form.idFund;
-							var businessTripsInfoSave = form.areaFieldSets.items.items[0].getRawValue();
-							if (businessTripsInfoSave === '')
-								businessTripsInfoSave = null;
-							var rewardsInfoSave = form.areaFieldSets.items.items[1].getRawValue();
-							if (rewardsInfoSave === '')
-								rewardsInfoSave = null;
-							var notesSave = form.areaFieldSets.items.items[2].getRawValue();
-							if (notesSave === '')
-								notesSave = null;
-							var idArch = form.fundFieldset.items.items[0].getValue();
-							var prefix = form.fundFieldset.items.items[2].items.items[0].getRawValue();
-							if (prefix === '')
-								prefix = null;
-							var numFund = form.fundFieldset.items.items[2].items.items[1].getRawValue();
-							var suffix = form.fundFieldset.items.items[2].items.items[2].getRawValue();
-							if (suffix === '')
-								suffix = null;
-							var nameFund = form.fundFieldset.items.items[1].getRawValue();
-							if (nameFund === '')
-								nameFund = null;
-							var datesFund = form.fundFieldset.items.items[3].getRawValue();
-							if (datesFund === '')
-								datesFund = null;
+
+							var areaFieldSets = form.areaFieldSets.items,
+									fundFieldset = form.fundFieldset.items,
+									idArch = fundFieldset.items[0].getValue(),
+									prefix = fundFieldset.items[2].items.items[0].getRawValue() || null,
+									numFund = fundFieldset.items[2].items.items[1].getRawValue(),
+									suffix = fundFieldset.items[2].items.items[2].getRawValue() || null,
+									nameFund = fundFieldset.items[1].getRawValue() || null,
+									datesFund = fundFieldset.items[3].getRawValue() || null;
 							if (numFund === '') {
 								numFund = null;
 								var fund = null;
 							} else {
 								numFund = parseInt(numFund);
 								var fund = {
-									'id': idFund,
+									'id': form.idFund,
 									'archiveId': idArch,
 									'num': numFund,
 									'prefix': prefix,
@@ -368,14 +339,14 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								storage.push(card);
 							}
 							var org = {
-								id: idOrg,
+								id: form.idCard,
 								names: names,
 								archiveId: idArch,
 								fund: fund,
 								storage: storage,
-								businessTripsInfo: businessTripsInfoSave,
-								rewardsInfo: rewardsInfoSave,
-								notes: notesSave
+								businessTripsInfo: areaFieldSets.items[0].getRawValue() || null,
+								rewardsInfo: areaFieldSets.items[1].getRawValue() || null,
+								notes: areaFieldSets.items[2].getRawValue() || null
 							};
 							org = Ext.encode(org);
 							Ext.Ajax.request({

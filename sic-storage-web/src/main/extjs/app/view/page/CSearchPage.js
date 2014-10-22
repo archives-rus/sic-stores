@@ -5,7 +5,6 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 	],
 	autoScroll: false,
 	minWidth: 500,
-	FIO: null,
 	xtype: 'searchpage',
 	width: '100%',
 	id: 'searchgpage',
@@ -29,40 +28,40 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 		});
 
 		var toolBarSearch = create('Ext.toolbar.Toolbar', {
-			items: [create('Ext.Button', {
+			items: [
+				{
 					text: 'Поиск',
 					cls: "srch",
 					height: 25,
 					action: 'srchBtn'
-				}), create('Ext.Button', {
+				}, {
 					text: 'Очистить параметры',
+					cls: 'clr',
 					height: 25,
-					// cls : 'btnEdit',
 					action: 'clearSearchParm',
-					cls: 'clr'
-				}), create('Ext.Button', {
+				}, {
 					text: 'Добавить',
-					height: 25,
 					cls: 'btnAdd',
-					action: 'addOrg'
-				}), create('Ext.Button', {
-					text: 'Вернуться в главное меню',
 					height: 25,
-					// cls : 'btnEdit',
+					action: 'addOrg'
+				}, {
+					text: 'Вернуться в главное меню',
+					cls: 'back_main',
+					height: 25,
 					action: 'backMain',
-					cls: 'back_main'
-				}), '->',
+				}, '->',
 				me.FIO,
-				create('Ext.toolbar.Separator', {
+				{
+					xtype: 'tbseparator',
 					html: '|',
 					baseCls: 'vertSeparator'
-				}), create('Ext.Button', {
+				}, {
 					text: 'Выход',
 					tooltip: 'Выход из системы',
 					tooltipType: 'title',
 					componentCls: 'quitButton',
 					action: 'quitSearch'
-				})]
+				}]
 		});
 
 		var tfNameOrg = create('Ext.form.field.Text', {

@@ -1,6 +1,6 @@
 Ext.define('storeplaces.view.page.COrganizationPage', {
 	extend: 'Ext.form.Panel',
-	// autoScroll : true,
+	requires: ['storeplaces.store.OrgNamesStore'],
 	minWidth: 1024,
 	minHeight: 500,
 	FIO: null,
@@ -21,7 +21,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	initComponent: function () {
 		var me = this,
 				create = Ext.create;
-		me.orgStore = Ext.getStore('OrgNamesStore');
+		me.orgStore = create('OrgNamesStore');
 		me.orgStore.load();
 		me.FIO = create('Ext.form.Label', {
 			text: '',
@@ -31,39 +31,36 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		var toolBar = create('Ext.toolbar.Toolbar', {
 			xtype: 'maintb',
 			items: [
-				create('Ext.Button', {
+				{
 					text: 'Сохранить',
 					height: 25,
 					cls: 'btnSave',
 					action: 'orgCardSave'
-				}), create('Ext.Button', {
+				}, {
 					text: 'Отменить',
 					height: 25,
 					cls: 'btnCancel',
 					action: 'orgCardCancel'
-				}),
-				create('Ext.Button', {
+				}, {
 					text: 'Вернуться к результатам поиска',
 					height: 25,
 					cls: 'backToSrch',
 					action: 'backSrchResult',
 					hidden: true
-				}),
+				},
 				'->',
 				me.FIO,
-				create('Ext.toolbar.Separator', {
+				{
+					xtype: 'tbseparator',
 					html: '|',
 					baseCls: 'vertSeparator'
-				}),
-				create('Ext.Button', {
+				}, {
 					text: 'Выход',
 					tooltip: 'Выход из системы',
 					tooltipType: 'title',
 					componentCls: 'quitButton',
 					action: 'quit'
-							// cls:'quitButton',
-							//id : 'quit'
-				})]
+				}]
 		});
 		me.gridToolBar = create('Ext.toolbar.Toolbar', {
 			items: [create('Ext.Button', {
@@ -145,14 +142,13 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 							}
 						}]
 				}]
-		})
+		});
 
-		var renamesFieldset = create('storeplaces.view.lib.StyledFieldSet',
-				{
-					title: 'Наименование организации и её переименования',
-					height: 150,
-					items: [me.gridNames]
-				});
+		var renamesFieldset = create('storeplaces.view.lib.StyledFieldSet', {
+			title: 'Наименование организации и её переименования',
+			height: 150,
+			items: [me.gridNames]
+		});
 		var cbArchive = create('Ext.form.ComboBox', {
 			fieldLabel: 'Архив',
 			store: 'DocArchiveStore',
@@ -200,15 +196,14 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 			},
 			items: [cbArchive, taFundName, tfFondNum, tfDates]
 		});
-		me.placesFieldSet = create('storeplaces.view.lib.StyledFieldSet',
-				{
-					title: 'Места хранения',
-					width: '100%',
-					height: 370,
-					cls: 'noscrl-x',
-					autoScroll: true,
-					margin: 20
-				});
+		me.placesFieldSet = create('storeplaces.view.lib.StyledFieldSet', {
+			title: 'Места хранения',
+			width: '100%',
+			height: 370,
+			cls: 'noscrl-x',
+			autoScroll: true,
+			margin: 20
+		});
 		var tbarStorePlace = create('Ext.toolbar.Toolbar', {
 			items: [create('Ext.Button', {
 					text: 'Добавить',

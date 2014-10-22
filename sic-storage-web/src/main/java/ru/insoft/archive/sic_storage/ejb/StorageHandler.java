@@ -187,14 +187,20 @@ public class StorageHandler {
 		if (criteria.getArchiveId() != null) {
 			predicates.add(cb.equal(root.get("archiveId"), criteria.getArchiveId()));
 		}
-		if (criteria.getFund() != null && criteria.getFund().getNum() != null) {
-			predicates.add(cb.equal(root.get("fundNum"), criteria.getFund().getNum()));
-			predicates.add(criteria.getFund().getPrefix() == null
-				? cb.isNull(root.get("prefix"))
-				: cb.equal(root.get("prefix"), criteria.getFund().getPrefix()));
-			predicates.add(criteria.getFund().getSuffix() == null
-				? cb.isNull(root.get("suffix"))
-				: cb.equal(root.get("suffix"), criteria.getFund().getSuffix()));
+		if (criteria.getFund() != null /*&& criteria.getFund().getNum() != null*/) {
+			FundSearchCriteria fund = criteria.getFund();
+			Integer num = fund.getNum();
+			if (num != null) {
+				predicates.add(cb.equal(root.get("fundNum"), num));
+			}
+			String prefix = fund.getPrefix();
+			if (prefix != null) {
+				predicates.add(cb.equal(root.get("prefix"), prefix));
+			}
+			String sufix = fund.getSuffix();
+			if (sufix != null) {
+				predicates.add(cb.equal(root.get("suffix"), sufix));
+			}
 		}
 		if (criteria.getDocumentTypeId() != null || criteria.getYearFrom() != null) {
 			Subquery<Long> sub = cq.subquery(Long.class);
