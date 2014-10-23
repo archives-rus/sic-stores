@@ -8,7 +8,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 		}
 	],
 	searchCriteria: null,
-	init: function() {
+	init: function () {
 		var me = this,
 				decode = Ext.decode,
 				create = Ext.create,
@@ -16,7 +16,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 				gridSearchOrgSt = getStore('GridSearchOrgStore');
 		me.control({
 			'searchpage grid': {
-				itemdblclick: function(thiss, record, item, index, e, eOpts) {
+				itemdblclick: function (thiss, record, item, index, e, eOpts) {
 					var id = record.get('orgId'),
 							form = thiss.up('form'),
 							main = form.up('container'),
@@ -30,21 +30,20 @@ Ext.define('storeplaces.controller.SearchFormController', {
 					myOrgPage.oldData = oldData;
 					myOrgPage.idCard = id;
 					myOrgPage.FIO.setText(FIO);
-					var criteria = Ext.encode(me.searchCriteria),
-							cardsStorePaging = getStore('CardsStore');
-					cardsStorePaging.getProxy().extraParams = {'criteria': criteria};
+					var cardsStorePaging = getStore('CardsStore');
+					cardsStorePaging.getProxy().extraParams = {criteria: Ext.encode(me.searchCriteria)};
 					cardsStorePaging.loadPage(cardNum);
 					Ext.Ajax.request({
 						url: 'servlet/QueryOrgNames',
 						params: {
 							id: id
 						},
-						success: function(action) {
+						success: function (action) {
 							var massStore = decode(action.responseText);
 							myOrgPage.orgStore.loadData(massStore);
 
 						},
-						failure: function() {
+						failure: function () {
 							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 						}
 					});
@@ -54,7 +53,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							id: id,
 							mode: 'VIEW'
 						},
-						success: function(action) {
+						success: function (action) {
 							var dataArray = decode(action.responseText),
 									archive = dataArray.archive,
 									fund = dataArray.fund,
@@ -87,8 +86,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							myUserName.setValue(userName);
 							myLastUpdateDate.setValue(lastUpdateDate);
 
-							for (var i = 0; i < storage.length; i++)
-							{
+							for (var i = 0; i < storage.length; i++) {
 								var placeCard = create('storeplaces.view.card.CStorePlaceView');
 								var num = i + 1;
 								var idPlace = storage[i].id;
@@ -103,14 +101,11 @@ Ext.define('storeplaces.controller.SearchFormController', {
 								var contentsPlace = storage[i].contents;
 
 								placeCard.idPlace = idPlace;
-								if (storageTypePlace === 'В организации')
-								{
+								if (storageTypePlace === 'В организации') {
 									placeCard.taOrg.setValue(orgNamePlace);
 									placeCard.tfArchive.setVisible(false);
 									placeCard.taOrg.setVisible(true);
-								}
-								else
-								{
+								} else {
 									placeCard.taOrg.setVisible(false);
 									placeCard.tfArchive.setValue(archivePlace);
 									placeCard.tfArchive.setVisible(true);
@@ -130,21 +125,19 @@ Ext.define('storeplaces.controller.SearchFormController', {
 										storageId: idPlace,
 										mode: 'VIEW'
 									},
-									pc: placeCard,
-									success: function(action, opts) {
-										var placeCard = opts.pc;
+									success: function (action) {
 										var massStorage = decode(action.responseText);
 										placeCard.docGrid.getStore().loadData(massStorage);
 
 									},
-									failure: function() {
+									failure: function () {
 										Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 									}
 								});
 								myOrgPage.placesFieldSet.add(placeCard);
 							}
 						},
-						failure: function() {
+						failure: function () {
 							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 						}
 					});
@@ -152,7 +145,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 				}
 			},
 			'searchpage  button': {
-				click: function(btn, eventObj) {
+				click: function (btn, eventObj) {
 					var myPage = me.getPage(),
 							sItems = myPage.searchFieldset.items,
 							orgName = sItems.getAt(0),
@@ -222,24 +215,27 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							if (isuffix === '')
 								isuffix = null;
 
-							var criteria = {'orgName': iorgName,
-								'documentTypeId': idocumentType,
-								'yearFrom': iyearFrom,
-								'yearTo': iyearTo,
-								'archiveId': iarchive,
-								'fund': {'num': inum, 'prefix': iprefix, 'suffix': isuffix}
+							var criteria = {
+								orgName: iorgName,
+								documentTypeId: idocumentType,
+								yearFrom: iyearFrom,
+								yearTo: iyearTo,
+								archiveId: iarchive,
+								fund: {num: inum, prefix: iprefix, suffix: isuffix}
 							};
 							me.searchCriteria = criteria;
-							criteria = Ext.encode(criteria);
-							gridSearchOrgSt.getProxy().extraParams = {'criteria': criteria};
+							var params = {criteria: Ext.encode(criteria)};
+							gridSearchOrgSt.getProxy().extraParams = params;
 							gridSearchOrgSt.load({params: {
-									'criteria': criteria,
-									'start': 0,
-									'limit': gridSearchOrgSt.pageSize
+//									'criteria': criteria,
+									start: 0,
+									limit: gridSearchOrgSt.pageSize
 								}});
 //							gsostore.loadPage(1, {params: {start: 0,
 //									limit: gsostore.pageSize, criteria: criteria}});
-							getStore('CardsStoreAll').load({params: {'criteria': criteria}});
+							var allCards = getStore('CardsStoreAll');
+							allCards.getProxy().extraParams = params;
+							allCards.load();
 							break;
 						default:
 							return;

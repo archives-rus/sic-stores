@@ -22,7 +22,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		var me = this,
 				create = Ext.create;
 		me.orgStore = create('OrgNamesStore');
-		me.orgStore.load();
+//		me.orgStore.load();
 		me.FIO = create('Ext.form.Label', {
 			text: '',
 			baseCls: 'loginedUserText',

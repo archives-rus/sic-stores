@@ -23,9 +23,9 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 	gridToolBar: null,
 	tfDateOfEdit: null,
 	tfUser: null,
-	initComponent: function() {
+	initComponent: function () {
 		var me = this;
-		me.orgStore = Ext.getStore('OrgNamesStore');
+		me.orgStore = Ext.create('OrgNamesStore');
 		me.FIO = Ext.create('Ext.form.Label', {
 			text: '',
 			baseCls: 'loginedUserText',
@@ -102,8 +102,21 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 		});
 
 		var cardStore = Ext.getStore('CardsStore'),
-				cardStoreAll = Ext.getStore('CardsStoreAll'),
 				orgPageFunc = window.app.getController('storeplaces.controller.OrgPageFunc');
+
+		/**
+		 * Загружает страницу определенного номера
+		 * @param {Number} page номер страницы
+		 */
+		var loadWantedPage = function (page) {
+			cardStore.loadPage(page, {
+				callback: function (r, op, s) {
+					if (s)
+						orgPageFunc.moveNext(r[0].get('orgId'));
+				}
+			});
+		};
+
 		me.cardToolBar = Ext.create('Ext.toolbar.Paging', {
 			store: cardStore,
 			layout: {
@@ -112,34 +125,34 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 			},
 			beforePageText: 'Карточка',
 			afterPageText: 'из {0}',
-			moveFirst: function() {
-				cardStore.loadPage(1);
-				orgPageFunc.moveNext(cardStoreAll.getAt(0).get('orgId'));
+			moveFirst: function () {
+				loadWantedPage(1);
 			},
-			movePrevious: function() {
-				var newPage = parseInt(this.items.getAt(4).getValue()) - 1;
-				cardStore.loadPage(newPage);
-				orgPageFunc.moveNext(cardStoreAll.getAt(newPage - 1).get('orgId'));
+			movePrevious: function () {
+				var page = cardStore.currentPage;
+				if (page > 1)
+					loadWantedPage(page - 1);
 			},
-			moveNext: function() {
-				var newPage = parseInt(this.items.getAt(4).getValue()) + 1;
-				cardStore.loadPage(newPage);
-				orgPageFunc.moveNext(cardStoreAll.getAt(newPage - 1).get('orgId'));
+			moveNext: function () {
+				var page = cardStore.currentPage;
+				if (page < cardStore.totalCount)
+					loadWantedPage(page + 1);
 			},
-			moveLast: function() {
-				var total = cardStore.totalCount;
-				cardStore.loadPage(total);
-				orgPageFunc.moveNext(cardStoreAll.getAt(total - 1).get('orgId'));
+			moveLast: function () {
+				loadWantedPage(cardStore.totalCount);
 			},
-			doRefresh: function() {
-				var page = parseInt(this.items.getAt(4).getValue());
-				cardStore.loadPage(page);
-				orgPageFunc.moveNext(me.idCard);
+			doRefresh: function () {
+				loadWantedPage(parseInt(inputField.getValue()));
 			}
 		});
 
-		me.cardToolBar.items.getAt(4).disable();
-		me.cardToolBar.items.getAt(4).setValue(me.cardNum);
+		var inputField = me.cardToolBar.items.getAt(4);
+		inputField.disable();
+		inputField.setValue(me.cardNum);
+		inputField.on('specialkey', function (field, ev) {
+			if (ev.getKey() === ev.ENTER)
+				me.cardToolBar.doRefresh();
+		});
 
 		me.gridNames = Ext.create('Ext.grid.Panel', {
 			store: me.orgStore,

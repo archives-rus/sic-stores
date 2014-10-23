@@ -152,8 +152,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									var cardsStore = Ext.getStore('CardsStore');
 									var cardsStoreAll = Ext.getStore('CardsStoreAll');
 									var thisPage = form.cardToolBar.items.items[4].getValue();
-									if (cardsStoreAll.getCount() == 1)
-									{
+									if (cardsStoreAll.getCount() == 1) {
 										var oldData = form.oldData;
 										main.removeAll();
 										buffer.removeAll();
@@ -163,16 +162,13 @@ Ext.define('storeplaces.controller.OrgPageController', {
 										// oldSrchPage.items.items[1].items.items[0].fireEvent('click');
 										main.add(oldSrchPage);
 									}
-									else if (thisPage == 1)
-									{
+									else if (thisPage == 1) {
 										cardsStore.loadPage(1);
 										var id = cardsStoreAll.getAt(1).get('id');
 										window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
 										cardsStore.reload();
 										cardsStoreAll.reload();
-									}
-									else
-									{
+									} else {
 										var newPage = parseInt(form.cardToolBar.items.items[4].getValue()) - 1;
 										cardsStore.loadPage(newPage);
 										var id = cardsStoreAll.getAt(newPage - 1).get('id');

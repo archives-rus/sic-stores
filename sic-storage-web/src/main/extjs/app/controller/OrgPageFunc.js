@@ -5,14 +5,15 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 			ref: 'page',
 			selector: 'viewport > container > form'
 		}],
-	init: function() {
+	activeReqs: [],
+	init: function () {
 
 	},
-	onLaunch: function() {
+	onLaunch: function () {
 	},
-	moveNext: function(id) {
-		//var tb = btn.up('toolbar');
-		var form = this.getPage(),
+	moveNext: function mvN(id) {
+		var me = this,
+				form = me.getPage(),
 				main = form.up('container'),
 				oldData = form.oldData,
 				FIO = form.FIO.text;
@@ -22,27 +23,33 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 		myOrgPage.oldData = oldData;
 		myOrgPage.idCard = id;
 		myOrgPage.FIO.setText(FIO);
-		Ext.Ajax.request({
+
+		me.activeReqs.forEach(function (req) {
+			Ext.Ajax.abort(req);
+		});
+		me.activeReqs = [];
+
+		me.activeReqs.push(Ext.Ajax.request({
 			url: 'servlet/QueryOrgNames',
 			params: {
 				id: id
 			},
-			success: function(action) {
+			success: function (action) {
 				var massStore = Ext.decode(action.responseText);
 				myOrgPage.orgStore.loadData(massStore);
-
 			},
-			failure: function() {
-				Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+			failure: function (req) {
+				if (!req.aborted)
+					Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 			}
-		});
-		Ext.Ajax.request({
+		}));
+		me.activeReqs.push(Ext.Ajax.request({
 			url: 'servlet/QueryOrganization',
 			params: {
 				id: id,
 				mode: 'VIEW'
 			},
-			success: function(action) {
+			success: function (action) {
 				var dataArray = Ext.decode(action.responseText),
 						archive = dataArray.archive,
 						fund = dataArray.fund,
@@ -75,66 +82,55 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 				myUserName.setValue(userName);
 				myLastUpdateDate.setValue(lastUpdateDate);
 
-				for (var i = 0; i < storage.length; i++)
-				{
-					var idPlace = storage[i].id;
-					var storageTypePlace = storage[i].storageType;
-					var archivePlace = storage[i].archive;
-					var orgNamePlace = storage[i].orgName;
-					var addressPlace = storage[i].address;
-					var phonePlace = storage[i].phone;
-					var documentCountPlace = storage[i].documentCount;
-					var beginYearPlace = storage[i].beginYear;
-					var endYearPlace = storage[i].endYear;
-					var contentsPlace = storage[i].contents;
+				for (var i = 0, max = storage.length; i < max; i++) {
+					var strg = storage[i],
+							idPlace = strg.id,
+							storageTypePlace = strg.storageType;
 
 					var placeCard = Ext.create('storeplaces.view.card.CStorePlaceView');
 					placeCard.idPlace = idPlace;
-					if (storageTypePlace == 'В организации')
-					{
-						placeCard.taOrg.setValue(orgNamePlace);
+					if (storageTypePlace == 'В организации') {
+						placeCard.taOrg.setValue(strg.orgName);
 						placeCard.tfArchive.setVisible(false);
 						placeCard.taOrg.setVisible(true);
-					}
-					else
-					{
+					} else {
 						placeCard.taOrg.setVisible(false);
-						placeCard.tfArchive.setValue(archivePlace);
+						placeCard.tfArchive.setValue(strg.archive);
 						placeCard.tfArchive.setVisible(true);
 					}
 
 					placeCard.tfStorageType.setValue(storageTypePlace);
-					placeCard.tfAddr.setValue(addressPlace);
-					placeCard.tfPhone.setValue(phonePlace);
-					placeCard.nfCount.setValue(documentCountPlace);
-					placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
-					placeCard.yearInterval.items.items[2].setValue(endYearPlace);
-					placeCard.taDocsContent.setValue(contentsPlace);
-					Ext.Ajax.request({
+					placeCard.tfAddr.setValue(strg.address);
+					placeCard.tfPhone.setValue(strg.phone);
+					placeCard.nfCount.setValue(strg.documentCount);
+					placeCard.yearInterval.items.items[1].setValue(strg.beginYear);
+					placeCard.yearInterval.items.items[2].setValue(strg.endYear);
+					placeCard.taDocsContent.setValue(strg.contents);
+					me.activeReqs.push(Ext.Ajax.request({
 						url: 'servlet/QueryDocuments',
 						params: {
 							storageId: idPlace,
 							mode: 'VIEW'
 						},
 						pc: placeCard,
-						success: function(action, opts) {
+						success: function (action, opts) {
 							var placeCard = opts.pc;
 							var massStorage = Ext.decode(action.responseText);
 							placeCard.docGrid.getStore().loadData(massStorage);
 						},
-						failure: function() {
-							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+						failure: function (req) {
+							if (!req.aborted)
+								Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 						}
-					});
+					}));
 					myOrgPage.placesFieldSet.add(placeCard);
 				}
-
-
 			},
-			failure: function() {
-				Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+			failure: function (req) {
+				if (!req.aborted)
+					Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 			}
-		});
+		}));
 		main.add(myOrgPage);
 	}
 });
