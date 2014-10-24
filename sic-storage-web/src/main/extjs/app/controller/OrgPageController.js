@@ -86,32 +86,11 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							break;
 						case 'quit':
 							storeplaces.userStore.removeAll(true);
-							window.location = "/qq-web/Auth?action=logout&redirect=1";
+							Ext.Ajax.request({url: '/qq-web/Auth?action=logout',
+								success: function () {
+									window.location = '/qq-web/';
+								}});
 							break;
-							/*
-							 Ext.Ajax.request({
-							 url: 'servlet/Auth',
-							 params: {
-							 action: 'logout'
-							 },
-							 success: function (action) {
-							 var isSuccess = Ext.decode(action.responseText).success;
-							 var isMsg = Ext.decode(action.responseText).msg;
-							 main.removeAll();
-							 buffer.removeAll();
-							 Ext.getStore('GridSearchOrgStore').removeAll();
-							 main.add(Ext.create('storeplaces.view.page.CLoginPage'));
-							 },
-							 failure: function (action) {
-							 msg.alert('Ошибка', 'Ошибка базы данных!');
-							 }
-							 });
-							 */
-							break;
-							/* case 'viewToEdit':
-							 main.removeAll();
-							 main.add(buffer.items.items[0]);
-							 break;      */
 						case 'orgCardDelete':
 							var id = form.idCard;
 							if (id == null)
@@ -189,7 +168,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							var oldData = form.oldData;
 							main.removeAll();
 							var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
-//							newOrgPage.items.items[0].items.items[2].action = 'viewNew';
 							newOrgPage.items.getAt(0).items.getAt(2).hide();
 							newOrgPage.FIO.setText(FIO);
 							newOrgPage.oldData = oldData;
@@ -205,7 +183,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							oldSrchPage.getForm().setValues(oldData);
 							oldSrchPage.FIO.setText(form.FIO.text);
 							main.add(oldSrchPage);
-							// oldSrchPage.items.items[1].items.items[0].fireEvent('click');
 							break;
 						case 'orgCardSave':
 							var errMessages = [];

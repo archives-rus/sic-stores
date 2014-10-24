@@ -1951,7 +1951,9 @@ Ext.ClassManager.addNameAliasMappings({
   "storeplaces.store.DocsReadStore": [],
   "storeplaces.store.DocsWriteStore": [],
   "storeplaces.store.GridSearchOrgStore": [],
-  "storeplaces.store.OrgNamesStore": [],
+  "storeplaces.store.OrgNamesStore": [
+    "OrgNamesStore"
+  ],
   "storeplaces.store.StoragePlaceStore": [],
   "storeplaces.store.StorageTypeStore": [],
   "storeplaces.view.Buffer": [
