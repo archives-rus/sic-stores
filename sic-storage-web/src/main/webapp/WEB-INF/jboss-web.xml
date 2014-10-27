@@ -5,5 +5,5 @@
 		<class-name>org.apache.catalina.authenticator.SingleSignOn</class-name>
 	</valve>
 	<context-root>/sic-storage</context-root>
-	<!--	<virtual-host>qqweb</virtual-host>-->
+	<!--<virtual-host>qqweb</virtual-host>-->
 </jboss-web>
