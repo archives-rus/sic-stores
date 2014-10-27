@@ -88,6 +88,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 
 							for (var i = 0; i < storage.length; i++) {
 								var placeCard = create('storeplaces.view.card.CStorePlaceView');
+								myOrgPage.placesFieldSet.add(placeCard);
 								var num = i + 1;
 								var idPlace = storage[i].id;
 								var storageTypePlace = storage[i].storageType;
@@ -134,7 +135,6 @@ Ext.define('storeplaces.controller.SearchFormController', {
 										Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 									}
 								});
-								myOrgPage.placesFieldSet.add(placeCard);
 							}
 						},
 						failure: function () {

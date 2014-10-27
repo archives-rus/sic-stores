@@ -379,6 +379,9 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							{
 								var oldCard = massCard[j];
 								var newCard = Ext.create('storeplaces.view.card.CStorePlaceView');
+
+								OrgViewPage.placesFieldSet.add(newCard);
+
 								newCard.idPalace = oldCard.idPalace;
 								newCard.idArchStorage = oldCard.idArchStorage;
 								var oldStorageType = oldCard.cbStorageType.getRawValue();
@@ -414,7 +417,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								var oldPlaceStoreData = oldCard.docGrid.getStore().getRange();
 								newCard.docGrid.reconfigure(newCard.docGrid.getStore(), newCard.gridEditOnlyColumns);
 								newCard.docGrid.getStore().loadData(oldPlaceStoreData);
-								OrgViewPage.placesFieldSet.add(newCard);
 							}
 							// OrgViewPage.items.items[0].items.items[1].action = 'viewToEdit';
 							var archivePage = OrgViewPage.fundFieldset.items.items[0];
@@ -485,6 +487,9 @@ Ext.define('storeplaces.controller.OrgPageController', {
 												nfCount = placeCard.nfCount,
 												yearInterval = placeCard.yearInterval,
 												archStrg = card.archStrg || null;
+
+										myEditOrgPage.placesFieldSet.add(placeCard);
+
 										if (archStrg) {
 											placeCard.idArchStorage = archStrg.id;
 											if (!archStrg.archiveId) {
@@ -534,7 +539,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 												msg.alert('Ошибка', 'Ошибка базы данных!');
 											}
 										});
-										myEditOrgPage.placesFieldSet.add(placeCard);
 									});
 
 								},
@@ -671,6 +675,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 						var endYearPlace = storage[i].endYear;
 						var contentsPlace = storage[i].contents;
 						var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
+						myEditOrgPage.placesFieldSet.add(placeCard);
 						placeCard.idPlace = idPlace;
 						placeCard.idArchStorage = archInId;
 						placeCard.tfPhone.setDisabled(false);
@@ -720,7 +725,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								msg.alert('Ошибка', 'Ошибка базы данных!');
 							}
 						});
-						myEditOrgPage.placesFieldSet.add(placeCard);
 					}
 
 

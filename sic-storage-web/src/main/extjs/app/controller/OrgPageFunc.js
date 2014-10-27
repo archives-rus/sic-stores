@@ -89,6 +89,7 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 
 					var placeCard = Ext.create('storeplaces.view.card.CStorePlaceView');
 					placeCard.idPlace = idPlace;
+					myOrgPage.placesFieldSet.add(placeCard);
 					if (storageTypePlace == 'В организации') {
 						placeCard.taOrg.setValue(strg.orgName);
 						placeCard.tfArchive.setVisible(false);
@@ -123,7 +124,6 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 								Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 						}
 					}));
-					myOrgPage.placesFieldSet.add(placeCard);
 				}
 			},
 			failure: function (req) {
