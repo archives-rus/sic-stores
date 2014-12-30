@@ -159,7 +159,8 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 			buttonAlign: 'center',
 			forceFit: true,
 			width: '100%',
-			height: 115,
+			minHeight: 80,
+			maxHeight: 135,
 			cls: 'autoscrl-y',
 			autoScroll: true,
 			columns: [{
@@ -194,7 +195,6 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
 				{
 					title: 'Наименование организации и её переименования',
-					height: 150,
 					items: [me.gridNames]
 				});
 

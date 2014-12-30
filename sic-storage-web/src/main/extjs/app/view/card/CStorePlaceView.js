@@ -1,7 +1,10 @@
 Ext.define("storeplaces.view.card.CStorePlaceView", {
 	extend: 'Ext.form.Panel',
 	layout: 'absolute',
-	requires: ['Ext.grid.plugin.CellEditing'],
+	requires: [
+		'Ext.grid.plugin.CellEditing',
+		'Ext.form.field.Number'
+	],
 	tfStorageType: null,
 	tfAddr: null,
 	tfPhone: null,
@@ -41,6 +44,10 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			text: '№ описи',
 			dataIndex: 'series',
 			flex: 1
+		}, {
+			text: 'Количество дел',
+			dataIndex: 'caseCount',
+			flex: 1
 		}],
 	gridEditOnlyColumns: [{
 			text: 'ИД',
@@ -49,7 +56,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			hideable: false
 		}, {
 			text: 'Вид документа',
-			width: '70%',
+			width: '60%',
 			dataIndex: 'documentTypeId',
 			editor: Ext.create('Ext.form.field.ComboBox', {
 				store: 'DocTypesStore',
@@ -61,7 +68,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 				forceSelection: true,
 				validateOnChange: false
 			}),
-			renderer: function(value) {
+			renderer: function (value) {
 				var editorComboStore = this.ownerCt.gridEditOnlyColumns[1].editor
 						.getStore();
 				for (var i = 0; i < editorComboStore.getCount(); i++) {
@@ -82,14 +89,27 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			}
 		}, {
 			text: '№ описи',
-			width: '13%',
+			width: '10%',
 			dataIndex: 'series',
 			editor: {
 				xtype: 'textfield',
 				allowBlank: false
 			}
+		}, {
+			text: 'Количество дел',
+			width: '10%',
+			dataIndex: 'caseCount',
+			editor: {
+				xtype: 'numberfield',
+				minValue: 0,
+				hideTrigger: true,
+				keyNavEnabled: false,
+				mouseWheelEnabled: false,
+				allowExponential: false,
+				allowBlank: false
+			}
 		}],
-	initComponent: function() {
+	initComponent: function () {
 		//   this.docReadStore = Ext.create('storeplaces.store.DocsReadStore');
 		//  this.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
 		var x_ = 580;
@@ -188,7 +208,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			x: 650,
 			y: 25,
 			listeners: {
-				'select': function() {
+				'select': function () {
 					me.tfPhone.setValue(this.getValue());
 				}
 			}

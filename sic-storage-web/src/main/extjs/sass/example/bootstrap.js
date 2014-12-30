@@ -1156,6 +1156,7 @@ if (!Function.prototype.bind) {
  */
 
 Ext.Boot.loadSync([
+  "../../.sencha/app/Boot.js",
   "../../ext/src/Ext.js",
   "../../ext/src/version/Version.js",
   "../../ext/src/lang/String.js",
@@ -1216,6 +1217,7 @@ Ext.Boot.loadSync([
 
 Ext.Loader.addClassPathMappings({
   "Ext": "../../ext/src",
+  "Ext.Boot": "../../.sencha/app/Boot.js",
   "Ext.DomHelper": "../../ext/src/dom/Helper.js",
   "Ext.DomQuery": "../../ext/src/dom/Query.js",
   "Ext.EventObjectImpl": "../../ext/src/EventObject.js",

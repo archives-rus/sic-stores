@@ -80,11 +80,12 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		me.gridNames = create('Ext.grid.Panel', {
 			store: me.orgStore,
 			buttonAlign: 'center',
-			plugins: ['cellediting'],
+			plugins: [{ptype: 'cellediting', clicksToEdit: 1}],
 			dockedItems: [me.gridToolBar],
 			forceFit: true,
 			width: '100%',
-			height: 115,
+			minHeight: 80,
+			maxHeight: 135,
 			cls: 'autoscrl-y',
 			autoScroll: true,
 			columns: [{
@@ -146,7 +147,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 		var renamesFieldset = create('storeplaces.view.lib.StyledFieldSet', {
 			title: 'Наименование организации и её переименования',
-			height: 150,
 			items: [me.gridNames]
 		});
 		var cbArchive = create('Ext.form.ComboBox', {

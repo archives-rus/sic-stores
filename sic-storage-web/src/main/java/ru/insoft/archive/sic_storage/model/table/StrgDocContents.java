@@ -37,6 +37,17 @@ public class StrgDocContents implements HasId, JsonIn, JsonOut
 
     @Column(name = "SERIES")
     private String series;
+	
+    @Column(name = "CASE_COUNT")
+    private Integer caseCount;
+
+	public Integer getCaseCount() {
+		return caseCount;
+	}
+
+	public void setCaseCount(Integer caseCount) {
+		this.caseCount = caseCount;
+	}
 
     public Long getId() {
         return id;

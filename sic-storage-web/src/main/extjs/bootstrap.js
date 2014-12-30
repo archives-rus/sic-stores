@@ -24,6 +24,7 @@
 
 Ext.Loader.addClassPathMappings({
   "Ext": "ext/src",
+  "Ext.Boot": ".sencha/app/Boot.js",
   "Ext.DomHelper": "ext/src/dom/Helper.js",
   "Ext.DomQuery": "ext/src/dom/Query.js",
   "Ext.EventObjectImpl": "ext/src/EventObject.js",

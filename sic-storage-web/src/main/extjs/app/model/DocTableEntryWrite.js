@@ -14,6 +14,9 @@ Ext.define('storeplaces.model.DocTableEntryWrite',{
 	},{
 		name:'series',
 		type:'string'
+	}, {
+		name: 'caseCount',
+		type: 'int'
 	}
 	]
 });

@@ -70,17 +70,18 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								form.gridNames.getStore().insert(index + 1, record);
 							}
 							break;
-						case 'namesGridAdd':
-							var index = this.getPage().orgStore.getCount();
-							if (index == null)
-								index = 0;
-							this.getPage().orgStore.insert(index, Ext.create('storeplaces.model.OrganizationName'));
+						case 'namesGridAdd': // Добавляет ряд для "Наименование организации и ее переименования"
+							var page_ = this.getPage(),
+									store_ = page_.orgStore,
+									index = store_.getCount() || 0;
+							store_.insert(index, Ext.create('storeplaces.model.OrganizationName'));
+							page_.gridNames.getView().focusRow(index);
 							break;
 						case 'addDocRow':
 							var gridTb = btn.up('toolbar');
 							var gridPlace = gridTb.up('grid');
 							var count = gridPlace.getStore().getCount();
-							if (count == null)
+							if (count === null)
 								count = 0;
 							gridPlace.getStore().insert(count, Ext.create('storeplaces.model.DocTableEntryWrite'));
 							break;

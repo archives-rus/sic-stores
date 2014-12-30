@@ -12,7 +12,9 @@ Ext.define('storeplaces.model.DocTableEntryRead',{
 	},{
 		name:'series',
 		type:'string'
-	}
-	]
+	}, {
+		name: 'caseCount',
+		type: 'int'
+	}]
 	
 });

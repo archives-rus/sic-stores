@@ -5,7 +5,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 	requires: [
 		'Ext.grid.plugin.CellEditing',
 		'storeplaces.store.DocTypesStore',
-		'storeplaces.store.StoragePlaceStore'
+		'storeplaces.store.StoragePlaceStore',
+		'Ext.form.field.Number'
 	],
 	cbStorageType: null,
 	docsWriteStore: null,
@@ -46,6 +47,10 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			text: '№ описи',
 			dataIndex: 'series',
 			flex: 1
+		}, {
+			text: 'Количество дел',
+			dataIndex: 'caseCount',
+			flex: 1
 		}],
 	gridEditOnlyColumns: [{
 			text: 'ИД',
@@ -54,7 +59,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			hideable: false
 		}, {
 			text: 'Вид документа',
-			width: '70%',
+			width: '60%',
 			dataIndex: 'documentTypeId',
 			editor: Ext.create('Ext.form.field.ComboBox', {
 				store: 'DocTypesStore',
@@ -85,10 +90,23 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			}
 		}, {
 			text: '№ описи',
-			width: '13%',
+			width: '10%',
 			dataIndex: 'series',
 			editor: {
 				xtype: 'textfield',
+				allowBlank: false
+			}
+		}, {
+			text: 'Количество дел',
+			width: '10%',
+			dataIndex: 'caseCount',
+			editor: {
+				xtype: 'numberfield',
+				minValue: 0,
+				hideTrigger: true,
+				keyNavEnabled: false,
+				mouseWheelEnabled: false,
+				allowExponential: false,
 				allowBlank: false
 			}
 		}, {
@@ -335,7 +353,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		me.docGrid = Ext.create('Ext.grid.Panel', {
 			store: me.docsWriteStore,
 			x: 15,
-			plugins: ['cellediting'],
+			plugins: [{ptype: 'cellediting', clicksToEdit: 1}],
 			dockedItems: me.docGridToolBar,
 			y: me.nfCount.y + me.nfCount.height + 5,
 			cls: 'mar_right15',
@@ -349,7 +367,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			//labelWidth : me.fieldLabelWidth,
 			labelWidth: 140,
 			fieldLabel: 'Состав документов',
-			disabled: true,
+//			disabled: true,
 			height: 40,
 			y: me.docGrid.y + me.docGrid.height + 5,
 			x: 5,

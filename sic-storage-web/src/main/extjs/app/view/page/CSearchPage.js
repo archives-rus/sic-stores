@@ -38,7 +38,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 					text: 'Очистить параметры',
 					cls: 'clr',
 					height: 25,
-					action: 'clearSearchParm',
+					action: 'clearSearchParm'
 				}, {
 					text: 'Добавить',
 					cls: 'btnAdd',
@@ -48,7 +48,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 					text: 'Вернуться в главное меню',
 					cls: 'back_main',
 					height: 25,
-					action: 'backMain',
+					action: 'backMain'
 				}, '->',
 				me.FIO,
 				{
