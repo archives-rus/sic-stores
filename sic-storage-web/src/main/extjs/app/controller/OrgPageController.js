@@ -303,7 +303,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									})(),
 									orgName: orgName,
 									address: address,
-									phone: archStrg.phone || null,
+									phone: archStrg ? (archStrg.phone || null) : 
+											orgName ? (dataCard.tfPhone.getRawValue() || null) : null,
 									documentCount: documentCount,
 									beginYear: beginYear,
 									endYear: endYear,
@@ -484,6 +485,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									dataArray.storage.forEach(function (card) {
 										var placeCard = Ext.create('storeplaces.view.card.CStorePlace'),
 												cbAddr = placeCard.cbAddr,
+												tfAddr = placeCard.tfAddr,
 												tfPhone = placeCard.tfPhone,
 												nfCount = placeCard.nfCount,
 												yearInterval = placeCard.yearInterval,
@@ -497,8 +499,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 												placeCard.cbStorageType.setValue(2);
 												cbAddr.setVisible(false);
 
-												showWidget(placeCard.taOrg, card.orgName)
-												showWidget(placeCard.tfAddr, card.address)
+												showWidget(placeCard.taOrg, card.orgName);
+												showWidget(placeCard.tfAddr, card.address);
 
 											} else {
 												placeCard.cbStorageType.setValue(1);
@@ -508,7 +510,11 @@ Ext.define('storeplaces.controller.OrgPageController', {
 												cbAddr.setRawValue(card.address);
 												cbAddr.setDisabled(false);
 											}
-
+										} else if (card.orgName) {
+												placeCard.cbStorageType.setValue(2);
+												showWidget(placeCard.taOrg, card.orgName);
+												tfAddr.setValue(card.address);
+												tfAddr.setDisabled(false);
 										}
 										placeCard.idPlace = card.id; // id места хранения документов
 										[tfPhone, nfCount, yearInterval].forEach(
