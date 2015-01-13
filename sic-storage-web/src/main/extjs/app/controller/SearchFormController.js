@@ -89,7 +89,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							for (var i = 0; i < storage.length; i++) {
 								var placeCard = create('storeplaces.view.card.CStorePlaceView');
 								myOrgPage.placesFieldSet.add(placeCard);
-								var num = i + 1;
+//								var num = i + 1;
 								var idPlace = storage[i].id;
 								var storageTypePlace = storage[i].storageType;
 								var archivePlace = storage[i].archive;
@@ -120,6 +120,17 @@ Ext.define('storeplaces.controller.SearchFormController', {
 								placeCard.yearInterval.items.items[2].setValue(endYearPlace);
 								placeCard.taDocsContent.setValue(contentsPlace);
 
+								placeCard.docGrid.getStore().load({
+									params: {
+										storageId: idPlace,
+										mode: 'VIEW'
+									},
+									callback: function(_, __, success){
+										if (!success) 
+											Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+									}
+								});
+								/*
 								Ext.Ajax.request({
 									url: 'servlet/QueryDocuments',
 									params: {
@@ -135,6 +146,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 										Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 									}
 								});
+								*/
 							}
 						},
 						failure: function () {

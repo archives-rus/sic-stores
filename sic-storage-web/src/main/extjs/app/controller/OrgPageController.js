@@ -4,28 +4,27 @@ Ext.define('storeplaces.controller.OrgPageController', {
 		{
 			ref: 'page',
 			selector: 'viewport > container > corgpage'
+		}, {
+			ref: 'viewport',
+			selector: 'viewport'
 		}],
 	init: function () {
 		var msg = Ext.Msg,
-				me = this;
-		me.control({
-			'button': {
+				controller = this;
+		controller.control({
+			button: {
 				click: function myfn(btn, eventObj) {
-					if (btn.action == 'srchFund') {
+					var allViews = controller.getViewport().items,
+							mainContainer = allViews.getAt(0),
+							hiddenContainer = allViews.getAt(1);
+					if (btn.action === 'srchFund') {
 						var numFund = btn.up('fieldcontainer'),
-								fs = numFund.up('fieldset'),
-								main = fs.up('container');
-					}
-					else if (btn.action == 'deleteCard') {
+								fs = numFund.up('fieldset');
+					} else if (btn.action === 'deleteCard') {
 						var form = btn.up('form');
-						me.getPage().placesFieldSet.remove(form);
-					}
-					else if (btn.id != 'button-1005') {
-						var tb = btn.up('toolbar'),
-								form = tb.up('form'),
-								main = form.up('container'),
-								vp = main.up('viewport'),
-								buffer = vp.items.items[1];
+						controller.getPage().placesFieldSet.remove(form);
+					} else if (btn.id !== 'button-1005') { // ОК button on dialog
+						var form = btn.up('toolbar').up('form');
 					}
 
 					switch (btn.action) {
@@ -40,18 +39,18 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								forceSelection: true,
 								validateOnChange: false
 							});
-							this.getPage().placesFieldSet.add(place);
-							this.getPage().placesFieldSet.body.dom.scrollTop = 99999;
+							var page = this.getPage();
+							page.placesFieldSet.add(place);
+							page.placesFieldSet.body.dom.scrollTop = 99999;
 							break;
 						case 'namesGridUp':
 							var form = btn.up('toolbar').up('gridpanel').up('fieldset').up('form');
 							var sm = form.gridNames.getSelectionModel();
 							var record = sm.getSelection()[0];
-							if (record == null)
+							if (record === null)
 								break;
 							var index = form.gridNames.getStore().indexOf(record);
-							if (index != 0)
-							{
+							if (index !== 0) {
 								form.gridNames.getStore().remove(record, true);
 								form.gridNames.getStore().insert(index - 1, record);
 							}
@@ -61,10 +60,10 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							var maxIndex = form.gridNames.getStore().getCount() - 1;
 							var sm = form.gridNames.getSelectionModel();
 							var record = sm.getSelection()[0];
-							if (record == null)
+							if (record === null)
 								break;
 							var index = form.gridNames.getStore().indexOf(record);
-							if (index != maxIndex)
+							if (index !== maxIndex)
 							{
 								form.gridNames.getStore().remove(record, true);
 								form.gridNames.getStore().insert(index + 1, record);
@@ -94,8 +93,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							break;
 						case 'orgCardDelete':
 							var id = form.idCard;
-							if (id == null)
-							{
+							if (id === null) {
 								msg.alert('Внимание', 'Организация не создана!');
 								break;
 							}
@@ -106,8 +104,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								},
 								success: function (action) {
 									var success = Ext.decode(action.responseText).success;
-									main.removeAll();
-									main.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+									mainContainer.removeAll();
+									mainContainer.add(Ext.create('storeplaces.view.page.COrganizationPage'));
 									msg.alert('Внимание', 'Организация удалена!');
 								},
 								failure: function () {
@@ -117,8 +115,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							break;
 						case 'orgCardDeleteView':
 							var id = form.idCard;
-							if (id == null)
-							{
+							if (id === null) {
 								msg.alert('Внимание', 'Организация не создана!');
 								break;
 							}
@@ -128,21 +125,22 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									id: id
 								},
 								success: function (action) {
-									var success = Ext.decode(action.responseText).success;
+//									var success = Ext.decode(action.responseText).success;
 									var cardsStore = Ext.getStore('CardsStore');
 									var cardsStoreAll = Ext.getStore('CardsStoreAll');
 									var thisPage = form.cardToolBar.items.items[4].getValue();
-									if (cardsStoreAll.getCount() == 1) {
+									if (cardsStoreAll.getCount() < 2) {
+										if (cardsStoreAll.getCount() === 1)
+											Ext.getStore('GridSearchOrgStore').reload();
 										var oldData = form.oldData;
-										main.removeAll();
-										buffer.removeAll();
+										mainContainer.removeAll();
+										hiddenContainer.removeAll();
 										var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
 										oldSrchPage.getForm().setValues(oldData);
 										oldSrchPage.FIO.setText(form.FIO.text);
 										// oldSrchPage.items.items[1].items.items[0].fireEvent('click');
-										main.add(oldSrchPage);
-									}
-									else if (thisPage == 1) {
+										mainContainer.add(oldSrchPage);
+									} else if (thisPage === 1) {
 										cardsStore.loadPage(1);
 										var id = cardsStoreAll.getAt(1).get('id');
 										window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
@@ -163,36 +161,45 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								}
 							});
 							break;
-						case 'newCancel':
 						case 'orgCardAdd':
 							var FIO = form.FIO.text;
 							var oldData = form.oldData;
-							main.removeAll();
+							hiddenContainer.removeAll();
+							hiddenContainer.add(mainContainer.items.getAt(0));
+							mainContainer.removeAll(false);
 							var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
 							newOrgPage.items.getAt(0).items.getAt(2).hide();
 							newOrgPage.FIO.setText(FIO);
 							newOrgPage.oldData = oldData;
 							newOrgPage.items.items[0].items.items[4].action = 'newCancel';
 							newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
-							main.add(newOrgPage);
+							mainContainer.add(newOrgPage);
 							break;
 						case 'backSrchResult':
 							var oldData = form.oldData;
-							main.removeAll();
-							buffer.removeAll();
+							mainContainer.removeAll();
+							hiddenContainer.removeAll();
 							var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
 							oldSrchPage.getForm().setValues(oldData);
 							oldSrchPage.FIO.setText(form.FIO.text);
-							main.add(oldSrchPage);
+							mainContainer.add(oldSrchPage);
 							break;
 						case 'orgCardSave':
-							var errMessages = [];
+							var errMessages = [],
+									fundNumber = form.fundFieldset.items.getAt(2).items;
 							if (form.gridNames.getStore().getCount() === 0)
 								errMessages.push('заполнить наименование организации');
 							if (form.fundFieldset.items.items[0].getValue() === null)
 								errMessages.push('выбать архив в фондовой принадлежности');
 
-							if (form.fundFieldset.items.items[2].items.items[1].getRawValue() !== '' &&
+							if (fundNumber.getAt(0).getRawValue().length > 4)
+								errMessages.push('префикс не должен превышать 4 символа');
+							if (fundNumber.getAt(2).getRawValue().length > 4)
+								errMessages.push('суффикс не должен превышать 4 символа');
+							if (fundNumber.getAt(1).getRawValue().length > 10)
+								errMessages.push('номер фонда не должен превышать 10 символов');
+
+							if (fundNumber.getAt(1).getRawValue() !== '' &&
 									form.fundFieldset.items.items[1].getRawValue() === '')
 								errMessages.push('заполнить название фонда');
 							if (form.placesFieldSet.items.items.length === 0)
@@ -284,7 +291,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 								var contents = dataCard.taDocsContent.getRawValue(),
 										tmpAddress;
-								if (contents == '')
+								if (contents === '')
 									contents = null;
 								var card = {
 									'id': idPlace,
@@ -303,14 +310,14 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									})(),
 									orgName: orgName,
 									address: address,
-									phone: archStrg ? (archStrg.phone || null) : 
+									phone: archStrg ? (archStrg.phone || null) :
 											orgName ? (dataCard.tfPhone.getRawValue() || null) : null,
 									documentCount: documentCount,
 									beginYear: beginYear,
 									endYear: endYear,
 									documents: documents,
 									contents: contents
-								}
+								};
 								storage.push(card);
 							}
 							var org = {
@@ -331,23 +338,29 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								},
 								success: function (action) {
 									btn.action = 'orgCardView';
+									form.idCard = Ext.decode(action.responseText).id;
 									myfn(btn);
 									/* Сохранение без перехода в просмотр
-									 var idOrg = Ext.decode(action.responseText).id;
-									 form.idCard = idOrg;
 									 var FIO = form.FIO.text;
 									 reloadMain(idOrg, FIO, oldData, main);
 									 */
 								},
 								failure: function () {
 									// msg.alert('Ошибка', 'Ошибка базы данных!');
-									// msg.alert('Внимание', 'Для сохранения необходимо заполнить место хранения, архив и адрес в каждой карточке!');
+									// msg.alert('Внимание', 'Для сохранения необходимо заполнить место хранения, архив и адрес в каждой карточке!')
 								}
 							});
 							break;
+						case 'newCancel':
 						case 'orgCardCancel':
+							mainContainer.removeAll();
+							mainContainer.add(hiddenContainer.items.getAt(0));
+							hiddenContainer.removeAll(false);
+							break;
+
 						case 'orgCardView':
-							buffer.add(form);
+							hiddenContainer.removeAll();
+							hiddenContainer.add(form);
 							var values = form.getForm().getValues();
 							var FIO = form.FIO.text;
 							var idFund = form.idFund;
@@ -367,7 +380,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								var card = form.placesFieldSet.items.items[i];
 								massCard.push(card);
 							}
-							main.removeAll();
+							mainContainer.removeAll();
 							var OrgViewPage = Ext.create('storeplaces.view.page.COrganizationPageView');
 							OrgViewPage.getForm().setValues(values);
 							OrgViewPage.oldData = oldData;
@@ -388,7 +401,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								newCard.idArchStorage = oldCard.idArchStorage;
 								var oldStorageType = oldCard.cbStorageType.getRawValue();
 								newCard.tfStorageType.setValue(oldStorageType);
-								if (oldStorageType == 'В архиве')
+								if (oldStorageType === 'В архиве')
 								{
 									var oldArchive = oldCard.cbArchive.getRawValue();
 									var oldAddress = oldCard.cbAddr.getRawValue();
@@ -397,7 +410,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									newCard.tfArchive.setValue(oldArchive);
 									newCard.tfAddr.setValue(oldAddress);
 								}
-								else if (oldStorageType == 'В организации')
+								else if (oldStorageType === 'В организации')
 								{
 									var oldOrgName = oldCard.taOrg.getRawValue();
 									var oldAddress = oldCard.tfAddr.getRawValue();
@@ -425,14 +438,16 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							var fundNumPage = OrgViewPage.fundFieldset.items.items[2];
 							archivePage.setRawValue(archive);
 							fundNumPage.setRawValue(fundNum);
-							main.add(OrgViewPage);
+							mainContainer.add(OrgViewPage);
 							break;
+
 						case 'orgCardEdit':
-							buffer.removeAll();
-							var id = form.idCard;
-							var FIO = form.FIO.text;
-							var oldData = form.oldData;
-							main.removeAll();
+							hiddenContainer.removeAll();
+							hiddenContainer.add(mainContainer.items.getAt(0));
+							var id = form.idCard,
+									FIO = form.FIO.text,
+									oldData = form.oldData;
+							mainContainer.removeAll(false);
 							var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
 							myEditOrgPage.FIO.setText(FIO);
 							myEditOrgPage.oldData = oldData;
@@ -511,10 +526,10 @@ Ext.define('storeplaces.controller.OrgPageController', {
 												cbAddr.setDisabled(false);
 											}
 										} else if (card.orgName) {
-												placeCard.cbStorageType.setValue(2);
-												showWidget(placeCard.taOrg, card.orgName);
-												tfAddr.setValue(card.address);
-												tfAddr.setDisabled(false);
+											placeCard.cbStorageType.setValue(2);
+											showWidget(placeCard.taOrg, card.orgName);
+											tfAddr.setValue(card.address);
+											tfAddr.setDisabled(false);
 										}
 										placeCard.idPlace = card.id; // id места хранения документов
 										[tfPhone, nfCount, yearInterval].forEach(
@@ -553,7 +568,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
-							main.add(myEditOrgPage);
+							mainContainer.add(myEditOrgPage);
 							break;
 						case 'srchFund':
 							var archiveId = fs.items.items[0].getValue(),
@@ -588,7 +603,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 										datesFund.setValue(fond.dates);
 										nameFund.enable();
 										datesFund.enable();
-										me.getPage().idFund = fond.id;
+										controller.getPage().idFund = fond.id;
 									}
 								},
 								failure: function (action) {
@@ -604,6 +619,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 				}
 			}
 		});
+
 		var reloadMain = function (id, FIO, oldData, main) {
 			var myMask = new Ext.LoadMask(Ext.getBody(), {msg: "Сохранение..."});
 			myMask.show();
@@ -742,6 +758,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 			});
 			main.add(myEditOrgPage);
 		};
+
 		/**
 		 * объект для хранения информации об адресе архива
 		 */

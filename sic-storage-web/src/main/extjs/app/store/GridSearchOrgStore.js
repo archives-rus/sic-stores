@@ -15,8 +15,9 @@ Ext.define('storeplaces.store.GridSearchOrgStore', {
 		}
 	},
 	listeners: {
-		'load': function(store) {
-			if (store.getCount() === 0 && store.currentPage !== 0)
+		'load': function (store) {
+			if (store.getCount() === 0 && store.currentPage !== 0 &&
+					Ext.getStore('CardsStoreAll').getCount() !== 1)
 				Ext.Msg.alert('Внимание', 'Организации не найдены!');
 		}
 	}
