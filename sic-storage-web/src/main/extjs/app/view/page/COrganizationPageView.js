@@ -74,6 +74,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 				{
 					xtype: 'button',
 					text: 'Удалить',
+					hidden: true,
 					height: 25,
 					cls: 'btnDelete',
 					action: 'orgCardDeleteView'
