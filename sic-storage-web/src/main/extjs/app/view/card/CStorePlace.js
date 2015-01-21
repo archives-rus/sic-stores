@@ -1,5 +1,9 @@
+/**
+ *  Панель для определяения места хранения на странице организации в режиме редактирования.
+ */
 Ext.define("storeplaces.view.card.CStorePlace", {
 	extend: 'Ext.form.Panel',
+	alias: 'CStorePlace',
 	layout: 'absolute',
 	xtype: 'storeplacecard',
 	requires: [

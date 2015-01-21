@@ -27,6 +27,7 @@ Ext.define('storeplaces.view.Main', {
 					]});
 		store.load({callback: function () {
 				var userName = store.getById('current').get('name');
+				storeplaces.userName = userName;
 				page.down('toolbar').down('label').setText(userName);
 				Ext.onReady(function () {
 					storeplaces.alert('Доброго времени суток', userName);
@@ -50,6 +51,22 @@ Ext.define('storeplaces.view.Main', {
 			m.slideIn('t').ghost("t", {delay: 1000, remove: true});
 		};
 		this.callParent();
+	},
+	setPage: function(page, save) {
+		if (save) {
+			this.items.getAt(0).hide();
+		} else {
+			this.removeAll(true);
+		}
+		this.insert(0, page);
+	},
+	returnPage: function() {
+		if (this.items.getCount() < 2) {
+			console.log("Not found previous page");
+			return;
+		}	
+		this.remove(this.getAt(0), true);
+		this.getAt(0).show();
 	}
 });
 

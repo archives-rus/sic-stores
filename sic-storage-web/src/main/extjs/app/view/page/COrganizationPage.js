@@ -1,16 +1,20 @@
+/**
+ * Страница организации в режиме редактирования (добавления)
+ */
 Ext.define('storeplaces.view.page.COrganizationPage', {
 	extend: 'Ext.form.Panel',
-	requires: ['storeplaces.store.OrgNamesStore'],
+	requires: [
+		'storeplaces.store.OrgNamesStore',
+		'storeplaces.view.card.CStorePlace'
+	],
+	alias: 'COrganizationPage',
 	minWidth: 1024,
 	minHeight: 500,
-	FIO: null,
 	idFund: null,
 	idCard: null,
 	xtype: 'corgpage',
 	width: '100%',
-	oldData: null,
 	cls: 'pad10-20',
-	placesFieldSet: null,
 	areaFieldSets: null,
 	tfUser: null,
 	fundFieldset: null,
@@ -23,15 +27,9 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				create = Ext.create;
 		me.orgStore = create('OrgNamesStore');
 //		me.orgStore.load();
-		me.FIO = create('Ext.form.Label', {
-			text: '',
-			baseCls: 'loginedUserText',
-			flex: 0
-		});
 		var toolBar = create('Ext.toolbar.Toolbar', {
 			xtype: 'maintb',
-			items: [
-				{
+			items: [{
 					text: 'Сохранить',
 					height: 25,
 					cls: 'btnSave',
@@ -45,11 +43,15 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					text: 'Вернуться к результатам поиска',
 					height: 25,
 					cls: 'backToSrch',
-					action: 'backSrchResult',
-					hidden: true
+					action: 'backSrchResult'
 				},
 				'->',
-				me.FIO,
+				{
+					xtype: 'label',
+					text: storeplaces.userName,
+					baseCls: 'loginedUserText',
+					flex: 0
+				},
 				{
 					xtype: 'tbseparator',
 					html: '|',
@@ -60,7 +62,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					tooltipType: 'title',
 					componentCls: 'quitButton',
 					action: 'quit'
-				}]
+				}],
 		});
 		me.gridToolBar = create('Ext.toolbar.Toolbar', {
 			items: [create('Ext.Button', {
@@ -145,7 +147,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				}]
 		});
 
-		var renamesFieldset = create('storeplaces.view.lib.StyledFieldSet', {
+		var renamesFieldset = create('StyledFieldSet', {
 			title: 'Наименование организации и её переименования',
 			items: [me.gridNames]
 		});
@@ -187,7 +189,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 			width: 440,
 			labelWidth: 150
 		});
-		me.fundFieldset = create('storeplaces.view.lib.StyledFieldSet', {
+		me.fundFieldset = create('StyledFieldSet', {
 			title: 'Фондовая принадлежность',
 			height: 150,
 			layout: {
@@ -196,13 +198,16 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 			},
 			items: [cbArchive, taFundName, tfFondNum, tfDates]
 		});
-		me.placesFieldSet = create('storeplaces.view.lib.StyledFieldSet', {
+		me.placesFieldSet = create('StyledFieldSet', {
 			title: 'Места хранения',
 			width: '100%',
 			height: 370,
 			cls: 'noscrl-x',
 			autoScroll: true,
-			margin: 20
+			margin: 20,
+			items: [{
+					xtype: 'storeplacecard'
+				}]
 		});
 		var tbarStorePlace = create('Ext.toolbar.Toolbar', {
 			items: [create('Ext.Button', {
@@ -212,7 +217,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					action: 'addStorePlace'
 				})]
 		});
-		me.areaFieldSets = create('storeplaces.view.lib.StyledFieldSet', {
+		me.areaFieldSets = create('StyledFieldSet', {
 			layout: 'fit',
 			items: [create('Ext.form.field.TextArea', {
 					name: 'zagranInfo',
@@ -259,5 +264,87 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				me.placesFieldSet, me.areaFieldSets, userDate]
 		});
 		me.callParent(arguments);
+		me._btns = toolBar.items;
+	},
+	fromSearch: function () {
+		var buttons = this._btns;
+		buttons.getAt(2).show();
+		buttons.getAt(1).hide();
+	},
+	fromView: function () {
+		var buttons = this._btns;
+		buttons.getAt(1).show();
+		buttons.getAt(2).hide();
+	},
+	/**
+	 * Устанавливает места хранения
+	 * @param {Object[]} places список мест хранения
+	 */
+	setPlaces: function (places) {
+		var fieldSet = this.placesFieldSet;
+		fieldSet.removeAll(true);
+
+		places.forEach(function (card) {
+			var placeCard = Ext.create('CStorePlace'),
+					cbAddr = placeCard.cbAddr,
+					tfAddr = placeCard.tfAddr,
+					tfPhone = placeCard.tfPhone,
+					cbStorageType = placeCard.cbStorageType,
+					taOrg = placeCard.taOrg,
+					nfCount = placeCard.nfCount,
+					yearInterval = placeCard.yearInterval,
+					archStrg = card.archStrg || null;
+
+			fieldSet.add(placeCard);
+
+			if (archStrg) {
+				placeCard.idArchStorage = archStrg.id;
+				if (!archStrg.archiveId) {
+					cbStorageType.setValue(2);
+					taOrg.setValue(card.orgName);
+					tfAddr.setValue(card.address);
+
+				} else {
+					cbStorageType.setValue(1);
+					placeCard.cbArchive.setValue(archStrg.archiveId);
+					cbAddr.setRawValue(card.address);
+				}
+			} else if (card.orgName) {
+				cbStorageType.setValue(2);
+				taOrg.setValue(card.orgName);
+				tfAddr.setValue(card.address);
+			}
+			placeCard.idPlace = card.id; // id места хранения документов
+			[tfPhone, nfCount, yearInterval].forEach(
+					function (v) {
+						v.setDisabled(false);
+					});
+
+			tfPhone.setValue(card.phone);
+			nfCount.setValue(card.documentCount);
+			yearInterval.setValue(card.beginYear, card.endYear);
+			placeCard.taDocsContent.setValue(card.contents);
+
+			Ext.Ajax.request({
+				url: 'servlet/QueryDocuments?mode=EDIT&storageId=' + card.id,
+				success: function (action) {
+					placeCard.docGrid.columns[1].editor = Ext.create(
+							'Ext.form.field.ComboBox', {
+								store: 'DocTypesStore',
+								valueField: 'id',
+								displayField: 'name',
+								blankText: 'Не выбран вид документа',
+								emptyText: 'Не выбран',
+								forceSelection: true,
+								validateOnChange: false
+							});
+					placeCard.docGrid.getStore().loadData(Ext.decode(action.responseText));
+				},
+				failure: function () {
+					Ext.msg.alert('Ошибка', 'Ошибка базы данных!');
+				}
+			});
+		});
+
 	}
 });

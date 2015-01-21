@@ -132,12 +132,10 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									if (cardsStoreAll.getCount() < 2) {
 										if (cardsStoreAll.getCount() === 1)
 											Ext.getStore('GridSearchOrgStore').reload();
-										var oldData = form.oldData;
 										mainContainer.removeAll();
 										hiddenContainer.removeAll();
 										var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
-										oldSrchPage.getForm().setValues(oldData);
-										oldSrchPage.FIO.setText(form.FIO.text);
+										oldSrchPage.getForm().setValues(storeplaces.searchQ);
 										// oldSrchPage.items.items[1].items.items[0].fireEvent('click');
 										mainContainer.add(oldSrchPage);
 									} else if (thisPage === 1) {
@@ -162,27 +160,14 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							});
 							break;
 						case 'orgCardAdd':
-							var FIO = form.FIO.text;
-							var oldData = form.oldData;
-							hiddenContainer.removeAll();
-							hiddenContainer.add(mainContainer.items.getAt(0));
-							mainContainer.removeAll(false);
-							var newOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
-							newOrgPage.items.getAt(0).items.getAt(2).hide();
-							newOrgPage.FIO.setText(FIO);
-							newOrgPage.oldData = oldData;
-							newOrgPage.items.items[0].items.items[4].action = 'newCancel';
-							newOrgPage.placesFieldSet.add(Ext.create('storeplaces.view.card.CStorePlace'));
-							mainContainer.add(newOrgPage);
+							var newOrgPage = Ext.create('COrganizationPage');
+							newOrgPage.fromView();
+							mainContainer.setPage(newOrgPage, true);
 							break;
 						case 'backSrchResult':
-							var oldData = form.oldData;
-							mainContainer.removeAll();
-							hiddenContainer.removeAll();
 							var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
-							oldSrchPage.getForm().setValues(oldData);
-							oldSrchPage.FIO.setText(form.FIO.text);
-							mainContainer.add(oldSrchPage);
+							oldSrchPage.getForm().setValues(storeplaces.searchQ);
+							mainContainer.setPage(oldSrchPage);
 							break;
 						case 'orgCardSave':
 							var errMessages = [],
@@ -340,10 +325,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									btn.action = 'orgCardView';
 									form.idCard = Ext.decode(action.responseText).id;
 									myfn(btn);
-									/* Сохранение без перехода в просмотр
-									 var FIO = form.FIO.text;
-									 reloadMain(idOrg, FIO, oldData, main);
-									 */
 								},
 								failure: function () {
 									// msg.alert('Ошибка', 'Ошибка базы данных!');
@@ -351,7 +332,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								}
 							});
 							break;
-						case 'newCancel':
 						case 'orgCardCancel':
 							mainContainer.removeAll();
 							mainContainer.add(hiddenContainer.items.getAt(0));
@@ -362,10 +342,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							hiddenContainer.removeAll();
 							hiddenContainer.add(form);
 							var values = form.getForm().getValues();
-							var FIO = form.FIO.text;
 							var idFund = form.idFund;
 							var idCard = form.idCard;
-							var oldData = form.oldData;
 							var archive = form.fundFieldset.items.items[0].getRawValue();
 							var prefix = form.fundFieldset.items.items[2].items.items[0].getRawValue();
 							var numfond = form.fundFieldset.items.items[2].items.items[1].getRawValue();
@@ -381,12 +359,10 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								massCard.push(card);
 							}
 							mainContainer.removeAll();
-							var OrgViewPage = Ext.create('storeplaces.view.page.COrganizationPageView');
+							var OrgViewPage = Ext.create('COrganizationPageView');
 							OrgViewPage.getForm().setValues(values);
-							OrgViewPage.oldData = oldData;
 							OrgViewPage.idFund = idFund;
 							OrgViewPage.idCard = idCard;
-							OrgViewPage.FIO.setText(FIO);
 							OrgViewPage.tfUser.setValue(nameUser);
 							OrgViewPage.tfDateOfEdit.setValue(editDate);
 							OrgViewPage.orgStore.loadData(oldOrgStoreData);
@@ -444,18 +420,14 @@ Ext.define('storeplaces.controller.OrgPageController', {
 						case 'orgCardEdit':
 							hiddenContainer.removeAll();
 							hiddenContainer.add(mainContainer.items.getAt(0));
-							var id = form.idCard,
-									FIO = form.FIO.text,
-									oldData = form.oldData;
+							var id = form.idCard;
 							mainContainer.removeAll(false);
-							var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
-							myEditOrgPage.FIO.setText(FIO);
-							myEditOrgPage.oldData = oldData;
-							myEditOrgPage.idCard = id;
+							var editOrgPage = Ext.create('COrganizationPage');
+							editOrgPage.idCard = id;
 							Ext.Ajax.request({
 								url: 'servlet/QueryOrgNames?id=' + id,
 								success: function (action) {
-									myEditOrgPage.orgStore.loadData(
+									editOrgPage.orgStore.loadData(
 											Ext.decode(action.responseText));
 								},
 								failure: function () {
@@ -467,13 +439,13 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								success: function (action) {
 									var dataArray = Ext.decode(action.responseText),
 											fund = dataArray.fund,
-											fundFieldset = myEditOrgPage.fundFieldset.items,
+											fundFieldset = editOrgPage.fundFieldset.items,
 											myFundName = fundFieldset.items[1],
 											myDates = fundFieldset.items[3],
-											areaFieldSets = myEditOrgPage.areaFieldSets.items;
+											areaFieldSets = editOrgPage.areaFieldSets.items;
 
 									if (fund) {
-										myEditOrgPage.idFund = fund.id;
+										editOrgPage.idFund = fund.id;
 										fundFieldset.items[2].items.items[1].setValue(fund.num);
 										myFundName.setValue(fund.name);
 										myDates.setValue(fund.dates);
@@ -488,87 +460,20 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									areaFieldSets.items[0].setValue(dataArray.businessTripsInfo);
 									areaFieldSets.items[1].setValue(dataArray.rewardsInfo);
 									areaFieldSets.items[2].setValue(dataArray.notes);
-									myEditOrgPage.tfUser.setValue(dataArray.userName);
-									myEditOrgPage.tfDateOfEdit.setValue(dataArray.lastUpdateDate);
+									editOrgPage.tfUser.setValue(dataArray.userName);
+									editOrgPage.tfDateOfEdit.setValue(dataArray.lastUpdateDate);
 
-									function showWidget(w, v) {
-										w.setVisible(true);
-										w.setValue(v);
-										w.setDisabled(false);
+
+									if (dataArray.storage.length) {
+										editOrgPage.setPlaces(dataArray.storage);
 									}
-
-									dataArray.storage.forEach(function (card) {
-										var placeCard = Ext.create('storeplaces.view.card.CStorePlace'),
-												cbAddr = placeCard.cbAddr,
-												tfAddr = placeCard.tfAddr,
-												tfPhone = placeCard.tfPhone,
-												nfCount = placeCard.nfCount,
-												yearInterval = placeCard.yearInterval,
-												archStrg = card.archStrg || null;
-
-										myEditOrgPage.placesFieldSet.add(placeCard);
-
-										if (archStrg) {
-											placeCard.idArchStorage = archStrg.id;
-											if (!archStrg.archiveId) {
-												placeCard.cbStorageType.setValue(2);
-												cbAddr.setVisible(false);
-
-												showWidget(placeCard.taOrg, card.orgName);
-												showWidget(placeCard.tfAddr, card.address);
-
-											} else {
-												placeCard.cbStorageType.setValue(1);
-
-												showWidget(placeCard.cbArchive, archStrg.archiveId);
-
-												cbAddr.setRawValue(card.address);
-												cbAddr.setDisabled(false);
-											}
-										} else if (card.orgName) {
-											placeCard.cbStorageType.setValue(2);
-											showWidget(placeCard.taOrg, card.orgName);
-											tfAddr.setValue(card.address);
-											tfAddr.setDisabled(false);
-										}
-										placeCard.idPlace = card.id; // id места хранения документов
-										[tfPhone, nfCount, yearInterval].forEach(
-												function (v) {
-													v.setDisabled(false);
-												});
-
-										tfPhone.setValue(card.phone);
-										nfCount.setValue(card.documentCount);
-										yearInterval.setValue(card.beginYear, card.endYear);
-										placeCard.taDocsContent.setValue(card.contents);
-
-										Ext.Ajax.request({
-											url: 'servlet/QueryDocuments?mode=EDIT&storageId=' + card.id,
-											success: function (action) {
-												placeCard.docGrid.columns[1].editor = Ext.create(
-														'Ext.form.field.ComboBox', {
-															store: 'DocTypesStore',
-															valueField: 'id',
-															displayField: 'name',
-															blankText: 'Не выбран вид документа',
-															emptyText: 'Не выбран',
-															forceSelection: true,
-															validateOnChange: false
-														});
-												placeCard.docGrid.getStore().loadData(Ext.decode(action.responseText));
-											},
-											failure: function () {
-												msg.alert('Ошибка', 'Ошибка базы данных!');
-											}
-										});
-									});
 
 								},
 								failure: function () {
 									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
-							mainContainer.add(myEditOrgPage);
+							mainContainer.add(editOrgPage);
 							break;
 						case 'srchFund':
 							var archiveId = fs.items.items[0].getValue(),
@@ -619,145 +524,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 				}
 			}
 		});
-
-		var reloadMain = function (id, FIO, oldData, main) {
-			var myMask = new Ext.LoadMask(Ext.getBody(), {msg: "Сохранение..."});
-			myMask.show();
-			main.removeAll();
-			var myEditOrgPage = Ext.create('storeplaces.view.page.COrganizationPage');
-			myEditOrgPage.FIO.setText(FIO);
-			myEditOrgPage.oldData = oldData;
-			myEditOrgPage.idCard = id;
-			Ext.Ajax.request({
-				url: 'servlet/QueryOrgNames?id=' + id,
-				success: function (action) {
-					var massStore = Ext.decode(action.responseText);
-					myEditOrgPage.orgStore.loadData(massStore);
-				},
-				failure: function () {
-					msg.alert('Ошибка', 'Ошибка базы данных!');
-				}
-			});
-			Ext.Ajax.request({
-				url: 'servlet/QueryOrganization?mode=EDIT&id=' + id,
-				success: function (action) {
-					var dataArray = Ext.decode(action.responseText),
-							archiveId = dataArray.archiveId,
-							fund = dataArray.fund,
-							storage = dataArray.storage,
-							businessTripsInfo = dataArray.businessTripsInfo,
-							rewardsInfo = dataArray.rewardsInfo,
-							notes = dataArray.notes,
-							userName = dataArray.userName,
-							lastUpdateDate = dataArray.lastUpdateDate,
-							fundFieldset = myEditOrgPage.fundFieldset.items,
-							myArchive = fundFieldset.items[0],
-							myFundNumber = fundFieldset.items[2].items,
-							myDates = fundFieldset.items[3],
-							areaFieldSets = myEditOrgPage.areaFieldSets.items,
-							myBusinessTripsInfo = areaFieldSets.items[0],
-							myRewardsInfo = areaFieldSets.items[1],
-							myNotes = areaFieldSets.items[2],
-							myUserName = myEditOrgPage.tfUser,
-							myLastUpdateDate = myEditOrgPage.tfDateOfEdit,
-							myFundName = fundFieldset.items[1];
-
-					if (fund) {
-						myFundNumber.items[1].setValue(fund.num);
-						myFundNumber.items[0].setValue(fund.prefix);
-						myFundNumber.items[2].setValue(fund.suffix);
-						myFundName.setValue(fund.name);
-						myDates.setValue(fund.dates);
-						myEditOrgPage.idFund = fund.id;
-					}
-
-					myFundName.setDisabled(false);
-					myDates.setDisabled(false);
-
-					myArchive.setValue(archiveId);
-
-					myBusinessTripsInfo.setValue(businessTripsInfo);
-					myRewardsInfo.setValue(rewardsInfo);
-					myNotes.setValue(notes);
-					myUserName.setValue(userName);
-					myLastUpdateDate.setValue(lastUpdateDate);
-					for (var i = 0; i < storage.length; i++) {
-						var idPlace = storage[i].id; // id места хранения документов
-						var archStrg = storage[i].archStrg;
-						if (archStrg) {
-							var archInId = storage[i].archStrg.id; // id места хранения в архиве
-							var archId = storage[i].archStrg.archiveId; //id архива(второй комбо снизу)
-						}
-						else
-							archStrg == null;
-						var orgNamePlace = storage[i].orgName;
-						var addressPlace = storage[i].address;
-						var phonePlace = storage[i].phone;
-						var documentCountPlace = storage[i].documentCount;
-						var beginYearPlace = storage[i].beginYear;
-						var endYearPlace = storage[i].endYear;
-						var contentsPlace = storage[i].contents;
-						var placeCard = Ext.create('storeplaces.view.card.CStorePlace');
-						myEditOrgPage.placesFieldSet.add(placeCard);
-						placeCard.idPlace = idPlace;
-						placeCard.idArchStorage = archInId;
-						placeCard.tfPhone.setDisabled(false);
-						placeCard.nfCount.setDisabled(false);
-						placeCard.yearInterval.setDisabled(false);
-						placeCard.yearInterval.items.items[1].setDisabled(false);
-						placeCard.yearInterval.items.items[2].setDisabled(false);
-						if (archId == '' || archId == null) {
-							placeCard.cbStorageType.setValue(2);
-							placeCard.taOrg.setVisible(true);
-							placeCard.tfAddr.setVisible(true);
-							placeCard.cbAddr.setVisible(false);
-							placeCard.taOrg.setValue(orgNamePlace);
-							placeCard.tfAddr.setValue(addressPlace);
-							placeCard.taOrg.setDisabled(false);
-							placeCard.tfAddr.setDisabled(false);
-						} else {
-							placeCard.cbStorageType.setValue(1);
-							placeCard.cbArchive.setVisible(true);
-							placeCard.cbArchive.setValue(archId);
-							placeCard.cbAddr.setRawValue(addressPlace);
-							placeCard.cbArchive.setDisabled(false);
-							placeCard.cbAddr.setDisabled(false);
-						}
-						placeCard.tfPhone.setValue(phonePlace);
-						placeCard.nfCount.setValue(documentCountPlace);
-						placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
-						placeCard.yearInterval.items.items[2].setValue(endYearPlace);
-						placeCard.taDocsContent.setValue(contentsPlace);
-						Ext.Ajax.request({
-							url: 'servlet/QueryDocuments?mode=EDIT&storageId=' + idPlace,
-							success: function (action) {
-								placeCard.docGrid.getStore().removeAll();
-								placeCard.docGrid.columns[1].editor = Ext.create('Ext.form.field.ComboBox', {
-									store: 'DocTypesStore',
-									valueField: 'id',
-									displayField: 'name',
-									blankText: 'Не выбран вид документа',
-									emptyText: 'Не выбран',
-									forceSelection: true,
-									validateOnChange: false
-								});
-								placeCard.docGrid.getStore().loadData(Ext.decode(action.responseText));
-								myMask.hide();
-							},
-							failure: function () {
-								msg.alert('Ошибка', 'Ошибка базы данных!');
-							}
-						});
-					}
-
-
-				},
-				failure: function () {
-					msg.alert('Ошибка', 'Ошибка базы данных!');
-				}
-			});
-			main.add(myEditOrgPage);
-		};
 
 		/**
 		 * объект для хранения информации об адресе архива

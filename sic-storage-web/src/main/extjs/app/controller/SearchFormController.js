@@ -20,16 +20,14 @@ Ext.define('storeplaces.controller.SearchFormController', {
 					var id = record.get('orgId'),
 							form = thiss.up('form'),
 							main = form.up('container'),
-							oldData = form.getForm().getValues(),
-							FIO = form.FIO.text,
 							pageSearch = gridSearchOrgSt.currentPage,
 							size = gridSearchOrgSt.pageSize,
 							cardNum = parseInt((size * (pageSearch - 1) + 1) + index);
+
+					storeplaces.searchQ = form.getForm().getValues();
 					main.removeAll();
 					var myOrgPage = create('storeplaces.view.page.COrganizationPageView');
-					myOrgPage.oldData = oldData;
 					myOrgPage.idCard = id;
-					myOrgPage.FIO.setText(FIO);
 					var cardsStorePaging = getStore('CardsStore');
 					cardsStorePaging.getProxy().extraParams = {criteria: Ext.encode(me.searchCriteria)};
 					cardsStorePaging.loadPage(cardNum);
@@ -125,28 +123,12 @@ Ext.define('storeplaces.controller.SearchFormController', {
 										storageId: idPlace,
 										mode: 'VIEW'
 									},
-									callback: function(_, __, success){
-										if (!success) 
+									callback: function (_, __, success) {
+										if (!success)
 											Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 									}
 								});
-								/*
-								Ext.Ajax.request({
-									url: 'servlet/QueryDocuments',
-									params: {
-										storageId: idPlace,
-										mode: 'VIEW'
-									},
-									success: function (action) {
-										var massStorage = decode(action.responseText);
-										placeCard.docGrid.getStore().loadData(massStorage);
 
-									},
-									failure: function () {
-										Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
-									}
-								});
-								*/
 							}
 						},
 						failure: function () {
@@ -175,10 +157,8 @@ Ext.define('storeplaces.controller.SearchFormController', {
 					switch (btn.action) {
 						case 'clearSearchParm':
 							gridSearchOrgSt.removeAll();
-							var FIO = myPage.FIO.text;
 							main.removeAll();
 							var schPage = create('storeplaces.view.page.CSearchPage');
-							schPage.FIO.setText(FIO);
 							main.add(schPage);
 							break;
 						case 'backMain':
@@ -192,16 +172,10 @@ Ext.define('storeplaces.controller.SearchFormController', {
 								}});
 							break;
 						case 'addOrg':
-							var FIO = myPage.FIO.text;
-							var oldData = myPage.getForm().getValues();
+							storeplaces.searchQ = myPage.getForm().getValues();
 							main.removeAll();
-							var newForm = create('storeplaces.view.page.COrganizationPage');
-							newForm.items.getAt(0).items.getAt(2).show();
-							newForm.items.getAt(0).items.getAt(1).hide();
-							newForm.FIO.setText(FIO);
-							newForm.oldData = oldData;
-							newForm.items.items[0].items.items[4].action = 'newCancel';
-							newForm.placesFieldSet.add(create('storeplaces.view.card.CStorePlace'));
+							var newForm = create('COrganizationPage');
+							newForm.fromSearch();
 							main.add(newForm);
 							break;
 						case 'srchBtn':

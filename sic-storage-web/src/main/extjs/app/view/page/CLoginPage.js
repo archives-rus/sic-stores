@@ -49,7 +49,7 @@ Ext.define('storeplaces.view.page.CLoginPage', {
         }
     });
 
-    var LoginFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+    var LoginFieldset = Ext.create('StyledFieldSet', {
         title : 'Вход в систему',
         //width:'100%',
         width:500,

@@ -14,15 +14,11 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 	moveNext: function mvN(id) {
 		var me = this,
 				form = me.getPage(),
-				main = form.up('container'),
-				oldData = form.oldData,
-				FIO = form.FIO.text;
+				main = form.up('container');
 		main.removeAll();
 
 		var myOrgPage = Ext.create('storeplaces.view.page.COrganizationPageView');
-		myOrgPage.oldData = oldData;
 		myOrgPage.idCard = id;
-		myOrgPage.FIO.setText(FIO);
 
 		me.activeReqs.forEach(function (req) {
 			Ext.Ajax.abort(req);

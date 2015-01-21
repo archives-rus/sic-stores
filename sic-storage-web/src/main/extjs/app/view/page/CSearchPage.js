@@ -21,12 +21,6 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 					cls: 'title_search'
 				});
 
-		me.FIO = create('Ext.form.Label', {
-			text: '',
-			baseCls: 'loginedUserText',
-			flex: 0
-		});
-
 		var toolBarSearch = create('Ext.toolbar.Toolbar', {
 			items: [
 				{
@@ -50,7 +44,12 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 					height: 25,
 					action: 'backMain'
 				}, '->',
-				me.FIO,
+				{
+					xtype: 'label',
+					text: storeplaces.userName,
+					baseCls: 'loginedUserText',
+					flex: 0
+				},
 				{
 					xtype: 'tbseparator',
 					html: '|',
@@ -141,7 +140,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 			labelWidth: 190
 		});
 
-		me.searchFieldset = create('storeplaces.view.lib.StyledFieldSet', {
+		me.searchFieldset = create('StyledFieldSet', {
 			title: 'Параметры поиска',
 			height: 250,
 			width: '100%',
@@ -190,7 +189,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 				}]
 		});
 
-		var ResultsFieldset = create('storeplaces.view.lib.StyledFieldSet', {
+		var ResultsFieldset = create('StyledFieldSet', {
 			title: 'Результаты поиска',
 			items: [gridSearch]
 		});

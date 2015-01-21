@@ -1,12 +1,14 @@
+/**
+ * Страница организации в режиме просмотра
+ */
 Ext.define('storeplaces.view.page.COrganizationPageView', {
 	extend: 'Ext.form.Panel',
+	alias: 'COrganizationPageView',
 	requires: [
 		'storeplaces.view.lib.YearInterval'
 	],
 	minWidth: 1024,
 	minHeight: 500,
-	FIO: null,
-	oldData: null,
 	width: '100%',
 	id: 'orgpageview',
 	cls: 'pad10-20',
@@ -26,11 +28,6 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 	initComponent: function () {
 		var me = this;
 		me.orgStore = Ext.create('OrgNamesStore');
-		me.FIO = Ext.create('Ext.form.Label', {
-			text: '',
-			baseCls: 'loginedUserText',
-			flex: 0
-		});
 		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
 			xtype: 'maintb',
 			items: [{
@@ -86,7 +83,12 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 					cls: 'backToSrch',
 					action: 'backSrchResult'
 				}, '->',
-				me.FIO,
+				{
+					xtype: 'label',
+					text: storeplaces.userName,
+					baseCls: 'loginedUserText',
+					flex: 0
+				},
 				Ext.create('Ext.toolbar.Separator', {
 					html: '|',
 					//id : 'vertSeparator',
@@ -193,7 +195,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 				}]
 		})
 
-		var renamesFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet',
+		var renamesFieldset = Ext.create('StyledFieldSet',
 				{
 					title: 'Наименование организации и её переименования',
 					items: [me.gridNames]
@@ -233,7 +235,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 			labelWidth: 150
 		});
 
-		me.fundFieldset = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+		me.fundFieldset = Ext.create('StyledFieldSet', {
 			title: 'Фондовая принадлежность',
 			height: 150,
 			layout: {
@@ -243,7 +245,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 			items: [tfArchive, taFundName, tfFondNum, tfDates]
 		});
 
-		me.placesFieldSet = Ext.create('storeplaces.view.lib.StyledFieldSet',
+		me.placesFieldSet = Ext.create('StyledFieldSet',
 				{
 					title: 'Места хранения',
 					width: '100%',
@@ -254,7 +256,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 				});
 
 
-		me.areaFieldSets = Ext.create('storeplaces.view.lib.StyledFieldSet', {
+		me.areaFieldSets = Ext.create('StyledFieldSet', {
 			layout: 'fit',
 			items: [Ext.create('Ext.form.field.TextArea', {
 					fieldLabel: 'Сведения о загранкомандировках',
