@@ -271,6 +271,7 @@ public class StorageHandler {
 		StrgOrganization org = em.find(StrgOrganization.class, id);
 		org.setUserName(em.find(AdmUser.class, org.getModUserId()).getName());
 		initCollection(org.getStorage());
+		initCollection(org.getNames());
 		return org;
 	}
 

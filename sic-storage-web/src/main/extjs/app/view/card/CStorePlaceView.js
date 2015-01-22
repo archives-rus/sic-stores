@@ -3,25 +3,12 @@
  */
 Ext.define("storeplaces.view.card.CStorePlaceView", {
 	extend: 'Ext.form.Panel',
+	alias: 'CStorePlaceView',
 	layout: 'absolute',
 	requires: [
 		'Ext.grid.plugin.CellEditing',
 		'Ext.form.field.Number'
 	],
-	tfStorageType: null,
-	tfAddr: null,
-	tfPhone: null,
-	taOrg: null,
-	nfCount: null,
-	docReadStore: null,
-	docsWriteStore: null,
-	taDocsContent: null,
-	cbAddr: null,
-	yearInterval: null,
-	cbArchive: null,
-	tfArchive: null,
-	docGrid: null,
-	idArchStorage: null,
 	minHeight: 320,
 	height: 'auto',
 	idPlace: null,
@@ -33,8 +20,9 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 	currentMode: null,
 	readOnlyMode: 'READ',
 	editOnlyMode: 'EDIT',
-	cbDocTypes: null,
 	docTypeColumnEditor: null,
+	cbArchive: null,
+	idArchStorage: null,
 	gridReadOnlyColumns: [{
 			text: 'Вид документа',
 			dataIndex: 'documentType',
@@ -113,9 +101,6 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			}
 		}],
 	initComponent: function () {
-		//   this.docReadStore = Ext.create('storeplaces.store.DocsReadStore');
-		//  this.docsWriteStore = Ext.create('storeplaces.store.DocsWriteStore');
-		var x_ = 580;
 		var me = this;
 
 		me.tfStorageType = Ext.create('Ext.form.field.Text', {
@@ -149,10 +134,9 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			fieldLabel: 'Название организации',
 			disabled: true,
 			hidden: true,
-			width: me.fieldLabelWidth,
 			height: 46,
-			width : 530,
-					labelWidth: 140, //me.fieldLabelWidth,
+			width: 530,
+			labelWidth: 140, //me.fieldLabelWidth,
 			x: 5,
 			y: me.tfStorageType.y + me.tfStorageType.height + 5
 		});

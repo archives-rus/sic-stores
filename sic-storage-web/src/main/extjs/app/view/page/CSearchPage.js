@@ -1,5 +1,6 @@
 Ext.define('storeplaces.view.page.CSearchPage', {
 	extend: 'Ext.form.Panel',
+	alias: 'CSearchPage',
 	requires: [
 		'Ext.toolbar.Paging'
 	],
@@ -7,7 +8,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 	minWidth: 500,
 	xtype: 'searchpage',
 	width: '100%',
-	id: 'searchgpage',
+//	id: 'searchgpage',
 	searchFieldset: null,
 	initComponent: function () {
 		var me = this,
@@ -151,7 +152,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 			items: [tfNameOrg, cbTypeDoc, fcDate, cbArch, tfNumberFond]
 		});
 
-		var gridSearch = create('Ext.grid.Panel', {
+		me._grd = create('Ext.grid.Panel', {
 			store: storeId,
 			forceFit: true,
 			autoScroll: true,
@@ -191,12 +192,18 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 
 		var ResultsFieldset = create('StyledFieldSet', {
 			title: 'Результаты поиска',
-			items: [gridSearch]
+			items: [me._grd]
 		});
 		Ext.applyIf(me, {
 			items: [titlePage, toolBarSearch, me.searchFieldset, ResultsFieldset]
 		});
 
 		me.callParent(arguments);
+		me._gtb = me._grd.dockedItems.getAt(1);
+	},
+	reset: function() {
+		this.getForm().reset();
+		this._grd.store.removeAll();
+		this._gtb.onLoad();
 	}
 });

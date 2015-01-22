@@ -6,7 +6,7 @@ Ext.define('storeplaces.view.page.CLoginPage', {
     alias: 'widget.enterpage',
     width : '100%',
     cls:'main_bg',
-    id : 'enterpage',
+//    id : 'enterpage',
     initComponent : function() {
 
      var titlePage = Ext.create('Ext.form.Label', {

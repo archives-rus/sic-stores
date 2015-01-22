@@ -28,7 +28,6 @@ public class StrgOrganization implements HasId, HasUserInfo, JsonIn, JsonOut
     @Column(name = "ORGANIZATION_ID")
     private Long id;
 
-    @JsonExclude
     @OneToMany(mappedBy = "org", cascade = CascadeType.MERGE)
     @OrderBy("sortOrder")
     private List<StrgOrgName> names;

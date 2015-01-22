@@ -19,14 +19,14 @@ Ext.define('storeplaces.controller.SearchFormController', {
 				itemdblclick: function (thiss, record, item, index, e, eOpts) {
 					var id = record.get('orgId'),
 							form = thiss.up('form'),
-							main = form.up('container'),
 							pageSearch = gridSearchOrgSt.currentPage,
 							size = gridSearchOrgSt.pageSize,
 							cardNum = parseInt((size * (pageSearch - 1) + 1) + index);
 
-					storeplaces.searchQ = form.getForm().getValues();
-					main.removeAll();
-					var myOrgPage = create('storeplaces.view.page.COrganizationPageView');
+//					storeplaces.searchQ = form.getForm().getValues();
+
+					var myOrgPage = storeplaces.mainView.setPage('COrganizationPageView');
+					myOrgPage.clear();
 					myOrgPage.idCard = id;
 					var cardsStorePaging = getStore('CardsStore');
 					cardsStorePaging.getProxy().extraParams = {criteria: Ext.encode(me.searchCriteria)};
@@ -135,7 +135,6 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 						}
 					});
-					main.add(myOrgPage);
 				}
 			},
 			'searchpage  button': {
@@ -152,14 +151,11 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							prefix = nItems.getAt(0),
 							num = nItems.getAt(1),
 							suffix = nItems.getAt(2),
-							main = myPage.up('container');
+							main = storeplaces.mainView;
 
 					switch (btn.action) {
 						case 'clearSearchParm':
-							gridSearchOrgSt.removeAll();
-							main.removeAll();
-							var schPage = create('storeplaces.view.page.CSearchPage');
-							main.add(schPage);
+							myPage.reset();
 							break;
 						case 'backMain':
 							window.location = "/qq-web/";
@@ -172,11 +168,9 @@ Ext.define('storeplaces.controller.SearchFormController', {
 								}});
 							break;
 						case 'addOrg':
-							storeplaces.searchQ = myPage.getForm().getValues();
-							main.removeAll();
-							var newForm = create('COrganizationPage');
-							newForm.fromSearch();
-							main.add(newForm);
+							var p = main.setPage('COrganizationPage');
+							p.clear();
+							p.fromSearch();
 							break;
 						case 'srchBtn':
 							if (gridSearchOrgSt.getCount() !== 0)

@@ -15,18 +15,10 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	xtype: 'corgpage',
 	width: '100%',
 	cls: 'pad10-20',
-	areaFieldSets: null,
-	tfUser: null,
-	fundFieldset: null,
-	tfDateOfEdit: null,
-	orgStore: null,
-	gridNames: null,
-	gridToolBar: null,
 	initComponent: function () {
 		var me = this,
 				create = Ext.create;
 		me.orgStore = create('OrgNamesStore');
-//		me.orgStore.load();
 		var toolBar = create('Ext.toolbar.Toolbar', {
 			xtype: 'maintb',
 			items: [{
@@ -62,19 +54,16 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 					tooltipType: 'title',
 					componentCls: 'quitButton',
 					action: 'quit'
-				}],
+				}]
 		});
 		me.gridToolBar = create('Ext.toolbar.Toolbar', {
 			items: [create('Ext.Button', {
-					//text : '+',
 					action: 'namesGridAdd',
 					cls: 'addStr'
 				}), create('Ext.Button', {
-					//text : '^',
 					action: 'namesGridDown',
 					cls: 'upStr'
 				}), create('Ext.Button', {
-					//text : '˅',
 					action: 'namesGridUp',
 					cls: 'downStr'
 				})]
@@ -156,7 +145,6 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 			store: 'DocArchiveStore',
 			name: 'archiveStoreOrg',
 			editable: false,
-			// allowBlank : false,
 			queryMode: 'local',
 			displayField: 'name',
 			valueField: 'id',
@@ -177,14 +165,14 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		var taFundName = create('Ext.form.field.TextArea', {
 			fieldLabel: 'Название фонда',
 			name: 'fundName',
-			disabled: true,
+//			disabled: true,
 			height: 50,
 			width: 620,
 			labelWidth: 150
 		});
 		var tfDates = create('Ext.form.field.Text', {
 			fieldLabel: 'Крайние даты фонда',
-			disabled: true,
+//			disabled: true,
 			name: 'edgeDates',
 			width: 440,
 			labelWidth: 150
@@ -285,66 +273,75 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 		fieldSet.removeAll(true);
 
 		places.forEach(function (card) {
-			var placeCard = Ext.create('CStorePlace'),
-					cbAddr = placeCard.cbAddr,
-					tfAddr = placeCard.tfAddr,
-					tfPhone = placeCard.tfPhone,
-					cbStorageType = placeCard.cbStorageType,
-					taOrg = placeCard.taOrg,
-					nfCount = placeCard.nfCount,
-					yearInterval = placeCard.yearInterval,
-					archStrg = card.archStrg || null;
-
-			fieldSet.add(placeCard);
-
-			if (archStrg) {
-				placeCard.idArchStorage = archStrg.id;
-				if (!archStrg.archiveId) {
-					cbStorageType.setValue(2);
-					taOrg.setValue(card.orgName);
-					tfAddr.setValue(card.address);
-
-				} else {
-					cbStorageType.setValue(1);
-					placeCard.cbArchive.setValue(archStrg.archiveId);
-					cbAddr.setRawValue(card.address);
-				}
-			} else if (card.orgName) {
-				cbStorageType.setValue(2);
-				taOrg.setValue(card.orgName);
-				tfAddr.setValue(card.address);
-			}
-			placeCard.idPlace = card.id; // id места хранения документов
-			[tfPhone, nfCount, yearInterval].forEach(
-					function (v) {
-						v.setDisabled(false);
-					});
-
-			tfPhone.setValue(card.phone);
-			nfCount.setValue(card.documentCount);
-			yearInterval.setValue(card.beginYear, card.endYear);
-			placeCard.taDocsContent.setValue(card.contents);
-
-			Ext.Ajax.request({
-				url: 'servlet/QueryDocuments?mode=EDIT&storageId=' + card.id,
-				success: function (action) {
-					placeCard.docGrid.columns[1].editor = Ext.create(
-							'Ext.form.field.ComboBox', {
-								store: 'DocTypesStore',
-								valueField: 'id',
-								displayField: 'name',
-								blankText: 'Не выбран вид документа',
-								emptyText: 'Не выбран',
-								forceSelection: true,
-								validateOnChange: false
-							});
-					placeCard.docGrid.getStore().loadData(Ext.decode(action.responseText));
-				},
-				failure: function () {
-					Ext.msg.alert('Ошибка', 'Ошибка базы данных!');
-				}
-			});
+			fieldSet.add(Ext.create('CStorePlace', card));
 		});
+
+	},
+	clear: function () {
+		this.orgStore.removeAll();
+		this.placesFieldSet.removeAll();
+		this.placesFieldSet.add(Ext.create('CStorePlace'));
+		this.getForm().reset();
+	},
+	/**
+	 * Наполняет форму
+	 * @param {Object} data имеет вид:
+	 * 
+	 * 	- archiveId {Number}
+	 * 	- lastUpdateDate {String}
+	 * 	- notes {String}
+	 * 	- userName {String}
+	 * 	- businessTripsInfo {String}
+	 * 	- rewardsInfo {String}
+	 * 	- notes {String}
+	 * 	- names {Object[]} каждый объект содержит поля:
+	 * 		- fullName ...
+	 * 		
+	 * 	- fund {Object} содержит поля:
+	 * 	
+	 * 		- id {Number}	
+	 * 		- name {String}
+	 * 		- num {Number}
+	 * 		- prefix {Number}
+	 * 		- suffix {Number}
+	 * 		- dates {String}
+	 * 		
+	 * 	- storage {Object[]}
+	 * 			
+	 */
+	setData: function (data) {
+		var me = this,
+				areaFieldSets = me.areaFieldSets.items,
+				fundSet = me.fundFieldset.items,
+				fund = data.fund;
+		me.clear();
+
+		me.orgStore.loadData(data.names);
+
+		if (fund) {
+			var fundNumber = fundSet.getAt(2).items;
+
+			fundNumber.getAt(0).setValue(fund.prefix);
+			fundNumber.getAt(1).setValue(fund.num);
+			fundNumber.getAt(2).setValue(fund.suffix);
+
+			fundSet.getAt(1).setValue(fund.name);
+			fundSet.getAt(3).setValue(fund.dates);
+			me.idFund = data.fund.id;
+		}
+		fundSet.getAt(0).setValue(data.archiveId);
+
+		areaFieldSets.getAt(0).setValue(data.businessTripsInfo);
+		areaFieldSets.getAt(1).setValue(data.rewardsInfo);
+		areaFieldSets.getAt(2).setValue(data.notes);
+
+		me.tfUser.setValue(data.userName);
+		me.tfDateOfEdit.setValue(data.lastUpdateDate);
+
+		if (data.storage.length) {
+			me.setPlaces(data.storage);
+		}
+
 
 	}
 });

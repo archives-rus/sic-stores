@@ -3,7 +3,6 @@ Ext.define('storeplaces.Application', {
 	extend: 'Ext.app.Application',
 	requires: [
 		'storeplaces.view.Main',
-		'storeplaces.view.Buffer',
 		'storeplaces.view.lib.NumFond',
 		'storeplaces.view.lib.StyledFieldSet',
 		'storeplaces.store.DocArchiveStore',

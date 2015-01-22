@@ -6,6 +6,7 @@ import ru.insoft.archive.extcommons.json.JsonOut;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import ru.insoft.archive.sic_storage.model.table.StrgOrgName;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,6 +53,10 @@ public class VStrgOrgForView implements JsonOut
 
     @Column(name = "LAST_UPDATE_DATE")
     private Date lastUpdateDate;
+
+    @OneToMany(mappedBy = "org", fetch = FetchType.EAGER)
+    @OrderBy("sortOrder")
+    private List<StrgOrgName> names;
 
     public Long getId() {
         return id;
@@ -100,6 +105,14 @@ public class VStrgOrgForView implements JsonOut
     public void setStorage(List<VStrgPlaceOrg> storage) {
         this.storage = storage;
     }
+
+	public List<StrgOrgName> getNames() {
+		return names;
+	}
+
+	public void setNames(List<StrgOrgName> names) {
+		this.names = names;
+	}
 
     public String getBusinessTripsInfo() {
         return businessTripsInfo;

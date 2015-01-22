@@ -12,7 +12,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		'storeplaces.store.StoragePlaceStore',
 		'Ext.form.field.Number'
 	],
-	cbStorageType: null,
 	docsWriteStore: null,
 	addresStore: null,
 	tfAddr: null,
@@ -131,6 +130,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					}
 				}]
 		}],
+	constructor: function (data) {
+		if (data && !data.xtype)
+			this._data = data;
+		this.callParent();
+	},
 	initComponent: function () {
 		var x_ = 580, me = this,
 				createCmp = Ext.create,
@@ -166,7 +170,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			y: 25,
 			listeners: {
 				change: function (combo, v) {
-					var form = combo.up('storeplacecard').up('fieldset').up('form');
+					var form = storeplaces.mainView.pages.COrganizationPage;
 					if (v === 1) {
 						var value = form.fundFieldset.items.items[0].getValue();
 						if (value !== null)
@@ -176,11 +180,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 						me.taOrg.setVisible(false);
 						me.cbAddr.setVisible(true);
 						me.tfAddr.setVisible(false);
-						me.cbDocTypes.setDisabled(false);
-						me.nfCount.setDisabled(false);
-						me.cbAddr.setDisabled(false);
-						me.tfPhone.setDisabled(false);
-						me.yearInterval.setDisabled(false);
+//						me.cbDocTypes.setDisabled(false);
+//						me.nfCount.setDisabled(false);
+//						me.cbAddr.setDisabled(false);
+//						me.tfPhone.setDisabled(false);
+//						me.yearInterval.setDisabled(false);
 					} else if (v === 2) {
 						var org = form.gridNames.getStore().getAt(0);
 						if (!org) {
@@ -193,14 +197,14 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 						me.taOrg.setVisible(true);
 
 						me.tfAddr.setVisible(true);
-						me.tfAddr.setDisabled(false);
+//						me.tfAddr.setDisabled(false);
 
 						me.cbArchive.setVisible(false);
 						me.cbAddr.setVisible(false);
-						me.cbDocTypes.setDisabled(false);
-						me.nfCount.setDisabled(false);
-						me.tfPhone.setDisabled(false);
-						me.yearInterval.setDisabled(false);
+//						me.cbDocTypes.setDisabled(false);
+//						me.nfCount.setDisabled(false);
+//						me.tfPhone.setDisabled(false);
+//						me.yearInterval.setDisabled(false);
 					} else {
 						me.clear();
 					}
@@ -212,7 +216,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			store: 'DocTypesStore',
 			valueField: 'id',
 			displayField: 'name',
-			disabled: true,
+//			disabled: true,
 			blankText: 'Не выбран вид документа',
 			emptyText: 'Не выбран',
 			forceSelection: true,
@@ -276,7 +280,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			fieldLabel: 'Количество ед. хр.',
 			labelSeparator: '',
 			height: 22,
-			disabled: true,
+//			disabled: true,
 			width: 210,
 			labelWidth: 140, //me.fieldLabelWidth,
 			x: 5,
@@ -288,7 +292,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			fieldLabel: 'Адрес',
 			labelSeparator: '',
 			width: 490,
-			disabled: true,
+//			disabled: true,
 			hidden: true,
 			height: 22,
 			labelWidth: 100,
@@ -302,7 +306,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			editable: true,
 			queryMode: 'local',
 			displayField: 'address',
-			disabled: true,
+//			disabled: true,
 			valueField: 'id',
 			emptyText: 'Не выбрано',
 			width: 490,
@@ -323,7 +327,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		me.tfPhone = Ext.create('Ext.form.field.Text', {
 			name: 'phone',
 			fieldLabel: 'Телефон',
-			disabled: true,
+//			disabled: true,
 			height: 22,
 			width: 300,
 			labelSeparator: '',
@@ -334,7 +338,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.yearInterval = Ext.create('storeplaces.view.lib.YearInterval', {
 			fieldLabel: 'Годы',
-			disabled: true,
+//			disabled: true,
 			width: 310,
 			//labelWidth : me.fieldLabelWidth - 50,
 			labelWidth: 100,
@@ -385,18 +389,85 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		});
 
 		me.callParent(arguments);
+		me.fill();
 	},
 	clear: function () {
 		var me = this;
 		me.taOrg.hide();
 		me.cbArchive.hide();
-		me.nfCount.setDisabled(true);
-		me.cbDocTypes.setDisabled(true);
-		me.tfPhone.setDisabled(true);
-		me.yearInterval.setDisabled(true);
+//		me.nfCount.setDisabled(true);
+//		me.cbDocTypes.setDisabled(true);
+//		me.tfPhone.setDisabled(true);
+//		me.yearInterval.setDisabled(true);
 		me.cbAddr.show();
-		me.cbAddr.setDisabled(true);
+//		me.cbAddr.setDisabled(true);
 		me.tfAddr.hide();
-		me.tfAddr.setDisabled(true);
+//		me.tfAddr.setDisabled(true);
+	},
+	/**
+	 * Наполняет карточку данными, если они есть
+	 * data {Object} содержит поля:
+	 * 	- address {String}
+	 *  - contents {String}
+	 *  - orgName {String}
+	 *  - phone {String}
+	 *  - documentCount {Number}
+	 *  - beginYear {Number}
+	 *  - endYear {Number}
+	 * 	- id {Number}
+	 * 	- archStrg {Object} содержит поля:
+	 * 			
+	 * 	  - address {String}
+	 * 	  - archiveId {Number}
+	 * 	  - id {Number}
+	 */
+	fill: function () {
+		if (this._data) {
+			var me = this,
+					data = me._data,
+					archStrg = data.archStrg;
+			if (archStrg) {
+				me.idArchStorage = archStrg.id;
+				if (!archStrg.archiveId) {
+					me.cbStorageType.setValue(2);
+					me.taOrg.setValue(data.orgName);
+					me.tfAddr.setValue(data.address);
+				} else {
+					me.cbStorageType.setValue(1);
+					me.cbArchive.setValue(archStrg.archiveId);
+					me.cbAddr.setRawValue(data.address);
+				}
+			} else if (data.orgName) {
+				me.cbStorageType.setValue(2);
+				me.taOrg.setValue(data.orgName);
+				me.tfAddr.setValue(data.address);
+			}
+			me.idPlace = data.id;
+
+			me.tfPhone.setValue(data.phone);
+			me.nfCount.setValue(data.documentCount);
+			me.yearInterval.setValue(data.beginYear, data.endYear);
+			me.taDocsContent.setValue(data.contents);
+
+			Ext.Ajax.request({
+				url: 'servlet/QueryDocuments?mode=EDIT&storageId=' + data.id,
+				success: function (action) {
+					me.docGrid.columns[1].editor = Ext.create(
+							'Ext.form.field.ComboBox', {
+								store: 'DocTypesStore',
+								valueField: 'id',
+								displayField: 'name',
+								blankText: 'Не выбран вид документа',
+								emptyText: 'Не выбран',
+								forceSelection: true,
+								validateOnChange: false
+							});
+					me.docGrid.getStore().loadData(Ext.decode(action.responseText));
+				},
+				failure: function () {
+					Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+				}
+			});
+		}
 	}
 });

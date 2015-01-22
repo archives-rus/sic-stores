@@ -3,40 +3,39 @@ Ext.define('storeplaces.view.Main', {
 	requires: [
 		'Ext.tab.Panel',
 		'Ext.layout.container.Border',
+		'Ext.layout.container.Card',
 		'Ext.DomHelper',
 		'Ext.String'
 	],
-	//height:'100%',
-	//height:200,
 	autoScroll: true,
 	xtype: 'app-main',
-//    items:[Ext.create('storeplaces.view.page.CLoginPage')]
+	layout: 'card',
+	pages: {},
 	initComponent: function () {
-		var page = Ext.create('storeplaces.view.page.CSearchPage'),
+		var me = this,
 				store = Ext.create('Ext.data.Store', {
 					proxy: {
 						type: 'localstorage',
 						id: 'user'
 					},
-					fields: [
-						{name: 'id', type: 'string'},
+					fields: [{name: 'id', type: 'string'},
 						{name: 'userId', type: 'int'},
 						{name: 'name', type: 'string'},
 						{name: 'access', type: 'auto'},
 						{name: 'organization', type: 'int'}
 					]});
+		me.callParent();
+		storeplaces.userStore = store;
+		me._lt = me.getLayout();
+
 		store.load({callback: function () {
 				var userName = store.getById('current').get('name');
 				storeplaces.userName = userName;
-				page.down('toolbar').down('label').setText(userName);
+				me.setPage('CSearchPage');
 				Ext.onReady(function () {
 					storeplaces.alert('Доброго времени суток', userName);
 				});
 			}});
-		this.items = [page];
-		this.callParent();
-
-		storeplaces.userStore = store;
 
 	},
 	constructor: function () {
@@ -52,21 +51,19 @@ Ext.define('storeplaces.view.Main', {
 		};
 		this.callParent();
 	},
-	setPage: function(page, save) {
-		if (save) {
-			this.items.getAt(0).hide();
-		} else {
-			this.removeAll(true);
+	setPage: function (classOfPage) {
+		var me = this,
+				pages = me.pages;
+		if (!pages[classOfPage]) {
+			pages[classOfPage] = Ext.create(classOfPage);
+			me.add(pages[classOfPage]);
 		}
-		this.insert(0, page);
+		me._prv = me._lt.getActiveItem();
+		return me._lt.setActiveItem(pages[classOfPage]);
 	},
-	returnPage: function() {
-		if (this.items.getCount() < 2) {
-			console.log("Not found previous page");
-			return;
-		}	
-		this.remove(this.getAt(0), true);
-		this.getAt(0).show();
+	setPrev: function () {
+		if (this._prv)
+			return this._lt.setActiveItem(this._prv);
 	}
 });
 

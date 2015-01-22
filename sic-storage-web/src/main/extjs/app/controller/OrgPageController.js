@@ -14,9 +14,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 		controller.control({
 			button: {
 				click: function myfn(btn, eventObj) {
-					var allViews = controller.getViewport().items,
-							mainContainer = allViews.getAt(0),
-							hiddenContainer = allViews.getAt(1);
+					var mainContainer = storeplaces.mainView;
 					if (btn.action === 'srchFund') {
 						var numFund = btn.up('fieldcontainer'),
 								fs = numFund.up('fieldset');
@@ -104,8 +102,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								},
 								success: function (action) {
 									var success = Ext.decode(action.responseText).success;
-									mainContainer.removeAll();
-									mainContainer.add(Ext.create('storeplaces.view.page.COrganizationPage'));
+									mainContainer.setPage('COrganizationPage');
 									msg.alert('Внимание', 'Организация удалена!');
 								},
 								failure: function () {
@@ -132,12 +129,9 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									if (cardsStoreAll.getCount() < 2) {
 										if (cardsStoreAll.getCount() === 1)
 											Ext.getStore('GridSearchOrgStore').reload();
-										mainContainer.removeAll();
-										hiddenContainer.removeAll();
-										var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
-										oldSrchPage.getForm().setValues(storeplaces.searchQ);
+										mainContainer.setPage('CSearchPage');
 										// oldSrchPage.items.items[1].items.items[0].fireEvent('click');
-										mainContainer.add(oldSrchPage);
+
 									} else if (thisPage === 1) {
 										cardsStore.loadPage(1);
 										var id = cardsStoreAll.getAt(1).get('id');
@@ -159,16 +153,17 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								}
 							});
 							break;
+
 						case 'orgCardAdd':
-							var newOrgPage = Ext.create('COrganizationPage');
-							newOrgPage.fromView();
-							mainContainer.setPage(newOrgPage, true);
+							var p = mainContainer.setPage('COrganizationPage');
+							p.clear();
+							p.fromView();
 							break;
+
 						case 'backSrchResult':
-							var oldSrchPage = Ext.create('storeplaces.view.page.CSearchPage');
-							oldSrchPage.getForm().setValues(storeplaces.searchQ);
-							mainContainer.setPage(oldSrchPage);
+							mainContainer.setPage('CSearchPage');
 							break;
+
 						case 'orgCardSave':
 							var errMessages = [],
 									fundNumber = form.fundFieldset.items.getAt(2).items;
@@ -332,15 +327,12 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								}
 							});
 							break;
+
 						case 'orgCardCancel':
-							mainContainer.removeAll();
-							mainContainer.add(hiddenContainer.items.getAt(0));
-							hiddenContainer.removeAll(false);
+							mainContainer.setPrev();
 							break;
 
 						case 'orgCardView':
-							hiddenContainer.removeAll();
-							hiddenContainer.add(form);
 							var values = form.getForm().getValues();
 							var idFund = form.idFund;
 							var idCard = form.idCard;
@@ -358,18 +350,17 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								var card = form.placesFieldSet.items.items[i];
 								massCard.push(card);
 							}
-							mainContainer.removeAll();
-							var OrgViewPage = Ext.create('COrganizationPageView');
+							var OrgViewPage = mainContainer.setPage('COrganizationPageView');
+							OrgViewPage.clear();
 							OrgViewPage.getForm().setValues(values);
 							OrgViewPage.idFund = idFund;
 							OrgViewPage.idCard = idCard;
 							OrgViewPage.tfUser.setValue(nameUser);
 							OrgViewPage.tfDateOfEdit.setValue(editDate);
 							OrgViewPage.orgStore.loadData(oldOrgStoreData);
-							for (var j = 0; j < massCard.length; j++)
-							{
+							for (var j = 0; j < massCard.length; j++) {
 								var oldCard = massCard[j];
-								var newCard = Ext.create('storeplaces.view.card.CStorePlaceView');
+								var newCard = Ext.create('CStorePlaceView');
 
 								OrgViewPage.placesFieldSet.add(newCard);
 
@@ -414,72 +405,30 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							var fundNumPage = OrgViewPage.fundFieldset.items.items[2];
 							archivePage.setRawValue(archive);
 							fundNumPage.setRawValue(fundNum);
-							mainContainer.add(OrgViewPage);
 							break;
 
 						case 'orgCardEdit':
-							hiddenContainer.removeAll();
-							hiddenContainer.add(mainContainer.items.getAt(0));
-							var id = form.idCard;
-							mainContainer.removeAll(false);
-							var editOrgPage = Ext.create('COrganizationPage');
+							var id = form.idCard,
+									editOrgPage = mainContainer.setPage('COrganizationPage');
+							editOrgPage.fromView();
 							editOrgPage.idCard = id;
-							Ext.Ajax.request({
-								url: 'servlet/QueryOrgNames?id=' + id,
-								success: function (action) {
-									editOrgPage.orgStore.loadData(
-											Ext.decode(action.responseText));
-								},
-								failure: function () {
-									msg.alert('Ошибка', 'Ошибка базы данных!');
-								}
-							});
+
 							Ext.Ajax.request({
 								url: 'servlet/QueryOrganization?mode=EDIT&id=' + id,
 								success: function (action) {
-									var dataArray = Ext.decode(action.responseText),
-											fund = dataArray.fund,
-											fundFieldset = editOrgPage.fundFieldset.items,
-											myFundName = fundFieldset.items[1],
-											myDates = fundFieldset.items[3],
-											areaFieldSets = editOrgPage.areaFieldSets.items;
-
-									if (fund) {
-										editOrgPage.idFund = fund.id;
-										fundFieldset.items[2].items.items[1].setValue(fund.num);
-										myFundName.setValue(fund.name);
-										myDates.setValue(fund.dates);
-										fundFieldset.items[2].items.items[0].setValue(fund.prefix);
-										fundFieldset.items[2].items.items[2].setValue(fund.suffix);
-									}
-
-									myFundName.setDisabled(false);
-									myDates.setDisabled(false);
-
-									fundFieldset.items[0].setValue(dataArray.archiveId);
-									areaFieldSets.items[0].setValue(dataArray.businessTripsInfo);
-									areaFieldSets.items[1].setValue(dataArray.rewardsInfo);
-									areaFieldSets.items[2].setValue(dataArray.notes);
-									editOrgPage.tfUser.setValue(dataArray.userName);
-									editOrgPage.tfDateOfEdit.setValue(dataArray.lastUpdateDate);
-
-
-									if (dataArray.storage.length) {
-										editOrgPage.setPlaces(dataArray.storage);
-									}
-
+									editOrgPage.setData(Ext.decode(action.responseText));
 								},
 								failure: function () {
 									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
-							mainContainer.add(editOrgPage);
 							break;
+
 						case 'srchFund':
 							var archiveId = fs.items.items[0].getValue(),
 									numItems = numFund.items,
 									num = numItems.getAt(1).getRawValue();
-							if (archiveId == '' || archiveId == null || num == '') {
+							if (!(archiveId && num)) {
 								msg.alert('Внимание', 'Для поиска необходимо ввсети архив и номер фонда');
 								break;
 							}
@@ -498,7 +447,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								},
 								success: function (action) {
 									var answer = Ext.decode(action.responseText);
-									if (answer.found == false) {
+									if (answer.found === false) {
 										storeplaces.alert('Внимание!', 'Фонд не найден!');
 										nameFund.enable();
 										datesFund.enable();

@@ -13,11 +13,9 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 	},
 	moveNext: function mvN(id) {
 		var me = this,
-				form = me.getPage(),
-				main = form.up('container');
-		main.removeAll();
+				myOrgPage = storeplaces.mainView.setPage('COrganizationPageView');
+		myOrgPage.clear();
 
-		var myOrgPage = Ext.create('storeplaces.view.page.COrganizationPageView');
 		myOrgPage.idCard = id;
 
 		me.activeReqs.forEach(function (req) {
@@ -83,7 +81,7 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 							idPlace = strg.id,
 							storageTypePlace = strg.storageType;
 
-					var placeCard = Ext.create('storeplaces.view.card.CStorePlaceView');
+					var placeCard = Ext.create('CStorePlaceView');
 					placeCard.idPlace = idPlace;
 					myOrgPage.placesFieldSet.add(placeCard);
 					if (storageTypePlace == 'В организации') {
@@ -127,7 +125,6 @@ Ext.define('storeplaces.controller.OrgPageFunc', {
 					Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 			}
 		}));
-		main.add(myOrgPage);
 	}
 });
 

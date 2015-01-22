@@ -10,21 +10,13 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 	minWidth: 1024,
 	minHeight: 500,
 	width: '100%',
-	id: 'orgpageview',
+//	id: 'orgpageview',
 	cls: 'pad10-20',
 	idFund: null,
 	idCard: null,
 	cardNum: null,
 	searchCriteria: null,
-	placesFieldSet: null,
-	areaFieldSets: null,
-	fundFieldset: null,
-	orgStore: null,
-	gridNames: null,
-	cardToolBar: null,
 	gridToolBar: null,
-	tfDateOfEdit: null,
-	tfUser: null,
 	initComponent: function () {
 		var me = this;
 		me.orgStore = Ext.create('OrgNamesStore');
@@ -313,5 +305,8 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 
 		me.callParent(arguments);
 
+	},
+	clear: function() {
+		console.log("clear " + this.$className);
 	}
 });
