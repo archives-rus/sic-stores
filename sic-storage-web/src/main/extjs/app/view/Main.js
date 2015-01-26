@@ -59,11 +59,17 @@ Ext.define('storeplaces.view.Main', {
 			me.add(pages[classOfPage]);
 		}
 		me._prv = me._lt.getActiveItem();
-		return me._lt.setActiveItem(pages[classOfPage]);
+		me._lt.setActiveItem(pages[classOfPage]);
+		return pages[classOfPage];
 	},
 	setPrev: function () {
-		if (this._prv)
-			return this._lt.setActiveItem(this._prv);
+		if (this._prv) {
+			this._lt.setActiveItem(this._prv);
+			return this._prv;
+		}
+	},
+	getCurrentPage: function() {
+		return this._lt.getActiveItem();
 	}
 });
 

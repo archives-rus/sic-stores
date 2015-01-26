@@ -100,6 +100,11 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 				allowBlank: false
 			}
 		}],
+	constructor: function (data) {
+		if (data && !data.xtype)
+			this._data = data;
+		this.callParent();
+	},
 	initComponent: function () {
 		var me = this;
 
@@ -258,6 +263,48 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 				me.docGrid, me.taDocsContent]
 		});
 
-		me.callParent(arguments);
+		me.callParent();
+		me.fill();
+	},
+	fill: function () {
+		if (this._data) {
+			var me = this, 
+					strg = me._data,
+					idPlace = strg.id,
+					storageTypePlace = strg.storageType;
+
+			me.idPlace = idPlace;
+			if (storageTypePlace === 'В организации') {
+				me.taOrg.setValue(strg.orgName);
+				me.tfArchive.setVisible(false);
+				me.taOrg.setVisible(true);
+			} else {
+				me.taOrg.setVisible(false);
+				me.tfArchive.setValue(strg.archive);
+				me.tfArchive.setVisible(true);
+			}
+
+			me.tfStorageType.setValue(storageTypePlace);
+			me.tfAddr.setValue(strg.address);
+			me.tfPhone.setValue(strg.phone);
+			me.nfCount.setValue(strg.documentCount);
+			me.yearInterval.items.items[1].setValue(strg.beginYear);
+			me.yearInterval.items.items[2].setValue(strg.endYear);
+			me.taDocsContent.setValue(strg.contents);
+			Ext.Ajax.request({
+				url: 'servlet/QueryDocuments',
+				params: {
+					storageId: idPlace,
+					mode: 'VIEW'
+				},
+				success: function (action) {
+					me.docGrid.getStore().loadData(Ext.decode(action.responseText));
+				},
+				failure: function (req) {
+					if (!req.aborted)
+						Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
+				}
+			});
+		}
 	}
 });

@@ -24,7 +24,6 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 			width: 100,
 			fieldLabel: 'с',
 			labelWidth: 20,
-			disabled: true,
 			margin: '0 0px 0 -10px',
 			height: 22
 		}));
@@ -33,18 +32,12 @@ Ext.define('storeplaces.view.lib.YearInterval', {
 		items.push(me.tfTo = Ext.create('Ext.form.field.Text', {
 			width: 110,
 			fieldLabel: 'по',
-			disabled: true,
 			labelWidth: 30
 		}));
 
 
 		Ext.applyIf(me, {items: items});
 		me.callParent(arguments);
-	},
-	setDisabled: function (stat) {
-		this.tfFrom.setDisabled(stat);
-		this.tfTo.setDisabled(stat);
-		this.callParent([stat]);
 	},
 	setValue: function (value1, value2) {
 		this.tfFrom.setValue(value1);

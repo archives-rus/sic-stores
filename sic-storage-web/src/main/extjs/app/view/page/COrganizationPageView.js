@@ -10,7 +10,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 	minWidth: 1024,
 	minHeight: 500,
 	width: '100%',
-//	id: 'orgpageview',
+	id: 'orgpageview',
 	cls: 'pad10-20',
 	idFund: null,
 	idCard: null,
@@ -23,53 +23,40 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 		var toolBar = Ext.create('Ext.toolbar.Toolbar', {
 			xtype: 'maintb',
 			items: [{
-					xtype: 'button',
 					text: 'Добавить',
 					cls: "btnAdd",
 					height: 25,
 					action: 'orgCardAdd'
-				},
-				{
-					xtype: 'button',
+				}, {
 					text: 'Редактировать',
 					height: 25,
 					cls: 'btnEdit',
 					action: 'orgCardEdit'
-				},
-				{
-					xtype: 'button',
+				}, {
 					text: 'Просмотр',
 					height: 25,
 					hidden: true,
 					cls: 'btnView',
 					action: 'orgCardView'
-				},
-				{
-					xtype: 'button',
+				}, {
 					text: 'Сохранить',
 					hidden: true,
 					height: 25,
 					cls: 'btnSave',
 					action: 'orgCardSave'
-				},
-				{
-					xtype: 'button',
+				}, {
 					text: 'Отменить',
 					hidden: true,
 					height: 25,
 					cls: 'btnCancel',
 					action: 'orgCardCancel'
-				},
-				{
-					xtype: 'button',
+				}, {
 					text: 'Удалить',
 					hidden: true,
 					height: 25,
 					cls: 'btnDelete',
 					action: 'orgCardDeleteView'
-				},
-				{
-					xtype: 'button',
+				}, {
 					text: 'Вернуться к результатам поиска',
 					height: 25,
 					cls: 'backToSrch',
@@ -80,14 +67,11 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 					text: storeplaces.userName,
 					baseCls: 'loginedUserText',
 					flex: 0
-				},
-				Ext.create('Ext.toolbar.Separator', {
+				}, {
+					xtype: 'tbseparator',
 					html: '|',
-					//id : 'vertSeparator',
 					baseCls: 'vertSeparator'
-				}),
-				{
-					xtype: 'button',
+				}, {
 					text: 'Выход',
 					tooltip: 'Выход из системы',
 					tooltipType: 'title',
@@ -97,7 +81,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 		});
 
 		var cardStore = Ext.getStore('CardsStore'),
-				orgPageFunc = window.app.getController('storeplaces.controller.OrgPageFunc');
+				orgPageFunc = window.app.getController('OrgPageFunc');
 
 		/**
 		 * Загружает страницу определенного номера
@@ -185,10 +169,9 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 					hidden: true,
 					hideable: false
 				}]
-		})
+		});
 
-		var renamesFieldset = Ext.create('StyledFieldSet',
-				{
+		var renamesFieldset = Ext.create('StyledFieldSet', {
 					title: 'Наименование организации и её переименования',
 					items: [me.gridNames]
 				});
@@ -303,10 +286,46 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 				me.placesFieldSet, me.areaFieldSets, userDate]
 		});
 
-		me.callParent(arguments);
+		me.callParent();
 
 	},
-	clear: function() {
-		console.log("clear " + this.$className);
+	setPlaces: function (places) {
+		var fieldSet = this.placesFieldSet;
+		fieldSet.removeAll(true);
+
+		places.forEach(function (card) {
+			fieldSet.add(Ext.create('CStorePlaceView', card));
+		});
+
+	},
+	clear: function () {
+		var me = this;
+		me.orgStore.removeAll();
+		me.placesFieldSet.removeAll();
+		me.placesFieldSet.add(Ext.create('CStorePlaceView'));
+		me.getForm().reset();
+//		me.idFund = me.idCard = null;
+	},
+	setData: function (data) {
+		var me = this,
+				areaFieldSets = me.areaFieldSets.items,
+				fundSet = me.fundFieldset.items;
+		me.clear();
+
+		me.orgStore.loadData(data.names);
+
+		fundSet.getAt(0).setValue(data.archive);
+		fundSet.getAt(1).setValue(data.fundName);
+		fundSet.getAt(2).setValue(data.fund);
+		fundSet.getAt(3).setValue(data.edgeDates);
+		areaFieldSets.getAt(0).setValue(data.businessTripsInfo);
+		areaFieldSets.getAt(1).setValue(data.rewardsInfo);
+		areaFieldSets.getAt(2).setValue(data.notes);
+		me.tfUser.setValue(data.userName);
+		me.tfDateOfEdit.setValue(data.lastUpdateDate);
+
+		if (data.storage.length) {
+			me.setPlaces(data.storage);
+		}
 	}
 });

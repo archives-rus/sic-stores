@@ -12,6 +12,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 	minHeight: 500,
 	idFund: null,
 	idCard: null,
+	id: 'orgpage',
 	xtype: 'corgpage',
 	width: '100%',
 	cls: 'pad10-20',
@@ -278,10 +279,12 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 
 	},
 	clear: function () {
-		this.orgStore.removeAll();
-		this.placesFieldSet.removeAll();
-		this.placesFieldSet.add(Ext.create('CStorePlace'));
-		this.getForm().reset();
+		var me = this;
+		me.orgStore.removeAll();
+		me.placesFieldSet.removeAll();
+		me.placesFieldSet.add(Ext.create('CStorePlace'));
+		me.getForm().reset();
+//		me.idFund = me.idCard = null;
 	},
 	/**
 	 * Наполняет форму

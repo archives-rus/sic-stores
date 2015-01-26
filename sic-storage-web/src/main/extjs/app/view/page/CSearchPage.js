@@ -8,7 +8,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 	minWidth: 500,
 	xtype: 'searchpage',
 	width: '100%',
-//	id: 'searchgpage',
+	id: 'searchgpage',
 	searchFieldset: null,
 	initComponent: function () {
 		var me = this,

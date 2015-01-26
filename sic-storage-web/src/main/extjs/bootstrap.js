@@ -915,7 +915,6 @@ Ext.ClassManager.addNameAlternateMappings({
   "storeplaces.store.OrgNamesStore": [],
   "storeplaces.store.StoragePlaceStore": [],
   "storeplaces.store.StorageTypeStore": [],
-  "storeplaces.view.Buffer": [],
   "storeplaces.view.Main": [],
   "storeplaces.view.Viewport": [],
   "storeplaces.view.card.CStorePlace": [],
@@ -1936,7 +1935,9 @@ Ext.ClassManager.addNameAliasMappings({
   "storeplaces.Application": [],
   "storeplaces.controller.EnterFormController": [],
   "storeplaces.controller.OrgPageController": [],
-  "storeplaces.controller.OrgPageFunc": [],
+  "storeplaces.controller.OrgPageFunc": [
+    "OrgPageFunc"
+  ],
   "storeplaces.controller.SearchFormController": [],
   "storeplaces.controller.StorePlaceCardController": [],
   "storeplaces.model.DocTableEntryRead": [],
@@ -1957,29 +1958,35 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "storeplaces.store.StoragePlaceStore": [],
   "storeplaces.store.StorageTypeStore": [],
-  "storeplaces.view.Buffer": [
-    "widget.buffer"
-  ],
   "storeplaces.view.Main": [
     "widget.app-main"
   ],
   "storeplaces.view.Viewport": [],
   "storeplaces.view.card.CStorePlace": [
+    "CStorePlace",
     "widget.storeplacecard"
   ],
-  "storeplaces.view.card.CStorePlaceView": [],
+  "storeplaces.view.card.CStorePlaceView": [
+    "CStorePlaceView"
+  ],
   "storeplaces.view.lib.NumFond": [],
-  "storeplaces.view.lib.StyledFieldSet": [],
+  "storeplaces.view.lib.StyledFieldSet": [
+    "StyledFieldSet"
+  ],
   "storeplaces.view.lib.YearInterval": [],
   "storeplaces.view.page.CLoginPage": [
     "widget.centerpage",
     "widget.enterpage"
   ],
   "storeplaces.view.page.COrganizationPage": [
+    "COrganizationPage",
     "widget.corgpage"
   ],
-  "storeplaces.view.page.COrganizationPageView": [],
+  "storeplaces.view.page.COrganizationPageView": [
+    "COrganizationPageView"
+  ],
   "storeplaces.view.page.CSearchPage": [
+    "CSearchPage",
     "widget.searchpage"
   ]
 });

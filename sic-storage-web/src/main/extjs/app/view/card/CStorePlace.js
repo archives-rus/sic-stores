@@ -12,12 +12,10 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		'storeplaces.store.StoragePlaceStore',
 		'Ext.form.field.Number'
 	],
-	docsWriteStore: null,
 	addresStore: null,
 	tfAddr: null,
 	tfPhone: null,
 	taOrg: null,
-	nfCount: null,
 	taDocsContent: null,
 	cbAddr: null,
 	yearInterval: null,
@@ -64,7 +62,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			text: 'Вид документа',
 			width: '60%',
 			dataIndex: 'documentTypeId',
-			editor: Ext.create('Ext.form.field.ComboBox', {
+			editor:  {
+				xtype: 'combobox',
 				store: 'DocTypesStore',
 				valueField: 'id',
 				displayField: 'name',
@@ -72,12 +71,12 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				emptyText: 'Не выбран',
 				forceSelection: true,
 				validateOnChange: false
-			}),
+			},
 			renderer: function (value, store) {
 				var editorComboStore = Ext.getStore('DocTypesStore');
 				for (var i = 0; i < editorComboStore.getCount(); i++) {
 					var obj = editorComboStore.getAt(i);
-					if (obj.data.id == value) {
+					if (obj.data.id === value) {
 						return obj.data.name;
 					}
 				}
@@ -136,12 +135,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		this.callParent();
 	},
 	initComponent: function () {
-		var x_ = 580, me = this,
+		var me = this,
 				createCmp = Ext.create,
 				addresses = createCmp('Ext.util.MixedCollection');
 		me.docsWriteStore = createCmp('storeplaces.store.DocsWriteStore');
-		var closeButton = createCmp('Ext.Button', {
-			//text : 'X',
+		var closeButton = createCmp('Ext.button.Button', {
 			x: '98%',
 			y: 0,
 			height: 25,
@@ -180,11 +178,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 						me.taOrg.setVisible(false);
 						me.cbAddr.setVisible(true);
 						me.tfAddr.setVisible(false);
-//						me.cbDocTypes.setDisabled(false);
-//						me.nfCount.setDisabled(false);
-//						me.cbAddr.setDisabled(false);
-//						me.tfPhone.setDisabled(false);
-//						me.yearInterval.setDisabled(false);
 					} else if (v === 2) {
 						var org = form.gridNames.getStore().getAt(0);
 						if (!org) {
@@ -197,14 +190,9 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 						me.taOrg.setVisible(true);
 
 						me.tfAddr.setVisible(true);
-//						me.tfAddr.setDisabled(false);
 
 						me.cbArchive.setVisible(false);
 						me.cbAddr.setVisible(false);
-//						me.cbDocTypes.setDisabled(false);
-//						me.nfCount.setDisabled(false);
-//						me.tfPhone.setDisabled(false);
-//						me.yearInterval.setDisabled(false);
 					} else {
 						me.clear();
 					}
@@ -216,7 +204,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			store: 'DocTypesStore',
 			valueField: 'id',
 			displayField: 'name',
-//			disabled: true,
 			blankText: 'Не выбран вид документа',
 			emptyText: 'Не выбран',
 			forceSelection: true,
@@ -235,13 +222,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			y: me.cbStorageType.y + me.cbStorageType.height + 5
 		});
 
-
 		me.cbArchive = createCmp('Ext.form.ComboBox', {
 			fieldLabel: 'Архив',
 			store: 'DocArchiveStore',
 			name: 'archiveStoreCard',
 			editable: false,
-			// allowBlank : false,
 			queryMode: 'local',
 			displayField: 'name',
 			valueField: 'id',
@@ -264,7 +249,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 									addresses.add(value, d);
 									me.addressStore.loadData(d);
 								},
-								failure: function (action) {
+								failure: function () {
 									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
@@ -280,7 +265,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			fieldLabel: 'Количество ед. хр.',
 			labelSeparator: '',
 			height: 22,
-//			disabled: true,
 			width: 210,
 			labelWidth: 140, //me.fieldLabelWidth,
 			x: 5,
@@ -292,7 +276,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			fieldLabel: 'Адрес',
 			labelSeparator: '',
 			width: 490,
-//			disabled: true,
 			hidden: true,
 			height: 22,
 			labelWidth: 100,
@@ -306,7 +289,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			editable: true,
 			queryMode: 'local',
 			displayField: 'address',
-//			disabled: true,
 			valueField: 'id',
 			emptyText: 'Не выбрано',
 			width: 490,
@@ -327,7 +309,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		me.tfPhone = Ext.create('Ext.form.field.Text', {
 			name: 'phone',
 			fieldLabel: 'Телефон',
-//			disabled: true,
 			height: 22,
 			width: 300,
 			labelSeparator: '',
@@ -338,7 +319,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.yearInterval = Ext.create('storeplaces.view.lib.YearInterval', {
 			fieldLabel: 'Годы',
-//			disabled: true,
 			width: 310,
 			//labelWidth : me.fieldLabelWidth - 50,
 			labelWidth: 100,
@@ -348,15 +328,11 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 
 		me.docGridToolBar = Ext.create('Ext.toolbar.Toolbar', {
 			items: [Ext.create('Ext.Button', {
-					//text : 'Добавить',
 					action: 'addDocRow',
 					cls: 'addStr'
 				})]
 		});
 
-		// var cellEditor = Ext.create('Ext.grid.plugin.CellEditing', {
-		// clicksToEdit : 2
-		// });
 
 		me.docGrid = Ext.create('Ext.grid.Panel', {
 			store: me.docsWriteStore,
@@ -375,7 +351,6 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			//labelWidth : me.fieldLabelWidth,
 			labelWidth: 140,
 			fieldLabel: 'Состав документов',
-//			disabled: true,
 			height: 40,
 			y: me.docGrid.y + me.docGrid.height + 5,
 			x: 5,
@@ -395,14 +370,8 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 		var me = this;
 		me.taOrg.hide();
 		me.cbArchive.hide();
-//		me.nfCount.setDisabled(true);
-//		me.cbDocTypes.setDisabled(true);
-//		me.tfPhone.setDisabled(true);
-//		me.yearInterval.setDisabled(true);
 		me.cbAddr.show();
-//		me.cbAddr.setDisabled(true);
 		me.tfAddr.hide();
-//		me.tfAddr.setDisabled(true);
 	},
 	/**
 	 * Наполняет карточку данными, если они есть
@@ -469,5 +438,24 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 				}
 			});
 		}
+	},
+	getErrors: function (errors) {
+		var me = this,
+				address;
+		switch (me.cbStorageType.getValue()) {
+			case 1:
+				address = me.cbAddr.getRawValue();
+				break;
+			case 2:
+				if (!me.taOrg.getValue())
+					errors.push('заполнить название организации места хранения');
+				address = me.tfAddr.getValue();
+				break;
+			default:
+				errors.push('выбрать место хранения');
+				return;
+		}
+		if (!address)
+			errors.push('выбрать / заполнить адрес места хранения');
 	}
 });

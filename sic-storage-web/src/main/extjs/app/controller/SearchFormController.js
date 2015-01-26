@@ -31,20 +31,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 					var cardsStorePaging = getStore('CardsStore');
 					cardsStorePaging.getProxy().extraParams = {criteria: Ext.encode(me.searchCriteria)};
 					cardsStorePaging.loadPage(cardNum);
-					Ext.Ajax.request({
-						url: 'servlet/QueryOrgNames',
-						params: {
-							id: id
-						},
-						success: function (action) {
-							var massStore = decode(action.responseText);
-							myOrgPage.orgStore.loadData(massStore);
 
-						},
-						failure: function () {
-							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
-						}
-					});
 					Ext.Ajax.request({
 						url: 'servlet/QueryOrganization',
 						params: {
@@ -52,85 +39,8 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							mode: 'VIEW'
 						},
 						success: function (action) {
-							var dataArray = decode(action.responseText),
-									archive = dataArray.archive,
-									fund = dataArray.fund,
-									fundName = dataArray.fundName,
-									edgeDates = dataArray.edgeDates,
-									storage = dataArray.storage,
-									businessTripsInfo = dataArray.businessTripsInfo,
-									rewardsInfo = dataArray.rewardsInfo,
-									notes = dataArray.notes,
-									userName = dataArray.userName,
-									lastUpdateDate = dataArray.lastUpdateDate;
-
-							var myArchive = myOrgPage.fundFieldset.items.items[0];
-							var myFundName = myOrgPage.fundFieldset.items.items[1];
-							var myFundNum = myOrgPage.fundFieldset.items.items[2];
-							var myDates = myOrgPage.fundFieldset.items.items[3];
-							var myBusinessTripsInfo = myOrgPage.areaFieldSets.items.items[0];
-							var myRewardsInfo = myOrgPage.areaFieldSets.items.items[1];
-							var myNotes = myOrgPage.areaFieldSets.items.items[2];
-							var myUserName = myOrgPage.tfUser;
-							var myLastUpdateDate = myOrgPage.tfDateOfEdit;
-
-							myFundName.setValue(fundName);
-							myFundNum.setValue(fund);
-							myArchive.setValue(archive);
-							myDates.setValue(edgeDates);
-							myBusinessTripsInfo.setValue(businessTripsInfo);
-							myRewardsInfo.setValue(rewardsInfo);
-							myNotes.setValue(notes);
-							myUserName.setValue(userName);
-							myLastUpdateDate.setValue(lastUpdateDate);
-
-							for (var i = 0; i < storage.length; i++) {
-								var placeCard = create('storeplaces.view.card.CStorePlaceView');
-								myOrgPage.placesFieldSet.add(placeCard);
-//								var num = i + 1;
-								var idPlace = storage[i].id;
-								var storageTypePlace = storage[i].storageType;
-								var archivePlace = storage[i].archive;
-								var orgNamePlace = storage[i].orgName;
-								var addressPlace = storage[i].address;
-								var phonePlace = storage[i].phone;
-								var documentCountPlace = storage[i].documentCount;
-								var beginYearPlace = storage[i].beginYear;
-								var endYearPlace = storage[i].endYear;
-								var contentsPlace = storage[i].contents;
-
-								placeCard.idPlace = idPlace;
-								if (storageTypePlace === 'В организации') {
-									placeCard.taOrg.setValue(orgNamePlace);
-									placeCard.tfArchive.setVisible(false);
-									placeCard.taOrg.setVisible(true);
-								} else {
-									placeCard.taOrg.setVisible(false);
-									placeCard.tfArchive.setValue(archivePlace);
-									placeCard.tfArchive.setVisible(true);
-								}
-
-								placeCard.tfStorageType.setValue(storageTypePlace);
-								placeCard.tfAddr.setValue(addressPlace);
-								placeCard.tfPhone.setValue(phonePlace);
-								placeCard.nfCount.setValue(documentCountPlace);
-								placeCard.yearInterval.items.items[1].setValue(beginYearPlace);
-								placeCard.yearInterval.items.items[2].setValue(endYearPlace);
-								placeCard.taDocsContent.setValue(contentsPlace);
-
-								placeCard.docGrid.getStore().load({
-									params: {
-										storageId: idPlace,
-										mode: 'VIEW'
-									},
-									callback: function (_, __, success) {
-										if (!success)
-											Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
-									}
-								});
-
-							}
-						},
+							myOrgPage.setData(Ext.decode(action.responseText));
+						}, 
 						failure: function () {
 							Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 						}

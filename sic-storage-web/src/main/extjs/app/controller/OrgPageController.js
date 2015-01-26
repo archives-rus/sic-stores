@@ -13,21 +13,21 @@ Ext.define('storeplaces.controller.OrgPageController', {
 				controller = this;
 		controller.control({
 			button: {
-				click: function myfn(btn, eventObj) {
-					var mainContainer = storeplaces.mainView;
+				click: function myfn(btn) {
+					var mainContainer = storeplaces.mainView,
+							form = mainContainer.getCurrentPage();
+
 					if (btn.action === 'srchFund') {
 						var numFund = btn.up('fieldcontainer'),
 								fs = numFund.up('fieldset');
 					} else if (btn.action === 'deleteCard') {
-						var form = btn.up('form');
-						controller.getPage().placesFieldSet.remove(form);
-					} else if (btn.id !== 'button-1005') { // ОК button on dialog
-						var form = btn.up('toolbar').up('form');
+						form.placesFieldSet.remove(btn.up('form'));
+						return;
 					}
 
 					switch (btn.action) {
 						case 'addStorePlace':
-							var place = Ext.create('storeplaces.view.card.CStorePlace');
+							var place = Ext.create('CStorePlace');
 							place.docGrid.columns[1].editor = Ext.create('Ext.form.field.ComboBox', {
 								store: 'DocTypesStore',
 								valueField: 'id',
@@ -37,9 +37,8 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								forceSelection: true,
 								validateOnChange: false
 							});
-							var page = this.getPage();
-							page.placesFieldSet.add(place);
-							page.placesFieldSet.body.dom.scrollTop = 99999;
+							form.placesFieldSet.add(place);
+							form.placesFieldSet.body.dom.scrollTop = 99999;
 							break;
 						case 'namesGridUp':
 							var form = btn.up('toolbar').up('gridpanel').up('fieldset').up('form');
@@ -153,13 +152,12 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								}
 							});
 							break;
-
 						case 'orgCardAdd':
 							var p = mainContainer.setPage('COrganizationPage');
 							p.clear();
 							p.fromView();
+							p.idFund = p.idCard = null;
 							break;
-
 						case 'backSrchResult':
 							mainContainer.setPage('CSearchPage');
 							break;
@@ -171,14 +169,12 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								errMessages.push('заполнить наименование организации');
 							if (form.fundFieldset.items.items[0].getValue() === null)
 								errMessages.push('выбать архив в фондовой принадлежности');
-
 							if (fundNumber.getAt(0).getRawValue().length > 4)
 								errMessages.push('префикс не должен превышать 4 символа');
 							if (fundNumber.getAt(2).getRawValue().length > 4)
 								errMessages.push('суффикс не должен превышать 4 символа');
 							if (fundNumber.getAt(1).getRawValue().length > 10)
 								errMessages.push('номер фонда не должен превышать 10 символов');
-
 							if (fundNumber.getAt(1).getRawValue() !== '' &&
 									form.fundFieldset.items.items[1].getRawValue() === '')
 								errMessages.push('заполнить название фонда');
@@ -186,47 +182,31 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								errMessages.push('заполнить хотя бы одно место хранения');
 
 							form.placesFieldSet.items.each(function (Card) {
-								var ps = Card.cbStorageType.getValue(),
-										addres;
-								if (ps === 2) {
-									place = Card.taOrg.getRawValue(); //tf
-									addres = Card.tfAddr.getValue();
-								} else {
-									place = Card.cbArchive.getValue(); //combo
-									addres = Card.cbAddr.getValue(); //combo
-								}
-								if (ps === null)
-									errMessages.push('выбрать место хранения');
-								else if (place === '')
-									errMessages.push('заполнить название организации места хранения');
-
-								addres || errMessages.push('выбрать / заполнить адрес места хранения');
+								Card.getErrors(errMessages);
 							});
 
 							if (errMessages.length) {
 								msg.alert("Внимание", "<p>Для сохранения необходимо:<ul><li>" + errMessages.join('<li>'));
 								break;
 							}
+
 							var names = [];
 							form.orgStore.getRange().forEach(function (record, i) {
 								record.set('sortOrder', i + 1);
 								names.push(record.getData());
 							});
-
 							var areaFieldSets = form.areaFieldSets.items,
 									fundFieldset = form.fundFieldset.items,
 									idArch = fundFieldset.items[0].getValue(),
 									prefix = fundFieldset.items[2].items.items[0].getRawValue() || null,
-									numFund = fundFieldset.items[2].items.items[1].getRawValue(),
+									numFund = fundFieldset.items[2].items.items[1].getRawValue() || null,
 									suffix = fundFieldset.items[2].items.items[2].getRawValue() || null,
 									nameFund = fundFieldset.items[1].getRawValue() || null,
-									datesFund = fundFieldset.items[3].getRawValue() || null;
-							if (numFund === '') {
-								numFund = null;
-								var fund = null;
-							} else {
+									datesFund = fundFieldset.items[3].getRawValue() || null,
+									fund = null;
+							if (numFund) {
 								numFund = parseInt(numFund);
-								var fund = {
+								fund = {
 									'id': form.idFund,
 									'archiveId': idArch,
 									'num': numFund,
@@ -237,31 +217,30 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								};
 							}
 
-							var myCards = form.placesFieldSet.items.items,
-									storage = [],
+							var storage = [],
 									newaddresses = Ext.create('Ext.util.MixedCollection');
-							for (var j = 0; j < myCards.length; j++) {
-								var documents = new Array();
-								var dataCard = myCards[j];
-								var idPlace = dataCard.idPlace;
-								var documentCount = dataCard.nfCount.getRawValue();
-								documentCount = parseInt(documentCount);
-								var orgName = dataCard.taOrg.getRawValue();
-								if (orgName) {
-									var address = dataCard.tfAddr.getRawValue() || null;
-									var archStrg = null;
+
+							form.placesFieldSet.items.each(function (Card) {
+								var documents = [],
+										idPlace = Card.idPlace,
+										typeSave = Card.cbStorageType.getValue(),
+										documentCount = parseInt(Card.nfCount.getRawValue()),
+										orgName = null,
+										address, archStrg;
+								if (typeSave === 2) {
+									orgName = Card.taOrg.getRawValue();
+									address = Card.tfAddr.getRawValue() || null;
+									archStrg = null;
 								} else {
-									orgName = null;
-									var address = dataCard.cbAddr.getRawValue() || null;
-									var archStrg = new archiveInfo(dataCard.cbAddr.getValue(),
-											dataCard.cbArchive.getValue(),
-											address, dataCard.tfPhone.getRawValue(), dataCard.cbAddr.getStore());
+									address = Card.cbAddr.getRawValue() || null;
+									archStrg = new archiveInfo(Card.cbAddr.getValue(),
+											Card.cbArchive.getValue(),
+											address, Card.tfPhone.getRawValue(),
+											Card.cbAddr.getStore());
 								}
-								var beginYear = dataCard.yearInterval.items.items[1].getRawValue();
-								beginYear = parseInt(beginYear);
-								var endYear = dataCard.yearInterval.items.items[2].getRawValue();
-								endYear = parseInt(endYear);
-								var modelsCard = dataCard.docGrid.getStore().getRange();
+								var beginYear = parseInt(Card.yearInterval.items.getAt(1).getRawValue()),
+										endYear = parseInt(Card.yearInterval.items.getAt(2).getRawValue()),
+										modelsCard = Card.docGrid.getStore().getRange();
 								for (var i = 0; i < modelsCard.length; i++) {
 									var documentsModel = modelsCard[i];
 									if (documentsModel.get('id') === 0)
@@ -269,7 +248,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									documents.push(modelsCard[i].getData());
 								}
 
-								var contents = dataCard.taDocsContent.getRawValue(),
+								var contents = Card.taDocsContent.getRawValue(),
 										tmpAddress;
 								if (contents === '')
 									contents = null;
@@ -291,7 +270,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									orgName: orgName,
 									address: address,
 									phone: archStrg ? (archStrg.phone || null) :
-											orgName ? (dataCard.tfPhone.getRawValue() || null) : null,
+											orgName ? (Card.tfPhone.getRawValue() || null) : null,
 									documentCount: documentCount,
 									beginYear: beginYear,
 									endYear: endYear,
@@ -299,8 +278,9 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									contents: contents
 								};
 								storage.push(card);
-							}
-							var org = {
+							});
+
+							var org = Ext.encode({
 								id: form.idCard,
 								names: names,
 								archiveId: idArch,
@@ -309,21 +289,19 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								businessTripsInfo: areaFieldSets.items[0].getRawValue() || null,
 								rewardsInfo: areaFieldSets.items[1].getRawValue() || null,
 								notes: areaFieldSets.items[2].getRawValue() || null
-							};
-							org = Ext.encode(org);
+							});
+
 							Ext.Ajax.request({
 								url: 'servlet/SaveOrganization',
 								params: {
 									org: org
 								},
 								success: function (action) {
-									btn.action = 'orgCardView';
 									form.idCard = Ext.decode(action.responseText).id;
-									myfn(btn);
+									myfn(Ext.create('Ext.button.Button', {action: 'orgCardView'}));
 								},
-								failure: function () {
-									// msg.alert('Ошибка', 'Ошибка базы данных!');
-									// msg.alert('Внимание', 'Для сохранения необходимо заполнить место хранения, архив и адрес в каждой карточке!')
+								failure: function (res) {
+									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
 							break;
@@ -333,78 +311,22 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							break;
 
 						case 'orgCardView':
-							var values = form.getForm().getValues();
-							var idFund = form.idFund;
-							var idCard = form.idCard;
-							var archive = form.fundFieldset.items.items[0].getRawValue();
-							var prefix = form.fundFieldset.items.items[2].items.items[0].getRawValue();
-							var numfond = form.fundFieldset.items.items[2].items.items[1].getRawValue();
-							var suffix = form.fundFieldset.items.items[2].items.items[2].getRawValue();
-							var fundNum = prefix + '-' + numfond + '-' + suffix;
-							var nameUser = form.tfUser.getRawValue();
-							var editDate = form.tfDateOfEdit.getRawValue();
-							var oldOrgStoreData = form.orgStore.getRange();
-							var countCard = form.placesFieldSet.items.getCount();
-							var massCard = new Array();
-							for (var i = 0; i < countCard; i++) {
-								var card = form.placesFieldSet.items.items[i];
-								massCard.push(card);
-							}
-							var OrgViewPage = mainContainer.setPage('COrganizationPageView');
-							OrgViewPage.clear();
-							OrgViewPage.getForm().setValues(values);
-							OrgViewPage.idFund = idFund;
-							OrgViewPage.idCard = idCard;
-							OrgViewPage.tfUser.setValue(nameUser);
-							OrgViewPage.tfDateOfEdit.setValue(editDate);
-							OrgViewPage.orgStore.loadData(oldOrgStoreData);
-							for (var j = 0; j < massCard.length; j++) {
-								var oldCard = massCard[j];
-								var newCard = Ext.create('CStorePlaceView');
+							var myOrgPage = mainContainer.setPage('COrganizationPageView');
+							myOrgPage.idCard = form.idCard;
 
-								OrgViewPage.placesFieldSet.add(newCard);
-
-								newCard.idPalace = oldCard.idPalace;
-								newCard.idArchStorage = oldCard.idArchStorage;
-								var oldStorageType = oldCard.cbStorageType.getRawValue();
-								newCard.tfStorageType.setValue(oldStorageType);
-								if (oldStorageType === 'В архиве')
-								{
-									var oldArchive = oldCard.cbArchive.getRawValue();
-									var oldAddress = oldCard.cbAddr.getRawValue();
-									newCard.taOrg.setVisible(false);
-									newCard.tfArchive.setVisible(true);
-									newCard.tfArchive.setValue(oldArchive);
-									newCard.tfAddr.setValue(oldAddress);
+							Ext.Ajax.request({
+								url: 'servlet/QueryOrganization',
+								params: {
+									id: myOrgPage.idCard,
+									mode: 'VIEW'
+								},
+								success: function (action) {
+									myOrgPage.setData(Ext.decode(action.responseText));
+								},
+								failure: function () {
+									Ext.Msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
-								else if (oldStorageType === 'В организации')
-								{
-									var oldOrgName = oldCard.taOrg.getRawValue();
-									var oldAddress = oldCard.tfAddr.getRawValue();
-									newCard.taOrg.setVisible(true);
-									newCard.tfArchive.setVisible(false);
-									newCard.taOrg.setValue(oldOrgName);
-									newCard.tfAddr.setValue(oldAddress);
-								}
-								var oldPhone = oldCard.tfPhone.getRawValue();
-								newCard.tfPhone.setValue(oldPhone);
-								var oldDocumentCount = oldCard.nfCount.getRawValue();
-								newCard.nfCount.setValue(oldDocumentCount);
-								var oldBeginYear = oldCard.yearInterval.items.items[1].getRawValue();
-								newCard.yearInterval.items.items[1].setValue(oldBeginYear);
-								var oldEndYear = oldCard.yearInterval.items.items[2].getRawValue();
-								newCard.yearInterval.items.items[2].setValue(oldEndYear);
-								var oldContents = oldCard.taDocsContent.getRawValue();
-								newCard.taDocsContent.setValue(oldContents);
-								var oldPlaceStoreData = oldCard.docGrid.getStore().getRange();
-								newCard.docGrid.reconfigure(newCard.docGrid.getStore(), newCard.gridEditOnlyColumns);
-								newCard.docGrid.getStore().loadData(oldPlaceStoreData);
-							}
-							// OrgViewPage.items.items[0].items.items[1].action = 'viewToEdit';
-							var archivePage = OrgViewPage.fundFieldset.items.items[0];
-							var fundNumPage = OrgViewPage.fundFieldset.items.items[2];
-							archivePage.setRawValue(archive);
-							fundNumPage.setRawValue(fundNum);
+							});
 							break;
 
 						case 'orgCardEdit':
@@ -423,7 +345,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								}
 							});
 							break;
-
 						case 'srchFund':
 							var archiveId = fs.items.items[0].getValue(),
 									numItems = numFund.items,
@@ -473,7 +394,6 @@ Ext.define('storeplaces.controller.OrgPageController', {
 				}
 			}
 		});
-
 		/**
 		 * объект для хранения информации об адресе архива
 		 */
