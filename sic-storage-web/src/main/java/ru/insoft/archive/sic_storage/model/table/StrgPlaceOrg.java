@@ -48,7 +48,7 @@ public class StrgPlaceOrg implements HasId, JsonIn, JsonOut
     private String phone;
 
     @Column(name = "DOCUMENT_COUNT")
-    private Integer documentCount;
+    private Long documentCount;
 
     @Column(name = "BEGIN_YEAR")
     private Integer beginYear;
@@ -119,11 +119,11 @@ public class StrgPlaceOrg implements HasId, JsonIn, JsonOut
         this.phone = phone;
     }
 
-    public Integer getDocumentCount() {
+    public Long getDocumentCount() {
         return documentCount;
     }
 
-    public void setDocumentCount(Integer documentCount) {
+    public void setDocumentCount(Long documentCount) {
         this.documentCount = documentCount;
     }
 

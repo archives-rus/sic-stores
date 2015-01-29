@@ -265,7 +265,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			fieldLabel: 'Количество ед. хр.',
 			labelSeparator: '',
 			height: 22,
-			width: 210,
+			width: 300,
 			labelWidth: 140, //me.fieldLabelWidth,
 			x: 5,
 			y: me.taOrg.y + me.taOrg.height + 5

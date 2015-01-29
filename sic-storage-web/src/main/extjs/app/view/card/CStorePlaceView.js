@@ -166,7 +166,7 @@ Ext.define("storeplaces.view.card.CStorePlaceView", {
 			labelSeparator: '',
 			height: 22,
 			disabled: true,
-			width: 210,
+			width: 300,
 			labelWidth: 140, //me.fieldLabelWidth,
 			x: 5,
 			y: me.taOrg.y + me.taOrg.height + 5
