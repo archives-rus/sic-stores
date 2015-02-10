@@ -24,8 +24,7 @@ Ext.define('storeplaces.view.page.CLoginPage', {
         labelWidth : 100,
         cls:'mar lft',
         validator : function(){
-            if (this.getValue() =='')
-            {
+            if (this.getValue() === '') {
                 return 'Логин не может быть пустым';
             }
             else return true;
@@ -41,7 +40,7 @@ Ext.define('storeplaces.view.page.CLoginPage', {
         labelWidth : 100,
         cls:'mar lft',
         validator : function(){
-            if (this.getValue() =='')
+            if (this.getValue() === '')
             {
                 return 'Пароль не может быть пустым';
             }

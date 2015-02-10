@@ -232,25 +232,28 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 
 
 		me.areaFieldSets = Ext.create('StyledFieldSet', {
-			layout: 'fit',
+			layout: 'vbox',
 			items: [Ext.create('Ext.form.field.TextArea', {
 					fieldLabel: 'Сведения о загранкомандировках',
 					name: 'zagranInfo',
 					disabled: true,
 					labelWidth: 200,
-					height: 25
+					width: '98%',
+					height: 42
 				}), Ext.create('Ext.form.field.TextArea', {
 					fieldLabel: 'Сведения о награждениях',
 					disabled: true,
 					name: 'goldInfo',
 					labelWidth: 200,
-					height: 25
+					width: '98%',
+					height: 42
 				}), Ext.create('Ext.form.field.TextArea', {
 					fieldLabel: 'Примечание',
 					name: 'noteInfo',
 					disabled: true,
 					labelWidth: 200,
-					height: 25
+					width: '98%',
+					height: 42
 				})]
 		});
 

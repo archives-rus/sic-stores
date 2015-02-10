@@ -207,22 +207,25 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				})]
 		});
 		me.areaFieldSets = create('StyledFieldSet', {
-			layout: 'fit',
+			layout: 'vbox',
 			items: [create('Ext.form.field.TextArea', {
 					name: 'zagranInfo',
 					fieldLabel: 'Сведения о загранкомандировках',
 					labelWidth: 200,
-					height: 33
+					width: '98%',
+					height: 42
 				}), create('Ext.form.field.TextArea', {
 					fieldLabel: 'Сведения о награждениях',
 					name: 'goldInfo',
 					labelWidth: 200,
-					height: 33
+					width: '98%',
+					height: 42
 				}), create('Ext.form.field.TextArea', {
 					fieldLabel: 'Примечание',
 					name: 'noteInfo',
 					labelWidth: 200,
-					height: 33
+					width: '98%',
+					height: 42
 				})]
 		});
 		me.tfUser = create('Ext.form.field.Text', {

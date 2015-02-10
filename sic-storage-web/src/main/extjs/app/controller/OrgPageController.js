@@ -163,6 +163,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							break;
 
 						case 'orgCardSave':
+							btn.setDisabled(true);
 							var errMessages = [],
 									fundNumber = form.fundFieldset.items.getAt(2).items;
 							if (form.gridNames.getStore().getCount() === 0)
@@ -187,6 +188,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 
 							if (errMessages.length) {
 								msg.alert("Внимание", "<p>Для сохранения необходимо:<ul><li>" + errMessages.join('<li>'));
+								btn.setDisabled(false);
 								break;
 							}
 
@@ -297,10 +299,12 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									org: org
 								},
 								success: function (action) {
+									btn.setDisabled(false);
 									form.idCard = Ext.decode(action.responseText).id;
 									myfn(Ext.create('Ext.button.Button', {action: 'orgCardView'}));
 								},
 								failure: function (res) {
+									btn.setDisabled(false);
 									msg.alert('Ошибка', 'Ошибка базы данных!');
 								}
 							});
