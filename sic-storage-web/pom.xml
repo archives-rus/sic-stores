@@ -83,7 +83,23 @@
 			</plugin>
 		</plugins>
 	</build> -->
-
+	<profiles>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<jndi.url>java:jboss/SicDS</jndi.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>development</id>
+			<properties>
+				<jndi.url>java:jboss/SicOracleLocal</jndi.url>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<pluginManagement>
@@ -113,5 +129,11 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 </project>
