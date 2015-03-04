@@ -76,19 +76,16 @@ public class StorageHandler {
 		CriteriaQuery<StrgFund> cq = cb.createQuery(StrgFund.class);
 		Root<StrgFund> root = cq.from(StrgFund.class);
 		cq.select(root).where(cb.and(
-			cb.equal(root.get("archiveId"), archiveId),
-			cb.equal(root.get("num"), criteria.getNum()),
-			criteria.getPrefix() == null ? cb.isNull(root.get("prefix")) : cb.equal(root.get("prefix"), criteria.getPrefix()),
-			criteria.getSuffix() == null ? cb.isNull(root.get("suffix")) : cb.equal(root.get("suffix"), criteria.getSuffix())
+				cb.equal(root.get("archiveId"), archiveId),
+				cb.equal(root.get("num"), criteria.getNum()),
+				criteria.getPrefix() == null ? cb.isNull(root.get("prefix")) : cb.equal(root.get("prefix"), criteria.getPrefix()),
+				criteria.getSuffix() == null ? cb.isNull(root.get("suffix")) : cb.equal(root.get("suffix"), criteria.getSuffix())
 		));
-		try {
-			StrgFund fund = em.createQuery(cq).getSingleResult();
+		List<StrgFund> funds = em.createQuery(cq).getResultList();
+		if (!funds.isEmpty()) {
 			res.setFound(true);
-			res.setFund(fund);
-		} catch (NoResultException | NonUniqueResultException e) {
-
+			res.setFund(funds.get(0));
 		}
-
 		return res;
 	}
 
@@ -178,11 +175,11 @@ public class StorageHandler {
 	}
 
 	protected <T> Predicate[] getSearchPredicates(CriteriaBuilder cb, CriteriaQuery<T> cq,
-		Root<VStrgOrgForSearch> root, OrgSearchCriteria criteria) {
+			Root<VStrgOrgForSearch> root, OrgSearchCriteria criteria) {
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		if (criteria.getOrgName() != null) {
 			predicates.add(cb.greaterThan(cb.function("contains", Integer.class,
-				root.get("indexedName"), cb.literal(StringUtils.textRequest(criteria.getOrgName()))), 0));
+					root.get("indexedName"), cb.literal(StringUtils.textRequest(criteria.getOrgName()))), 0));
 		}
 		if (criteria.getArchiveId() != null) {
 			predicates.add(cb.equal(root.get("archiveId"), criteria.getArchiveId()));
@@ -214,23 +211,23 @@ public class StorageHandler {
 			}
 			if (criteria.getYearFrom() != null && criteria.getYearTo() == null) {
 				subPredicates.add(cb.and(
-					cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom()),
-					cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearFrom())));
+						cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom()),
+						cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearFrom())));
 			}
 			if (criteria.getYearFrom() != null && criteria.getYearTo() != null) {
 				subPredicates.add(cb.or(
-					cb.and(
-						cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom()),
-						cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearFrom())
-					),
-					cb.and(
-						cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearTo()),
-						cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearTo())
-					),
-					cb.and(
-						cb.lessThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearTo()),
-						cb.greaterThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom())
-					)
+						cb.and(
+								cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom()),
+								cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearFrom())
+						),
+						cb.and(
+								cb.lessThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearTo()),
+								cb.greaterThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearTo())
+						),
+						cb.and(
+								cb.lessThanOrEqualTo(subroot.<Integer>get("endYear"), criteria.getYearTo()),
+								cb.greaterThanOrEqualTo(subroot.<Integer>get("beginYear"), criteria.getYearFrom())
+						)
 				));
 			}
 			sub.where(subPredicates.toArray(new Predicate[0]));
@@ -254,14 +251,14 @@ public class StorageHandler {
 			CriteriaQuery<OrgSearchResult> valQuery = cb.createQuery(OrgSearchResult.class);
 			Root<VStrgOrgForSearch> valRoot = valQuery.from(VStrgOrgForSearch.class);
 			valQuery.multiselect(valRoot.<Long>get("id"), valRoot.<Long>get("orgId"),
-				valRoot.<String>get("name"), valRoot.<String>get("archive"),
-				valRoot.<String>get("fund"),
-				cb.<String>function("get_org_storage_years", String.class,
-					valRoot.<Long>get("orgId")).alias("dates"));
+					valRoot.<String>get("name"), valRoot.<String>get("archive"),
+					valRoot.<String>get("fund"),
+					cb.<String>function("get_org_storage_years", String.class,
+							valRoot.<Long>get("orgId")).alias("dates"));
 			valQuery.where(getSearchPredicates(cb, valQuery, valRoot, criteria));
 			valQuery.orderBy(cb.asc(valRoot.get("name")));
 			osi.setValues(em.createQuery(valQuery)
-				.setFirstResult(start).setMaxResults(limit).getResultList());
+					.setFirstResult(start).setMaxResults(limit).getResultList());
 		}
 
 		return osi;
@@ -308,7 +305,7 @@ public class StorageHandler {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public HasId insertEntity(HasId newEntity, HasId oldEntity)
-		throws Exception {
+			throws Exception {
 		try {
 			if (oldEntity == null && newEntity.getId() != null) {
 				oldEntity = em.find(newEntity.getClass(), newEntity.getId());
@@ -324,15 +321,15 @@ public class StorageHandler {
 				newEntityWithUser.setLastUpdateDate(new Date());
 				if (newEntity.getId() == null) {
 					newEntityWithUser.setAddUserId(newEntityWithUser
-						.getModUserId());
+							.getModUserId());
 					newEntityWithUser.setInsertDate(newEntityWithUser
-						.getLastUpdateDate());
+							.getLastUpdateDate());
 				} else {
 					HasUserInfo oldEntityWithUser = (HasUserInfo) oldEntity;
 					newEntityWithUser.setAddUserId(oldEntityWithUser
-						.getAddUserId());
+							.getAddUserId());
 					newEntityWithUser.setInsertDate(oldEntityWithUser
-						.getInsertDate());
+							.getInsertDate());
 				}
 			}
 
@@ -340,7 +337,7 @@ public class StorageHandler {
 				for (Field f : newEntity.getClass().getDeclaredFields()) {
 					if (List.class.equals(f.getType())) {
 						Type[] tt = ((ParameterizedType) f.getGenericType())
-							.getActualTypeArguments();
+								.getActualTypeArguments();
 						if (tt.length > 0 && HasId.class.isAssignableFrom((Class<?>) tt[0])) {
 							f.setAccessible(true);
 							List<HasId> oldLst = (List<HasId>) f.get(oldEntity);
@@ -352,7 +349,7 @@ public class StorageHandler {
 								// Эквивалентными считаются два значения с одинаковым ID
 								for (int i = 0; i < newLst.size(); i++) {
 									if (oldId != null && oldId.equals(
-										newLst.get(i).getId())) {
+											newLst.get(i).getId())) {
 										index = i;
 										break;
 									}
