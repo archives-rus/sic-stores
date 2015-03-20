@@ -47,7 +47,7 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 				}, '->',
 				{
 					xtype: 'label',
-					text: storeplaces.userName,
+					text: storeplaces.fio,
 					baseCls: 'loginedUserText',
 					flex: 0
 				},

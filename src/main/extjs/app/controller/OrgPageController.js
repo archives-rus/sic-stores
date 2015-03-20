@@ -14,16 +14,17 @@ Ext.define('storeplaces.controller.OrgPageController', {
 		controller.control({
 			button: {
 				click: function myfn(btn) {
-					var mainContainer = storeplaces.mainView,
-							form = mainContainer.getCurrentPage();
-
 					if (btn.action === 'srchFund') {
 						var numFund = btn.up('fieldcontainer'),
 								fs = numFund.up('fieldset');
 					} else if (btn.action === 'deleteCard') {
 						form.placesFieldSet.remove(btn.up('form'));
 						return;
-					}
+					} else if (!btn.action)
+						return;
+					
+					var mainContainer = storeplaces.mainView,
+							form = mainContainer.getCurrentPage();
 
 					switch (btn.action) {
 						case 'addStorePlace':
@@ -82,8 +83,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							gridPlace.getStore().insert(count, Ext.create('storeplaces.model.DocTableEntryWrite'));
 							break;
 						case 'quit':
-							storeplaces.userStore.removeAll(true);
-							Ext.Ajax.request({url: '/qq-web/Auth?action=logout',
+							Ext.Ajax.request({url: '/qq-web/logout',
 								success: function () {
 									window.location = '/qq-web/';
 								}});
@@ -134,14 +134,14 @@ Ext.define('storeplaces.controller.OrgPageController', {
 									} else if (thisPage === 1) {
 										cardsStore.loadPage(1);
 										var id = cardsStoreAll.getAt(1).get('id');
-										window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+										storeplaces.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
 										cardsStore.reload();
 										cardsStoreAll.reload();
 									} else {
 										var newPage = parseInt(form.cardToolBar.items.items[4].getValue()) - 1;
 										cardsStore.loadPage(newPage);
 										var id = cardsStoreAll.getAt(newPage - 1).get('id');
-										window.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
+										storeplaces.app.getController('storeplaces.controller.OrgPageFunc').moveNext(id);
 										cardsStore.reload();
 										cardsStoreAll.reload();
 									}

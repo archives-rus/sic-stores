@@ -64,7 +64,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 				}, '->',
 				{
 					xtype: 'label',
-					text: storeplaces.userName,
+					text: storeplaces.fio,
 					baseCls: 'loginedUserText',
 					flex: 0
 				}, {
@@ -81,7 +81,7 @@ Ext.define('storeplaces.view.page.COrganizationPageView', {
 		});
 
 		var cardStore = Ext.getStore('CardsStore'),
-				orgPageFunc = window.app.getController('OrgPageFunc');
+				orgPageFunc = storeplaces.app.getController('OrgPageFunc');
 
 		/**
 		 * Загружает страницу определенного номера

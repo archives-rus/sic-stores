@@ -12,30 +12,14 @@ Ext.define('storeplaces.view.Main', {
 	layout: 'card',
 	pages: {},
 	initComponent: function () {
-		var me = this,
-				store = Ext.create('Ext.data.Store', {
-					proxy: {
-						type: 'localstorage',
-						id: 'user'
-					},
-					fields: [{name: 'id', type: 'string'},
-						{name: 'userId', type: 'int'},
-						{name: 'name', type: 'string'},
-						{name: 'access', type: 'auto'},
-						{name: 'organization', type: 'int'}
-					]});
+		var me = this;
 		me.callParent();
-		storeplaces.userStore = store;
 		me._lt = me.getLayout();
 
-		store.load({callback: function () {
-				var userName = store.getById('current').get('name');
-				storeplaces.userName = userName;
-				me.setPage('CSearchPage');
-				Ext.onReady(function () {
-					storeplaces.alert('Доброго времени суток', userName);
-				});
-			}});
+		me.setPage('CSearchPage');
+//		Ext.onReady(function () {
+		storeplaces.alert('Доброго времени суток', storeplaces.fio);
+//		});
 
 	},
 	constructor: function () {
@@ -68,17 +52,13 @@ Ext.define('storeplaces.view.Main', {
 			return this._prv;
 		}
 	},
-	getCurrentPage: function() {
+	getCurrentPage: function () {
 		return this._lt.getActiveItem();
 	}
 });
 
 Ext.Ajax.on('requestexception', function (conn, response) {
 	if (response.status === 403) {
-		try {
-			storeplaces.userStore.removeAll(true);
-		} finally {
-			window.location = "/qq-web/";
-		}
+		window.location = "/qq-web/";
 	}
 });

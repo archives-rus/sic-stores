@@ -71,8 +71,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							window.location = "/qq-web/";
 							break;
 						case 'quitSearch':
-							storeplaces.userStore.removeAll(true);
-							Ext.Ajax.request({url: '/qq-web/Auth?action=logout',
+							Ext.Ajax.request({url: '/qq-web/logout',
 								success: function () {
 									window.location = '/qq-web/';
 								}});

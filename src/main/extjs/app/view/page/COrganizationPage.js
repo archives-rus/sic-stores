@@ -41,7 +41,7 @@ Ext.define('storeplaces.view.page.COrganizationPage', {
 				'->',
 				{
 					xtype: 'label',
-					text: storeplaces.userName,
+					text: storeplaces.fio,
 					baseCls: 'loginedUserText',
 					flex: 0
 				},

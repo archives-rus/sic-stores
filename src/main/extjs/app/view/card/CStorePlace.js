@@ -62,7 +62,7 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 			text: 'Вид документа',
 			width: '60%',
 			dataIndex: 'documentTypeId',
-			editor:  {
+			editor: {
 				xtype: 'combobox',
 				store: 'DocTypesStore',
 				valueField: 'id',
@@ -119,13 +119,9 @@ Ext.define("storeplaces.view.card.CStorePlace", {
 					icon: 'img/emblem-unreadable.png',
 					tooltip: 'Удалить',
 					handler: function (grid, rowIndex, colIndex) {
-						if (window.app) {
-							window.app
-									.getController('storeplaces.controller.StorePlaceCardController')
-									.removeFromDocGrid(grid, rowIndex, colIndex);
-						} else {
-							console.log('window app is undefined!');
-						}
+						storeplaces.app
+								.getController('storeplaces.controller.StorePlaceCardController')
+								.removeFromDocGrid(grid, rowIndex, colIndex);
 					}
 				}]
 		}],
