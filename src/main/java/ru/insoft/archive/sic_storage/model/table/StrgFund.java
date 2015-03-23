@@ -8,95 +8,93 @@ import ru.insoft.archive.extcommons.json.JsonOut;
 import javax.persistence.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: melnikov
- * Date: 08.07.13
- * Time: 16:19
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: melnikov Date: 08.07.13 Time: 16:19 To
+ * change this template use File | Settings | File Templates.
  */
-
 @Entity
-@Table(name = "STRG_FUND")
-public class StrgFund implements HasId, JsonIn, JsonOut
-{
-    @Id
-    @SequenceGenerator(name = "seqFund", sequenceName = "SEQ_STRG_FUND", allocationSize = 1)
-    @GeneratedValue(generator = "seqFund")
-    @Column(name = "FUND_ID")
-    private Long id;
+@Table(name = "STRG_FUND", uniqueConstraints
+		= @UniqueConstraint(columnNames = {"ARCHIVE_ID", "FUND_NUM", "PREFIX", "SUFFIX"})
+)
+public class StrgFund implements HasId, JsonIn, JsonOut {
 
-    @JsonExclude
-    @Column(name = "ARCHIVE_ID")
-    private Long archiveId;
+	@Id
+	@SequenceGenerator(name = "seqFund", sequenceName = "SEQ_STRG_FUND", allocationSize = 1)
+	@GeneratedValue(generator = "seqFund")
+	@Column(name = "FUND_ID")
+	private Long id;
 
-    @Column(name = "FUND_NUM")
-    private Integer num;
+	@JsonExclude
+	@Column(name = "ARCHIVE_ID")
+	private Long archiveId;
 
-    @Column(name = "PREFIX")
-    private String prefix;
+	@Column(name = "FUND_NUM")
+	private Integer num;
 
-    @Column(name = "SUFFIX")
-    private String suffix;
+	@Column(name = "PREFIX")
+	private String prefix;
 
-    @Column(name = "FUND_NAME")
-    private String name;
+	@Column(name = "SUFFIX")
+	private String suffix;
 
-    @Column(name = "EDGE_DATES")
-    private String dates;
+	@Column(name = "FUND_NAME")
+	private String name;
 
-    public Long getId() {
-        return id;
-    }
+	@Column(name = "EDGE_DATES")
+	private String dates;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getArchiveId() {
-        return archiveId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setArchiveId(Long archiveId) {
-        this.archiveId = archiveId;
-    }
+	public Long getArchiveId() {
+		return archiveId;
+	}
 
-    public Integer getNum() {
-        return num;
-    }
+	public void setArchiveId(Long archiveId) {
+		this.archiveId = archiveId;
+	}
 
-    public void setNum(Integer num) {
-        this.num = num;
-    }
+	public Integer getNum() {
+		return num;
+	}
 
-    public String getPrefix() {
-        return prefix;
-    }
+	public void setNum(Integer num) {
+		this.num = num;
+	}
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    public String getSuffix() {
-        return suffix;
-    }
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
+	public String getSuffix() {
+		return suffix;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDates() {
-        return dates;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setDates(String dates) {
-        this.dates = dates;
-    }
+	public String getDates() {
+		return dates;
+	}
+
+	public void setDates(String dates) {
+		this.dates = dates;
+	}
 }

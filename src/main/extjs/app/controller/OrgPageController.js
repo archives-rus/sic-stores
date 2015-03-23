@@ -22,7 +22,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 						return;
 					} else if (!btn.action)
 						return;
-					
+
 					var mainContainer = storeplaces.mainView,
 							form = mainContainer.getCurrentPage();
 
@@ -350,25 +350,22 @@ Ext.define('storeplaces.controller.OrgPageController', {
 							});
 							break;
 						case 'srchFund':
+
 							var archiveId = fs.items.items[0].getValue(),
-									numItems = numFund.items,
-									num = numItems.getAt(1).getRawValue();
+									num = numFund.getNumber(),
+									page = controller.getPage();
+							page.idFund = null;
 							if (!(archiveId && num)) {
 								msg.alert('Внимание', 'Для поиска необходимо ввсети архив и номер фонда');
 								break;
 							}
-							num = parseInt(num);
-							var fund = {num: num,
-								prefix: numItems.getAt(0).getRawValue() || null,
-								suffix: numItems.getAt(2).getRawValue() || null};
-							fund = Ext.encode(fund);
-							var nameFund = fs.items.items[1];
-							var datesFund = fs.items.items[3];
+							var nameFund = fs.items.items[1],
+									datesFund = fs.items.items[3];
 							Ext.Ajax.request({
 								url: 'servlet/QueryFundInfo',
 								params: {
-									'archiveId': archiveId,
-									'fund': fund
+									archiveId: archiveId,
+									fund: Ext.encode(numFund.getFull())
 								},
 								success: function (action) {
 									var answer = Ext.decode(action.responseText);
@@ -382,7 +379,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 										datesFund.setValue(fond.dates);
 										nameFund.enable();
 										datesFund.enable();
-										controller.getPage().idFund = fond.id;
+										page.idFund = fond.id;
 									}
 								},
 								failure: function (action) {

@@ -80,6 +80,7 @@ Ext.define('storeplaces.controller.SearchFormController', {
 							var p = main.setPage('COrganizationPage');
 							p.clear();
 							p.fromSearch();
+							p.idFund = p.idCard = null;
 							break;
 						case 'srchBtn':
 							if (gridSearchOrgSt.getCount() !== 0)
