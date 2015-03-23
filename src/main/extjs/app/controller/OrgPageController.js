@@ -305,7 +305,7 @@ Ext.define('storeplaces.controller.OrgPageController', {
 								},
 								failure: function (res) {
 									btn.setDisabled(false);
-									msg.alert('Ошибка', 'Ошибка базы данных!');
+									msg.alert('Ошибка', res.responseText);
 								}
 							});
 							break;

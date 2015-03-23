@@ -8,7 +8,6 @@ Ext.application({
 			success: function (response) {
 				var authRes = Ext.decode(response.responseText);
 				storeplaces.fio = authRes.name;
-
 				Ext.create('storeplaces.view.Viewport');
 			},
 			failure: function () {

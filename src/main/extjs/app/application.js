@@ -18,7 +18,6 @@ Ext.define('storeplaces.Application', {
 		'storeplaces.view.card.CStorePlaceView',
 		'storeplaces.view.page.CLoginPage',
 		'storeplaces.view.page.COrganizationPage',
-		'storeplaces.view.page.CSearchPage',
 		'storeplaces.view.page.COrganizationPageView'
 	],
 	controllers: [

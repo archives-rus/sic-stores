@@ -13,7 +13,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STRG_FUND", uniqueConstraints
-		= @UniqueConstraint(columnNames = {"ARCHIVE_ID", "FUND_NUM", "PREFIX", "SUFFIX"})
+		= @UniqueConstraint(name = "fundNumber", 
+				columnNames = {"ARCHIVE_ID", "FUND_NUM", "PREFIX", "SUFFIX"})
 )
 public class StrgFund implements HasId, JsonIn, JsonOut {
 

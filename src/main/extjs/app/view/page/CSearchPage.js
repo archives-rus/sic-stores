@@ -47,7 +47,6 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 				}, '->',
 				{
 					xtype: 'label',
-					text: storeplaces.fio,
 					baseCls: 'loginedUserText',
 					flex: 0
 				},
@@ -61,7 +60,12 @@ Ext.define('storeplaces.view.page.CSearchPage', {
 					tooltipType: 'title',
 					componentCls: 'quitButton',
 					action: 'quitSearch'
-				}]
+				}],
+			listeners: {
+				afterrender: function(tb) {
+					tb.items.getAt(5).setText(storeplaces.fio);
+				}
+			}
 		});
 
 		var tfNameOrg = create('Ext.form.field.Text', {
