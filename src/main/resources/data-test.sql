@@ -1,0 +1,1 @@
+insert into adm_user values(1, 3, 'Serge', 'Basa', 0, 'Serge Basa'), (2, 3, 'Angel', 'OG', 0, 'Angel OG');
