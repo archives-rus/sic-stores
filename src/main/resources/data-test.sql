@@ -1,1 +1,3 @@
-insert into adm_user values(1, 3, 'Serge', 'Basa', 0, 'Serge Basa'), (2, 3, 'Angel', 'OG', 0, 'Angel OG');
+merge into adm_user values(1, 81, 'user', upper(md5('user')), 0, 'Простой пользователь'), 
+							(2, 81, 'userb', upper(md5('userb')), 1, 'Заблокированный пользователь'),
+							(3, 81, 'admin', upper(md5('admin')), 0, 'Администратор');

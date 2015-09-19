@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Места хранения::Авторизация</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="js/libs/login.min.js"></script>
+		<script src="js/login/login.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/libs/login.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/login/login.min.css"/>
+	</head>
+	<body ng-app="login">
+		<div ng-controller="loginCtrl">
+			<form role="form" ng-submit="login()">
+				<div>
+					<label for="username">Пользователь:</label> 
+					<input type="text" id="username" name="username" ng-model="cred.username"/>
+				</div>
+				<div>
+					<label for="password">Пароль:</label> 
+					<input type="password" id="password" name="password" ng-model="cred.password"/>
+				</div>
+				<button type="submit">Войти</button>
+			</form>
+		</div>
+	</body>
+</html>
