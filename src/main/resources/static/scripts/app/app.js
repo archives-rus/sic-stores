@@ -1,0 +1,1 @@
+var SP = angular.module('Storages', []);

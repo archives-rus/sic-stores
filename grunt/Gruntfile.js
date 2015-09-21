@@ -30,14 +30,14 @@ module.exports = function (grunt) {
 		paths: {
 			loginjs: {
 				src: join(jsRoot, 'login', '**', '*.js'),
-				dst: join(jsRoot, 'login.min.js')
+				min: join(jsRoot, 'login.min.js')
 			},
 			appjs: {
 				src: join(jsRoot, 'app', '**', '*.js'),
-				dst: join(jsRoot, 'app.min.js')
+				min: join(jsRoot, 'app.min.js')
 			},
 			vendorjs: {
-				src: join(modulesDir),
+				src: join(modulesDir, 'angular', 'angular.min.js'),
 				dst: join(jsRoot, 'vendor', 'script.min.js')
 			},
 			logincss: {
@@ -47,10 +47,6 @@ module.exports = function (grunt) {
 			appcss: {
 				src: join(cssRoot, 'app', '**', '*.css'),
 				dst: join(cssRoot, 'app.min.css')
-			},
-			vendorcss: {
-				src: join(modulesDir),
-				dst: join(cssRoot, 'vendor', 'styles.min.css')
 			}
 		},
 		// Проверка правильности js кода
@@ -59,6 +55,43 @@ module.exports = function (grunt) {
 				src: ['Gruntfile.js', '<%= paths.loginjs.src %>',
 					'<%= paths.appjs.src %>']
 			}
+		},
+		// Запуск заданий автоматически при изменении файлов
+		watch: {
+			jshint: {
+				files: '<%= jshint.files.src %>',
+				tasks: 'newer:jshint' //обслуживать только измененные файлы
+			},
+			l_uglify: {
+				files: '<%= uglify.login.src %>',
+				tasks: 'uglify:login'
+			},
+			a_uglify: {
+				files: '<%= uglify.app.src %>',
+				tasks: 'uglify:app'
+			},
+			options: {
+				atBegin: true
+			}
+		},
+		// Кучкуем файлы js 
+		concat: {
+			vendorjs: {
+				files: {
+					'<%= paths.vendorjs.dst %>': '<%= paths.vendorjs.src %>'
+				}
+			}	
+		},
+		// Сжимаем js файлы
+		uglify: {
+			login: {
+				src: '<%= paths.loginjs.src %>',
+				dest: '<%= paths.loginjs.min %>'
+			},
+			app: {
+				src: '<%= paths.appjs.src %>',
+				dest: '<%= paths.appjs.min %>'
+			}	
 		},
 		// Здесь просто для примера, spring-boot:run обрабатывает динамически
 		// изменения в папке static, так что эту задачу я не использую
@@ -77,7 +110,7 @@ module.exports = function (grunt) {
 								readStaticFileToNetwork('enter.html', res);
 							else if (req.url == '/index.html' || req.url === '/')
 								readStaticFileToNetwork('index.html', res);
-							else if (filePath = /^\/(.+?\.(css|js))$/.exec(req.url))
+							else if ((filePath = /^\/(.+?\.(css|js))$/.exec(req.url)))
 								readStaticFileToNetwork(filePath[1], res);
 							else
 								res.writeHead(301, {'Location': "http://localhost:8991" + req.url});
@@ -88,5 +121,5 @@ module.exports = function (grunt) {
 		}
 
 	});
-	grunt.registerTask('default', ['jshint']);
+	grunt.registerTask('default', ['concat:vendorjs', 'watch']);
 };
