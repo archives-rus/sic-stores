@@ -1,0 +1,43 @@
+#searchgpage-body,
+.pad10-20 > .x-panel-body,
+#orgpageview-body{
+    padding:10px 20px;
+}
+.x-fieldset{
+    margin:0 10px !important;
+}
+.x-form-trigger,
+.x-form-trigger-over{
+    height:24px;
+}
+/*#enterpage,*/ #orgpage, #searchgpage, #orgpageview{
+    background-color: #EDE4CE;
+}
+.mar{
+    margin:10px 15px 0 !important;
+}
+.lft{
+    left:0 !important;
+}
+.mar_top35{
+    margin-top:35px !important;
+}
+.mar_right15{
+    margin-right:15px !important;
+}
+.mar_auto{
+    margin:auto !important;
+}
+.height50{
+    height:50px !important;
+}
+.autoscrl-y,
+.x-grid-body{
+    overflow-y:auto;
+}
+.noscrl-x .x-fieldset-body{
+    overflow-x:hidden !important;
+}
+.width480{
+	width:480px !important;
+}

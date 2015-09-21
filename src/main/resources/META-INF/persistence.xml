@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="Storages" transaction-type="JTA">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <jta-data-source>java:jboss/SicDS</jta-data-source>
+    <!-- Корректный путь должен быть именно таким. Если меняются версии - править руками версию ramdoc-ear & core-model !-->
+    <!--    <jar-file>qq-0.0.1-SNAPSHOT.ear/lib/core-model-0.1.2.jar</jar-file>
+		<jar-file>qq-0.0.1-SNAPSHOT.ear/qq-ejb-0.0.1-SNAPSHOT.jar</jar-file> -->
+    <class>ru.insoft.archive.core_model.table.adm.AdmAccessRule</class>
+    <class>ru.insoft.archive.core_model.table.adm.AdmEmployee</class>
+    <class>ru.insoft.archive.core_model.table.adm.AdmGroup</class>
+    <class>ru.insoft.archive.core_model.table.adm.AdmGroupRule</class>
+    <class>ru.insoft.archive.core_model.table.adm.AdmUser</class>
+    <class>ru.insoft.archive.core_model.table.adm.AdmUserGroup</class>
+    <class>ru.insoft.archive.core_model.table.core.CoreParameter</class>
+    <class>ru.insoft.archive.core_model.table.core.CoreSubsystem</class>
+    <class>ru.insoft.archive.core_model.table.desc.DescDatatype</class>
+    <class>ru.insoft.archive.core_model.table.desc.DescriptorGroup</class>
+    <class>ru.insoft.archive.core_model.table.desc.DescriptorGroupAttr</class>
+    <class>ru.insoft.archive.core_model.table.desc.DescriptorValue</class>
+    <class>ru.insoft.archive.core_model.table.desc.DescriptorValueAttr</class>
+    <class>ru.insoft.archive.core_model.view.adm.VAdmUserRule</class>
+    <class>ru.insoft.archive.core_model.view.desc.VDescAttrValue</class>
+    <class>ru.insoft.archive.sic_storage.model.table.StrgDocContents</class>
+    <class>ru.insoft.archive.sic_storage.model.table.StrgFund</class>
+    <class>ru.insoft.archive.sic_storage.model.table.StrgOrgName</class>
+    <class>ru.insoft.archive.sic_storage.model.table.StrgOrganization</class>
+    <class>ru.insoft.archive.sic_storage.model.table.StrgPlaceArchive</class>
+    <class>ru.insoft.archive.sic_storage.model.table.StrgPlaceOrg</class>
+    <class>ru.insoft.archive.sic_storage.model.view.VStrgArchive</class>
+    <class>ru.insoft.archive.sic_storage.model.view.VStrgDocContents</class>
+    <class>ru.insoft.archive.sic_storage.model.view.VStrgOrgForSearch</class>
+    <class>ru.insoft.archive.sic_storage.model.view.VStrgOrgForView</class>
+    <class>ru.insoft.archive.sic_storage.model.view.VStrgPlaceOrg</class>
+    <properties>
+      <property name="hibernate.dialect" value="ru.insoft.archive.sic_storage.SicStorageDialect"/>
+      <property name="hibernate.jdbc.batch_size" value="20"/>
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.format_sql" value="false"/>
+      <property name="hibernate.use_sql_comments" value="false"/>
+      <property name="hibernate.cache.use_query_cache" value="false"/>
+      <property name="hibernate.cache.use_second_level_cache" value="false"/>
+      <property name="hibernate.generate_statistics" value="false"/>
+      <property name="hibernate.current_session_context_class" value="thread"/>
+    </properties>
+  </persistence-unit>
+</persistence>
