@@ -26,6 +26,7 @@ module.exports = function (grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig({
+		// Настройки путей к файлам
 		paths: {
 			loginjs: {
 				src: join(jsRoot, 'login', '**', '*.js'),
@@ -37,9 +38,22 @@ module.exports = function (grunt) {
 			},
 			vendorjs: {
 				src: join(modulesDir),
-				dst: join(jsRoot, 'vendor', 'script.js')
+				dst: join(jsRoot, 'vendor', 'script.min.js')
+			},
+			logincss: {
+				src: join(cssRoot, 'login', '**', '*.css'),
+				dst: join(cssRoot, 'login.min.css')
+			},
+			appcss: {
+				src: join(cssRoot, 'app', '**', '*.css'),
+				dst: join(cssRoot, 'app.min.css')
+			},
+			vendorcss: {
+				src: join(modulesDir),
+				dst: join(cssRoot, 'vendor', 'styles.min.css')
 			}
 		},
+		// Проверка правильности js кода
 		jshint: {
 			files: {
 				src: ['Gruntfile.js', '<%= paths.loginjs.src %>',
