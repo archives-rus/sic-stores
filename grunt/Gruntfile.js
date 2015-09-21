@@ -121,5 +121,6 @@ module.exports = function (grunt) {
 		}
 
 	});
-	grunt.registerTask('default', ['concat:vendorjs', 'watch']);
+	grunt.registerTask('default', ['concat', 'watch']);
+	grunt.registerTask('compile', ['jshint', 'concat', 'uglify']);
 };
