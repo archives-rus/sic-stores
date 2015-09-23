@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.authorizeRequests()
-				.antMatchers("/js/libs/login.min.js", "/js/login/login.min.js", 
-						"/css/libs/login.min.css", "/css/login/login.min.css")
+				.antMatchers("/scripts/vendor/script.min.js", "/scripts/login.min.js", 
+						"/styles/vendor/styles.min.css", "/styles/login.min.css")
 				.permitAll()
 				.anyRequest().authenticated()
 				.and()

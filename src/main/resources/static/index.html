@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Storages">
 	<head>
-		<title>Места хранения</title>
+		<base href="/"/>
+		<title ng-bind="title"></title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="styles/vendor/styles.min.css"/>
-		<link rel="stylesheet" type="text/css" href="styles/app.min.css"/>
+		<!--
+		<link rel="stylesheet" type="text/css" href="/styles/vendor/styles.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/styles/app.min.css"/>
+		-->
 	</head>
-	<body>
-		<h1>МЕСТА ХРАНЕНИЯ</h1>
-		<script src="scripts/vendor/script.js"></script>
-		<script src="scripts/app.min.js"></script>
+	<body ng-controller="ParentCtrl as prnt">
+		<header ng-show="header">Справочно-информационная база данных о местах хранения архивных 
+			документов по личному составу в государственных, муниципальных и ведомственных архивах</header>
+		<nav>
+			<button ng-click=''>Поиск</button>
+			<button ng-click=''>Очистить параметры</button>
+			<a href='/new_card/main'>Добавить</a> 
+			<button ng-click=''>Сохранить</button>
+			<a href='/new_card/view'>Добавить</a> 
+			<a href='/view_card'>Отменить</a>
+			<a href='/edit_card'>Редактировать</a> 
+			<a href='/'>Вернуться к результатам поиска</a>
+			<a href='/view_card'>Просмотр</a> 
+			<span ng-bind='user.fio'></span>
+			<button ng-click='prnt.logout()'>Выйти</button>
+		</nav>
+
+		<div ng-view></div>
+
+		<script src="/scripts/vendor/script.min.js"></script>
+		<script src="/scripts/app.min.js"></script>
 	</body>
 </html>

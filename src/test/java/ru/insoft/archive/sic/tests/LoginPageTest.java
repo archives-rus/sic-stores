@@ -1,5 +1,8 @@
 package ru.insoft.archive.sic.tests;
 
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,14 +26,28 @@ public class LoginPageTest {
 	@Autowired
 	private WebDriver driver;
 
+	@PersistenceContext
+	private EntityManager em;
+
+	@Test
+	public void checkData() {
+		for (String login : (List<String>)em.createNativeQuery("select login from adm_user").getResultList()){
+			System.out.println("FOUND: " + login);
+		}
+		System.out.println("PASSWORD FOR 'admin': " + em.createNativeQuery("select password from adm_user where login = 'admin'").getSingleResult());
+
+	}
+
 	@Test
 	public void testTitle() {
-//		Assert.assertEquals("Title is wrong", "ENTER", driver.getTitle());
+		Assert.assertEquals("Title is wrong", "Места хранения::Авторизация", driver.getTitle());
 	}
 
 	@Test
 	public void testBody() {
-//		Assert.assertEquals("Body is wrong", "LOGIN", driver.findElement(new By.ByTagName("div")).getText());
+		Assert.assertNotNull("Поле для ввода логина отсутствует", driver.findElement(By.name("username")));
+		Assert.assertNotNull("Поле для ввода пароля отсутствует", driver.findElement(By.name("password")));
+		Assert.assertTrue("Кнопка отсутствует", driver.findElement(By.tagName("button")).getAttribute("type").equals("submit"));
 	}
 
 }

@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Авторизация</title>
+		<title>Места хранения::Авторизация</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="styles/vendor/styles.min.css"/>
 		<link rel="stylesheet" type="text/css" href="styles/login.min.css"/>
 	</head>
-	<body ng-app="login">
-		<div ng-controller="loginCtrl">
-			<form role="form" ng-submit="login()">
-				<div>
-					<label for="username">Пользователь:</label> 
-					<input type="text" id="username" name="username" ng-model="cred.username"/>
-				</div>
-				<div>
-					<label for="password">Пароль:</label> 
-					<input type="password" id="password" name="password" ng-model="cred.password"/>
-				</div>
-				<button type="submit">Войти</button>
-			</form>
-		</div>
-		<script src="scripts/vendor/script.js"></script>
+	<body ng-app="LoginStorages">
+		<form ng-controller="LoginCtrl" role="form" ng-submit="login()">
+			<div>
+				<label for="username">Пользователь:</label> 
+				<input type="text" id="username" name="username" ng-model="cred.username"/>
+			</div>
+			<div>
+				<label for="password">Пароль:</label> 
+				<input type="password" id="password" name="password" ng-model="cred.password"/>
+			</div>
+			<button type="submit">Войти</button>
+		</form>
+		<script src="scripts/vendor/script.min.js"></script>
 		<script src="scripts/login.min.js"></script>
 	</body>
 </html>

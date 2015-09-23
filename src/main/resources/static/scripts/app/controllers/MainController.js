@@ -1,4 +1,2 @@
-SP.controller('MainController', ['$scope', function($scope){
-	console.log('MainController');
-	console.log(SP);
-}]);
+SP.controller('MainCtrl', ['$scope', function ($scope) {
+	}]);

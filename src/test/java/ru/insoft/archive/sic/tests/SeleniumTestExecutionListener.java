@@ -3,9 +3,12 @@ package ru.insoft.archive.sic.tests;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -45,7 +48,15 @@ public class SeleniumTestExecutionListener extends AbstractTestExecutionListener
 		if (webDriver != null) {
 			SeleniumTest annotation = findAnnotation(
 					testContext.getTestClass(), SeleniumTest.class);
-			webDriver.get(annotation.baseUrl());
+			String url = annotation.baseUrl();
+			webDriver.get(url);
+			if (!url.equals(webDriver.getCurrentUrl())) {
+				// Значит перенаправили на форму авторизации
+				webDriver.findElement(By.name("username")).sendKeys("admin");
+				webDriver.findElement(By.name("password")).sendKeys("admin");
+				webDriver.findElement(By.tagName("button")).click();
+				new WebDriverWait(webDriver, 7).until(ExpectedConditions.urlContains(url));
+			}
 		}
 	}
 

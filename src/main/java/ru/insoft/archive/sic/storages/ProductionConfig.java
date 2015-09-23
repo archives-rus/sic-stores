@@ -12,8 +12,8 @@ public class ProductionConfig {
 
 	@Bean
 	public DataSource dataSource(@Value("#{environment.STORAGES_DB_URL?:'jdbc:oracle:thin:@localhost:1521:hawkw'}") String url,
-			@Value("#{environment.STORAGES_DB_USER?:'sic'}") String username,
-			@Value("#{environment.STORAGES_DB_PASSWORD?:'archiv'}") String password,
+			@Value("#{environment.STORAGES_DB_USER?:'store'}") String username,
+			@Value("#{environment.STORAGES_DB_PASSWORD?:'PstoreLace'}") String password,
 			@Value("#{environment.STORAGES_DB_DRIVER?:'oracle.jdbc.OracleDriver'}") String driverName) {
 		DataSource ds = new DataSource();
 		ds.setUrl(url);

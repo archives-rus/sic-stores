@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
@@ -30,11 +32,13 @@ public class MainPageTest {
 
 	@Test
 	public void testTitle() {
-	//	Assert.assertEquals("Title is wrong", "INDEX", driver.getTitle());
+		Assert.assertEquals("Title is wrong", "Места хранения", driver.getTitle());
 	}
 
 	@Test
-	public void testBody() {
-	//	Assert.assertEquals("Body is wrong", "MAIN", driver.findElement(new By.ByTagName("div")).getText());
+	public void testLogout() {
+		driver.findElement(By.id("exitButton")).click();
+		new WebDriverWait(driver, 7).until(ExpectedConditions.not(ExpectedConditions.urlContains("/index.html")));
+		Assert.assertTrue("Перенаправлен после выхода не туда", driver.getCurrentUrl().endsWith("/enter.html"));
 	}
 }
