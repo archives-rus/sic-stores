@@ -38,7 +38,9 @@ module.exports = function (grunt) {
 			},
 			vendorjs: {
 				src: [join(modulesDir, 'angular', 'angular.min.js'),
-					join(modulesDir, 'angular-route', 'angular-route.min.js')],
+					join(modulesDir, 'angular-route', 'angular-route.min.js'),
+					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap.min.js')
+				],
 				dst: join(jsRoot, 'vendor', 'script.min.js')
 			},
 			logincss: {
@@ -48,13 +50,26 @@ module.exports = function (grunt) {
 			appcss: {
 				src: join(cssRoot, 'app', '**', '*.css'),
 				dst: join(cssRoot, 'app.min.css')
+			},
+			vendorcss: {
+				src: [join(modulesDir, 'angular', 'angular-csp.css')],
+				dst: join(cssRoot, 'vendor', 'styles.min.css')
 			}
+
 		},
 		// Проверка правильности js кода
 		jshint: {
 			files: {
 				src: ['Gruntfile.js', '<%= paths.loginjs.src %>',
 					'<%= paths.appjs.src %>']
+			}
+		},
+		// Сжимаем стили
+		cssmin: {
+			vendor: {
+				files: {
+					'<%= paths.vendorcss.dst %>': '<%= paths.vendorcss.src %>'
+				}
 			}
 		},
 		// Запуск заданий автоматически при изменении файлов
@@ -122,6 +137,6 @@ module.exports = function (grunt) {
 		}
 
 	});
-	grunt.registerTask('default', ['concat', 'watch']);
-	grunt.registerTask('compile', ['jshint', 'concat', 'uglify']);
+	grunt.registerTask('default', ['concat', 'cssmin:vendor', 'watch']);
+	grunt.registerTask('compile', ['jshint', 'concat', 'cssmin', 'uglify']);
 };

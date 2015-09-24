@@ -70,4 +70,8 @@ public class CurrentUser implements UserDetails {
 		return !user.isBlocked();
 	}
 
+	public AdmUser getUser() {
+		return user;
+	}
+
 }

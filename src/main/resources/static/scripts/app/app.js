@@ -1,4 +1,5 @@
-var SP = angular.module('Storages', ['ngRoute'])
+var SP = angular.module('Storages', ['ngRoute', 'ui.bootstrap'])
+		.value('user', {})
 		.config(['$routeProvider', '$locationProvider',
 			function ($routeProvider, $locationProvider) {
 
