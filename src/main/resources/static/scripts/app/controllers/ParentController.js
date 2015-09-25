@@ -1,16 +1,31 @@
-SP.controller('ParentCtrl', ['$http', '$window', '$location', 'user', '$timeout',
-	function ($http, $window, $location, user, $timeout) {
+SP.controller('ParentCtrl', ['$http', '$window', '$location',
+	'$timeout', '$rootScope', 'criteria',
+	function ($http, $window, $location, $timeout, $rootScope, criteria) {
 		var me = this;
+
 		$http.get('/userinfo').success(function (data) {
-			for (var o in data)
-				user[o] = data[o];
-			me.fio = user.fio; 
+			$rootScope.user = data;
 			me.msg = true;
-			$timeout(function() {
+			$timeout(function () {
 				me.msg = false;
 			}, 1500);
 		});
 
+		// Инициализируем справочники
+		$http.get('/dict/archives').success(function (data) {
+			$rootScope.archives = data;
+		});
+		$http.get('/dict/docTypes').success(function (data) {
+			$rootScope.docTypes = data;
+		});
+
+		/**
+		 * Очищает параметры поиска
+		 */
+		me.reset = function () {
+			for (var o in criteria)
+				delete criteria[o];
+		};
 		/**
 		 * Выполняет выход из системы
 		 */

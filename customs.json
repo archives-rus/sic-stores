@@ -6,5 +6,9 @@
 			}
 		}
 	},
-	"attributes": {}
+	"attributes": {
+		"sp-paginator": {
+			"context": "div"
+		}
+	}
 }

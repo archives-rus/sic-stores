@@ -1,8 +1,7 @@
 var SP = angular.module('Storages', ['ngRoute', 'ui.bootstrap'])
-		.value('user', {})
+		.constant('criteria', {})
 		.config(['$routeProvider', '$locationProvider',
 			function ($routeProvider, $locationProvider) {
-
 				/**
 				 * Дополнительные настройки для маршрутов
 				 * @param {String} suffix - изменяемая часть заголовка вкладки браузера

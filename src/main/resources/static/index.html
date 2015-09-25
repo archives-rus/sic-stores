@@ -15,8 +15,8 @@
 			документов по личному составу в государственных, муниципальных и ведомственных архивах</header>
 		<nav>
 			<ng-include src="prnt.menu()"></ng-include>
-			<div style='text-align: right; display: inline-block; width: 70%'>
-				<span ng-bind='prnt.fio'></span>
+			<div style='float: right; display: inline-block'>
+				<span ng-bind='user.fio'></span>
 				<button ng-click='prnt.logout()'>Выйти</button>
 			</div>
 		</nav>

@@ -1,8 +1,19 @@
-<script type="text/ng-template" id="alert.html">
-	<div style="position:absolute;text-align: center;border:1px solid black;top:0;z-index:100;left:40%;width:200px;word-wrap:break-word;background-color:#fafcfa;color:brown" 
-	role="alert">
-	<div ng-transclude></div>
-	</div>
-</script>
-<alert ng-show='prnt.msg' class='ng-cloak' template-url='alert.html'>Доброго времени суток {{prnt.fio}}</alert>
+<style>
+	#greeting {
+		position:absolute;
+		text-align:center;
+		border:1px solid black;
+		top:0;
+		left:40%;
+		width:200px;
+		word-wrap:break-word;
+		background-color:#fafcfa;
+		opacity: 0.9;
+		color:brown;
+		z-index:100;
+	}
+</style>
+<div id='greeting' ng-show='prnt.msg' class='ng-cloak'> 
+	Доброго времени суток {{user.fio}}
+</div>
 

@@ -1,2 +1,3 @@
-SP.controller('MainCtrl', ['$scope', function ($scope) {
+SP.controller('MainCtrl', ['$scope', 'criteria', function ($scope, criteria) {
+		$scope.criteria = criteria;
 	}]);

@@ -1,1 +1,37 @@
-<div>Main</div>
+<div>Параметры поиска</div>
+<form ng-submit="orgSearch()">
+	<div>
+		<label for="nameorg">Наименование организации:</label>
+		<input id="nameorg" ng-model="criteria.org"/>
+	</div>
+	<div>
+		<label for="doctype">Вид документов:</label>
+		<select id="doctype" ng-model="criteria.docType" ng-options="type.fullValue for type in docTypes"></select>
+	</div>
+	<div>
+		<label for="startYear">Годы</label>
+		<label for="startYear">c:</label> 
+		<input id="startYear" ng-model="criteria.startYear"/>
+		<label for="endYear">по:</label> 
+		<input id="endYear" ng-model="criteria.endYear"/>
+	</div>
+	<div>
+		<label for="archive">Архив:</label>
+		<select id="archive" ng-model="criteria.archive" ng-options="archive.fullValue for archive in archives"></select>
+	</div>
+	<div>
+		<label for="fundNumber">№ фонда:</label>
+		<input ng-model="criteria.number.prefix"/>
+		<input id="fundNumber" ng-model="criteria.number.number"/>
+		<input ng-model="criteria.number.suffix"/>
+	</div>
+</form>	
+<div>Результаты поиска</div>
+<div sp-paginator></div>
+
+
+
+
+
+
+

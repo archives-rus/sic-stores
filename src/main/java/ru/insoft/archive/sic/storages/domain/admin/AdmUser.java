@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * Пользователь системы
  *
  * @author stikkas<stikkas@yandex.ru>
  */
