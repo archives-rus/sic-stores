@@ -1,6 +1,6 @@
 SP.controller('ParentCtrl', ['$http', '$window', '$location',
-	'$timeout', '$rootScope', 'criteria',
-	function ($http, $window, $location, $timeout, $rootScope, criteria) {
+	'$timeout', '$rootScope', 'Search',
+	function ($http, $window, $location, $timeout, $rootScope, Search) {
 		var me = this;
 
 		$http.get('/userinfo').success(function (data) {
@@ -19,13 +19,6 @@ SP.controller('ParentCtrl', ['$http', '$window', '$location',
 			$rootScope.docTypes = data;
 		});
 
-		/**
-		 * Очищает параметры поиска
-		 */
-		me.reset = function () {
-			for (var o in criteria)
-				delete criteria[o];
-		};
 		/**
 		 * Выполняет выход из системы
 		 */
@@ -56,5 +49,15 @@ SP.controller('ParentCtrl', ['$http', '$window', '$location',
 				default:
 					return dir + 'main.html';
 			}
+		};
+		/**
+		 * Очищает параметры поиска
+		 */
+		me.reset = Search.clearCriteria;
+		/**
+		 * Поиск информации об организациях
+		 */
+		me.search = function () {
+			Search.loadTablePage(1);
 		};
 	}]);

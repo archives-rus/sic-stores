@@ -6,21 +6,21 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="/styles/vendor/styles.min.css"/>
-		<!--
 		<link rel="stylesheet" type="text/css" href="/styles/app.min.css"/>
-		-->
 	</head>
 	<body ng-controller="ParentCtrl as prnt">
-		<header ng-show="header">Справочно-информационная база данных о местах хранения архивных 
-			документов по личному составу в государственных, муниципальных и ведомственных архивах</header>
-		<nav>
-			<ng-include src="prnt.menu()"></ng-include>
-			<div style='float: right; display: inline-block'>
-				<span ng-bind='user.fio'></span>
-				<button ng-click='prnt.logout()'>Выйти</button>
-			</div>
-		</nav>
-	<div ng-view></div>
+		<div class="container">
+			<header class="row text-center" ng-show="header">Справочно-информационная база данных о местах хранения архивных 
+				документов по личному составу в государственных, муниципальных и ведомственных архивах</header>
+			<nav>
+				<ng-include src="prnt.menu()"></ng-include>
+				<div style='float: right; display: inline-block'>
+					<span ng-bind='user.fio'></span>
+					<button class='btn btn-default' ng-click='prnt.logout()'>Выход</button>
+				</div>
+			</nav>
+			<div ng-view></div>
+		</div>
 	<ng-include src="'views/info/greeting.html'"></ng-include>
 	<script src="/scripts/vendor/script.min.js"></script>
 	<script src="/scripts/app.min.js"></script>

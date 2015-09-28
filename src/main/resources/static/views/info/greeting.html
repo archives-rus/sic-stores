@@ -12,8 +12,15 @@
 		color:brown;
 		z-index:100;
 	}
+	.show-hide {
+		-webkit-transition:all linear 0.5s;
+		transition:all linear 0.5s;
+	}
+	.show-hide.ng-hide {
+		opacity:0;
+	}
 </style>
-<div id='greeting' ng-show='prnt.msg' class='ng-cloak'> 
+<div id='greeting' ng-show='prnt.msg' class='ng-cloak show-hide'> 
 	Доброго времени суток {{user.fio}}
 </div>
 

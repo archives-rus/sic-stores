@@ -39,7 +39,9 @@ module.exports = function (grunt) {
 			vendorjs: {
 				src: [join(modulesDir, 'angular', 'angular.min.js'),
 					join(modulesDir, 'angular-route', 'angular-route.min.js'),
-					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap.min.js')
+					join(modulesDir, 'angular-animate', 'angular-animate.min.js'),
+					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap.min.js'),
+					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap-tpls.min.js')
 				],
 				dst: join(jsRoot, 'vendor', 'script.min.js')
 			},
@@ -51,8 +53,13 @@ module.exports = function (grunt) {
 				src: join(cssRoot, 'app', '**', '*.css'),
 				dst: join(cssRoot, 'app.min.css')
 			},
+			theme: {
+				src: join(projectDir, 'bootstrap', 'app-theme.less'),
+				dst: join(cssRoot, 'app-theme.css')
+			},
 			vendorcss: {
-				src: [join(modulesDir, 'angular', 'angular-csp.css')],
+				src: [join(modulesDir, 'angular', 'angular-csp.css'),
+					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap-csp.css')],
 				dst: join(cssRoot, 'vendor', 'styles.min.css')
 			}
 
@@ -70,6 +77,19 @@ module.exports = function (grunt) {
 				files: {
 					'<%= paths.vendorcss.dst %>': '<%= paths.vendorcss.src %>'
 				}
+			},
+			app: {
+				files: {
+					'<%= paths.appcss.dst %>': ['<%= paths.theme.dst %>', '<%= paths.appcss.src %>']
+				}
+			}
+		},
+		// Тема
+		less: {
+			app: {
+				files: {
+					'<%= paths.theme.dst %>': '<%= paths.theme.src %>'
+				}
 			}
 		},
 		// Запуск заданий автоматически при изменении файлов
@@ -86,6 +106,14 @@ module.exports = function (grunt) {
 				files: '<%= uglify.app.src %>',
 				tasks: 'uglify:app'
 			},
+			less: {
+				files: '<%= paths.theme.src %>',
+				tasks: 'less:app'
+			},
+			cssmin: {
+				files: ['<%= paths.appcss.src %>', '<%= paths.theme.dst %>'],
+				tasks: 'cssmin:app'
+			},
 			options: {
 				atBegin: true
 			}
@@ -96,7 +124,7 @@ module.exports = function (grunt) {
 				files: {
 					'<%= paths.vendorjs.dst %>': '<%= paths.vendorjs.src %>'
 				}
-			}	
+			}
 		},
 		// Сжимаем js файлы
 		uglify: {
@@ -107,7 +135,7 @@ module.exports = function (grunt) {
 			app: {
 				src: '<%= paths.appjs.src %>',
 				dest: '<%= paths.appjs.min %>'
-			}	
+			}
 		},
 		// Здесь просто для примера, spring-boot:run обрабатывает динамически
 		// изменения в папке static, так что эту задачу я не использую
@@ -138,5 +166,5 @@ module.exports = function (grunt) {
 
 	});
 	grunt.registerTask('default', ['concat', 'cssmin:vendor', 'watch']);
-	grunt.registerTask('compile', ['jshint', 'concat', 'cssmin', 'uglify']);
+	grunt.registerTask('compile', ['jshint', 'concat', 'less', 'cssmin', 'uglify']);
 };
