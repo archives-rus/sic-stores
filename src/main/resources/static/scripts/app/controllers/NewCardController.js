@@ -1,3 +1,8 @@
-SP.controller('NewCardCtrl', ['$scope', '$routeParams',
-	function ($scope, $routeParams) {
-	}]);
+SP.controller('NewCardCtrl', ['$scope',
+	/**
+	 * Отвечает за создание новой карточки
+	 */
+	function ($scope) {
+		$scope.names = [];
+	}
+]);

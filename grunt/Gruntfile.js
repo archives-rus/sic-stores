@@ -37,7 +37,8 @@ module.exports = function (grunt) {
 				min: join(jsRoot, 'app.min.js')
 			},
 			vendorjs: {
-				src: [join(modulesDir, 'angular', 'angular.min.js'),
+				src: [
+					join(modulesDir, 'angular', 'angular.min.js'),
 					join(modulesDir, 'angular-route', 'angular-route.min.js'),
 					join(modulesDir, 'angular-animate', 'angular-animate.min.js'),
 					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap.min.js'),

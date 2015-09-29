@@ -11,15 +11,10 @@ SP.service('Search', ['$http', 'criteria', 'tableResult', 'singleResult',
 						delete obj[o];
 				},
 				// Создает список параметров для запроса
-				// Combobox отдает объект, а нам нужно тольк id
 				buildParams = function (start, limit) {
 					var params = {};
 					for (var o in criteria) {
-						var param = criteria[o];
-						if (param instanceof Object)
-							params[o] = param.id;
-						else
-							params[o] = param;
+						params[o] = criteria[o];
 					}
 					params.start = start;
 					if (limit)

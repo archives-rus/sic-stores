@@ -1,0 +1,39 @@
+<div class="btn-group">
+	<button ng-click="ctrl.addName()" class="btn btn-default">Добавить</button>
+	<button ng-click="ctrl.downName()" class="btn btn-default">Вниз</button>
+	<button ng-click="ctrl.upName()" class="btn btn-default">Вверх</button>
+</div>
+<table style="width:100%" class='table table-bordered table-striped'>
+	<thead>
+		<tr>
+			<th class='text-center'>Полное наименование и переименования</th>
+			<th class='text-center'>Краткое наименование</th>
+			<th class='text-center'>Подчинённость</th>
+			<th class='text-center'>Даты</th>
+			<th class='text-center'></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="name in names">
+			<td ng-click="ctrl.setCurrentName($index, 0)" ng-class="ctrl.isCurrent($index)">
+				<input type="text" class="form-control" ng-focus="ctrl.setCurrentName($index, 0)" 
+					   ng-model="name.fullName" ng-readonly="!ctrl.isSelected($index, 0)" ng-blur='ctrl.blurName($index, 0)'/>
+			</td>
+			<td ng-click="ctrl.setCurrentName($index, 1)" ng-class="ctrl.isCurrent($index)">
+				<input type="text" class="form-control" ng-focus="ctrl.setCurrentName($index, 1)" 
+					   ng-model="name.shortName" ng-readonly="!ctrl.isSelected($index, 1)" ng-blur='ctrl.blurName($index, 1)'/>
+			</td>
+			<td ng-click="ctrl.setCurrentName($index, 2)" ng-class="ctrl.isCurrent($index)">
+				<input type="text" class="form-control" ng-focus="ctrl.setCurrentName($index, 2)" 
+					   ng-model="name.owner" ng-readonly="!ctrl.isSelected($index, 2)" ng-blur='ctrl.blurName($index, 2)'/>
+			</td>
+			<td ng-click="ctrl.setCurrentName($index, 3)" ng-class="ctrl.isCurrent($index)">
+				<input type="text" class="form-control" ng-focus="ctrl.setCurrentName($index, 3)" 
+					   ng-model="name.years" ng-readonly="!ctrl.isSelected($index, 3)" ng-blur='ctrl.blurName($index, 3)'/>
+			</td>
+			<td ng-click="ctrl.setCurrentName($index, 4)" ng-class="ctrl.isCurrent($index)">
+				<button class="btn btn-danger btn-sm" ng-click="ctrl.removeName($index)">Удалить</button>
+			</td>
+		</tr>
+	</tbody>
+</table>

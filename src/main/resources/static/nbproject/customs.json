@@ -1,0 +1,14 @@
+{
+	"elements": {
+		"names-table": {
+			"attributes": {
+				"names": {}
+			}
+		}
+	},
+	"attributes": {
+		"sp-paginator": {
+			"context": "div"
+		}
+	}
+}

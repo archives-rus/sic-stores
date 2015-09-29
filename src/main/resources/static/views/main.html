@@ -5,7 +5,7 @@
 </div>
 <div class='form-group form-inline'>
 	<label for="doctype">Вид документов:</label>
-	<select id="doctype" ng-model="criteria.docType" ng-options="type.fullValue for type in docTypes" class='form-control'></select>
+	<select id="doctype" ng-model="criteria.docType" ng-options="type.id as type.fullValue for type in docTypes" class='form-control'></select>
 </div>
 <div class='form-group form-inline'>
 	<label for="startYear">Годы</label>
@@ -16,7 +16,7 @@
 </div>
 <div class='form-group form-inline'>
 	<label for="archive">Архив:</label>
-	<select id="archive" ng-model="criteria.archive" ng-options="archive.fullValue for archive in archives" class='form-control'></select>
+	<select id="archive" ng-model="criteria.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
 </div>
 <div class='form-group form-inline'>
 	<label for="fundNumber">№ фонда:</label>
