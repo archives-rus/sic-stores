@@ -6,22 +6,8 @@ module.exports = function (grunt) {
 			wwwRoot = join(projectDir, 'src', 'main', 'resources', 'static'),
 			jsRoot = join(wwwRoot, 'scripts'),
 			cssRoot = join(wwwRoot, 'styles'),
-			fs = require('fs');
-
-	/**
-	 * Отправляет данные файла, который находится в wwwRoot, пользователю по HTTP
-	 * @param {String} filename - имя файла относительно wwwRoot
-	 * @param {http.ServerResponse} res - объект HTTP ответа
-	 */
-	function readStaticFileToNetwork(filename, res) {
-		var fullName = join(wwwRoot, filename);
-		if (fs.existsSync(fullName))
-			fs.createReadStream(fullName).pipe(res);
-		else {
-			res.statusCode = 404;
-			res.end();
-		}
-	}
+			fontsRoot = join(wwwRoot, 'fonts'),
+			annotateSuffix = '-annotated';
 
 	require('load-grunt-tasks')(grunt);
 
@@ -30,10 +16,12 @@ module.exports = function (grunt) {
 		paths: {
 			loginjs: {
 				src: join(jsRoot, 'login', '**', '*.js'),
+				ann: join(jsRoot, 'login', '**', '*' + annotateSuffix),
 				min: join(jsRoot, 'login.min.js')
 			},
 			appjs: {
 				src: join(jsRoot, 'app', '**', '*.js'),
+				ann: join(jsRoot, 'app', '**', '*' + annotateSuffix),
 				min: join(jsRoot, 'app.min.js')
 			},
 			vendorjs: {
@@ -62,8 +50,10 @@ module.exports = function (grunt) {
 				src: [join(modulesDir, 'angular', 'angular-csp.css'),
 					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap-csp.css')],
 				dst: join(cssRoot, 'vendor', 'styles.min.css')
+			},
+			fonts: {
+				bootstrap: join(modulesDir, 'bootstrap', 'dist', 'fonts')
 			}
-
 		},
 		// Проверка правильности js кода
 		jshint: {
@@ -83,11 +73,16 @@ module.exports = function (grunt) {
 				files: {
 					'<%= paths.appcss.dst %>': ['<%= paths.theme.dst %>', '<%= paths.appcss.src %>']
 				}
+			},
+			login: {
+				files: {
+					'<%= paths.logincss.dst %>': ['<%= paths.theme.dst %>', '<%= paths.logincss.src %>']
+				}
 			}
 		},
 		// Тема
 		less: {
-			app: {
+			theme: {
 				files: {
 					'<%= paths.theme.dst %>': '<%= paths.theme.src %>'
 				}
@@ -99,19 +94,27 @@ module.exports = function (grunt) {
 				files: '<%= jshint.files.src %>',
 				tasks: 'newer:jshint' //обслуживать только измененные файлы
 			},
+			annotate: {
+				files: ['<%= paths.appjs.src %>', '<%= paths.loginjs.src %>'],
+				tasks: 'newer:ngAnnotate'
+			},
 			l_uglify: {
-				files: '<%= uglify.login.src %>',
+				files: '<%= paths.loginjs.ann %>',
 				tasks: 'uglify:login'
 			},
 			a_uglify: {
-				files: '<%= uglify.app.src %>',
+				files: '<%= paths.appjs.ann %>',
 				tasks: 'uglify:app'
 			},
 			less: {
 				files: '<%= paths.theme.src %>',
-				tasks: 'less:app'
+				tasks: 'less'
 			},
-			cssmin: {
+			l_cssmin: {
+				files: ['<%= paths.logincss.src %>', '<%= paths.theme.dst %>'],
+				tasks: 'cssmin:login'
+			},
+			a_cssmin: {
 				files: ['<%= paths.appcss.src %>', '<%= paths.theme.dst %>'],
 				tasks: 'cssmin:app'
 			},
@@ -127,45 +130,57 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		// Копируем шрифты
+		copy: {
+			fonts: {
+				expand: true,
+				files: [
+					{
+						expand: true,
+						cwd: '<%= paths.fonts.bootstrap %>',
+						src: '**',
+						dest: fontsRoot
+					}
+				]
+			}
+		},
+		// Приводит DI angular в соответсвующий вид, чтобы работало посли минимизации
+		ngAnnotate: {
+			app: {
+				files: [
+					{
+						expand: true,
+						src: '<%= paths.appjs.src %>',
+						rename: function (d, s) {
+							return s + annotateSuffix;
+						}
+					}
+				]
+			},
+			login: {
+				files: [
+					{
+						expand: true,
+						src: '<%= paths.loginjs.src %>',
+						rename: function (d, s) {
+							return s + annotateSuffix;
+						}
+					}
+				]
+			}
+		},
 		// Сжимаем js файлы
 		uglify: {
 			login: {
-				src: '<%= paths.loginjs.src %>',
+				src: '<%= paths.loginjs.ann %>',
 				dest: '<%= paths.loginjs.min %>'
 			},
 			app: {
-				src: '<%= paths.appjs.src %>',
+				src: '<%= paths.appjs.ann %>',
 				dest: '<%= paths.appjs.min %>'
 			}
-		},
-		// Здесь просто для примера, spring-boot:run обрабатывает динамически
-		// изменения в папке static, так что эту задачу я не использую
-		connect: {
-			server: {
-				options: {
-					port: 8989,
-					hostname: '127.0.0.1',
-					base: wwwRoot,
-					keepalive: true,
-					debug: true,
-					middleware: [
-						function (req, res, next) {
-							var filePath;
-							if (req.url === '/enter.html')
-								readStaticFileToNetwork('enter.html', res);
-							else if (req.url == '/index.html' || req.url === '/')
-								readStaticFileToNetwork('index.html', res);
-							else if ((filePath = /^\/(.+?\.(css|js))$/.exec(req.url)))
-								readStaticFileToNetwork(filePath[1], res);
-							else
-								res.writeHead(301, {'Location': "http://localhost:8991" + req.url});
-						}
-					]
-				}
-			}
 		}
-
 	});
-	grunt.registerTask('default', ['concat', 'cssmin:vendor', 'watch']);
-	grunt.registerTask('compile', ['jshint', 'concat', 'less', 'cssmin', 'uglify']);
+	grunt.registerTask('default', ['concat', 'cssmin:vendor', 'copy', 'watch']);
+	grunt.registerTask('compile', ['jshint', 'concat', 'less', 'cssmin', 'copy', 'ngAnnotate', 'uglify']);
 };
