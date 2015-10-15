@@ -1,6 +1,6 @@
 SP.directive('spPaginator', [function() {
 	return {
-		templateUrl: 'directives/paginator.html',
+		templateUrl: 'partials/directives/paginator.html',
 		controller: 'PaginatorCtrl',
 		controllerAs: 'ctrl',
 		scope: {

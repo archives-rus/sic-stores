@@ -21,22 +21,22 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 
 				$routeProvider
 						.when('/new_card/:from', {
-							templateUrl: 'views/card.html',
+							templateUrl: 'partials/views/card.html',
 							controller: 'NewCardCtrl',
 							resolve: resolve("Создание карточки")
 						})
 						.when('/edit_card', {
-							templateUrl: 'views/card.html',
+							templateUrl: 'partials/views/card.html',
 							controller: 'EditCardCtrl',
 							resolve: resolve("Редактирование карточки")
 						})
 						.when('/view_card', {
-							templateUrl: 'views/view_card.html',
+							templateUrl: 'partials/views/view_card.html',
 							controller: 'ViewCardCtrl',
 							resolve: resolve("Просмотр карточки")
 						})
 						.otherwise({
-							templateUrl: 'views/main.html',
+							templateUrl: 'partials/views/main.html',
 							controller: 'MainCtrl',
 							resolve: resolve(null, true)
 						});

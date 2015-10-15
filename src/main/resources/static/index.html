@@ -21,7 +21,7 @@
 			</nav>
 			<div ng-view></div>
 		</div>
-	<ng-include src="'views/info/greeting.html'"></ng-include>
+	<alert ng-show='prnt.msg' id='greeting' class='ng-cloak'>Доброго времени суток <span>{{user.fio}}</span></alert>
 	<script src="/scripts/vendor/script.min.js"></script>
 	<script src="/scripts/app.min.js"></script>
 </body>

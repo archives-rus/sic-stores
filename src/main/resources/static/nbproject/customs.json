@@ -4,6 +4,26 @@
 			"attributes": {
 				"names": {}
 			}
+		},
+		"ng-include": {
+			"attributes": {
+				"src": {}
+			}
+		},
+		"uib-alert": {
+			"attributes": {
+				"ng-show": {},
+				"class": {},
+				"template-url": {}
+			}
+		},
+		"alert": {
+			"attributes": {
+				"ng-show": {},
+				"id": {},
+				"type": {},
+				"class": {}
+			}
 		}
 	},
 	"attributes": {

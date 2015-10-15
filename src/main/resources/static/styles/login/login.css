@@ -1,0 +1,25 @@
+
+header {
+	margin: 10px;
+}
+
+.ng-cloak {
+	display: none;
+}
+
+#wrongauth {
+	position: absolute;
+	top: 100px;
+	left: 40%;
+	width: 300px;
+	text-align: center;
+
+	-webkit-transition:all linear 0.5s;
+	-moz-transition:all linear 0.5s;
+	-o-transition:all linear 0.5s;
+	transition:all linear 0.5s;
+}
+
+#wrongauth.ng-hide {
+	opacity:0;
+}
