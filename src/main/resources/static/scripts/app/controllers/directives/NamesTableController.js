@@ -1,8 +1,7 @@
 /** 
  * Контроллер для таблицы 'Наименование организации и её переименования'
  */
-SP.controller('NamesTableCtrl', ['$scope',
-		function ($scope) {
+SP.controller('NamesTableCtrl', function ($scope) {
 			var currentName = {},
 					me = this;
 
@@ -73,6 +72,6 @@ SP.controller('NamesTableCtrl', ['$scope',
 				}
 			};
 		}
-]);
+);
 
 

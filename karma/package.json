@@ -1,0 +1,14 @@
+{
+  "name": "sic-storages-client-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Serge Basa",
+  "license": "ISC",
+  "dependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.10",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-jasmine": "^0.3.6"
+  }
+}
