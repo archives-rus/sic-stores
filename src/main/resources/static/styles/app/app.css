@@ -1,6 +1,47 @@
 .ng-cloak {
 	display: none !important;
 }
+.page-header {
+	margin: 10px 0 20px;
+}
+.panel-default > .panel-heading {
+	color: #560101;
+	background: url("../img/line.png") no-repeat scroll 0 0 / 100% 100% rgba(0, 0, 0, 0);
+	height: 30px;
+	padding: 5px 0;
+}
+.panel.panel-primary {
+	border: 1px solid #3F2013;
+	border-radius: 0px;
+	background-color: #F2EDE0;
+}
+
+.btn.btn-default.remove-card {
+	position: absolute; 
+	padding: 2px 3px 0;
+	top: 0; 
+	right: 0; 
+	z-index: 3;
+	color: #A36462;
+}
+
+.btn.btn-default.remove-card:hover {
+	right: 1px; 
+	left: auto;
+}
+
+.vertical-separator {
+	font-size: 11px;
+	margin: 0 -5px 0 5px;
+}
+.page-header {
+	border-bottom: 2px solid;
+    border-image: url("../img/tit_bot_search.png") 0 1 10 10;
+    padding-bottom: 10px;
+}
+.page-header, .control-label {
+	color: #452111;
+}
 
 #greeting {
 	position: absolute;
@@ -17,4 +58,9 @@
 #greeting.ng-hide {
 	opacity:0;
 	top: 0;
+}
+
+div[sp-paginator] button {
+	color: transparent;
+	background: linear-gradient(to right, blue, lightblue);
 }

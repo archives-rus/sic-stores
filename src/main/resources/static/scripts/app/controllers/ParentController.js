@@ -1,5 +1,6 @@
 SP.controller('ParentCtrl',
-		function ($http, $window, $location, $timeout, $rootScope, Search) {
+		function ($scope, $http, $window, $location, $timeout,
+				$rootScope, Search) {
 			var me = this;
 
 			$http.get('/userinfo').success(function (data) {
@@ -32,30 +33,11 @@ SP.controller('ParentCtrl',
 				});
 			};
 			/**
-			 * Переключает основное меню в зависимости от контекста
-			 */
-			me.menu = function () {
-				var dir = 'partials/views/menu/';
-				switch ($location.url()) {
-					case '/new_card/main':
-						return dir + 'new_card_main.html';
-					case '/view_card':
-						return dir + 'view_card.html';
-					case '/edit_card':
-					case '/new_card/view':
-						return dir + 'edit_card.html';
-					default:
-						return dir + 'main.html';
-				}
-			};
-			/**
 			 * Очищает параметры поиска
 			 */
 			me.reset = Search.clearCriteria;
 			/**
 			 * Поиск информации об организациях
 			 */
-			me.search = function () {
-				Search.loadTablePage(1);
-			};
+			me.search = Search.loadTablePage;
 		});

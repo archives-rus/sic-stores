@@ -6,7 +6,7 @@
 // Reset and dependencies
 @import "normalize.less";
 //@import "print.less";
-//@import "glyphicons.less";
+@import "glyphicons.less";
 
 // Core CSS
 @import "scaffolding.less";
@@ -50,3 +50,39 @@
 @import "utilities.less";
 //@import "responsive-utilities.less";
 
+@body-bg: #ede4ce;
+@panel-bg: @body-bg;
+@panel-default-heading-bg: @body-bg;
+@panel-default-border: @body-bg;
+@panel-inner-border: @body-bg;
+
+.btn.btn-default {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	position: relative;
+	&:active {
+		outline: none;
+		box-shadow: none;
+		&:focus {
+			top: 1px;
+			left: 1px;
+		}
+	}
+	&:hover {
+		top: -1px;
+		left: -1px;
+	}
+}
+
+.panel {
+	border: none;
+	box-shadow: none;
+}
+.panel > .table-bordered {
+	.table-bordered;
+}
+
+table > thead > tr > th {
+	.text-center;
+}

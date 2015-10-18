@@ -1,8 +1,7 @@
 /** 
  * Поиск организаций по критериям
  */
-SP.service('Search', ['$http', 'criteria', 'tableResult', 'singleResult',
-	'ShowMessage', function ($http, criteria, tableResult, singleResult, ShowMessage) {
+SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowMessage) {
 
 		var
 				// Удаляет все свойства объекта
@@ -26,8 +25,9 @@ SP.service('Search', ['$http', 'criteria', 'tableResult', 'singleResult',
 		return {
 			// Получает данные для одной страницы таблицы
 			loadTablePage: function (numberOfPage) {
+				var page = numberOfPage || 1; 
 				$http.get('/search/main', {
-					params: buildParams(numberOfPage - 1, limit)
+					params: buildParams(page - 1, limit)
 				}).success(function (data) {
 					for (var o in data) {
 						tableResult[o] = data[o];
@@ -60,6 +60,6 @@ SP.service('Search', ['$http', 'criteria', 'tableResult', 'singleResult',
 				clear(tableResult);
 			}
 		};
-	}]);
+	});
 
 

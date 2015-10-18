@@ -1,47 +1,74 @@
-<div class='text-center'>Параметры поиска</div>
-<div class='form-group form-inline'>
-	<label for="nameorg">Наименование организации:</label>
-	<input id="nameorg" ng-model="criteria.org" class='form-control'/>
+<div class="panel panel-default">
+	<div class="panel-heading panel-title text-center">Параметры поиска</div>
+	<div class="panel-body">
+		<form  ng-submit="ctrl.search()" class="form-horizontal">
+			<div class='form-group'>
+				<label for="nameorg" class="col-sm-3 control-label">Наименование организации:</label>
+				<div class="col-sm-5">
+					<input id="nameorg" ng-model="ctrl.crit.org" class='form-control'/>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="doctype" class="col-sm-3 control-label">Вид документов:</label>
+				<div class="col-sm-5">
+					<select id="doctype" ng-model="ctrl.crit.docType" ng-options="type.id as type.fullValue for type in docTypes" class='form-control'></select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="startYear" class="col-sm-3 control-label">Годы</label>
+				<div class="col-sm-2" style='width: 9.5%'>
+					<div class="input-group">
+						<label for="startYear" class="input-group-addon control-label">c:</label>
+						<input id="startYear" ng-model="ctrl.crit.startYear" class='form-control'/>
+					</div>
+				</div>
+				<div class="col-sm-2" style='width: 10.15%'>
+					<div class="input-group">
+						<label for="endYear" class="input-group-addon control-label">по:</label> 
+						<input id="endYear" ng-model="ctrl.crit.endYear" class='form-control'/>
+					</div>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="archive" class='col-sm-3 control-label'>Архив:</label>
+				<div class='col-sm-5'>
+					<select id="archive" ng-model="ctrl.crit.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="fundNumber" class='col-sm-3 control-label'>№ фонда:</label>
+				<div class="col-sm-2">
+					<div class="input-group">
+						<input ng-model="ctrl.crit.prefix" class="form-control" style='width: 60px'/>
+						<input id="fundNumber" ng-model="ctrl.crit.number" class='form-control' style='width: 60px'/>
+						<input ng-model="ctrl.crit.suffix" class='form-control' style='width: 60px'/>
+					</div>
+				</div>
+			</div>
+			<input type='submit' hidden=""/> 
+		</form>
+	</div>
 </div>
-<div class='form-group form-inline'>
-	<label for="doctype">Вид документов:</label>
-	<select id="doctype" ng-model="criteria.docType" ng-options="type.id as type.fullValue for type in docTypes" class='form-control'></select>
+<div class="panel panel-default">
+	<div class="panel-heading panel-title text-center">Результаты поиска</div>
+		<div sp-paginator></div>
+		<table class='table table-bordered table-striped table-hover'>
+			<thead>
+				<tr>
+					<th>Организация</th>
+					<th>Архив</th>
+					<th>Фонд</th>
+					<th>Годы</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in ctrl.result.content">
+					<td>{{item.organization}}</td>
+					<td>{{item.archive}}</td>
+					<td>{{item.fund}}</td>
+					<td>{{item.years}}</td>
+				</tr>
+			</tbody>
+		</table>
 </div>
-<div class='form-group form-inline'>
-	<label for="startYear">Годы</label>
-	<label for="startYear">c:</label> 
-	<input id="startYear" ng-model="criteria.startYear" class='form-control' style='width: 60px'/>
-	<label for="endYear">по:</label> 
-	<input id="endYear" ng-model="criteria.endYear" class='form-control' style='width: 60px'/>
-</div>
-<div class='form-group form-inline'>
-	<label for="archive">Архив:</label>
-	<select id="archive" ng-model="criteria.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
-</div>
-<div class='form-group form-inline'>
-	<label for="fundNumber">№ фонда:</label>
-	<input ng-model="criteria.prefix" class="form-control" style='width: 60px'/>
-	<input id="fundNumber" ng-model="criteria.number" class='form-control' style='width: 60px'/>
-	<input ng-model="criteria.suffix" class='form-control' style='width: 60px'/>
-</div>
-<div class='text-center'>Результаты поиска</div>
-<div sp-paginator></div>
-<table style="width:100%" class='table table-bordered table-striped'>
-	<thead>
-		<tr>
-			<th class='text-center'>Организация</th>
-			<th class='text-center'>Архив</th>
-			<th class='text-center'>Фонд</th>
-			<th class='text-center'>Годы</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="item in result.content">
-			<td>{{item.organization}}</td>
-			<td>{{item.archive}}</td>
-			<td>{{item.fund}}</td>
-			<td>{{item.years}}</td>
-		</tr>
-	</tbody>
-</table>
 

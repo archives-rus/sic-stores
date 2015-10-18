@@ -1,11 +1,23 @@
-<div class='form-group form-inline'>
-	<button class='btn btn-default' ng-disabled="ctrl.isFirst()" ng-click="ctrl.firstPage()">Первая</button>
-	<button class='btn btn-default' ng-disabled="ctrl.isFirst()" ng-click="ctrl.prevPage()">Предыдущая</button>
+<div class='form-inline pull-left'>
+	<div class="btn-group">
+		<button class='btn btn-default' ng-disabled="ctrl.isFirst()" ng-click="ctrl.firstPage()">
+			<span class="glyphicon glyphicon-step-backward"></span>
+		</button>
+		<button class='btn btn-default' ng-disabled="ctrl.isFirst()" ng-click="ctrl.prevPage()">
+			<span class="glyphicon glyphicon-triangle-left"></span>
+		</button>
+	</div>
 	Страница 
 	<input style="width: 50px" class='form-control' type='text' ng-model='ctrl.pages.current' ng-change="ctrl.pageChanged()" 
 		   ng-keypress="$event.which === 13 && loadPage(ctrl.pages.current)"/>
 	из {{ctrl.maxPages}}
-	<button class='btn btn-default' ng-disabled="ctrl.isLast()" ng-click="ctrl.nextPage()">Следующая</button>
-	<button class='btn btn-default' ng-disabled="ctrl.isLast()" ng-click="ctrl.lastPage()">Последняя</button>
-	<div style="display:inline-block;float: right">Отображаются записи с по</div>
+	<div class="btn-group">
+		<button class='btn btn-default' ng-disabled="ctrl.isLast()" ng-click="ctrl.nextPage()">
+			<span class="glyphicon glyphicon-triangle-right"></span>
+		</button>
+		<button class='btn btn-default' ng-disabled="ctrl.isLast()" ng-click="ctrl.lastPage()">
+			<span class="glyphicon glyphicon-step-forward"></span>
+		</button>
+	</div>
 </div>
+<div class='pull-right'>Отображаются записи с по {{ctrl.pages.total}}</div>

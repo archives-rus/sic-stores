@@ -9,17 +9,25 @@
 		<link rel="stylesheet" type="text/css" href="/styles/app.min.css"/>
 	</head>
 	<body ng-controller="ParentCtrl as prnt">
-		<div class="container">
-			<header class="row text-center" ng-show="header">Справочно-информационная база данных о местах хранения архивных 
-				документов по личному составу в государственных, муниципальных и ведомственных архивах</header>
-			<nav>
-				<ng-include src="prnt.menu()"></ng-include>
-				<div style='float: right; display: inline-block'>
-					<span ng-bind='user.fio'></span>
-					<button class='btn btn-default' ng-click='prnt.logout()'>Выход</button>
+		<div class="container-fluid">
+			<header class="row text-center page-header" ng-show="header"><h3>
+					Справочно-информационная база данных о местах хранения архивных документов по личному составу в государственных, муниципальных и ведомственных архивах
+				</h3></header>
+			<nav class="row">
+				<div class="col-md-12">
+					<ng-include src="topMenu" class='pull-left'></ng-include>
+					<div class='pull-right'>
+						<span ng-bind='user.fio'></span>
+						<span class='vertical-separator'>|</span>
+						<button class='btn btn-default' ng-click='prnt.logout()'>
+							<span class="glyphicon glyphicon-log-out"></span>  Выход
+						</button>
+					</div>
 				</div>
 			</nav>
-			<div ng-view></div>
+			<div class="row">
+			<div ng-view class="col-md-12"></div>
+			</div>
 		</div>
 	<alert ng-show='prnt.msg' id='greeting' class='ng-cloak'>Доброго времени суток <span>{{user.fio}}</span></alert>
 	<script src="/scripts/vendor/script.min.js"></script>

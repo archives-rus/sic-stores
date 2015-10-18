@@ -1,5 +1,7 @@
-SP.controller('MainCtrl', ['$scope', 'criteria', 'tableResult', 'Search',
-	function ($scope, criteria, tableResult, Search) {
-		$scope.criteria = criteria;
-		$scope.result = tableResult;
-	}]);
+SP.controller('MainCtrl',
+		function (criteria, tableResult, Search) {
+			var me = this;
+			me.crit = criteria;
+			me.result = tableResult;
+			me.search = Search.loadTablePage;
+		});
