@@ -16,12 +16,10 @@
 			<nav class="row">
 				<div class="col-md-12">
 					<ng-include src="topMenu" class='pull-left'></ng-include>
-					<div class='pull-right'>
+					<div class='pull-right fio-section'>
 						<span ng-bind='user.fio'></span>
 						<span class='vertical-separator'>|</span>
-						<button class='btn btn-default' ng-click='prnt.logout()'>
-							<span class="glyphicon glyphicon-log-out"></span>  Выход
-						</button>
+						<button class='btn btn-default btn-quit' ng-click='prnt.logout()'>Выход</button>
 					</div>
 				</div>
 			</nav>
