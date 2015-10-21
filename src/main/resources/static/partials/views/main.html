@@ -63,10 +63,10 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="item in ctrl.result.content">
-					<td>{{item.organization}}</td>
-					<td>{{item.archive}}</td>
-					<td>{{item.fund}}</td>
-					<td>{{item.years}}</td>
+					<td><a ng-href="/view_card/{{$index}}">{{item.organization}}</a></td>
+					<td><a ng-href="/view_card/{{$index}}">{{item.archive}}</a></td>
+					<td><a ng-href="/view_card/{{$index}}">{{item.fund}}</a></td>
+					<td><a ng-href="/view_card/{{$index}}">{{item.years}}</a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -54,11 +54,12 @@ public class MainController {
 	/**
 	 * Перенаправляет запрос к роутеру angular
 	 *
+	 * @param start начальная позиция карточки в таблице результатов поиска
 	 * @return строку с перенаправлением к реальному маршруту 
 	 */
-	@RequestMapping(value = "/view_card")
-	public String getViewCard() {
-		return "redirect:/#view_card";
+	@RequestMapping(value = "/view_card/{start}")
+	public String getViewCard(@PathVariable("start") Integer start) {
+		return "redirect:/#view_card/" + start;
 	}
 
 	/**

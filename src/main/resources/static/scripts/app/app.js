@@ -17,20 +17,22 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 								$rootScope.header = showHeader;
 							}],
 						topMenu: ['$rootScope', '$location', function ($rootScope, $location) {
-								var dir = 'partials/menus/';
-								switch ($location.url()) {
-									case '/new_card/main':
-										$rootScope.topMenu = dir + 'new_card_main.html';
-										break;
-									case '/view_card':
-										$rootScope.topMenu = dir + 'view_card.html';
-										break;
-									case '/edit_card':
-									case '/new_card/view':
-										$rootScope.topMenu = dir + 'edit_card.html';
-										break;
-									default:
-										$rootScope.topMenu = dir + 'main.html';
+								var dir = 'partials/menus/',
+										url = $location.url();
+								if (/^\/view_card\//.test(url)) {
+									$rootScope.topMenu = dir + 'view_card.html';
+								} else {
+									switch ($location.url()) {
+										case '/new_card/main':
+											$rootScope.topMenu = dir + 'new_card_main.html';
+											break;
+										case '/edit_card':
+										case '/new_card/view':
+											$rootScope.topMenu = dir + 'edit_card.html';
+											break;
+										default:
+											$rootScope.topMenu = dir + 'main.html';
+									}
 								}
 							}]
 					};
@@ -48,7 +50,7 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 							controllerAs: 'ectrl',
 							resolve: resolve("Редактирование карточки")
 						})
-						.when('/view_card', {
+						.when('/view_card/:start', {
 							templateUrl: 'partials/views/view_card.html',
 							controller: 'ViewCardCtrl',
 							controllerAs: 'vctrl',
