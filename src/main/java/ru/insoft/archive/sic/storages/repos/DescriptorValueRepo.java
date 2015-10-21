@@ -7,9 +7,9 @@ import ru.insoft.archive.sic.storages.domain.admin.DescriptorValue;
 
 public interface DescriptorValueRepo extends JpaRepository<DescriptorValue, Long> {
 
-	public List<DescriptorValue> findByGroupCode(@Param("code") String code);
+	List<DescriptorValue> findByGroupCode(@Param("code") String code);
 
-	public List<DescriptorValue> findByParent(@Param("parent") DescriptorValue parent);
+	List<DescriptorValue> findByParent(@Param("parent") DescriptorValue parent);
 
-	public DescriptorValue findOneByCode(String code);
+	DescriptorValue findOneByCode(String code);
 }
