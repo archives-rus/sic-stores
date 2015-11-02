@@ -1,7 +1,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading panel-title text-center">Параметры поиска</div>
 	<div class="panel-body">
-		<form  ng-submit="ctrl.search()" class="form-horizontal">
+		<form  ng-submit="ctrl.loadPage()" class="form-horizontal">
 			<div class='form-group'>
 				<label for="nameorg" class="col-sm-3 control-label">Наименование организации:</label>
 				<div class="col-sm-5">
@@ -51,7 +51,7 @@
 </div>
 <div class="panel panel-default">
 	<div class="panel-heading panel-title text-center">Результаты поиска</div>
-		<div sp-paginator></div>
+		<ng-include src="'partials/paginator.html'"></ng-include>
 		<table class='table table-bordered table-striped table-hover'>
 			<thead>
 				<tr>

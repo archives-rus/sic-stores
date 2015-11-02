@@ -41,19 +41,19 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 						.when('/new_card/:from', {
 							templateUrl: 'partials/views/card.html',
 							controller: 'NewCardCtrl',
-							controllerAs: 'nctrl',
+							controllerAs: 'ctrl',
 							resolve: resolve("Создание карточки")
 						})
 						.when('/edit_card', {
 							templateUrl: 'partials/views/card.html',
 							controller: 'EditCardCtrl',
-							controllerAs: 'ectrl',
+							controllerAs: 'ctrl',
 							resolve: resolve("Редактирование карточки")
 						})
 						.when('/view_card/:start', {
 							templateUrl: 'partials/views/view_card.html',
 							controller: 'ViewCardCtrl',
-							controllerAs: 'vctrl',
+							controllerAs: 'ctrl',
 							resolve: resolve("Просмотр карточки")
 						})
 						.otherwise({

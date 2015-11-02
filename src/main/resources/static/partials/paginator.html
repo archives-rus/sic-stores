@@ -1,0 +1,23 @@
+<div class='form-inline pull-left'>
+	<div class="btn-group">
+		<button class='btn btn-default' ng-disabled="ctrl.first()" ng-click="ctrl.loadPage()">
+			<span class="glyphicon glyphicon-step-backward"></span>
+		</button>
+		<button class='btn btn-default' ng-disabled="ctrl.first()" ng-click="ctrl.loadPage(ctrl.result.number - 1)">
+			<span class="glyphicon glyphicon-triangle-left"></span>
+		</button>
+	</div>
+	Страница 
+	<input style="width: 50px" class='form-control' type='text' ng-disabled="!ctrl.start()" ng-model='ctrl.result.current' ng-change="ctrl.pageChanged()" 
+		   ng-keypress="$event.which === 13 && ctrl.loadPage(ctrl.pages.current)"/>
+	из {{ctrl.result.totalPages}}
+	<div class="btn-group">
+		<button class='btn btn-default' ng-disabled="ctrl.last()" ng-click="ctrl.loadPage(ctrl.result.number + 1)">
+			<span class="glyphicon glyphicon-triangle-right"></span>
+		</button>
+		<button class='btn btn-default' ng-disabled="ctrl.last()" ng-click="ctrl.loadPage(ctrl.result.totalPages - 1)">
+			<span class="glyphicon glyphicon-step-forward"></span>
+		</button>
+	</div>
+</div>
+<div class='pull-right' ng-show="ctrl.start()">Отображаются записи с <span ng-bind="ctrl.start()"></span> по <span ng-bind="ctrl.end()"></span></div>

@@ -22,15 +22,19 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 	return {
 		// Получает данные для одной страницы таблицы
 		loadTablePage: function (numberOfPage) {
-			var page = numberOfPage || 1;
+			var page = numberOfPage || 0;
 			$http.get('/search/main', {
-				params: buildParams(page - 1, limit)
+				params: buildParams(page, limit)
 			}).success(function (data) {
-				for (var o in data) {
-					tableResult[o] = data[o];
-				}
-				if (!tableResult.totalElements)
+				if (!data.totalElements) {
+					clear(tableResult);
 					ShowMessage.show('Внимание', 'Организации не найдены');
+				} else {
+					for (var o in data) {
+						tableResult[o] = data[o];
+					}
+					tableResult.current = tableResult.number + 1;
+				}
 			}).error(function () {
 				clear(tableResult);
 				ShowMessage.show('Внимание', 'Организации не найдены');
