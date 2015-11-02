@@ -1,5 +1,7 @@
 package ru.insoft.archive.sic.storages.dto;
 
+import com.mysema.query.annotations.QueryProjection;
+
 /**
  * Объект для передачи найденных данных для организаций, для отображения в
  * таблице
@@ -13,6 +15,7 @@ public class TableOrgDto {
 	private String fund;
 	private String years;
 
+	@QueryProjection
 	public TableOrgDto(String organization, String archive, String fund, String years) {
 		this.organization = organization;
 		this.archive = archive;
@@ -52,5 +55,4 @@ public class TableOrgDto {
 		this.years = years;
 	}
 
-	
 }

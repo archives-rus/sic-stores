@@ -1,12 +1,15 @@
 package ru.insoft.archive.sic.storages.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -95,6 +98,10 @@ public class Organization implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar updateDate;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "organization")
+	private List<Place> places;
+
 	public Long getId() {
 		return id;
 	}
@@ -173,6 +180,14 @@ public class Organization implements Serializable {
 
 	public void setUpdateDate(Calendar updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public List<Place> getPlaces() {
+		return places;
+	}
+
+	public void setPlaces(List<Place> places) {
+		this.places = places;
 	}
 
 }

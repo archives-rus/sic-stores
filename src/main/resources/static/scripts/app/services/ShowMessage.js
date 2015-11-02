@@ -3,21 +3,30 @@
  * @param {String} title - заголовок окна
  * @param {String} message - сообщение окна
  */
-SP.service('ShowMessage', ['$modal', function ($modal) {
-		return {
-			show: function (title, message) {
-				$modal.open({
-					animation: true,
-					templateUrl: 'views/dialogs/message.html',
-					controller: 'ShowMessageCtrl',
-					resolve: {
-						title: function () {
-							return title;
-						},
-						message: function () {
-							return message;
-						}
+SP.service('ShowMessage', function ($modal) {
+	var ShowMessageController = function ($scope, message, title, $modalInstance) {
+		$scope.message = message;
+		$scope.title = title;
+		$scope.ok = $modalInstance.close;
+	};
+
+	ShowMessageController.$inject = ['$scope', 'message', 'title', '$modalInstance'];
+
+
+	return {
+		show: function (title, message) {
+			$modal.open({
+				animation: true,
+				templateUrl: 'partials/services/message.html',
+				controller: ShowMessageController,
+				resolve: {
+					title: function () {
+						return title;
+					},
+					message: function () {
+						return message;
 					}
-				});
-			}};
-	}]);
+				}
+			});
+		}};
+});

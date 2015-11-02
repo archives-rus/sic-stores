@@ -37,7 +37,7 @@ public class MainPageTest {
 
 	@Test
 	public void testLogout() {
-		driver.findElement(By.id("exitButton")).click();
+		driver.findElement(By.cssSelector(".btn-quit")).click();
 		new WebDriverWait(driver, 7).until(ExpectedConditions.not(ExpectedConditions.urlContains("/index.html")));
 		Assert.assertTrue("Перенаправлен после выхода не туда", driver.getCurrentUrl().endsWith("/enter.html"));
 	}

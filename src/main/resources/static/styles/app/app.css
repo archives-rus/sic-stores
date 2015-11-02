@@ -32,23 +32,6 @@ body {
 	color: #452111;
 }
 
-#greeting {
-	position: absolute;
-	width: 200px;
-	top: 50px;
-	left: 40%;
-
-	-webkit-transition:all linear 0.5s;
-	-moz-transition:all linear 0.5s;
-	-o-transition:all linear 0.5s;
-	transition:all linear 0.5s;
-}
-
-#greeting.ng-hide {
-	opacity:0;
-	top: 0;
-}
-
 .fio-section {
 	padding-top: 2px;
 }

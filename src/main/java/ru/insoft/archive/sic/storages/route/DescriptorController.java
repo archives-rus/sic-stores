@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.insoft.archive.sic.storages.DictCodes;
 import ru.insoft.archive.sic.storages.domain.admin.DescriptorValue;
-import ru.insoft.archive.sic.storages.serivces.admin.DescriptorValueService;
+import ru.insoft.archive.sic.storages.repos.DescriptorValueRepo;
 
 /**
  * Предоставляет разные справочные данные
@@ -18,15 +18,27 @@ import ru.insoft.archive.sic.storages.serivces.admin.DescriptorValueService;
 public class DescriptorController {
 
 	@Autowired
-	private DescriptorValueService dvs;
+	private DescriptorValueRepo repo;
 
+	/**
+	 * Возвращает список типов документов
+	 *
+	 * @return список DescriptorValue
+	 */
 	@RequestMapping("/docTypes")
 	public List<DescriptorValue> getDocTypes() {
-		return dvs.findValuesByGroup(DictCodes.DOCUMENT_TYPE);
+		return repo.findByGroupCode(DictCodes.DOCUMENT_TYPE);
 	}
 
+	/**
+	 * Возвращает список архивов (организаций, у которых атрибут
+	 * ORG_STRUCTURE_TYPE=ARCHIVE)
+	 *
+	 * @return список DescriptorValue
+	 */
 	@RequestMapping("/archives")
 	public List<DescriptorValue> getArchives() {
-		return dvs.findValuesByParent(DictCodes.MEMBER_SIC);
+		return repo.findByAttrDescriptor(DictCodes.ARCHIVE);
 	}
+
 }

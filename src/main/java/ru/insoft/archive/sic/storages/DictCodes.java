@@ -55,4 +55,8 @@ public class DictCodes {
 	 */
 	public static final String MEMBER_RGBA = "MEMBER_RGBA";
 
+	/**
+	 * Тип организационной структуры - Архив
+	 */
+	public static final String ARCHIVE = "ARCHIVE";
 }

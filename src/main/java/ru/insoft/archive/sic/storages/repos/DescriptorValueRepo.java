@@ -11,5 +11,7 @@ public interface DescriptorValueRepo extends JpaRepository<DescriptorValue, Long
 
 	List<DescriptorValue> findByParent(@Param("parent") DescriptorValue parent);
 
+	List<DescriptorValue> findByAttrDescriptor(@Param("code") String code);
+
 	DescriptorValue findOneByCode(String code);
 }

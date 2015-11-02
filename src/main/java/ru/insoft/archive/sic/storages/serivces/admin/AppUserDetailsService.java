@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.insoft.archive.sic.storages.domain.admin.AdmUser;
+import ru.insoft.archive.sic.storages.repos.AdmUserRepo;
 import ru.insoft.archive.sic.storages.serivces.CurrentUser;
 
 /**
@@ -16,8 +17,9 @@ import ru.insoft.archive.sic.storages.serivces.CurrentUser;
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 
+
 	@Autowired
-	private AdmUserService service;
+	private AdmUserRepo repo;
 
 	/**
 	 * Ищет наличие пользователя в базе данных по логину.
@@ -29,7 +31,7 @@ public class AppUserDetailsService implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-		AdmUser user = service.find(login);
+		AdmUser user = repo.findOneByNameIgnoreCase(login);
 		if (user == null) {
 			throw new UsernameNotFoundException(
 					String.format("Пользователь с именем '%s' не существует", login));

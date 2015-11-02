@@ -11,4 +11,15 @@
                 <spring.profiles.active>dev</spring.profiles.active>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-notests</actionName>
+            <displayName>notests</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
     </actions>
