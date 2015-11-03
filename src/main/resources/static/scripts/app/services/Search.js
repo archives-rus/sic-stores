@@ -17,14 +17,22 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 					size: limit
 				};
 			},
+			// Возвращает корректный номер страницы
+			correctPageNumber = function (page) {
+				if (isNaN(page) || page < 0)
+					page = 0;
+				return Math.min(page, tableResult.totalPages > 0 ? tableResult.totalPages - 1 : 0);
+			},
 			limit = 10; // Ограничение кол-ва для одной страницы таблицы
 
 	return {
-		// Получает данные для одной страницы таблицы
+		/**
+		 * Получает данные для таблицы 
+		 * @param {Number/String} numberOfPage - интересующая страница, отсчет идет с нуля
+		 */
 		loadTablePage: function (numberOfPage) {
-			var page = numberOfPage || 0;
 			$http.get('/search/main', {
-				params: buildParams(page, limit)
+				params: buildParams(correctPageNumber(numberOfPage), limit)
 			}).success(function (data) {
 				if (!data.totalElements) {
 					clear(tableResult);

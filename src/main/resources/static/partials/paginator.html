@@ -8,8 +8,8 @@
 		</button>
 	</div>
 	Страница 
-	<input style="width: 50px" class='form-control' type='text' ng-disabled="!ctrl.start()" ng-model='ctrl.result.current' ng-change="ctrl.pageChanged()" 
-		   ng-keypress="$event.which === 13 && ctrl.loadPage(ctrl.pages.current)"/>
+	<input style="width: 55px" class='form-control' type='text' ng-disabled="!ctrl.start()" ng-model='ctrl.result.current'
+		   ng-keypress="$event.which === 13 && ctrl.loadPage(ctrl.result.current - 1)"/>
 	из {{ctrl.result.totalPages}}
 	<div class="btn-group">
 		<button class='btn btn-default' ng-disabled="ctrl.last()" ng-click="ctrl.loadPage(ctrl.result.number + 1)">
