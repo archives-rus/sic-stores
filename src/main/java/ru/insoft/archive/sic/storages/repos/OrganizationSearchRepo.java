@@ -28,7 +28,7 @@ public class OrganizationSearchRepo extends QueryDslRepositorySupport {
 		super(TableOrgDto.class);
 	}
 
-	private Page readPage(JPAQuery query, QTableOrgDto qEntity, Pageable pageable) {
+	private Page<TableOrgDto> readPage(JPAQuery query, QTableOrgDto qEntity, Pageable pageable) {
 // need to clone to have a second query, otherwise all items would be in the list
 		long total = query.clone(getEntityManager()).count();
 		JPQLQuery pagedQuery = getQuerydsl().applyPagination(pageable, query);
@@ -39,6 +39,7 @@ public class OrganizationSearchRepo extends QueryDslRepositorySupport {
 
 	/**
 	 * Возвращает страницу с результатами поиска, удволетворяющими условиям
+	 *
 	 * @param predicates условия поиска
 	 * @param pageable параметры страницы (начало, размер)
 	 * @return список записей по организациям
@@ -51,9 +52,8 @@ public class OrganizationSearchRepo extends QueryDslRepositorySupport {
 			query.where(predicates);
 		}
 		query.orderBy(new OrderSpecifier<>(Order.ASC, org.fullName));
-		return this.<TableOrgDto>readPage(query,
-				new QTableOrgDto(org.fullName, org.archiveName,
-						org.completeFundNumber, org.years), pageable);
+		return readPage(query, new QTableOrgDto(org.fullName, org.archiveName,
+				org.completeFundNumber, org.years), pageable);
 	}
 
 }

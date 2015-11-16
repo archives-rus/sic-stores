@@ -44,13 +44,6 @@ public class OrganizationSearch implements Serializable {
 	private Long archiveId;
 
 	/**
-	 * Примечание
-	 */
-	/*
-	 @Column(name = "NOTES", insertable = false, updatable = false)
-	 private String notes;
-	 */
-	/**
 	 * Наименование архива
 	 */
 	@Column(name = "ARCHIVE_NAME", insertable = false, updatable = false)

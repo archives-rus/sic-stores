@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
         <action>
-            <actionName>CUSTOM-run</actionName>
-            <displayName>run</displayName>
-            <goals>
-                <goal>spring-boot:run</goal>
-            </goals>
-            <properties>
-                <skipTests>true</skipTests>
-                <spring.profiles.active>dev</spring.profiles.active>
-            </properties>
-        </action>
-        <action>
             <actionName>CUSTOM-notests</actionName>
             <displayName>notests</displayName>
             <goals>
@@ -20,6 +9,22 @@
             </goals>
             <properties>
                 <skipTests>true</skipTests>
+                
             </properties>
         </action>
+        <action>
+            <actionName>test</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test</goal>
+                
+            </goals>
+            <properties>
+                <test>DateTimeServiceTest</test>
+                
+            </properties>
+        </action>
+        
     </actions>

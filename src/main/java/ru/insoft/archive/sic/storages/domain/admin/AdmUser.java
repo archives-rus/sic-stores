@@ -1,5 +1,8 @@
 package ru.insoft.archive.sic.storages.domain.admin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,19 +18,24 @@ import javax.persistence.Table;
 @Table(name = "ADM_USER")
 public class AdmUser implements Serializable {
 
+	@JsonIgnore
 	@Id
 	@Column(name = "USER_ID", insertable = false, updatable = false)
 	private Long id;
 
+	@JsonIgnore
 	@Column(name = "LOGIN", insertable = false, updatable = false)
 	private String name;
 
+	@JsonIgnore
 	@Column(name = "PASSWORD", insertable = false, updatable = false)
 	private String password;
 
+	@JsonIgnore
 	@Column(name = "IS_BLOCKED", insertable = false, updatable = false)
 	private Boolean blocked;
 
+	@JsonProperty("fio")
 	@Column(name = "DISPLAYED_NAME", insertable = false, updatable = false)
 	private String displayedName;
 
