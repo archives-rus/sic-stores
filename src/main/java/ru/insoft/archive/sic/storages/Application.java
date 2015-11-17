@@ -3,7 +3,9 @@ package ru.insoft.archive.sic.storages;
 import java.nio.file.Paths;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+@EnableJpaAuditing(dateTimeProviderRef = "auditDateTimeProvider")
 @SpringBootApplication
 public class Application {
 
@@ -49,10 +51,6 @@ public class Application {
 		System.setProperty("spring.profiles.active", activeProfile);
 
 		SpringApplication.run(Application.class, args);
-//		ApplicationContext ctx = SpringApplication.run(Application.class, args);
-//		for (AdmUser u : ctx.getBean(UserService.class).findAll()) {
-//			System.out.println("found: " + u.allFields());
-//		}
 	}
 
 }

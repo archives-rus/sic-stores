@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * Организация
@@ -22,6 +26,7 @@ import javax.validation.constraints.NotNull;
  * @author stikkas<stikkas@yandex.ru>
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "STRG_ORGANIZATION")
 public class Organization implements Serializable {
 
@@ -38,7 +43,7 @@ public class Organization implements Serializable {
 	 * ID архива TODO: эта информация присутствует в определении фонда, надо
 	 * разобраться, и, если ничего не мешает, убрать повторяющиеся данные отсюда
 	 */
-	@NotNull
+//	@NotNull
 	@Column(name = "ARCHIVE_ID")
 	private Long archiveId;
 
@@ -70,7 +75,7 @@ public class Organization implements Serializable {
 	 * ID пользователя, создавшего запись
 	 *
 	 */
-	@NotNull
+//	@NotNull
 	@Column(name = "ADD_USER_ID")
 	private Long addUserId;
 
@@ -78,24 +83,26 @@ public class Organization implements Serializable {
 	 * ID пользователя, обновившего запись
 	 *
 	 */
-	@NotNull
+//	@NotNull
 	@Column(name = "MOD_USER_ID")
 	private Long modUserId;
 
 	/**
 	 * Дата создания
 	 */
-	@NotNull
+//	@NotNull
 	@Column(name = "INSERT_DATE", columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
 	private Calendar insertDate;
 
 	/**
 	 * Дата последнего обновления
 	 */
-	@NotNull
+//	@NotNull
 	@Column(name = "LAST_UPDATE_DATE", columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
+	@LastModifiedDate
 	private Calendar updateDate;
 
 	@JsonIgnore
