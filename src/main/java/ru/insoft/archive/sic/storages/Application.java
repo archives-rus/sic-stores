@@ -12,7 +12,6 @@ public class Application {
 			"ais-storeplaces.log").toAbsolutePath().toString();
 
 	public static void main(String[] args) {
-
 		// Если установлен порт через системную переменную, как правило параметр
 		// командной строки, то используем его иначе:
 		if (System.getProperty("server.port") == null) {
@@ -25,13 +24,17 @@ public class Application {
 			System.setProperty("server.port", serverPort);
 		}
 
-		// Если установлен файл логирования, то используем его.
-		// Поумолчанию в spring-boot идет ротация через 10 метров
-		String productionLogFile = System.getenv("STORAGES_LOG");
-		if (productionLogFile != null) {
-			logFile = productionLogFile;
+		// Если установлен файл логирования через системную переменную, как правило параметр
+		// командной строки, то используем его иначе:
+		if (System.getProperty("logging.file") == null) {
+			// Если установлен файл логирования, то используем его.
+			// Поумолчанию в spring-boot идет ротация через 10 метров
+			String productionLogFile = System.getenv("STORAGES_LOG");
+			if (productionLogFile != null) {
+				logFile = productionLogFile;
+			}
+			System.setProperty("logging.file", logFile);
 		}
-		System.setProperty("logging.file", logFile);
 
 		// Когда разрабатываем, то для запуска используем особое действие: spring-boot:run
 		// с дополнительными параметрами для использования особых настроек в файле

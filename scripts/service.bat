@@ -1,0 +1,1 @@
+javaw -DSTORAGES_DB=nyoko -DSTORAGES_DB_HOST=calypso -Dlogging.file=C:\stores\server.log -jar C:\stores\sic-storages-0.0.1.jar
