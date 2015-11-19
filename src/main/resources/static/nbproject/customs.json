@@ -30,6 +30,9 @@
 	"attributes": {
 		"sp-paginator": {
 			"context": "div"
+		},
+		"file-model": {
+			"context": "input"
 		}
 	}
 }

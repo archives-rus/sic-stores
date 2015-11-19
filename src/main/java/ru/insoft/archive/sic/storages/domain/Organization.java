@@ -43,7 +43,7 @@ public class Organization implements Serializable {
 	 * ID архива TODO: эта информация присутствует в определении фонда, надо
 	 * разобраться, и, если ничего не мешает, убрать повторяющиеся данные отсюда
 	 */
-//	@NotNull
+	@NotNull
 	@Column(name = "ARCHIVE_ID")
 	private Long archiveId;
 
@@ -73,24 +73,22 @@ public class Organization implements Serializable {
 
 	/**
 	 * ID пользователя, создавшего запись
-	 *
 	 */
-//	@NotNull
+	@NotNull
 	@Column(name = "ADD_USER_ID")
 	private Long addUserId;
 
 	/**
 	 * ID пользователя, обновившего запись
-	 *
 	 */
-//	@NotNull
+	@NotNull
 	@Column(name = "MOD_USER_ID")
 	private Long modUserId;
 
 	/**
 	 * Дата создания
 	 */
-//	@NotNull
+	@NotNull
 	@Column(name = "INSERT_DATE", columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -99,7 +97,7 @@ public class Organization implements Serializable {
 	/**
 	 * Дата последнего обновления
 	 */
-//	@NotNull
+	@NotNull
 	@Column(name = "LAST_UPDATE_DATE", columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate

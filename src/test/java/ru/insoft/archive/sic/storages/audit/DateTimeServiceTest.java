@@ -37,11 +37,15 @@ public class DateTimeServiceTest {
 				+ constantDateTimeService.getCurrentDateAndTime().toString("dd-MM-yyyy HH:mm:ss"));
 	}
 
+	// Проверяем добавление и обновление времени для карточки организации
 	@Test
 	@Transactional
 	public void testAuditOrganizationBegin() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Organization org = new Organization();
+		org.setArchiveId(3l);
+		org.setAddUserId(1l);
+		org.setModUserId(1l);
 		orgRepo.save(org);
 
 		org = orgRepo.findOne(1l);

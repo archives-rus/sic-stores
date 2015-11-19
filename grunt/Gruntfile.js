@@ -24,6 +24,11 @@ module.exports = function (grunt) {
 				ann: join(jsRoot, 'app', '**', '*' + annotateSuffix),
 				min: join(jsRoot, 'app.min.js')
 			},
+			utilsjs: {
+				src: join(jsRoot, 'utils', '**', '*.js'),
+				ann: join(jsRoot, 'utils', '**', '*' + annotateSuffix),
+				min: join(jsRoot, 'utils.min.js')
+			},
 			vendorjs: {
 				src: [
 					join(modulesDir, 'angular', 'angular.min.js'),
@@ -42,9 +47,17 @@ module.exports = function (grunt) {
 				src: join(cssRoot, 'app', '**', '*.css'),
 				dst: join(cssRoot, 'app.min.css')
 			},
+			utilscss: {
+				src: join(cssRoot, 'utils', '**', '*.css'),
+				dst: join(cssRoot, 'utils.min.css')
+			},
 			theme: {
 				src: join(projectDir, 'bootstrap', 'app-theme.less'),
 				dst: join(cssRoot, 'app-theme.css')
+			},
+			utilsth: {
+				src: join(projectDir, 'bootstrap', 'utils-theme.less'),
+				dst: join(cssRoot, 'utils-theme.css')
 			},
 			vendorcss: {
 				src: [join(modulesDir, 'angular', 'angular-csp.css'),
@@ -59,7 +72,7 @@ module.exports = function (grunt) {
 		jshint: {
 			files: {
 				src: ['Gruntfile.js', '<%= paths.loginjs.src %>',
-					'<%= paths.appjs.src %>']
+					'<%= paths.appjs.src %>', '<%= paths.utilsjs.src %>']
 			}
 		},
 		// Сжимаем стили
@@ -78,6 +91,11 @@ module.exports = function (grunt) {
 				files: {
 					'<%= paths.logincss.dst %>': ['<%= paths.theme.dst %>', '<%= paths.logincss.src %>']
 				}
+			},
+			utils: {
+				files: {
+					'<%= paths.utilscss.dst %>': ['<%= paths.utilsth.dst %>', '<%= paths.utilscss.src %>']
+				}
 			}
 		},
 		// Тема
@@ -85,6 +103,11 @@ module.exports = function (grunt) {
 			theme: {
 				files: {
 					'<%= paths.theme.dst %>': '<%= paths.theme.src %>'
+				}
+			},
+			utilsth: {
+				files: {
+					'<%= paths.utilsth.dst %>': '<%= paths.utilsth.src %>'
 				}
 			}
 		},
@@ -95,7 +118,7 @@ module.exports = function (grunt) {
 				tasks: 'newer:jshint' //обслуживать только измененные файлы
 			},
 			annotate: {
-				files: ['<%= paths.appjs.src %>', '<%= paths.loginjs.src %>'],
+				files: ['<%= paths.appjs.src %>', '<%= paths.loginjs.src %>', '<%= paths.utilsjs.src %>'],
 				tasks: 'newer:ngAnnotate'
 			},
 			l_uglify: {
@@ -106,9 +129,17 @@ module.exports = function (grunt) {
 				files: '<%= paths.appjs.ann %>',
 				tasks: 'uglify:app'
 			},
+			u_uglify: {
+				files: '<%= paths.utilsjs.ann %>',
+				tasks: 'uglify:utils'
+			},
 			less: {
 				files: '<%= paths.theme.src %>',
-				tasks: 'less'
+				tasks: 'less:theme'
+			},
+			u_less: {
+				files: '<%= paths.utilsth.src %>',
+				tasks: 'less:utilsth'
 			},
 			l_cssmin: {
 				files: ['<%= paths.logincss.src %>', '<%= paths.theme.dst %>'],
@@ -117,6 +148,10 @@ module.exports = function (grunt) {
 			a_cssmin: {
 				files: ['<%= paths.appcss.src %>', '<%= paths.theme.dst %>'],
 				tasks: 'cssmin:app'
+			},
+			u_cssmin: {
+				files: ['<%= paths.utilscss.src %>', '<%= paths.utilsth.dst %>'],
+				tasks: 'cssmin:utils'
 			},
 			options: {
 				atBegin: true
@@ -167,6 +202,17 @@ module.exports = function (grunt) {
 						}
 					}
 				]
+			},
+			utils: {
+				files: [
+					{
+						expand: true,
+						src: '<%= paths.utilsjs.src %>',
+						rename: function (d, s) {
+							return s + annotateSuffix;
+						}
+					}
+				]
 			}
 		},
 		// Сжимаем js файлы
@@ -178,6 +224,10 @@ module.exports = function (grunt) {
 			app: {
 				src: '<%= paths.appjs.ann %>',
 				dest: '<%= paths.appjs.min %>'
+			},
+			utils: {
+				src: '<%= paths.utilsjs.ann %>',
+				dest: '<%= paths.utilsjs.min %>'
 			}
 		}
 	});
