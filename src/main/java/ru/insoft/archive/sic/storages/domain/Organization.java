@@ -16,7 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -76,6 +78,7 @@ public class Organization implements Serializable {
 	 */
 	@NotNull
 	@Column(name = "ADD_USER_ID")
+	@CreatedBy
 	private Long addUserId;
 
 	/**
@@ -83,6 +86,7 @@ public class Organization implements Serializable {
 	 */
 	@NotNull
 	@Column(name = "MOD_USER_ID")
+	@LastModifiedBy
 	private Long modUserId;
 
 	/**

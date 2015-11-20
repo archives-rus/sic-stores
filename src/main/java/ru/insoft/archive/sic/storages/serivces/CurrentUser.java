@@ -1,9 +1,12 @@
 package ru.insoft.archive.sic.storages.serivces;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.insoft.archive.sic.storages.domain.admin.AdmAccessRule;
+import ru.insoft.archive.sic.storages.domain.admin.AdmGroup;
 import ru.insoft.archive.sic.storages.domain.admin.AdmUser;
 
 /**
@@ -14,20 +17,24 @@ import ru.insoft.archive.sic.storages.domain.admin.AdmUser;
 public class CurrentUser implements UserDetails {
 
 	private final AdmUser user;
+	private final Set<AdmAccessRule> roles;
 
 	public CurrentUser(AdmUser user) {
 		this.user = user;
+		roles = new HashSet<>();
+		for (AdmGroup group : user.getGroups()) {
+			roles.addAll(group.getRules());
+		}
 	}
 
 	/**
-	 * На данный момент нет распределения по ролям, поэтому возвращаем пустой
-	 * список
+	 * Возвращает список ролей пользователя
 	 *
 	 * @return список ролей пользователя
 	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.createAuthorityList();
+		return roles;
 	}
 
 	/**

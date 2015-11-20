@@ -9,6 +9,14 @@
 
 	<body>
 		<div class="container">
+			<div class="row">
+				<div class='pull-left'>
+					<a href='/' class="btn"><span class="glyphicon glyphicon-home"></span> На главную</a>
+				</div>
+				<div class='pull-right' ng-controller='LogoutCtrl as ctrl'>
+					<a href='#' ng-click='ctrl.logout()' class='btn'><span class="glyphicon glyphicon-log-out"></span> Выйти</a>
+				</div>
+			</div>
 			<div class='row' ng-include="'partials/utils/loaddata.html'"></div>
 		</div>
 		<script src="/scripts/vendor/script.min.js"></script>

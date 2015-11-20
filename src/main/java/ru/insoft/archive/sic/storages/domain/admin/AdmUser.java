@@ -2,11 +2,15 @@ package ru.insoft.archive.sic.storages.domain.admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -38,6 +42,11 @@ public class AdmUser implements Serializable {
 	@JsonProperty("fio")
 	@Column(name = "DISPLAYED_NAME", insertable = false, updatable = false)
 	private String displayedName;
+
+	@JoinTable(name = "ADM_USER_GROUP", joinColumns = @JoinColumn(name = "USER_ID"),
+			inverseJoinColumns = @JoinColumn(name="GROUP_ID"))
+	@ManyToMany(fetch = FetchType.EAGER)
+	List<AdmGroup> groups;
 
 	public Long getId() {
 		return id;
@@ -77,6 +86,14 @@ public class AdmUser implements Serializable {
 
 	public void setDisplayedName(String displayedName) {
 		this.displayedName = displayedName;
+	}
+
+	public List<AdmGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<AdmGroup> groups) {
+		this.groups = groups;
 	}
 
 	public String allFields() {

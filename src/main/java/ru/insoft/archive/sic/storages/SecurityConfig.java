@@ -32,9 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.authorizeRequests()
-				.antMatchers("/scripts/vendor/script.min.js", "/scripts/login.min.js", 
+				.antMatchers("/scripts/vendor/script.min.js", "/scripts/login.min.js",
 						"/styles/vendor/styles.min.css", "/styles/login.min.css")
 				.permitAll()
+				.antMatchers("/utils.html", "/utils/**").hasAuthority("SP_UTILS")
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()
@@ -47,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.and()
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-//				.csrf().disable();
+				//				.csrf().disable();
 				.csrf().csrfTokenRepository(csrfTokenRepository());
 	}
 
