@@ -136,6 +136,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<fork>true</fork>
+					<meminitial>512m</meminitial>
+					<maxmem>1024m</maxmem>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
