@@ -1,8 +1,12 @@
-body {
-	padding-top: 12px;
-}
 .ng-cloak {
 	display: none !important;
+}
+.current-view {
+	background: blue;
+}
+/*
+body {
+	padding-top: 12px;
 }
 .page-header {
 	margin: 10px 0 20px;
@@ -35,3 +39,4 @@ body {
 .fio-section {
 	padding-top: 2px;
 }
+*/

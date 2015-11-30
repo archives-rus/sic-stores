@@ -1,23 +1,23 @@
-<div class='form-inline pull-left'>
+<div class='pull-left' ng-show="start()">Всего найдено <span ng-bind="data.totalElements"></span></div>
+<div class='form-inline text-center'>
 	<div class="btn-group">
-		<button class='btn btn-default' ng-disabled="ctrl.first()" ng-click="ctrl.loadPage()">
+		<button class='btn btn-default' ng-disabled="first()" ng-click="loadPage()">
 			<span class="glyphicon glyphicon-step-backward"></span>
 		</button>
-		<button class='btn btn-default' ng-disabled="ctrl.first()" ng-click="ctrl.loadPage(ctrl.result.number - 1)">
+		<button class='btn btn-default' ng-disabled="first()" ng-click="loadPage(data.number - 1)">
 			<span class="glyphicon glyphicon-triangle-left"></span>
 		</button>
 	</div>
 	Страница 
-	<input style="width: 55px" class='form-control' type='text' ng-disabled="!ctrl.start()" ng-model='ctrl.result.current'
-		   ng-keypress="$event.which === 13 && ctrl.loadPage(ctrl.result.current - 1)"/>
-	из {{ctrl.result.totalPages}}
+	<input style="width: 55px" class='form-control' type='text' ng-disabled="!start()" ng-model='data.current'
+		   ng-keypress="$event.which === 13 && loadPage(data.current - 1)"/>
+	из {{data.totalPages}}
 	<div class="btn-group">
-		<button class='btn btn-default' ng-disabled="ctrl.last()" ng-click="ctrl.loadPage(ctrl.result.number + 1)">
+		<button class='btn btn-default' ng-disabled="last()" ng-click="loadPage(data.number + 1)">
 			<span class="glyphicon glyphicon-triangle-right"></span>
 		</button>
-		<button class='btn btn-default' ng-disabled="ctrl.last()" ng-click="ctrl.loadPage(ctrl.result.totalPages - 1)">
+		<button class='btn btn-default' ng-disabled="last()" ng-click="loadPage(data.totalPages - 1)">
 			<span class="glyphicon glyphicon-step-forward"></span>
 		</button>
 	</div>
 </div>
-<div class='pull-right' ng-show="ctrl.start()">Отображаются записи с <span ng-bind="ctrl.start()"></span> по <span ng-bind="ctrl.end()"></span>, всего <span ng-bind="ctrl.result.totalElements"></span></div>

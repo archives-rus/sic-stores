@@ -1,5 +1,6 @@
 package ru.insoft.archive.sic.storages.route;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -65,11 +66,12 @@ public class MainController {
 	/**
 	 * Перенаправляет запрос к роутеру angular
 	 *
+	 * @param request
 	 * @return строку с перенаправлением к реальному маршруту 
 	 */
-	@RequestMapping(value = "/edit_card")
-	public String getEditCard() {
-		return "redirect:/#edit_card";
+	@RequestMapping(value = {"/edit_card", "/reports", "/jrch"})
+	public String getEditCard(HttpServletRequest request) {
+		return "redirect:/#" + request.getServletPath();
 	}
 
 }

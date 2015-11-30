@@ -1,5 +1,5 @@
 SP.controller('ParentCtrl',
-		function ($scope, $http, $window, $location, $timeout,
+		function ($http, $window, $location, $timeout,
 				$rootScope, Search) {
 			var me = this;
 
@@ -31,6 +31,17 @@ SP.controller('ParentCtrl',
 				}).success(function () {
 					$window.location.href = '/enter.html';
 				});
+			};
+			/**
+			 * Определяет является ли текущий url заданным
+			 * @param {String} url заданный url
+			 * @returns {Boolean} true если url === текущему
+			 */
+			me.isCurrent = function(url) {
+				var currentUrl = $location.url();
+				if (url === '/')
+					return currentUrl === url || /^\/index\.html/.test(currentUrl);
+				return currentUrl === url;
 			};
 			/**
 			 * Очищает параметры поиска

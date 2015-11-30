@@ -1,5 +1,5 @@
 SP.controller('MainCtrl',
-		function (criteria, tableResult, Search) {
+		function (criteria, tableResult, Search, $location) {
 			var me = this;
 			// Критерии поиска
 			me.crit = criteria;
@@ -28,4 +28,7 @@ SP.controller('MainCtrl',
 			};
 
 			me.loadPage = Search.loadTablePage;
+			me.viewCard = function(index) {
+				$location.path('/view_card/' + index);
+			};
 		});

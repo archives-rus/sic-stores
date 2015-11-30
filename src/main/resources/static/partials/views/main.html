@@ -1,21 +1,21 @@
 <div class="panel panel-default">
-	<div class="panel-heading panel-title text-center">Параметры поиска</div>
+	<div class="panel-heading panel-title">Параметры поиска</div>
 	<div class="panel-body">
 		<form  ng-submit="ctrl.loadPage()" class="form-horizontal">
 			<div class='form-group'>
-				<label for="nameorg" class="col-sm-3 control-label">Наименование организации:</label>
+				<label for="nameorg" class="col-sm-3 control-label">Наименование организации</label>
 				<div class="col-sm-5">
 					<input id="nameorg" ng-model="ctrl.crit.org" class='form-control'/>
 				</div>
 			</div>
 			<div class='form-group'>
-				<label for="doctype" class="col-sm-3 control-label">Вид документов:</label>
+				<label for="doctype" class="col-sm-3 control-label">Вид документов</label>
 				<div class="col-sm-5">
 					<select id="doctype" ng-model="ctrl.crit.docType" ng-options="type.id as type.fullValue for type in docTypes" class='form-control'></select>
 				</div>
 			</div>
 			<div class='form-group'>
-				<label for="startYear" class="col-sm-3 control-label">Годы</label>
+				<label for="startYear" class="col-sm-3 control-label">Даты документов</label>
 				<div class="col-sm-2" style='width: 9.5%'>
 					<div class="input-group">
 						<label for="startYear" class="input-group-addon control-label">c:</label>
@@ -30,9 +30,15 @@
 				</div>
 			</div>
 			<div class='form-group'>
-				<label for="archive" class='col-sm-3 control-label'>Архив:</label>
+				<label for="archive" class='col-sm-3 control-label'>Архив</label>
 				<div class='col-sm-5'>
 					<select id="archive" ng-model="ctrl.crit.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="archiveLevel" class='col-sm-3 control-label'>Уровень архива</label>
+				<div class='col-sm-5'>
+					<select id="archiveLevel" ng-model="ctrl.crit.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
 				</div>
 			</div>
 			<div class='form-group'>
@@ -45,30 +51,36 @@
 					</div>
 				</div>
 			</div>
+			<div class='form-group'>
+				<div class="col-sm-offset-3 col-sm-2">
+					<div style="display: inline-block; width: 60px">префикс</div>
+					<div style="display: inline-block; width: 60px" class="text-center">№</div>
+					<div style="display: inline-block; width: 60px">литера</div>
+				</div>
+			</div>
 			<input type='submit' hidden=""/> 
 		</form>
 	</div>
 </div>
 <div class="panel panel-default">
 	<div class="panel-heading panel-title text-center">Результаты поиска</div>
-		<ng-include src="'partials/paginator.html'"></ng-include>
-		<table class='table table-bordered table-striped table-hover'>
-			<thead>
-				<tr>
-					<th>Организация</th>
-					<th>Архив</th>
-					<th>Фонд</th>
-					<th>Годы</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="item in ctrl.result.content">
-					<td><a ng-href="/view_card/{{$index}}">{{item.organization}}</a></td>
-					<td><a ng-href="/view_card/{{$index}}">{{item.archive}}</a></td>
-					<td><a ng-href="/view_card/{{$index}}">{{item.fund}}</a></td>
-					<td><a ng-href="/view_card/{{$index}}">{{item.years}}</a></td>
-				</tr>
-			</tbody>
-		</table>
+	<div sp-paginator="" data="ctrl.result"></div>
+	<table class='table table-bordered table-striped table-hover'>
+		<thead>
+			<tr>
+				<th>Название организации</th>
+				<th>Архив</th>
+				<th>Фонд</th>
+				<th>Крайние даты</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in ctrl.result.content" ng-dblclick="ctrl.viewCard($index)">
+				<td>{{item.organization}}</td>
+				<td>{{item.archive}}</td>
+				<td>{{item.fund}}</td>
+				<td>{{item.years}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-
