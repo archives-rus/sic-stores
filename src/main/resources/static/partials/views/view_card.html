@@ -1,7 +1,6 @@
-<div sp-paginator></div>
-<div class="clearfix"></div>
+<div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)"></div>
 <div class="panel panel-default">
-	<div class="panel-heading panel-title text-center">Наименование организации и её переименования</div>
+	<div class="panel-heading panel-title">Наименование организации и её переименования</div>
 	<table class='table table-bordered table-hover table-striped'>
 		<thead>
 			<tr>
@@ -12,6 +11,12 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr ng-repeat="item in ctrl.result.names">
+				<td>{{item.full}}</td>
+				<td>{{item.short}}</td>
+				<td>{{item.sub}}</td>
+				<td>{{item.date}}</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
