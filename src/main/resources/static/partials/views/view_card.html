@@ -11,7 +11,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="item in ctrl.result.names">
+			<tr ng-repeat="item in ctrl.result.content[0].names">
 				<td>{{item.full}}</td>
 				<td>{{item.short}}</td>
 				<td>{{item.sub}}</td>
@@ -28,3 +28,53 @@
 		<div sp-store-card="" data="ctrl.place"></div>
 	</div>
 </div>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">Сведения о награждениях</div>
+	<table class='table table-bordered table-striped table-hover'>
+		<thead>
+			<tr>
+				<th>Название награды</th>
+				<th>Дата начальная</th>
+				<th>Дата конечная</th>
+				<th>№ описи</th>
+				<th>Количество дел</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in ctrl.result.content[0].rewards">
+				<td>{{item.name}}</td>
+				<td>{{item.startDate}}</td>
+				<td>{{item.endDate}}</td>
+				<td>{{item.opisNumber}}</td>
+				<td>{{item.docsCount}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">Сведения о загранкомандировках</div>
+	<table class='table table-bordered table-striped table-hover'>
+		<thead>
+			<tr>
+				<th>Вид документа</th>
+				<th>Дата начальная</th>
+				<th>Дата конечная</th>
+				<th>№ описи</th>
+				<th>Количество дел</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in ctrl.result.content[0].trips">
+				<td>{{item.type}}</td>
+				<td>{{item.startDate}}</td>
+				<td>{{item.endDate}}</td>
+				<td>{{item.opisNumber}}</td>
+				<td>{{item.docsCount}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="col-sm-6 text-right">Имя пользователя:	<span ng-bind="ctrl.result.content[0].user"></span></div>
+<div class="col-sm-6">Дата корректировки: <span ng-bind="ctrl.result.content[0].date"></span></div>

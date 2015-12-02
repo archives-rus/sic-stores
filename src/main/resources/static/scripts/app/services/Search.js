@@ -57,10 +57,28 @@ SP.service('Search', function ($http, criteria, tableResult, orgCard, storePlace
 			first: i === 0 ? true : false,
 			last: i === 4 ? true : false,
 			size: 1,
-			names: [{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
-				{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
-				{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'}
-			]};
+			content: [{
+					names: [{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
+						{full: 'Полное 2_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
+						{full: 'Полное 3_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'}],
+					rewards: [{name: 'Награда 1_' + (i + 1), startDate: '194' + i, endDate: '194' + (i + 2), opisNumber: 'Опись №' + (i + 1),
+							docsCount: '10'},
+						{name: 'Награда 2_' + (i + 1), startDate: '194' + i, endDate: '194' + (i + 2), opisNumber: 'Опись №' + (i + 1),
+							docsCount: '10'},
+						{name: 'Награда 3_' + (i + 1), startDate: '194' + i, endDate: '194' + (i + 2), opisNumber: 'Опись №' + (i + 1),
+							docsCount: '10'}
+					],
+					trips: [{type: 'Загранка 1_' + (i + 1), startDate: '194' + i, endDate: '194' + (i + 2), opisNumber: 'Опись №' + (i + 1),
+							docsCount: '10'},
+						{type: 'Загранка 2_' + (i + 1), startDate: '194' + i, endDate: '194' + (i + 2), opisNumber: 'Опись №' + (i + 1),
+							docsCount: '10'},
+						{type: 'Загранка 3_' + (i + 1), startDate: '194' + i, endDate: '194' + (i + 2), opisNumber: 'Опись №' + (i + 1),
+							docsCount: '10'}
+					],
+					user: 'Кузнецов О. И.',
+					date: '28.03.2015'
+				}]
+		};
 	}
 	// -------------------------------------------
 	return {
