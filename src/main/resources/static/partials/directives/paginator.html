@@ -8,7 +8,7 @@
 			<span class="glyphicon glyphicon-triangle-left"></span>
 		</button>
 	</div>
-	Страница 
+	{{titlePage}}
 	<input style="width: 55px" class='form-control' type='text' ng-disabled="!start()" ng-model='data.current'
 		   ng-keypress="$event.which === 13 && load({page: data.current - 1})"/>
 	из {{data.totalPages}}

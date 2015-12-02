@@ -29,7 +29,8 @@ SP.directive('spPaginator', function () {
 		},
 		scope: {
 			data: '=',
-			load: '&'
+			load: '&',
+			titlePage: '@'
 		}
 	};
 });

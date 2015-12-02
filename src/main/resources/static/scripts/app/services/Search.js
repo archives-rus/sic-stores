@@ -24,7 +24,24 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 				return Math.min(page, tableResult.totalPages > 0 ? tableResult.totalPages - 1 : 0);
 			},
 			limit = 10; // Ограничение кол-ва для одной страницы таблицы
-
+	// Тестовые данные---------------------------
+	var testDataSingle = [];
+	for (var i = 0; i < 5; ++i) {
+		testDataSingle[i] = {
+			totalElements: 5,
+			number: i,
+			current: i + 1,
+			totalPages: 5,
+			first: i === 0 ? true : false,
+			last: i === 4 ? true : false,
+			size: 1,
+			names: [{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
+				{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
+				{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'}
+			]
+		};
+	}
+	// -------------------------------------------
 	return {
 		/**
 		 * Получает данные для таблицы 
@@ -50,18 +67,27 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 		},
 		// Получает данные для карточки
 		loadSinglePage: function (numberOfPage) {
-			$http.get('/search/card', {
-				params: buildParams(numberOfPage - 1, 1)
-			}).success(function (data) {
-				for (var o in data) {
-					singleResult[o] = data[o];
-				}
-				if (!singleResult.totalElements) // Не должно быть такой ситуации никогда
-					ShowMessage.show('Внимание', 'Ошибка получения данных');
-			}).error(function () {
-				clear(singleResult);
-				ShowMessage.show('Внимание', 'Ошибка получения данных');
-			});
+			if (numberOfPage === undefined)
+				numberOfPage = 0;
+			var data = testDataSingle[numberOfPage];
+			for (var o in data) {
+				singleResult[o] = data[o];
+			}
+
+			/*
+			 $http.get('/search/card', {
+			 params: buildParams(numberOfPage - 1, 1)
+			 }).success(function (data) {
+			 for (var o in data) {
+			 singleResult[o] = data[o];
+			 }
+			 if (!singleResult.totalElements) // Не должно быть такой ситуации никогда
+			 ShowMessage.show('Внимание', 'Ошибка получения данных');
+			 }).error(function () {
+			 clear(singleResult);
+			 ShowMessage.show('Внимание', 'Ошибка получения данных');
+			 });
+			 */
 		},
 		// Очищает параметры и результаты поиска
 		clearCriteria: function () {
