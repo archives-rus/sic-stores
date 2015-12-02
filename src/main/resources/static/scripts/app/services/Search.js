@@ -1,7 +1,7 @@
 /** 
  * Поиск организаций по критериям
  */
-SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowMessage) {
+SP.service('Search', function ($http, criteria, tableResult, orgCard, storePlace, ShowMessage) {
 
 	var
 			// Удаляет все свойства объекта
@@ -25,8 +25,30 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 			},
 			limit = 10; // Ограничение кол-ва для одной страницы таблицы
 	// Тестовые данные---------------------------
-	var testDataSingle = [];
+	var testDataSingle = [],
+			places = {};
 	for (var i = 0; i < 5; ++i) {
+		places[i] = [];
+		if (i % 2 === 0) {
+			for (var j = 0; j < 2; ++j) {
+				var content;
+				if (j === 0) {
+					content = {};
+				} else {
+					content = {};
+				}
+				places[i][j] = {
+					totalElements: 2,
+					number: j,
+					current: j + 1,
+					totalPages: 2,
+					first: j === 0 ? true : false,
+					last: j === 1 ? true : false,
+					size: 1,
+					content: content
+				};
+			}
+		}
 		testDataSingle[i] = {
 			totalElements: 5,
 			number: i,
@@ -38,8 +60,7 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 			names: [{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
 				{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
 				{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'}
-			]
-		};
+			]};
 	}
 	// -------------------------------------------
 	return {
@@ -66,12 +87,13 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 			});
 		},
 		// Получает данные для карточки
-		loadSinglePage: function (numberOfPage) {
+		loadOrgCard: function (numberOfPage) {
 			if (numberOfPage === undefined)
 				numberOfPage = 0;
 			var data = testDataSingle[numberOfPage];
+			clear(orgCard);
 			for (var o in data) {
-				singleResult[o] = data[o];
+				orgCard[o] = data[o];
 			}
 
 			/*
@@ -79,15 +101,25 @@ SP.service('Search', function ($http, criteria, tableResult, singleResult, ShowM
 			 params: buildParams(numberOfPage - 1, 1)
 			 }).success(function (data) {
 			 for (var o in data) {
-			 singleResult[o] = data[o];
+			 orgCard[o] = data[o];
 			 }
-			 if (!singleResult.totalElements) // Не должно быть такой ситуации никогда
+			 if (!orgCard.totalElements) // Не должно быть такой ситуации никогда
 			 ShowMessage.show('Внимание', 'Ошибка получения данных');
 			 }).error(function () {
-			 clear(singleResult);
+			 clear(orgCard);
 			 ShowMessage.show('Внимание', 'Ошибка получения данных');
 			 });
 			 */
+		},
+		// Получает данные для места хранения
+		loadStorePlace: function (numberOfPage) {
+			if (numberOfPage === undefined)
+				numberOfPage = 0;
+			var data = places[orgCard.number][numberOfPage];
+			clear(storePlace);
+			for (var o in data) {
+				storePlace[o] = data[o];
+			}
 		},
 		// Очищает параметры и результаты поиска
 		clearCriteria: function () {

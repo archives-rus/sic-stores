@@ -33,6 +33,12 @@
 		},
 		"file-model": {
 			"context": "input"
+		},
+		"sp-store-card": {
+			"context": "div"
+		},
+		"sp-store-info": {
+			"context": "div"
 		}
 	}
 }

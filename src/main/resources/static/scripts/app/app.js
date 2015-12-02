@@ -1,7 +1,8 @@
 var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 		.constant('criteria', {}) // Критерии поиска
 		.constant('tableResult', {}) // Результаты поиска для таблицы
-		.constant('singleResult', {}) // Результаты поиска для одной карточки
+		.constant('orgCard', {}) // Результаты поиска для одной организации
+		.constant('storePlace', {}) // Результаты поиска места хранения для одной организации
 		.config(['$routeProvider', '$locationProvider',
 			function ($routeProvider, $locationProvider) {
 				/**
