@@ -18,7 +18,18 @@ SP.controller('ParentCtrl',
 			$http.get('/dict/docTypes').success(function (data) {
 				$rootScope.docTypes = data;
 			});
-
+			// TODO: перенести в базу
+			$rootScope.places = [{id: 1, fullValue: 'Архив'}, {id: 2, fullValue: 'Организация'}];
+			$rootScope.levels = [{id: 1, fullValue: 'Федеральный архив'},
+				{id: 2, fullValue: 'Государственный архив'},
+				{id: 3, fullValue: 'Муниципальный архив'},
+				{id: 4, fullValue: 'Ведомственный архив'},
+				{id: 5, fullValue: 'Архивный отдел муниципального образования'}
+			];
+			$rootScope.adreses = {
+				87: [{fullValue: 'ул. Пирогова'}, {fullValue: 'ул. Пометкина'}, {fullValue: 'ул. Хорошого'}],
+				88: [{fullValue: 'ул. Пирогова, 3'}, {fullValue: 'ул. Пометкина, 4'}, {fullValue: 'ул. Хорошого, 5'}]
+			};
 			/**
 			 * Выполняет выход из системы
 			 */
@@ -37,7 +48,7 @@ SP.controller('ParentCtrl',
 			 * @param {String} url заданный url
 			 * @returns {Boolean} true если url === текущему
 			 */
-			me.isCurrent = function(url) {
+			me.isCurrent = function (url) {
 				var currentUrl = $location.url();
 				if (url === '/')
 					return currentUrl === url || /^\/index\.html/.test(currentUrl);

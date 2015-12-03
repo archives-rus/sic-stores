@@ -1,82 +1,146 @@
-<div>
-	<div class='form-group'>
-		<label class='col-sm-2'>Место хранения</label>
-		<div class='col-sm-4' ng-bind="data.place"></div>
-		<label class='col-sm-2'>Архив</label>
-		<div class='col-sm-4' ng-bind="data.archive"></div>
+<div class='form-group'>
+	<label class='col-sm-2'>Место хранения</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.place.fullValue"></span>
+		<select ng-switch-when='true' ng-model="data.place" ng-options="place as place.fullValue for place in places" class='form-control'></select>
 	</div>
-
-	<div class="clearfix"></div>
-
-	<div class='form-group'>
-		<label class='col-sm-2'>Уровень архива</label>
-		<div class='col-sm-4' ng-bind="data.level"></div>
-		<label class='col-sm-2'>Адрес архива</label>
-		<div class='col-sm-4' ng-bind="data.adres"></div>
+	<label class='col-sm-2'>Архив</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.archive.fullValue"></span>
+		<select ng-switch-when='true' ng-model="data.archive" ng-options="archive as archive.fullValue for archive in archives" class='form-control'></select>
 	</div>
+</div>
 
-	<div class="clearfix"></div>
+<div class="clearfix"></div>
 
-	<div class='form-group'>
-		<label class='col-sm-2'>Номер фонда</label>
-		<div class='col-sm-4' ng-bind="data.fondNumber"></div>
-		<label class='col-sm-2'>Телефон</label>
-		<div class='col-sm-4' ng-bind="data.phone"></div>
+<div class='form-group'>
+	<label class='col-sm-2'>Уровень архива</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.level.fullValue"></span>
+		<select ng-switch-when='true' ng-model="data.level" ng-options="level as level.fullValue for level in levels" class='form-control'></select>
 	</div>
-
-	<div class="clearfix"></div>
-
-	<div class='form-group'>
-		<label class='col-sm-2'>Название фонда</label>
-		<div class='col-sm-4' ng-bind="data.fond"></div>
-		<label class='col-sm-2'>Электронная почта</label>
-		<div class='col-sm-4' ng-bind="data.email"></div>
+	<label class='col-sm-2'>Адрес архива</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.adres.fullValue"></span>
+		<select ng-switch-when='true' ng-model="data.adres" ng-options="adres as adres.fullValue for adres in adreses[data.archive.id]" class='form-control'></select>
 	</div>
+</div>
 
-	<div class="clearfix"></div>
+<div class="clearfix"></div>
 
-	<div class='form-group'>
-		<label class="col-sm-2">Годы</label>
-		<div class='col-sm-4' ng-bind="data.years"></div>
-		<label class='col-sm-2'>Архивохранилище</label>
-		<div class='col-sm-4' ng-bind="data.shron"></div>
+<div class='form-group'>
+	<label class='col-sm-2'>Номер фонда</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.fondNumber"></span>
+		<div ng-switch-when='true' class="input-group">
+			<input ng-model="data.fond.prefix" class="form-control" style='width: 60px'/>
+			<input ng-model="data.fond.number" class='form-control' style='width: 60px'/>
+			<input ng-model="data.fond.suffix" class='form-control' style='width: 60px'/>
+		</div>
 	</div>
-
-	<div class='clearfix'></div>
-
-	<div class='form-group'>
-		<label class="col-sm-2">Количество ед. хр.</label>
-		<div class='col-sm-4' ng-bind="data.ucount"></div>
+	<label class='col-sm-2'>Телефон</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.phone"></span>
+		<input class='form-control'  ng-switch-when='true' ng-model='data.phone'/> 
 	</div>
+</div>
+<div class="clearfix"></div>
 
-	<div class='clearfix'></div>
-
-	<div class="panel panel-default">
-		<div class="panel-heading panel-title text-center">Состав документов</div>
-		<table class='table table-bordered table-striped table-hover'>
-			<thead>
-				<tr>
-					<th>Вид документа</th>
-					<th>Дата начальная</th>
-					<th>Дата конечная</th>
-					<th>№ описи</th>
-					<th>Количество дел</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="item in data.docs">
-					<td>{{item.type}}</td>
-					<td>{{item.startDate}}</td>
-					<td>{{item.endDate}}</td>
-					<td>{{item.opisNumber}}</td>
-					<td>{{item.docCount}}</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="col-sm-2">Дополнительные сведения о составе документов</div>
-		<div class="col-sm-10" ng-bind="data.dopInfo"></div>
+<div ng-show="edit" class='form-group'>
+	<div class="col-sm-offset-2 col-sm-4">
+		<div style="display: inline-block; width: 60px">префикс</div>
+		<div style="display: inline-block; width: 60px" class="text-center">№</div>
+		<div style="display: inline-block; width: 60px">литера</div>
 	</div>
-	<div class='clearfix'></div>
-	<div class="col-sm-2">Примечание</div>
-	<div class="col-sm-10" ng-bind="data.remark"></div>
-	<div class='clearfix'></div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class='form-group'>
+	<label class='col-sm-2'>Название фонда</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.fond.name"></span>
+		<input class='form-control' ng-switch-when='true' ng-model='data.fond.name'/> 
+	</div>
+	<label class='col-sm-2'>Электронная почта</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.email"></span>
+		<input class='form-control' ng-switch-when='true' ng-model='data.email'/> 
+	</div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class='form-group'>
+	<label class="col-sm-2">Годы</label>
+	<div class='col-sm-4'  ng-switch="edit">
+		<span ng-switch-when='false'>{{data.startYear}}-{{data.endYear}}</span>
+		<div ng-switch-when='true' class="form-inline">
+			<div class="input-group" style="width: 160px">
+				<label class="input-group-addon control-label">c:</label>
+				<input ng-model="data.startYear" class='form-control'/>
+			</div>
+			<div class="input-group" style="width: 160px">
+				<label class="input-group-addon control-label">по:</label> 
+				<input ng-model="data.endYear" class='form-control'/>
+			</div>
+		</div>
+	</div>
+	<label class='col-sm-2'>Архивохранилище</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.shron"></span>
+		<input class='form-control' ng-switch-when='true' ng-model='data.shron'/> 
+	</div>
+</div>
+
+<div class='clearfix'></div>
+
+<div class='form-group'>
+	<label class="col-sm-2">Количество ед. хр.</label>
+	<div class='col-sm-4' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.ucount"></span>
+		<input class='form-control' ng-switch-when='true' ng-model='data.ucount'/> 
+	</div>
+</div>
+
+<div class='clearfix'></div>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-title text-center">Состав документов</div>
+	<table class='table table-bordered table-striped table-hover'>
+		<thead>
+			<tr>
+				<th>Вид документа</th>
+				<th>Дата начальная</th>
+				<th>Дата конечная</th>
+				<th>№ описи</th>
+				<th>Количество дел</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in data.docs">
+				<td>{{item.type}}</td>
+				<td>{{item.startDate}}</td>
+				<td>{{item.endDate}}</td>
+				<td>{{item.opisNumber}}</td>
+				<td>{{item.docCount}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="form-group">
+		<label class="col-sm-3">Дополнительные сведения о составе документов</label>
+		<div class='col-sm-9' ng-switch="edit">
+			<span ng-switch-when='false' ng-bind="data.dopInfo"></span>
+			<textarea class='form-control' ng-switch-when='true' ng-model='data.dopInfo'></textarea> 
+		</div>
+	</div>
+</div>
+<div class='clearfix'></div>
+<div class="form-group">
+	<label class="col-sm-3">Примечание</label>
+	<div class='col-sm-9' ng-switch="edit">
+		<span ng-switch-when='false' ng-bind="data.remark"></span>
+		<textarea class='form-control' ng-switch-when='true' ng-model='data.remark'></textarea> 
+	</div>
+</div>
+<div class='clearfix'></div>
