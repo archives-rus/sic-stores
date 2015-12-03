@@ -31,6 +31,9 @@
 		"sp-paginator": {
 			"context": "div"
 		},
+		"sp-docs-table": {
+			"context": "div"
+		},
 		"file-model": {
 			"context": "input"
 		},

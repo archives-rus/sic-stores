@@ -1,0 +1,28 @@
+<div class="btn-group pull-left" ng-show="edit">
+	<button class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+	<button class="btn btn-default"><span class="glyphicon glyphicon-arrow-down"></span></button>
+	<button class="btn btn-default"><span class="glyphicon glyphicon-arrow-up"></span></button>
+</div>
+<div class="text-center">{{title}}</div>
+<table class='table table-bordered table-striped table-hover'>
+	<thead>
+		<tr>
+			<th>Вид документа</th>
+			<th>Дата начальная</th>
+			<th>Дата конечная</th>
+			<th>№ описи</th>
+			<th>Количество дел</th>
+			<th ng-show="edit"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in data.docs">
+			<td>{{item.type}}</td>
+			<td>{{item.startDate}}</td>
+			<td>{{item.endDate}}</td>
+			<td>{{item.opisNumber}}</td>
+			<td>{{item.docCount}}</td>
+			<td ng-show="edit"><button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button></td>
+		</tr>
+	</tbody>
+</table>
