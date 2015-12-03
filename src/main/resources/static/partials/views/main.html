@@ -38,7 +38,7 @@
 			<div class='form-group'>
 				<label for="archiveLevel" class='col-sm-3 control-label'>Уровень архива</label>
 				<div class='col-sm-5'>
-					<select id="archiveLevel" ng-model="ctrl.crit.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
+					<select id="archiveLevel" ng-model="ctrl.crit.level" ng-options="level.id as level.fullValue for level in levels" class='form-control'></select>
 				</div>
 			</div>
 			<div class='form-group'>
@@ -63,8 +63,8 @@
 	</div>
 </div>
 <div class="panel panel-default">
-	<div class="panel-heading panel-title text-center">Результаты поиска</div>
-	<div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)"></div>
+	<div class="panel-heading panel-title">Результаты поиска</div>
+	<div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Страница" show-info="true"></div>
 	<table class='table table-bordered table-striped table-hover'>
 		<thead>
 			<tr>

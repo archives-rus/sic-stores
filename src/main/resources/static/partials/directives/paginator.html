@@ -1,4 +1,4 @@
-<div class='pull-left' ng-show="start()">Всего найдено: <span ng-bind="data.totalElements"></span></div>
+<div class='pull-left' ng-show="info()">Всего найдено: <span ng-bind="data.totalElements"></span></div>
 <div class='form-inline text-center'>
 	<div class="btn-group">
 		<button class='btn btn-default' ng-disabled="first()" ng-click="load()">
@@ -8,7 +8,7 @@
 			<span class="glyphicon glyphicon-triangle-left"></span>
 		</button>
 	</div>
-	Страница 
+	{{titlePage}}
 	<input style="width: 55px" class='form-control' type='text' ng-disabled="!start()" ng-model='data.current'
 		   ng-keypress="$event.which === 13 && load({page: data.current - 1})"/>
 	из {{data.totalPages}}

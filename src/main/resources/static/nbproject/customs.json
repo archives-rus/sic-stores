@@ -31,8 +31,17 @@
 		"sp-paginator": {
 			"context": "div"
 		},
+		"sp-docs-table": {
+			"context": "div"
+		},
 		"file-model": {
 			"context": "input"
+		},
+		"sp-store-card": {
+			"context": "div"
+		},
+		"sp-store-info": {
+			"context": "div"
 		}
 	}
 }

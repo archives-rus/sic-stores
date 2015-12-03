@@ -19,17 +19,23 @@ SP.directive('spPaginator', function () {
 					return data.number * data.size + 1;
 				return "";
 			};
-			// последняя запись
+			// Последняя запись
 			scope.end = function () {
 				var start = scope.start();
 				if (start)
 					return start + scope.data.numberOfElements - 1;
 				return "";
 			};
+			// Показывать или нет информацию.
+			scope.info = function() {
+				return scope.showInfo && scope.start();
+			};
 		},
 		scope: {
 			data: '=',
-			load: '&'
+			load: '&',
+			titlePage: '@',
+			showInfo: '='
 		}
 	};
 });
