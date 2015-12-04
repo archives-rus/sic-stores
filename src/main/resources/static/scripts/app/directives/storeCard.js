@@ -21,6 +21,13 @@ SP.directive('spStoreCard', function ($rootScope) {
 							return data[i].fullValue;
 					}
 			};
+			scope.isArchive = function () {
+				if (scope.data)
+					for (var i = 0; i < scope.places.length; ++i) {
+						if (scope.places[i].id === scope.data.place)
+							return scope.places[i].fullValue;
+					}
+			};
 		}
 	};
 });

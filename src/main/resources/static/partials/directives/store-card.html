@@ -1,126 +1,176 @@
-<div class='form-group'>
-	<label class='col-sm-2'>Место хранения</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="getText(data.place, places)"></span>
-		<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
-	</div>
-	<label class='col-sm-2'>Архив</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="getText(data.archive, archives)"></span>
-		<select ng-switch-when='true' ng-model="data.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
-	</div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class='form-group'>
-	<label class='col-sm-2'>Уровень архива</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="getText(data.level, levels)"></span>
-		<select ng-switch-when='true' ng-model="data.level" ng-options="level.id as level.fullValue for level in levels" class='form-control'></select>
-	</div>
-	<label class='col-sm-2'>Адрес архива</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="getText(data.adres, adreses[data.archive])"></span>
-		<select ng-switch-when='true' ng-model="data.adres" ng-options="adres.id as adres.fullValue for adres in adreses[data.archive]" class='form-control'></select>
-	</div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class='form-group'>
-	<label class='col-sm-2'>Номер фонда</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false'>{{data.fond.prefix}}{{data.fond.number}}{{data.fond.suffix}}</span>
-		<div ng-switch-when='true' class="input-group">
-			<input ng-model="data.fond.prefix" class="form-control" style='width: 60px'/>
-			<input ng-model="data.fond.number" class='form-control' style='width: 60px'/>
-			<input ng-model="data.fond.suffix" class='form-control' style='width: 60px'/>
-		</div>
-	</div>
-	<label class='col-sm-2'>Телефон</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.phone"></span>
-		<input class='form-control'  ng-switch-when='true' ng-model='data.phone'/> 
-	</div>
-</div>
-<div class="clearfix"></div>
-
-<div ng-show="edit" class='form-group'>
-	<div class="col-sm-offset-2 col-sm-4">
-		<div style="display: inline-block; width: 60px">префикс</div>
-		<div style="display: inline-block; width: 60px" class="text-center">№</div>
-		<div style="display: inline-block; width: 60px">литера</div>
-	</div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class='form-group'>
-	<label class='col-sm-2'>Название фонда</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.fond.name"></span>
-		<input class='form-control' ng-switch-when='true' ng-model='data.fond.name'/> 
-	</div>
-	<label class='col-sm-2'>Электронная почта</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.email"></span>
-		<input class='form-control' ng-switch-when='true' ng-model='data.email'/> 
-	</div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class='form-group'>
-	<label class="col-sm-2">Годы</label>
-	<div class='col-sm-4'  ng-switch="edit">
-		<span ng-switch-when='false'>{{data.startYear}}-{{data.endYear}}</span>
-		<div ng-switch-when='true' class="form-inline">
-			<div class="input-group" style="width: 160px">
-				<label class="input-group-addon control-label">c:</label>
-				<input ng-model="data.startYear" class='form-control'/>
+<div ng-switch='isArchive()'>
+	<div ng-switch-when="Архив">
+		<div class='form-group'>
+			<label class='col-sm-2'>Место хранения</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="getText(data.place, places)"></span>
+				<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
 			</div>
-			<div class="input-group" style="width: 160px">
-				<label class="input-group-addon control-label">по:</label> 
-				<input ng-model="data.endYear" class='form-control'/>
+			<label class='col-sm-2'>Архив</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="getText(data.archive, archives)"></span>
+				<select ng-switch-when='true' ng-model="data.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
 			</div>
 		</div>
-	</div>
-	<label class='col-sm-2'>Архивохранилище</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.shron"></span>
-		<input class='form-control' ng-switch-when='true' ng-model='data.shron'/> 
-	</div>
-</div>
 
-<div class='clearfix'></div>
+		<div class="clearfix"></div>
 
-<div class='form-group'>
-	<label class="col-sm-2">Количество ед. хр.</label>
-	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.ucount"></span>
-		<input class='form-control' ng-switch-when='true' ng-model='data.ucount'/> 
-	</div>
-</div>
-
-<div class='clearfix'></div>
-
-<div class="panel panel-default">
-	<div sp-docs-table="" type-data='docTypes' data="data.docs" doc-type='Вид документа' title="Состав документов" edit="edit"></div>
-	<div class="form-group">
-		<label class="col-sm-3">Дополнительные сведения о составе документов</label>
-		<div class='col-sm-9' ng-switch="edit">
-			<span ng-switch-when='false' ng-bind="data.dopInfo"></span>
-			<textarea class='form-control' ng-switch-when='true' ng-model='data.dopInfo'></textarea> 
+		<div class='form-group'>
+			<label class='col-sm-2'>Уровень архива</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="getText(data.level, levels)"></span>
+				<select ng-switch-when='true' ng-model="data.level" ng-options="level.id as level.fullValue for level in levels" class='form-control'></select>
+			</div>
+			<label class='col-sm-2'>Адрес архива</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="getText(data.adres, adreses[data.archive])"></span>
+				<select ng-switch-when='true' ng-model="data.adres" ng-options="adres.id as adres.fullValue for adres in adreses[data.archive]" class='form-control'></select>
+			</div>
 		</div>
+
+		<div class="clearfix"></div>
+
+		<div class='form-group'>
+			<label class='col-sm-2'>Номер фонда</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false'>{{data.fond.prefix}}{{data.fond.number}}{{data.fond.suffix}}</span>
+				<div ng-switch-when='true' class="input-group">
+					<input ng-model="data.fond.prefix" class="form-control" style='width: 60px'/>
+					<input ng-model="data.fond.number" class='form-control' style='width: 60px'/>
+					<input ng-model="data.fond.suffix" class='form-control' style='width: 60px'/>
+				</div>
+			</div>
+			<label class='col-sm-2'>Телефон</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.phone"></span>
+				<input class='form-control'  ng-switch-when='true' ng-model='data.phone'/> 
+			</div>
+		</div>
+		<div class="clearfix"></div>
+
+		<div ng-show="edit" class='form-group'>
+			<div class="col-sm-offset-2 col-sm-4">
+				<div style="display: inline-block; width: 60px">префикс</div>
+				<div style="display: inline-block; width: 60px" class="text-center">№</div>
+				<div style="display: inline-block; width: 60px">литера</div>
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class='form-group'>
+			<label class='col-sm-2'>Название фонда</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.fond.name"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.fond.name'/> 
+			</div>
+			<label class='col-sm-2'>Электронная почта</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.email"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.email'/> 
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class='form-group'>
+			<label class="col-sm-2">Годы</label>
+			<div class='col-sm-4'  ng-switch="edit">
+				<span ng-switch-when='false'>{{data.startYear}}-{{data.endYear}}</span>
+				<div ng-switch-when='true' class="form-inline">
+					<div class="input-group" style="width: 160px">
+						<label class="input-group-addon control-label">c:</label>
+						<input ng-model="data.startYear" class='form-control'/>
+					</div>
+					<div class="input-group" style="width: 160px">
+						<label class="input-group-addon control-label">по:</label> 
+						<input ng-model="data.endYear" class='form-control'/>
+					</div>
+				</div>
+			</div>
+			<label class='col-sm-2'>Архивохранилище</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.shron"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.shron'/> 
+			</div>
+		</div>
+
+		<div class='clearfix'></div>
+
+		<div class='form-group'>
+			<label class="col-sm-2">Количество ед. хр.</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.ucount"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.ucount'/> 
+			</div>
+		</div>
+
+		<div class='clearfix'></div>
+
+		<div class="panel panel-default">
+			<div sp-docs-table="" type-data='docTypes' data="data.docs" doc-type='Вид документа' title="Состав документов" edit="edit"></div>
+			<div class="form-group">
+				<label class="col-sm-3">Дополнительные сведения о составе документов</label>
+				<div class='col-sm-9' ng-switch="edit">
+					<span ng-switch-when='false' ng-bind="data.dopInfo"></span>
+					<textarea class='form-control' ng-switch-when='true' ng-model='data.dopInfo'></textarea> 
+				</div>
+			</div>
+		</div>
+		<div class='clearfix'></div>
+		<div class="form-group">
+			<label class="col-sm-3">Примечание</label>
+			<div class='col-sm-9' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.remark"></span>
+				<textarea class='form-control' ng-switch-when='true' ng-model='data.remark'></textarea> 
+			</div>
+		</div>
+		<div class='clearfix'></div>
+	</div>
+	<div ng-switch-when="Организация">
+		<div class='form-group'>
+			<label class='col-sm-2'>Место хранения</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="getText(data.place, places)"></span>
+				<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
+			</div>
+			<label class='col-sm-2'>Архив источник комплектования</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="getText(data.archive, archives)"></span>
+				<select ng-switch-when='true' ng-model="data.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
+			</div>
+		</div>
+		<div class='clearfix'></div>
+		<div class='form-group'>
+			<label class='col-sm-2'>Адрес организации</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.adres"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.adres'/> 
+			</div>
+		</div>
+		<div class='clearfix'></div>
+		<div class='form-group'>
+			<label class='col-sm-2'>Телефон организации</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.phone"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.phone'/> 
+			</div>
+		</div>
+		<div class='clearfix'></div>
+		<div class='form-group'>
+			<label class='col-sm-2'>Электронная почта организации</label>
+			<div class='col-sm-4' ng-switch="edit">
+				<span ng-switch-when='false' ng-bind="data.email"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.email'/> 
+			</div>
+		</div>
+		<div class='clearfix'></div>
+	</div>
+	<div ng-switch-default="">
+		<label class='col-sm-2'>Место хранения</label>
+		<div class='col-sm-4' ng-switch="edit">
+			<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
+		</div>
+		<div class='clearfix'></div>
 	</div>
 </div>
-<div class='clearfix'></div>
-<div class="form-group">
-	<label class="col-sm-3">Примечание</label>
-	<div class='col-sm-9' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.remark"></span>
-		<textarea class='form-control' ng-switch-when='true' ng-model='data.remark'></textarea> 
-	</div>
-</div>
-<div class='clearfix'></div>

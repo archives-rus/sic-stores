@@ -52,7 +52,7 @@ SP.service('Search', function ($http, criteria, tableResult, orgCard, storePlace
 							]
 						}];
 				} else {
-					content = {};
+					content = [{}];
 				}
 				places[i][j] = {
 					totalElements: 2,
