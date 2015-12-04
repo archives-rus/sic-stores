@@ -23,19 +23,19 @@
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.startDate}}</span>
-				<input ng-switch-when="true" ng-model="item.startDate"/>
+				<input ng-switch-when="true" ng-model="item.startDate" class='form-control'/>
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.endDate}}</span>
-				<input ng-switch-when="true" ng-model="item.endDate"/>
+				<input ng-switch-when="true" ng-model="item.endDate" class='form-control'/>
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.opisNumber}}</span>
-				<input ng-switch-when="true" ng-model="item.opisNumber"/>
+				<input ng-switch-when="true" ng-model="item.opisNumber" class='form-control'/>
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.docsCount}}</span>
-				<input ng-switch-when="true" ng-model="item.docsCount"/>
+				<input ng-switch-when="true" ng-model="item.docsCount" class='form-control'/>
 			</td>
 			<td ng-show="edit"><button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button></td>
 		</tr>

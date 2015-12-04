@@ -1,29 +1,16 @@
 <div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Карточка" ng-show="!ctrl.edit"></div>
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Наименование организации и её переименования</div>
-	<table class='table table-bordered table-hover table-striped'>
-		<thead>
-			<tr>
-				<th>Полное наименование и переименования</th>
-				<th>Краткое наименование</th>
-				<th>Подчинённость</th>
-				<th>Даты</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="item in ctrl.result.content[0].names">
-				<td>{{item.full}}</td>
-				<td>{{item.short}}</td>
-				<td>{{item.sub}}</td>
-				<td>{{item.date}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div sp-names-table="" data='ctrl.result.content[0].names' edit='ctrl.edit'></div>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Места хранения</div>
 	<div class="panel-body">
+		<div class="btn-group pull-left" ng-show="ctrl.edit">
+			<button class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+			<button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+		</div>
 		<div sp-paginator="" data="ctrl.place" load="ctrl.loadPlace(page)" title-page="Запись"></div>
 		<div sp-store-card="" data="ctrl.place.content[0]" edit='ctrl.edit'></div>
 	</div>

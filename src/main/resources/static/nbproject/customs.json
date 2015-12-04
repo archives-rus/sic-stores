@@ -31,6 +31,9 @@
 		"sp-paginator": {
 			"context": "div"
 		},
+		"sp-names-table": {
+			"context": "div"
+		},
 		"sp-docs-table": {
 			"context": "div"
 		},
