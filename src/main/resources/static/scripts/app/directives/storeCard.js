@@ -13,6 +13,14 @@ SP.directive('spStoreCard', function ($rootScope) {
 			scope.places = $rootScope.places;
 			scope.levels = $rootScope.levels;
 			scope.adreses = $rootScope.adreses;
+			scope.docTypes = $rootScope.docTypes;
+			scope.getText = function (id, data) {
+				if (data)
+					for (var i = 0; i < data.length; ++i) {
+						if (data[i].id === id)
+							return data[i].fullValue;
+					}
+			};
 		}
 	};
 });

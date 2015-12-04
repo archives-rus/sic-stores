@@ -11,18 +11,20 @@ SP.controller('CardCtrl', function (orgCard, Search, storePlace,
 		if ('last' === page) {
 			page = orgCard.number;
 		}
-		if ($routeParams.start !== page)
+		if ($routeParams.start != page) {
 			$location.path('/view_card/' + page);
-		else {
+		} else {
 			Search.loadOrgCard(page);
 			Search.loadStorePlace();
 		}
 	};
 	me.loadPlace = Search.loadStorePlace;
-	if ($routeParams.start) { // Режим просмотра
-		me.loadPage($routeParams.start);
+	if (/view_card/.test($location.path())) { // Режим просмотра
 		me.edit = false;
+		me.loadPage($routeParams.start);
 	} else { // Режим редактирования
+		me.result = angular.copy(orgCard);
+		me.place = angular.copy(storePlace);
 		me.edit = true;
 	}
 });

@@ -18,8 +18,8 @@
 	<tbody>
 		<tr ng-repeat="item in data">
 			<td ng-switch="edit">
-				<span ng-switch-when="false">{{item.type.fullValue}}</span>
-				<select ng-switch-when='true' ng-model="item.type" ng-options="type as type.fullValue for type in docTypes" class='form-control'></select>
+				<span ng-switch-when="false" ng-bind='getText(item.type)'></span>
+				<select ng-switch-when='true' ng-model="item.type" ng-options="type.id as type.fullValue for type in typeData" class='form-control'></select>
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.startDate}}</span>

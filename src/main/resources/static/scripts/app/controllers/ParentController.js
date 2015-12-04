@@ -27,9 +27,11 @@ SP.controller('ParentCtrl',
 				{id: 5, fullValue: 'Архивный отдел муниципального образования'}
 			];
 			$rootScope.adreses = {
-				87: [{fullValue: 'ул. Пирогова'}, {fullValue: 'ул. Пометкина'}, {fullValue: 'ул. Хорошого'}],
-				88: [{fullValue: 'ул. Пирогова, 3'}, {fullValue: 'ул. Пометкина, 4'}, {fullValue: 'ул. Хорошого, 5'}]
+				87: [{fullValue: 'ул. Пирогова', id: 1}, {fullValue: 'ул. Пометкина', id: 2}, {fullValue: 'ул. Хорошого', id: 3}],
+				88: [{fullValue: 'ул. Пирогова, 3', id: 1}, {fullValue: 'ул. Пометкина, 4', id: 2}, {fullValue: 'ул. Хорошого, 5', id: 3}]
 			};
+			$rootScope.rewardTypes = [{id: 1, fullValue: '850 лет Москвы'}, {id: 2, fullValue: 'Герой Советского Союза'}];
+			$rootScope.tripTypes = [{id: 1, fullValue: 'Командировочка'}, {id: 2, fullValue: 'Отчет'}];
 			/**
 			 * Выполняет выход из системы
 			 */

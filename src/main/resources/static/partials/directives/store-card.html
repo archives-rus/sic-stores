@@ -1,13 +1,13 @@
 <div class='form-group'>
 	<label class='col-sm-2'>Место хранения</label>
 	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.place.fullValue"></span>
-		<select ng-switch-when='true' ng-model="data.place" ng-options="place as place.fullValue for place in places" class='form-control'></select>
+		<span ng-switch-when='false' ng-bind="getText(data.place, places)"></span>
+		<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
 	</div>
 	<label class='col-sm-2'>Архив</label>
 	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.archive.fullValue"></span>
-		<select ng-switch-when='true' ng-model="data.archive" ng-options="archive as archive.fullValue for archive in archives" class='form-control'></select>
+		<span ng-switch-when='false' ng-bind="getText(data.archive, archives)"></span>
+		<select ng-switch-when='true' ng-model="data.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
 	</div>
 </div>
 
@@ -16,13 +16,13 @@
 <div class='form-group'>
 	<label class='col-sm-2'>Уровень архива</label>
 	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.level.fullValue"></span>
-		<select ng-switch-when='true' ng-model="data.level" ng-options="level as level.fullValue for level in levels" class='form-control'></select>
+		<span ng-switch-when='false' ng-bind="getText(data.level, levels)"></span>
+		<select ng-switch-when='true' ng-model="data.level" ng-options="level.id as level.fullValue for level in levels" class='form-control'></select>
 	</div>
 	<label class='col-sm-2'>Адрес архива</label>
 	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.adres.fullValue"></span>
-		<select ng-switch-when='true' ng-model="data.adres" ng-options="adres as adres.fullValue for adres in adreses[data.archive.id]" class='form-control'></select>
+		<span ng-switch-when='false' ng-bind="getText(data.adres, adreses[data.archive])"></span>
+		<select ng-switch-when='true' ng-model="data.adres" ng-options="adres.id as adres.fullValue for adres in adreses[data.archive]" class='form-control'></select>
 	</div>
 </div>
 
@@ -106,7 +106,7 @@
 <div class='clearfix'></div>
 
 <div class="panel panel-default">
-	<div sp-docs-table="" data="data.docs" doc-type='Вид документа' title="Состав документов" edit="edit"></div>
+	<div sp-docs-table="" type-data='docTypes' data="data.docs" doc-type='Вид документа' title="Состав документов" edit="edit"></div>
 	<div class="form-group">
 		<label class="col-sm-3">Дополнительные сведения о составе документов</label>
 		<div class='col-sm-9' ng-switch="edit">
