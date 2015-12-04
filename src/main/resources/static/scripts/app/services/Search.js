@@ -33,12 +33,27 @@ SP.service('Search', function ($http, criteria, tableResult, orgCard, storePlace
 			for (var j = 0; j < 2; ++j) {
 				var content;
 				if (j === 0) {
-					content = [{place: {id: 1, fullValue: 'Архив'}, 
-						archive: {id: 1, fullValue: 'Российский государственный архив'},
-						level: {id: 1, fullValue: 'Федеральный архив'},
-						adres: {id: 1, fullValue: 'ул. Пирогова'},
-						fond: {prefix: 1, number: 10, suffix: 'А'}
-					}];
+					content = [{place: {id: 1, fullValue: 'Архив'},
+							archive: {id: 1, fullValue: 'Российский государственный архив'},
+							level: {id: 1, fullValue: 'Федеральный архив'},
+							adres: {id: 1, fullValue: 'ул. Пирогова'},
+							fond: {prefix: 1, number: 10, suffix: 'А', name: 'Мой крутой фонд'},
+							phone: '+7 (495) 123-134-14',
+							email: 'it@yandex.ru',
+							startYear: '1940',
+							endYear: '1974',
+							shron: 'Новое архивохранилище',
+							ucount: '134',
+							dopInfo: 'Дополнительная информация',
+							remark: 'А это разные примечания',
+							docs: [{type: {fullValue: 'Документ 1_' + (i + 1), id: 1}, startDate: '194' + i, endDate: '194' + (i + 2),
+									opisNumber: 'Опись №' + (i + 1), docsCount: '10'},
+								{type: {fullValue: 'Документ 2_' + (i + 1), id: 2}, startDate: '194' + i, endDate: '194' + (i + 2),
+									opisNumber: 'Опись №' + (i + 1), docsCount: '10'},
+								{type: {fullValue: 'Документ 3_' + (i + 1), id: 3}, startDate: '194' + i, endDate: '194' + (i + 2),
+									opisNumber: 'Опись №' + (i + 1), docsCount: '10'}
+							]
+						}];
 				} else {
 					content = {};
 				}
@@ -66,18 +81,18 @@ SP.service('Search', function ($http, criteria, tableResult, orgCard, storePlace
 					names: [{full: 'Полное 1_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
 						{full: 'Полное 2_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'},
 						{full: 'Полное 3_' + (i + 1), short: 'Короткое', sub: 'Подчиненность', date: '1940-1942'}],
-					rewards: [{type: {fullValue: 'Награда 1_' + (i + 1), id: 1}, startDate: '194' + i, endDate: '194' + (i + 2), 
+					rewards: [{type: {fullValue: 'Награда 1_' + (i + 1), id: 1}, startDate: '194' + i, endDate: '194' + (i + 2),
 							opisNumber: 'Опись №' + (i + 1), docsCount: '10'},
-						{type: {fullValue: 'Награда 2_' + (i + 1), id: 2}, startDate: '194' + i, endDate: '194' + (i + 2), 
+						{type: {fullValue: 'Награда 2_' + (i + 1), id: 2}, startDate: '194' + i, endDate: '194' + (i + 2),
 							opisNumber: 'Опись №' + (i + 1), docsCount: '10'},
-						{type: {fullValue: 'Награда 3_' + (i + 1), id: 3}, startDate: '194' + i, endDate: '194' + (i + 2), 
+						{type: {fullValue: 'Награда 3_' + (i + 1), id: 3}, startDate: '194' + i, endDate: '194' + (i + 2),
 							opisNumber: 'Опись №' + (i + 1), docsCount: '10'}
 					],
-					trips: [{type: {fullValue: 'Загранка 1_' + (i + 1), id: 1}, startDate: '194' + i, endDate: '194' + (i + 2), 
+					trips: [{type: {fullValue: 'Загранка 1_' + (i + 1), id: 1}, startDate: '194' + i, endDate: '194' + (i + 2),
 							opisNumber: 'Опись №' + (i + 1), docsCount: '10'},
-						{type: {fullValue: 'Загранка 2_' + (i + 1), id: 2}, startDate: '194' + i, endDate: '194' + (i + 2), 
+						{type: {fullValue: 'Загранка 2_' + (i + 1), id: 2}, startDate: '194' + i, endDate: '194' + (i + 2),
 							opisNumber: 'Опись №' + (i + 1), docsCount: '10'},
-						{type: {fullValue: 'Загранка 3_' + (i + 1), id: 3}, startDate: '194' + i, endDate: '194' + (i + 2), 
+						{type: {fullValue: 'Загранка 3_' + (i + 1), id: 3}, startDate: '194' + i, endDate: '194' + (i + 2),
 							opisNumber: 'Опись №' + (i + 1), docsCount: '10'}
 					],
 					user: 'Кузнецов О. И.',
