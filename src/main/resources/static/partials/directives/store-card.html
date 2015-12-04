@@ -31,7 +31,7 @@
 <div class='form-group'>
 	<label class='col-sm-2'>Номер фонда</label>
 	<div class='col-sm-4' ng-switch="edit">
-		<span ng-switch-when='false' ng-bind="data.fondNumber"></span>
+		<span ng-switch-when='false'>{{data.fond.prefix}}{{data.fond.number}}{{data.fond.suffix}}</span>
 		<div ng-switch-when='true' class="input-group">
 			<input ng-model="data.fond.prefix" class="form-control" style='width: 60px'/>
 			<input ng-model="data.fond.number" class='form-control' style='width: 60px'/>
@@ -106,7 +106,7 @@
 <div class='clearfix'></div>
 
 <div class="panel panel-default">
-	<div sp-docs-table="" data="data.docs" title="Состав документов" edit="edit"></div>
+	<div sp-docs-table="" data="data.docs" doc-type='Вид документа' title="Состав документов" edit="edit"></div>
 	<div class="form-group">
 		<label class="col-sm-3">Дополнительные сведения о составе документов</label>
 		<div class='col-sm-9' ng-switch="edit">

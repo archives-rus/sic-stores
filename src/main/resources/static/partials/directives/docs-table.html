@@ -7,7 +7,7 @@
 <table class='table table-bordered table-striped table-hover'>
 	<thead>
 		<tr>
-			<th>Вид документа</th>
+			<th>{{docType}}</th>
 			<th>Дата начальная</th>
 			<th>Дата конечная</th>
 			<th>№ описи</th>
@@ -16,12 +16,27 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="item in data.docs">
-			<td>{{item.type}}</td>
-			<td>{{item.startDate}}</td>
-			<td>{{item.endDate}}</td>
-			<td>{{item.opisNumber}}</td>
-			<td>{{item.docCount}}</td>
+		<tr ng-repeat="item in data">
+			<td ng-switch="edit">
+				<span ng-switch-when="false">{{item.type.fullValue}}</span>
+				<select ng-switch-when='true' ng-model="item.type" ng-options="type as type.fullValue for type in docTypes" class='form-control'></select>
+			</td>
+			<td ng-switch="edit">
+				<span ng-switch-when="false">{{item.startDate}}</span>
+				<input ng-switch-when="true" ng-model="item.startDate"/>
+			</td>
+			<td ng-switch="edit">
+				<span ng-switch-when="false">{{item.endDate}}</span>
+				<input ng-switch-when="true" ng-model="item.endDate"/>
+			</td>
+			<td ng-switch="edit">
+				<span ng-switch-when="false">{{item.opisNumber}}</span>
+				<input ng-switch-when="true" ng-model="item.opisNumber"/>
+			</td>
+			<td ng-switch="edit">
+				<span ng-switch-when="false">{{item.docsCount}}</span>
+				<input ng-switch-when="true" ng-model="item.docsCount"/>
+			</td>
 			<td ng-show="edit"><button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button></td>
 		</tr>
 	</tbody>
