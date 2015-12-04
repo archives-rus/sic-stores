@@ -65,22 +65,24 @@
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Результаты поиска</div>
 	<div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Страница" show-info="true"></div>
-	<table class='table table-bordered table-striped table-hover'>
-		<thead>
-			<tr>
-				<th>Название организации</th>
-				<th>Архив</th>
-				<th>Фонд</th>
-				<th>Крайние даты</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="item in ctrl.result.content" ng-dblclick="ctrl.viewCard($index)">
-				<td>{{item.organization}}</td>
-				<td>{{item.archive}}</td>
-				<td>{{item.fund}}</td>
-				<td>{{item.years}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="panel-body">
+		<table class='table table-bordered table-striped table-hover'>
+			<thead>
+				<tr>
+					<th>Название организации</th>
+					<th>Архив</th>
+					<th>Фонд</th>
+					<th>Крайние даты</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in ctrl.result.content" ng-dblclick="ctrl.viewCard($index)">
+					<td>{{item.organization}}</td>
+					<td>{{item.archive}}</td>
+					<td>{{item.fund}}</td>
+					<td>{{item.years}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

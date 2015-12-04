@@ -31,6 +31,9 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 										case '/new_card/view':
 											$rootScope.topMenu = dir + 'edit_card.html';
 											break;
+										case '/jrch':
+											$rootScope.topMenu = dir + 'jrch.html';
+											break;
 										default:
 											$rootScope.topMenu = dir + 'main.html';
 									}
@@ -56,6 +59,12 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 							controller: 'CardCtrl',
 							controllerAs: 'ctrl',
 							resolve: resolve("Просмотр карточки")
+						})
+						.when('/jrch', {
+							templateUrl: 'partials/views/jrch.html',
+							controller: 'JrchCtrl',
+							controllerAs: 'ctrl',
+							resolve: resolve("Журнал регистрации изменений")
 						})
 						.otherwise({
 							templateUrl: 'partials/views/main.html',
