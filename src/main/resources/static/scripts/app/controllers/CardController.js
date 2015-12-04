@@ -1,7 +1,7 @@
 /**
  * Контроллер просмотра карточки организации
  */
-SP.controller('ViewCardCtrl', function (orgCard, Search, storePlace,
+SP.controller('CardCtrl', function (orgCard, Search, storePlace,
 		$routeParams, $location) {
 	var me = this;
 	me.result = orgCard;
@@ -19,5 +19,10 @@ SP.controller('ViewCardCtrl', function (orgCard, Search, storePlace,
 		}
 	};
 	me.loadPlace = Search.loadStorePlace;
-	me.loadPage($routeParams.start);
+	if ($routeParams.start) { // Режим просмотра
+		me.loadPage($routeParams.start);
+		me.edit = false;
+	} else { // Режим редактирования
+		me.edit = true;
+	}
 });
