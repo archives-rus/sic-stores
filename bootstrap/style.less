@@ -1,3 +1,6 @@
+.border(){
+    border-bottom:2px solid @light-colors;    
+}
 .btn{
 		border:none;
 		background-color: transparent;
@@ -7,13 +10,8 @@
   background-image:url("../img/bg-login.png");
   background-position:center bottom;
   background-repeat:no-repeat;
-	  .btn{
-		background-image:url("@{url-img}/enter.png");
-		background-position:left center;
-		background-repeat:no-repeat;
-		text-decoration:underline;
-	  }
-}
+}	  
+
 h2{
 	font: @font-size-h2 'SimeizBold';
 	color: @head-color;
@@ -36,4 +34,31 @@ h2{
 		border: none;
 		background-color: transparent;
 	}
+}
+.panel{
+    .panel-heading{
+        color:@main-colors;
+        font:@font-size-h3 'Candarab';
+        .border();
+        //border-bottom:2px solid @light-colors;
+    }
+    .sub-labels{
+        font-size:@font-size-small;
+        margin-top:-15px;
+        div{
+            div{
+                text-align:center;  
+                display:inline-block;
+                width:58px;
+            }
+        }
+    }
+}
+.row{
+    .icons-menu&{
+        margin:0;
+        .col-md-12{
+            .border();
+        }
+    }
 }
