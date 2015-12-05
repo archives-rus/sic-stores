@@ -1,10 +1,11 @@
 var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 		.constant('criteria', {}) // Критерии поиска
+		.constant('criteriaJ', {}) // Критерии поиска для ЖРИ
 		.constant('tableResult', {}) // Результаты поиска для таблицы
+		.constant('tableResultJ', {}) // Результаты поиска для таблицы для ЖРИ
 		.constant('orgCard', {}) // Результаты поиска для одной организации
 		.constant('storePlace', {}) // Результаты поиска места хранения для одной организации
-		.config(['$routeProvider', '$locationProvider',
-			function ($routeProvider, $locationProvider) {
+		.config(function ($routeProvider, $locationProvider) {
 				/**
 				 * Дополнительные настройки для маршрутов
 				 * @param {String} suffix - изменяемая часть заголовка вкладки браузера
@@ -74,4 +75,4 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 						});
 
 				$locationProvider.html5Mode(true);
-			}]);
+			});

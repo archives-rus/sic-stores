@@ -23,16 +23,26 @@
 
 			<div class='form-group'>
 				<label for="startYear" class="col-sm-3 control-label">Дата операции</label>
-				<div class="col-sm-2" style='width: 9.5%'>
+				<div class="col-sm-2">
 					<div class="input-group">
 						<label for="startYear" class="input-group-addon control-label">c:</label>
-						<input id="startYear" ng-model="ctrl.crit.start" class='form-control'/>
+						<input id="startYear" ng-model="ctrl.crit.start" class="form-control" is-open="ctrl.dp.start"
+							   datepicker-options="ctrl.dateOptions"
+							   datepicker-popup="dd.MM.yyyy"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="ctrl.openDP('start')"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
 					</div>
 				</div>
-				<div class="col-sm-2" style='width: 10.15%'>
+				<div class="col-sm-2">
 					<div class="input-group">
 						<label for="endYear" class="input-group-addon control-label">по:</label> 
-						<input id="endYear" ng-model="ctrl.crit.end" class='form-control'/>
+						<input id="endYear" ng-model="ctrl.crit.end" class="form-control" is-open="ctrl.dp.end"
+							   datepicker-options="ctrl.dateOptions"
+							   datepicker-popup="dd.MM.yyyy"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="ctrl.openDP('end')"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
 					</div>
 				</div>
 			</div>
@@ -72,15 +82,15 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="item in ctrl.result.content" ng-dblclick="ctrl.viewCard($index)">
-					<td>{{item.organization}}</td>
+					<td>{{$index + 1}}</td>
 					<td>{{item.archive}}</td>
-					<td>{{item.fund}}</td>
-					<td>{{item.years}}</td>
-					<td>{{item.years}}</td>
-					<td>{{item.years}}</td>
-					<td>{{item.years}}</td>
+					<td>{{item.level}}</td>
+					<td>{{item.date}}</td>
+					<td>{{item.type}}</td>
+					<td>{{item.user}}</td>
+					<td>{{item.organization}}</td>
 				</tr>
 			</tbody>
-		</table>
+		</table>					
 	</div>
 </div>

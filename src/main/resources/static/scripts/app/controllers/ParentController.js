@@ -64,4 +64,12 @@ SP.controller('ParentCtrl',
 			 * Поиск информации об организациях
 			 */
 			me.search = Search.loadTablePage;
+			/**
+			 * Очищает параметры поиска ЖРИ
+			 */
+			me.jrchReset = Search.clearCriteriaJ;
+			/**
+			 * Поиск информации для ЖРИ
+			 */
+			me.jrchSearch = Search.loadTablePageJ;
 		});

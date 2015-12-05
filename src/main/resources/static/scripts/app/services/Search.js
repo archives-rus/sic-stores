@@ -1,8 +1,8 @@
 /** 
  * Поиск организаций по критериям
  */
-SP.service('Search', function ($http, criteria, tableResult, orgCard, storePlace, ShowMessage) {
-
+SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
+		tableResultJ, orgCard, storePlace, ShowMessage) {
 	var
 			// Удаляет все свойства объекта
 			clear = function (obj) {
@@ -153,10 +153,38 @@ SP.service('Search', function ($http, criteria, tableResult, orgCard, storePlace
 				storePlace[o] = data[o];
 			}
 		},
+		// Получает данные для таблицы ЖРИ
+		loadTablePageJ: function (numberOfPage) {
+			var data = {
+				totalElements: 1,
+				numberOfElements: 1,
+				number: 0,
+				current: 1,
+				totalPages: 1,
+				first: true,
+				last: true,
+				size: 1,
+				content: [{
+						archive: 'Какой-то архив',
+						level: 'Федеральный архив',
+						date: '28.01.2015',
+						type: 'Редактирование',
+						user: 'Иванов И. И.',
+						organization: 'Какая-то организация'
+					}]
+			};
+			for (var o in data)
+				tableResultJ[o] = data[o];
+		},
 		// Очищает параметры и результаты поиска
 		clearCriteria: function () {
 			clear(criteria);
 			clear(tableResult);
+		},
+		// Очищает параметры и результаты поиска для ЖРИ
+		clearCriteriaJ: function () {
+			clear(criteriaJ);
+			clear(tableResultJ);
 		}
 	};
 });
