@@ -23,6 +23,8 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 										url = $location.url();
 								if (/^\/view_card\//.test(url)) {
 									$rootScope.topMenu = dir + 'view_card.html';
+								} else if (/^\/view_jrch\//.test(url)) {
+									$rootScope.topMenu = dir + 'view_jrch.html';
 								} else {
 									switch ($location.url()) {
 										case '/new_card/main':
@@ -66,6 +68,12 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 							controller: 'JrchCtrl',
 							controllerAs: 'ctrl',
 							resolve: resolve("Журнал регистрации изменений")
+						})
+						.when('/view_jrch/:start', {
+							templateUrl: 'partials/views/jrch_card.html',
+							controller: 'JrchCardCtrl',
+							controllerAs: 'ctrl',
+							resolve: resolve("Просмотр журнала регистрации изменений")
 						})
 						.otherwise({
 							templateUrl: 'partials/views/main.html',

@@ -1,10 +1,14 @@
-SP.controller('JrchCtrl', function (criteriaJ, tableResultJ, Search) {
+SP.controller('JrchCtrl', function (criteriaJ, tableResultJ,
+		Search, $location) {
 	var me = this;
 	// Критерии поиска
 	me.crit = criteriaJ;
 	// результаты поиска
 	me.result = tableResultJ;
 	me.loadPage = Search.loadTablePageJ;
+	me.viewCard = function (index) {
+		$location.path('/view_jrch/' + index);
+	};
 
 	// открытие datepickers
 	me.dp = {
