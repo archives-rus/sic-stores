@@ -1,10 +1,11 @@
 var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 		.constant('criteria', {}) // Критерии поиска
+		.constant('criteriaJ', {}) // Критерии поиска для ЖРИ
 		.constant('tableResult', {}) // Результаты поиска для таблицы
+		.constant('tableResultJ', {}) // Результаты поиска для таблицы для ЖРИ
 		.constant('orgCard', {}) // Результаты поиска для одной организации
 		.constant('storePlace', {}) // Результаты поиска места хранения для одной организации
-		.config(['$routeProvider', '$locationProvider',
-			function ($routeProvider, $locationProvider) {
+		.config(function ($routeProvider, $locationProvider) {
 				/**
 				 * Дополнительные настройки для маршрутов
 				 * @param {String} suffix - изменяемая часть заголовка вкладки браузера
@@ -22,6 +23,8 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 										url = $location.url();
 								if (/^\/view_card\//.test(url)) {
 									$rootScope.topMenu = dir + 'view_card.html';
+								} else if (/^\/view_jrch\//.test(url)) {
+									$rootScope.topMenu = dir + 'view_jrch.html';
 								} else {
 									switch ($location.url()) {
 										case '/new_card/main':
@@ -30,6 +33,9 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 										case '/edit_card':
 										case '/new_card/view':
 											$rootScope.topMenu = dir + 'edit_card.html';
+											break;
+										case '/jrch':
+											$rootScope.topMenu = dir + 'jrch.html';
 											break;
 										default:
 											$rootScope.topMenu = dir + 'main.html';
@@ -57,6 +63,18 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 							controllerAs: 'ctrl',
 							resolve: resolve("Просмотр карточки")
 						})
+						.when('/jrch', {
+							templateUrl: 'partials/views/jrch.html',
+							controller: 'JrchCtrl',
+							controllerAs: 'ctrl',
+							resolve: resolve("Журнал регистрации изменений")
+						})
+						.when('/view_jrch/:start', {
+							templateUrl: 'partials/views/jrch_card.html',
+							controller: 'JrchCardCtrl',
+							controllerAs: 'ctrl',
+							resolve: resolve("Просмотр журнала регистрации изменений")
+						})
 						.otherwise({
 							templateUrl: 'partials/views/main.html',
 							controller: 'MainCtrl',
@@ -65,4 +83,4 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 						});
 
 				$locationProvider.html5Mode(true);
-			}]);
+			});

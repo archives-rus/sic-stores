@@ -35,7 +35,8 @@ module.exports = function (grunt) {
 					join(modulesDir, 'angular-route', 'angular-route.min.js'),
 					join(modulesDir, 'angular-animate', 'angular-animate.min.js'),
 					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap.min.js'),
-					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap-tpls.min.js')
+					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap-tpls.min.js'),
+					join(modulesDir, 'angular-i18n', 'angular-locale_ru-ru.js')
 				],
 				dst: join(jsRoot, 'vendor', 'script.min.js')
 			},
@@ -179,7 +180,7 @@ module.exports = function (grunt) {
 				]
 			}
 		},
-		// Приводит DI angular в соответсвующий вид, чтобы работало посли минимизации
+		// Приводит DI angular в соответсвующий вид, чтобы работало посля минимизации
 		ngAnnotate: {
 			app: {
 				files: [

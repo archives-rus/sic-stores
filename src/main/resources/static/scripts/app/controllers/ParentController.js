@@ -52,9 +52,11 @@ SP.controller('ParentCtrl',
 			 */
 			me.isCurrent = function (url) {
 				var currentUrl = $location.url();
-				if (url === '/')
-					return currentUrl === url || /^\/index\.html/.test(currentUrl);
-				return currentUrl === url;
+				if (url === '/jrch')
+					return /jrch/.test(currentUrl);
+				else if (url === '/reports')
+					return /reports/.test(currentUrl);
+				return !/jrch|reports/.test(currentUrl);
 			};
 			/**
 			 * Очищает параметры поиска
@@ -64,4 +66,12 @@ SP.controller('ParentCtrl',
 			 * Поиск информации об организациях
 			 */
 			me.search = Search.loadTablePage;
+			/**
+			 * Очищает параметры поиска ЖРИ
+			 */
+			me.jrchReset = Search.clearCriteriaJ;
+			/**
+			 * Поиск информации для ЖРИ
+			 */
+			me.jrchSearch = Search.loadTablePageJ;
 		});

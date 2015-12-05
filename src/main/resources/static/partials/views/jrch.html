@@ -1,0 +1,96 @@
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">Параметры поиска</div>
+	<div class="panel-body">
+		<form  ng-submit="ctrl.loadPage()" class="form-horizontal">
+			<div class='form-group'>
+				<label for="archive" class='col-sm-3 control-label'>Архив</label>
+				<div class='col-sm-5'>
+					<select id="archive" ng-model="ctrl.crit.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="archiveLevel" class='col-sm-3 control-label'>Уровень архива</label>
+				<div class='col-sm-5'>
+					<select id="archiveLevel" ng-model="ctrl.crit.level" ng-options="level.id as level.fullValue for level in levels" class='form-control'></select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="nameorg" class="col-sm-3 control-label">Наименование организации</label>
+				<div class="col-sm-5">
+					<input id="nameorg" ng-model="ctrl.crit.org" class='form-control'/>
+				</div>
+			</div>
+
+			<div class='form-group'>
+				<label for="startYear" class="col-sm-3 control-label">Дата операции</label>
+				<div class="col-sm-2">
+					<div class="input-group">
+						<label for="startYear" class="input-group-addon control-label">c:</label>
+						<input id="startYear" ng-model="ctrl.crit.start" class="form-control" is-open="ctrl.dp.start"
+							   datepicker-options="ctrl.dateOptions"
+							   datepicker-popup="dd.MM.yyyy"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="ctrl.openDP('start')"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="input-group">
+						<label for="endYear" class="input-group-addon control-label">по:</label> 
+						<input id="endYear" ng-model="ctrl.crit.end" class="form-control" is-open="ctrl.dp.end"
+							   datepicker-options="ctrl.dateOptions"
+							   datepicker-popup="dd.MM.yyyy"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="ctrl.openDP('end')"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label for="type" class='col-sm-3 control-label'>Вид операции</label>
+				<div class='col-sm-5'>
+					<select id="type" ng-model="ctrl.crit.type" ng-options="type.id as type.fullValue for type in opTypes" class='form-control'></select>
+				</div>
+			</div>
+
+			<div class='form-group'>
+				<label for="user" class='col-sm-3 control-label'>Пользователь</label>
+				<div class='col-sm-5'>
+					<select id="user" ng-model="ctrl.crit.user" ng-options="user.id as user.fullValue for user in users" class='form-control'></select>
+				</div>
+			</div>
+			<input type='submit' hidden=""/> 
+		</form>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">Результаты поиска</div>
+	<div class="panel-body">
+		<div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Страница" show-info="true"></div>
+		<table class='table table-bordered table-striped table-hover'>
+			<thead>
+				<tr>
+					<th>№ п/п</th>
+					<th>Архив</th>
+					<th>Уровень архива</th>
+					<th>Дата операции</th>
+					<th>Вид операции</th>
+					<th>Пользователь</th>
+					<th>Наименование организации</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in ctrl.result.content" ng-dblclick="ctrl.viewCard($index)">
+					<td>{{$index + 1}}</td>
+					<td>{{item.archive}}</td>
+					<td>{{item.level}}</td>
+					<td>{{item.date}}</td>
+					<td>{{item.type}}</td>
+					<td>{{item.user}}</td>
+					<td>{{item.organization}}</td>
+				</tr>
+			</tbody>
+		</table>					
+	</div>
+</div>
