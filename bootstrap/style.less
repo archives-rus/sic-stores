@@ -10,6 +10,9 @@
   background-image:url("../img/bg-login.png");
   background-position:center bottom;
   background-repeat:no-repeat;
+  .btn-enter{
+      font:1.14em/1.1em 'Candarab';
+  }
 }	  
 
 h2{
@@ -28,6 +31,18 @@ h2{
 		background-color: @header-bg-color;
 		border-bottom: 1em solid @header-border-color;
 	}
+}
+.vertical-separator{
+    color:@light-colors;
+}
+.pull-right{
+    color:@head-color;
+    .italic-sans();
+    font-family:'robotobold_italic';
+    button{
+        font-family:'robotobold', @font-family-sans-serif;
+        font-style:normal;
+    }
 }
 .input-group-addon{
 	.control-label&{
