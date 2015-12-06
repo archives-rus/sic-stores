@@ -53,9 +53,9 @@ SP.controller('ParentCtrl',
 			me.isCurrent = function (url) {
 				var currentUrl = $location.url();
 				if (url === '/jrch')
-					return /jrch/.test(currentUrl);
+					return /^\/jrch/.test(currentUrl);
 				else if (url === '/reports')
-					return /reports/.test(currentUrl);
+					return /^\/reports/.test(currentUrl);
 				return !/jrch|reports/.test(currentUrl);
 			};
 			/**
