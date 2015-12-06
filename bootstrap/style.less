@@ -32,6 +32,28 @@ h2{
 		border-bottom: 1em solid @header-border-color;
 	}
 }
+
+.mode-panel{
+    .mode-menu{
+        font-size:@font-size-h4;
+        margin-left:3.57em;
+        a.btn, a.btn:hover{
+            color:@page-color;
+            font: 1.1em 'Impact';    
+            margin:0 0.3em;  
+            padding-left:.5em;
+            &.current-view{
+                background-color:transparent;
+                padding:6px .5em 2em .5em;
+                background-image:url("../img/flag-bg.png");
+                background-position:center bottom;
+                background-repeat:no-repeat;
+                background-size:100% 4.29em;
+            }
+        }
+    }
+}
+
 .vertical-separator{
     color:@light-colors;
 }
