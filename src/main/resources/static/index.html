@@ -7,8 +7,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="/styles/vendor/styles.min.css"/>
 		<link rel="stylesheet" type="text/css" href="/styles/app.min.css"/>
+		<!--
 		<link rel="stylesheet" type="text/css" href="styles/fonts.css"/>
 		<link rel="stylesheet" type="text/css" href="styles/styles.css"/>
+		-->
 	</head>
 	<body ng-controller="ParentCtrl as prnt" class="mainPages">
 
@@ -22,7 +24,7 @@
 			<nav class="row">
 				<div class="col-md-12">
 					<div class="btn-group">
-						<a href="/" class="btn btn-default" ng-class="{'current-view': prnt.isCurrent('/')} main-menu">Поиск</a>
+						<a href="/" class="btn btn-default" ng-class="{'current-view': prnt.isCurrent('/')}">Поиск</a>
 						<a href="/reports" class="btn btn-default" ng-class="{'current-view': prnt.isCurrent('/reports')}">Отчеты</a>
 						<a href="/jrch" class="btn btn-default" ng-class="{'current-view': prnt.isCurrent('/jrch')}">Журнал регистрации изменений</a>
 					</div>
