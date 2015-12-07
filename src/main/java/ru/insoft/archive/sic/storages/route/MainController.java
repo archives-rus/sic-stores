@@ -84,5 +84,4 @@ public class MainController {
 	public String getEditCard(HttpServletRequest request) {
 		return "redirect:/#" + request.getServletPath();
 	}
-
 }
