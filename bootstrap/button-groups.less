@@ -21,6 +21,31 @@
   }
 }
 
+.ng-isolate-scope{
+    .pull-left{
+        margin-left:15px;
+        padding:@padding-small-vertical 0;
+        font-family:'robotobold',@font-family-sans-serif;
+        color:@page-color;
+    }
+    .form-inline{
+        font-family:'robotobold',@font-family-sans-serif;
+        color:@page-color;
+        .btn-group{
+            button.btn{
+                padding-left:0;    
+                color:@page-color;
+            }
+        }
+        .ng-pristine{
+            background-color:transparent;
+            border:none;
+            box-shadow:none;
+            text-align:center;
+        }
+    }
+}
+
 // Prevent double borders when buttons are next to each other
 .btn-group {
   .btn + .btn,
