@@ -37,6 +37,9 @@
 		"sp-docs-table": {
 			"context": "div"
 		},
+		"sp-change-card": {
+			"context": "div"
+		},
 		"file-model": {
 			"context": "input"
 		},

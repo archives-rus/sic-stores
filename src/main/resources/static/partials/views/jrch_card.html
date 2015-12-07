@@ -7,4 +7,9 @@
 	<div class="col-sm-2">Тот самый уровень</div>
 	<div class="clearfix"></div>
 </div>
-<div class=""></div>
+<div class="panel panel-default">
+	<div class="panel-heading panel-title" ng-bind="ctrl.title"></div>
+	<div class="panel-body">
+		<div sp-change-card="" data='op' ng-repeat="op in ctrl.operations"></div>
+	</div>
+</div>

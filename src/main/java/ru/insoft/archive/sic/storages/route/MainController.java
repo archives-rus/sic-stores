@@ -66,6 +66,17 @@ public class MainController {
 	/**
 	 * Перенаправляет запрос к роутеру angular
 	 *
+	 * @param start начальная позиция карточки в таблице результатов поиска жри
+	 * @return строку с перенаправлением к реальному маршруту 
+	 */
+	@RequestMapping(value = "/view_jrch/{start}")
+	public String getJrchCard(@PathVariable("start") Integer start) {
+		return "redirect:/#view_jrch/" + start;
+	}
+
+	/**
+	 * Перенаправляет запрос к роутеру angular
+	 *
 	 * @param request
 	 * @return строку с перенаправлением к реальному маршруту 
 	 */

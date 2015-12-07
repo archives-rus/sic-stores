@@ -1,0 +1,17 @@
+<div class="col-sm-2">Дата операции</div>
+<div class="col-sm-2" ng-bind='data.date'></div>
+<div class="clearfix"></div>
+<div class="col-sm-2">Вид операции</div>
+<div class="col-sm-2" ng-bind='data.action'></div>
+<div class="clearfix"></div>
+<div class="col-sm-2">Пользователь</div>
+<div class="col-sm-2" ng-bind='data.user'></div>
+<div class="clearfix"></div>
+<div class="col-sm-12" ng-show="data.fields.length">
+	<h3>Редактируемые значения</h3>
+	<div ng-repeat="field in data.fields">
+		<h4 ng-bind="field.name"></h4>
+		<p style="text-decoration: line-through" ng-bind="field.oldValue"></p>
+		<p ng-bind="field.newValue"></p>
+	</div>
+</div>
