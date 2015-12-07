@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -33,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.authorizeRequests()
 				.antMatchers("/scripts/vendor/script.min.js", "/scripts/login.min.js",
-						"/styles/vendor/styles.min.css", "/styles/login.min.css", 
+						"/styles/vendor/styles.min.css", "/styles/login.min.css",
 						"/img/**", "/fonts/**", "/search.html", "/search/**",
 						"/scripts/search.min.js", "/styles/search.min.css")
 				.permitAll()
@@ -52,6 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
 				//				.csrf().disable();
 				.csrf().csrfTokenRepository(csrfTokenRepository());
+		/*
+				.and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
+		 */
 	}
 
 	private static CsrfTokenRepository csrfTokenRepository() {

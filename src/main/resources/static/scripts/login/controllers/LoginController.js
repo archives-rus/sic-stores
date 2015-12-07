@@ -12,11 +12,16 @@ LSP.controller('LoginCtrl', function ($scope, $http, $httpParamSerializerJQLike,
 				.success(function () {
 					$window.location.href = '/index.html';
 				})
-				.error(function () {
-					$scope.wrongauth = true;
-					$timeout(function () {
-						$scope.wrongauth = false;
-					}, 3000);
+				.error(function (data, status) {
+					if (status === 404 && /\.map$/.test(data.path)) {
+						// сюда сыпятся все ошибки по несуществующим файлам
+						$window.location.href = '/index.html';
+					} else {
+						$scope.wrongauth = true;
+						$timeout(function () {
+							$scope.wrongauth = false;
+						}, 3000);
+					}
 				});
 	};
 });
