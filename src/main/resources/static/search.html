@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="search">
+	<head>
+		<title>Поиск по местам хранения</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="/styles/vendor/styles.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/styles/search.min.css"/>
+	</head>
+
+	<body ng-controller="MainCtrl as ctrl">
+		<div class="container">
+			<form class="row" ng-submit="ctrl.search()">
+				<div class='form-group'>
+					<label for="criteria" class="col-sm-3 col-sm-offset-1 control-label">Поиск по местам хранения</label>
+					<div class="col-sm-3">
+						<input id="criteria" class="form-control"/>
+					</div>
+					<div class="col-sm-1">
+						<input class="btn btn-default" type="submit" value="Найти"/>
+					</div>
+				</div>
+			</form>
+			<div class="row">
+				<div class="col-sm-12">В результате найдено:</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>Название организации</th>
+								<th>Номер фонда</th>
+								<th>Крайние даты</th>
+								<th>Уровень архива</th>
+								<th>Архив/орг</th>
+								<th>Адрес</th>
+								<th>Телефон</th>
+								<th>Эл. почта</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat-start="org in ctrl.organizations">
+								<td rowspan="{{org.places.length}}">{{org.name}}</td>
+								<td>{{org.places[0].fond}}</td> 
+								<td>{{org.places[0].dates}}</td> 
+								<td>{{org.places[0].level}}</td> 
+								<td>{{org.places[0].archive}}</td> 
+								<td>{{org.places[0].adres}}</td> 
+								<td>{{org.places[0].phone}}</td> 
+								<td>{{org.places[0].email}}</td> 
+							</tr>
+							<tr ng-repeat-end ng-repeat='place in org.places' ng-hide="$first">
+								<td>{{place.fond}}</td> 
+								<td>{{place.dates}}</td> 
+								<td>{{place.level}}</td> 
+								<td>{{place.archive}}</td> 
+								<td>{{place.adres}}</td> 
+								<td>{{place.phone}}</td> 
+								<td>{{place.email}}</td> 
+							</tr>
+						</tbody>
+					</table>	
+				</div>
+			</div>
+		</div>
+		<script src="/scripts/vendor/script.min.js"></script>
+		<script src="/scripts/search.min.js"></script>
+	</body>
+</html>

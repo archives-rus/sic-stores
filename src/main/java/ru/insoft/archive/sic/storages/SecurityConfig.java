@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/scripts/vendor/script.min.js", "/scripts/login.min.js",
 						"/styles/vendor/styles.min.css", "/styles/login.min.css", 
-						"/img/**", "/fonts/**")
+						"/img/**", "/fonts/**", "/search.html", "/search/**",
+						"/scripts/search.min.js", "/styles/search.min.css")
 				.permitAll()
 				.antMatchers("/utils.html", "/utils/**").hasAuthority("SP_UTILS")
 				.anyRequest().authenticated()

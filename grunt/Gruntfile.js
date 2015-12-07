@@ -29,6 +29,11 @@ module.exports = function (grunt) {
 				ann: join(jsRoot, 'utils', '**', '*' + annotateSuffix),
 				min: join(jsRoot, 'utils.min.js')
 			},
+			searchjs: {
+				src: join(jsRoot, 'search', '**', '*.js'),
+				ann: join(jsRoot, 'search', '**', '*' + annotateSuffix),
+				min: join(jsRoot, 'search.min.js')
+			},
 			vendorjs: {
 				src: [
 					join(modulesDir, 'angular', 'angular.min.js'),
@@ -47,6 +52,10 @@ module.exports = function (grunt) {
 			appcss: {
 				src: join(cssRoot, 'app', '**', '*.css'),
 				dst: join(cssRoot, 'app.min.css')
+			},
+			searchcss: {
+				src: join(cssRoot, 'search', '**', '*.css'),
+				dst: join(cssRoot, 'search.min.css')
 			},
 			utilscss: {
 				src: join(cssRoot, 'utils', '**', '*.css'),
@@ -72,8 +81,8 @@ module.exports = function (grunt) {
 		// Проверка правильности js кода
 		jshint: {
 			files: {
-				src: ['Gruntfile.js', '<%= paths.loginjs.src %>',
-					'<%= paths.appjs.src %>', '<%= paths.utilsjs.src %>']
+				src: ['Gruntfile.js', '<%= paths.loginjs.src %>', '<%= paths.appjs.src %>',
+					'<%= paths.utilsjs.src %>', '<%= paths.searchjs.src %>']
 			}
 		},
 		// Сжимаем стили
@@ -97,6 +106,11 @@ module.exports = function (grunt) {
 				files: {
 					'<%= paths.utilscss.dst %>': ['<%= paths.utilsth.dst %>', '<%= paths.utilscss.src %>']
 				}
+			},
+			search: {
+				files: {
+					'<%= paths.searchcss.dst %>': ['<%= paths.theme.dst %>', '<%= paths.searchcss.src %>']
+				}
 			}
 		},
 		// Тема
@@ -119,7 +133,8 @@ module.exports = function (grunt) {
 				tasks: 'newer:jshint' //обслуживать только измененные файлы
 			},
 			annotate: {
-				files: ['<%= paths.appjs.src %>', '<%= paths.loginjs.src %>', '<%= paths.utilsjs.src %>'],
+				files: ['<%= paths.appjs.src %>', '<%= paths.loginjs.src %>',
+					'<%= paths.utilsjs.src %>', '<%= paths.searchjs.src %>'],
 				tasks: 'newer:ngAnnotate'
 			},
 			l_uglify: {
@@ -133,6 +148,10 @@ module.exports = function (grunt) {
 			u_uglify: {
 				files: '<%= paths.utilsjs.ann %>',
 				tasks: 'uglify:utils'
+			},
+			s_uglify: {
+				files: '<%= paths.searchjs.ann %>',
+				tasks: 'uglify:search'
 			},
 			less: {
 				files: '<%= paths.theme.src %>',
@@ -153,6 +172,10 @@ module.exports = function (grunt) {
 			u_cssmin: {
 				files: ['<%= paths.utilscss.src %>', '<%= paths.utilsth.dst %>'],
 				tasks: 'cssmin:utils'
+			},
+			s_cssmin: {
+				files: ['<%= paths.searchcss.src %>', '<%= paths.theme.dst %>'],
+				tasks: 'cssmin:search'
 			},
 			options: {
 				atBegin: true
@@ -214,6 +237,17 @@ module.exports = function (grunt) {
 						}
 					}
 				]
+			},
+			search: {
+				files: [
+					{
+						expand: true,
+						src: '<%= paths.searchjs.src %>',
+						rename: function (d, s) {
+							return s + annotateSuffix;
+						}
+					}
+				]
 			}
 		},
 		// Сжимаем js файлы
@@ -229,6 +263,10 @@ module.exports = function (grunt) {
 			utils: {
 				src: '<%= paths.utilsjs.ann %>',
 				dest: '<%= paths.utilsjs.min %>'
+			},
+			search: {
+				src: '<%= paths.searchjs.ann %>',
+				dest: '<%= paths.searchjs.min %>'
 			}
 		}
 	});

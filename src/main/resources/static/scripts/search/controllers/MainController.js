@@ -1,0 +1,4 @@
+SSP.controller('MainCtrl', function() {
+
+});
+
