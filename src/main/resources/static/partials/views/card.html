@@ -7,9 +7,9 @@
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Места хранения</div>
 	<div class="panel-body">
-		<div class="btn-group pull-left" ng-show="ctrl.edit">
-			<button class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
-			<button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+		<div class="btn-group pull-left card-icons" ng-show="ctrl.edit">
+			<button class="btn btn-default"><span class="btn-plus"></span></button>
+			<button class="btn btn-default"><span class="btn-remove"></span></button>
 		</div>
 		<div sp-paginator="" data="ctrl.place" load="ctrl.loadPlace(page)" title-page="Запись"></div>
 		<div sp-store-card="" data="ctrl.place.content[0]" edit='ctrl.edit'></div>
