@@ -81,6 +81,11 @@ h2{
         .border();
         //border-bottom:2px solid @light-colors;
     }
+    .center-header > .ng-binding{
+        color:@main-colors;
+        font:@font-size-h4 'Candarab';
+        padding:@padding-small-vertical @padding-base-horizontal;
+    }
     .sub-labels{
         font-size:@font-size-small;
         margin-top:-15px;
@@ -104,4 +109,26 @@ h2{
 
 .storage-place{
     border:1px solid @table-border-color;
+}
+
+.panel-body{
+    .change-info:last-child{
+        border:1px solid @table-border-color;
+        background-color:@light-bg-color;
+        
+    }
+    h3{
+        color:@page-color;
+        border-bottom:1px solid @light-colors;
+        display:inline-block;
+        font:@font-size-h3 'Candarab';
+    }
+    h4{ 
+        .bold-sans();
+        font-family: normal @font-size-h4 'robotobold'; 
+    }
+    p{
+        margin-left:6%;
+        font-family:'robotoregular';
+    }
 }

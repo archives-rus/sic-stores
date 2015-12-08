@@ -1,7 +1,7 @@
 <div class="btn-group card-icons" ng-show='edit'>
 	<button ng-click="add()" class="btn btn-default"><span class="btn-plus"></span></button>
-	<button ng-click="down()" class="btn btn-default"><span class="-down"></span></button>
-	<button ng-click="up()" class="btn btn-default"><span class="-up"></span></button>
+	<button ng-click="down()" class="btn btn-default"><span class="btn-down"></span></button>
+	<button ng-click="up()" class="btn btn-default"><span class="btn-up"></span></button>
 </div>
 <table style="width:100%" class='table table-bordered table-striped'>
 	<thead>
@@ -31,7 +31,7 @@
 				<span ng-switch-when="false" ng-bind='item.date'></span>
 				<input ng-switch-when="true" ng-model="item.date" class='form-control'/>
 			</td>
-			<td ng-show="edit"><button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button></td>
+			<td ng-show="edit" class="card-icons"><button class="btn btn-default"><span class="btn-remove"></span></button></td>
 		</tr>
 	</tbody>
 </table>

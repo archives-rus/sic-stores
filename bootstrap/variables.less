@@ -22,6 +22,7 @@
 
 @main-colors: #5C4276;
 @light-colors: #DEE9DB;
+@light-bg-color: #F1F7EF;
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
@@ -55,13 +56,16 @@
 
 @font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
 @font-size-h2:            floor((@font-size-base * 2.15)); // ~30px
-@font-size-h3:            ceil((@font-size-base * 1.7)); // ~24px
-@font-size-h4:            ceil((@font-size-base * 1.25)); // ~18px
+@font-size-h3:            ceil((@font-size-base * 1.45)); // ~24px (decrease to ~20)
+@font-size-h4:            ceil((@font-size-base * 1.15)); // ~18px (decrease to ~15)
 @font-size-h5:            @font-size-base;
 @font-size-h6:            ceil((@font-size-base * 0.85)); // ~12px
 
 .italic-sans(){
     font: italic bold @font-size-base @font-family-sans-serif;
+}
+.bold-sans(){
+    font:bold @font-size-base @font-family-sans-serif;
 }
 //** Unit-less `line-height` for use in components like buttons.
 @line-height-base:        1.428571429; // 20/14
