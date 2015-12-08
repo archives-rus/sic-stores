@@ -12,7 +12,13 @@ SP.directive('spStoreCard', function ($rootScope) {
 			scope.archives = $rootScope.archives;
 			scope.places = $rootScope.places;
 			scope.levels = $rootScope.levels;
-			scope.adreses = $rootScope.adreses;
+			scope.addresses = function(id) {
+				for(var i = 0, max = $rootScope.addresses.length; i < max; ++i) {
+					var item = $rootScope.addresses[i];
+					if (item.id === id)
+						return item.values;
+				} 
+			};
 			scope.docTypes = $rootScope.docTypes;
 			scope.getText = function (id, data) {
 				if (data)

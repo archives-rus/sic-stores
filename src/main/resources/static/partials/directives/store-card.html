@@ -23,8 +23,8 @@
 			</div>
 			<label class='col-sm-2'>Адрес архива</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="getText(data.adres, adreses[data.archive])"></span>
-				<select ng-switch-when='true' ng-model="data.adres" ng-options="adres.id as adres.fullValue for adres in adreses[data.archive]" class='form-control'></select>
+				<span ng-switch-when='false' ng-bind="getText(data.adres, addresses(data.archive))"></span>
+				<select ng-switch-when='true' ng-model="data.adres" ng-options="adres.id as adres.fullValue for adres in addresses(data.archive)" class='form-control'></select>
 			</div>
 		</div>
 
