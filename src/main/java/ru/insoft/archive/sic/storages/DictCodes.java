@@ -59,4 +59,39 @@ public class DictCodes {
 	 * Тип организационной структуры - Архив
 	 */
 	public static final String ARCHIVE = "ARCHIVE";
+
+	/**
+	 * Место хранения
+	 */
+	public static String STORE_PLACE = "STORE_PLACE";
+
+	/**
+	 * Уровень архива
+	 */
+	public static String ORG_LEVEL = "ORG_LEVEL";
+
+	/**
+	 * Награды
+	 */
+	public static String REWARDS = "REWARDS";
+
+	/**
+	 * Документы загранкомандировок
+	 */
+	public static String DOCS_TRIPS = "DOCS_TRIPS";
+
+	/**
+	 * Адреса
+	 */
+	public static String ADDRESSES = "ADDRESSES";
+
+	/**
+	 * Телефоны
+	 */
+	public static String PHONES = "PHONES";
+
+	/**
+	 * Код группы аттрибутов Адрес хранилища
+	 */
+	public static String STRG_ADDRESS = "STRG_ADDRESS";
 }

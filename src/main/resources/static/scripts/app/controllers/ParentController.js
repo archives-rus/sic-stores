@@ -12,6 +12,13 @@ SP.controller('ParentCtrl',
 			});
 
 			// Инициализируем справочники
+			['archives', 'docTypes', 'addresses', 'places', 'phones',
+				'levels', 'rewardTypes', 'tripTypes'].forEach(function (it) {
+				$http.get('/dict/' + it).success(function (data) {
+					$rootScope[it] = data;
+				});
+			});
+			//-----------------------
 			$http.get('/dict/archives').success(function (data) {
 				$rootScope.archives = data;
 			});
@@ -32,6 +39,7 @@ SP.controller('ParentCtrl',
 			};
 			$rootScope.rewardTypes = [{id: 1, fullValue: '850 лет Москвы'}, {id: 2, fullValue: 'Герой Советского Союза'}];
 			$rootScope.tripTypes = [{id: 1, fullValue: 'Командировочка'}, {id: 2, fullValue: 'Отчет'}];
+			//-------------------------------
 			/**
 			 * Выполняет выход из системы
 			 */

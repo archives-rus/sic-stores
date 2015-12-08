@@ -1,5 +1,6 @@
 package ru.insoft.archive.sic.storages.domain.admin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +28,18 @@ public class DescriptorValueAttr implements Serializable {
 	/**
 	 * значение справочника
 	 */
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
 	private DescriptorValue descValue;
+
+	/**
+	 * значение справочника
+	 */
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
+	private DescriptorValueWithDescAttr descValueWA;
 
 	/**
 	 * Ссылка на другое значение справочника
@@ -37,6 +47,14 @@ public class DescriptorValueAttr implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "REF_DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
 	private DescriptorValue refDescValue;
+
+	/**
+	 * Группа атрибутов
+	 */
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "DESCRIPTOR_GROUP_ATTR_ID", insertable = false, updatable = false)
+	private DescriptorGroupAttr attrGroup;
 
 	public Long getId() {
 		return id;
@@ -60,5 +78,21 @@ public class DescriptorValueAttr implements Serializable {
 
 	public void setRefDescValue(DescriptorValue refDescValue) {
 		this.refDescValue = refDescValue;
+	}
+
+	public DescriptorGroupAttr getAttrGroup() {
+		return attrGroup;
+	}
+
+	public void setAttrGroup(DescriptorGroupAttr attrGroup) {
+		this.attrGroup = attrGroup;
+	}
+
+	public DescriptorValueWithDescAttr getDescValueWA() {
+		return descValueWA;
+	}
+
+	public void setDescValueWA(DescriptorValueWithDescAttr descValueWA) {
+		this.descValueWA = descValueWA;
 	}
 }
