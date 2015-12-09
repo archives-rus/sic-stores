@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09.12.2015, 15:40:05
+    Author     : shapovalova
+*/
+@import "app-theme.less";
+
+.head-label{
+    width:90%;
+    margin:auto;
+    display:block;
+}
+.net-style{
+    background-image:url("../img/bg-site.png");
+    .container{
+        background-color:@site-bg-color;
+        .table-border();
+        margin-top:-40px;
+        padding:50px 15px 10px 15px;
+        .search{
+            background-color:@site-serch-panel;
+            border-bottom:7px solid @site-dark-color;
+            height:60px;
+            padding:15px;   
+            label{
+                text-align:right;
+            }
+            label, .btn{
+                color:@head-color;
+                font:1.64em 'marmeladregular';
+            }
+            .btn{
+                color:#fff;
+                padding:0 0 0 45px;
+                margin-left:-55px;
+                background-image:url("../img/site-search.png");
+                .bg-icons();
+            }
+        }
+    }
+}
