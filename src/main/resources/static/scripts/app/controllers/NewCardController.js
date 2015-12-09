@@ -1,8 +1,12 @@
 /**
  * Отвечает за создание новой карточки
  */
-SP.controller('NewCardCtrl', function () {
+SP.controller('NewCardCtrl', function (Card, orgCard) {
 	var me = this;
 	me.edit = true;
-	me.result = {content: [{names: []}]};
+	Card.newCard();
+	me.result = orgCard;
+
+
+	me.place = Card.newPlace();
 });

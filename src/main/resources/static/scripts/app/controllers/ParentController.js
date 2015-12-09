@@ -1,6 +1,6 @@
 SP.controller('ParentCtrl',
 		function ($http, $window, $location, $timeout, $route,
-				$rootScope, Search) {
+				$rootScope, Search, Card) {
 			var me = this;
 
 			$http.get('/userinfo').success(function (data) {
@@ -66,4 +66,8 @@ SP.controller('ParentCtrl',
 			me.add = function() {
 				$route.reload();
 			};
+			/**
+			 * Сохраняет карточку
+			 */
+			me.save = Card.save; 
 		});

@@ -40,6 +40,9 @@
 		"sp-change-card": {
 			"context": "div"
 		},
+		"sp-table": {
+			"context": "div"
+		},
 		"file-model": {
 			"context": "input"
 		},

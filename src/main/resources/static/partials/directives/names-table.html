@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="item in data">
+		<tr ng-repeat="item in data" ng-click="setCurrent($index)" ng-class="{'active': isCurrent($index)}">
 			<td ng-switch="edit">
 				<span ng-switch-when="false" ng-bind='item.full'></span>
 				<input ng-switch-when='true' ng-model="item.full" class='form-control'/>
@@ -28,10 +28,10 @@
 				<input ng-switch-when="true" ng-model="item.sub" class='form-control'/>
 			</td>
 			<td ng-switch="edit">
-				<span ng-switch-when="false" ng-bind='item.date'></span>
-				<input ng-switch-when="true" ng-model="item.date" class='form-control'/>
+				<span ng-switch-when="false" ng-bind='item.dates'></span>
+				<input ng-switch-when="true" ng-model="item.dates" class='form-control'/>
 			</td>
-			<td ng-show="edit" class="card-icons"><button class="btn btn-default"><span class="btn-remove"></span></button></td>
+			<td ng-show="edit" class="card-icons"><button class="btn btn-default" ng-click="remove($index)"><span class="btn-remove"></span></button></td>
 		</tr>
 	</tbody>
 </table>
