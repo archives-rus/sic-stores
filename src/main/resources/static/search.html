@@ -8,11 +8,12 @@
 		<link rel="stylesheet" type="text/css" href="/styles/search.min.css"/>
 	</head>
 
-	<body ng-controller="MainCtrl as ctrl">
+	<body ng-controller="MainCtrl as ctrl" class="net-style">
+            <img src="img/head-site.png" class="head-label" />
 		<div class="container">
-			<form class="row" ng-submit="ctrl.search()">
+			<form class="row search" ng-submit="ctrl.search()">
 				<div class='form-group'>
-					<label for="criteria" class="col-sm-3 col-sm-offset-1 control-label">Поиск по местам хранения</label>
+					<label for="criteria" class="col-sm-4 col-sm-offset-1 control-label">Поиск по местам хранения</label>
 					<div class="col-sm-3">
 						<input id="criteria" class="form-control" ng-keypress="$event.which === 13 && ctrl.search()"/>
 					</div>

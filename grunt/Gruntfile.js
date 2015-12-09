@@ -62,7 +62,10 @@ module.exports = function (grunt) {
 				dst: join(cssRoot, 'utils.min.css')
 			},
 			theme: {
-				src: join(projectDir, 'bootstrap', 'app-theme.less'),
+				src: [
+                                    join(projectDir, 'bootstrap', 'app-theme.less'),
+                                    join(projectDir, 'bootstrap', 'net-style.less')
+                                ],
 				dst: join(cssRoot, 'app-theme.css')
 			},
 			utilsth: {
