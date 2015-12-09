@@ -1,31 +1,36 @@
 <div ng-switch="ctrl.edit">
-	<div ng-switch-when="false" sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Карточка"></div>
+	<div ng-switch-when="false" sp-paginator="" data="ctrl.page" load="ctrl.loadPage(page)" title-page="Карточка"></div>
 </div>
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Наименование организации и её переименования</div>
-	<div sp-names-table="" data='ctrl.result.content[0].names' edit='ctrl.edit'></div>
+	<div sp-names-table="" data='ctrl.data.names' edit='ctrl.edit'></div>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Места хранения</div>
 	<div class="panel-body">
 		<div class="btn-group pull-left card-icons" ng-show="ctrl.edit">
-			<button class="btn btn-default"><span class="btn-plus"></span></button>
-			<button class="btn btn-default"><span class="btn-remove"></span></button>
+			<button class="btn btn-default" ng-click="ctrl.add()"><span class="btn-plus"></span></button>
+			<button class="btn btn-default" ng-click="ctrl.remove()" ng-show="ctrl.places.length > 0"><span class="btn-remove"></span></button>
 		</div>
-		<div sp-paginator="" data="ctrl.place" load="ctrl.loadPlace(page)" title-page="Запись"></div>
-		<div sp-store-card="" data="ctrl.place.content[0]" edit='ctrl.edit'></div>
+		<div ng-switch="ctrl.places.length">
+			<div ng-switch-when="0" class="clearfix"></div>
+			<div ng-switch-default="">
+				<div sp-paginator="" data="ctrl.place" load="ctrl.loadPlace(page)" title-page="Запись"></div>
+				<div sp-store-card="" data="ctrl.place.content" edit='ctrl.edit'></div>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Сведения о награждениях</div>
-	<div sp-docs-table="" doc-type='Название награды' data='ctrl.result.content[0].rewards' type-data='rewardTypes' edit='ctrl.edit'></div>
+	<div sp-docs-table="" doc-type='Название награды' data='ctrl.data.rewards' type-data='rewardTypes' edit='ctrl.edit'></div>
 </div>
 
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Сведения о загранкомандировках</div>
-	<div sp-docs-table="" doc-type='Вид документа' data='ctrl.result.content[0].trips' type-data='tripTypes' edit='ctrl.edit'></div>
+	<div sp-docs-table="" doc-type='Вид документа' data='ctrl.data.trips' type-data='tripTypes' edit='ctrl.edit'></div>
 </div>
 
 <div class="col-sm-6 text-right">Имя пользователя:	<span ng-bind="ctrl.result.content[0].user"></span></div>

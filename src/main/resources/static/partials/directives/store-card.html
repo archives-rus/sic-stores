@@ -3,8 +3,8 @@
 		<div class='form-group'>
 			<label class='col-sm-2'>Место хранения</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="getText(data.place, places)"></span>
-				<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
+				<span ng-switch-when='false' ng-bind="getText(data.type, places)"></span>
+				<select ng-switch-when='true' ng-model="data.type" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
 			</div>
 			<label class='col-sm-2'>Архив</label>
 			<div class='col-sm-4' ng-switch="edit">
@@ -106,33 +106,16 @@
 		</div>
 
 		<div class='clearfix'></div>
-
-		<div class="panel panel-default">
-			<div sp-docs-table="" type-data='docTypes' data="data.docs" doc-type='Вид документа' title="Состав документов" edit="edit" class="center-header"></div>
-			<div class="form-group">
-				<label class="col-sm-3">Дополнительные сведения о составе документов</label>
-				<div class='col-sm-9' ng-switch="edit">
-					<span ng-switch-when='false' ng-bind="data.dopInfo"></span>
-					<textarea class='form-control' ng-switch-when='true' ng-model='data.dopInfo'></textarea> 
-				</div>
-			</div>
-		</div>
-		<div class='clearfix'></div>
-		<div class="form-group">
-			<label class="col-sm-3">Примечание</label>
-			<div class='col-sm-9' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="data.remark"></span>
-				<textarea class='form-control' ng-switch-when='true' ng-model='data.remark'></textarea> 
-			</div>
-		</div>
+		<div ng-include="'partials/includes/docs-content.html'"></div>
 		<div class='clearfix'></div>
 	</div>
+
 	<div ng-switch-when="Организация">
 		<div class='form-group'>
 			<label class='col-sm-2'>Место хранения</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="getText(data.place, places)"></span>
-				<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
+				<span ng-switch-when='false' ng-bind="getText(data.type, places)"></span>
+				<select ng-switch-when='true' ng-model="data.type" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
 			</div>
 			<label class='col-sm-2'>Архив источник комплектования</label>
 			<div class='col-sm-4' ng-switch="edit">
@@ -165,11 +148,13 @@
 			</div>
 		</div>
 		<div class='clearfix'></div>
+		<div ng-include="'partials/includes/docs-content.html'"></div>
+		<div class='clearfix'></div>
 	</div>
 	<div ng-switch-default="">
 		<label class='col-sm-2'>Место хранения</label>
 		<div class='col-sm-4' ng-switch="edit">
-			<select ng-switch-when='true' ng-model="data.place" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
+			<select ng-switch-when='true' ng-model="data.type" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
 		</div>
 		<div class='clearfix'></div>
 	</div>

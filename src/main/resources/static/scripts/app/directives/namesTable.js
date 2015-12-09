@@ -10,7 +10,7 @@ SP.directive('spNamesTable', function () {
 	return {
 		templateUrl: 'partials/directives/names-table.html',
 		link: function (scope) {
-			var current = undefined;
+			var current;
 			scope.add = function () {
 				scope.data.push({sort: scope.data.length});
 			};

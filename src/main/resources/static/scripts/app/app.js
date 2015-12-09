@@ -5,7 +5,9 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 		.constant('tableResultJ', {}) // Результаты поиска для таблицы для ЖРИ
 		.value('orgCard', {}) // Карточка организации
 		.constant('storePlace', {}) // Результаты поиска места хранения для одной организации
-		.config(function ($routeProvider, $locationProvider) {
+		.config(function ($routeProvider, $locationProvider, $httpProvider) {
+				$httpProvider.defaults.withCredentials = true;
+				$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 				/**
 				 * Дополнительные настройки для маршрутов
 				 * @param {String} suffix - изменяемая часть заголовка вкладки браузера

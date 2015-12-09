@@ -17,7 +17,7 @@ SP.directive('spDocsTable', function ($rootScope) {
 							return scope.typeData[i].fullValue;
 					}
 			};
-			var current = undefined;
+			var current;
 			scope.add = function () {
 				scope.data.push({sort: scope.data.length});
 			};
