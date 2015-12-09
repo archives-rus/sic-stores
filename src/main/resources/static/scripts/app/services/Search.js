@@ -33,7 +33,7 @@ SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
 			for (var j = 0; j < 2; ++j) {
 				var content;
 				if (j === 0) {
-					content = [{place: 1, archive: 87, level: 1, adres: 1,
+					content = [{place: 409, archive: 89, level: 411, adres: 426,
 							fond: {prefix: 1, number: 10, suffix: 'А', name: 'Мой крутой фонд'},
 							phone: '+7 (495) 123-134-14',
 							email: 'it@yandex.ru',

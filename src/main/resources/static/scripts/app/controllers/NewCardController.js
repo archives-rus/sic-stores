@@ -1,8 +1,8 @@
-SP.controller('NewCardCtrl', ['$scope',
-	/**
-	 * Отвечает за создание новой карточки
-	 */
-	function ($scope) {
-		$scope.names = [];
-	}
-]);
+/**
+ * Отвечает за создание новой карточки
+ */
+SP.controller('NewCardCtrl', function () {
+	var me = this;
+	me.edit = true;
+	me.result = {content: [{names: []}]};
+});

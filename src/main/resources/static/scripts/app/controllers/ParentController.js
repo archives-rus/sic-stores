@@ -1,5 +1,5 @@
 SP.controller('ParentCtrl',
-		function ($http, $window, $location, $timeout,
+		function ($http, $window, $location, $timeout, $route,
 				$rootScope, Search) {
 			var me = this;
 
@@ -60,4 +60,10 @@ SP.controller('ParentCtrl',
 			 * Поиск информации для ЖРИ
 			 */
 			me.jrchSearch = Search.loadTablePageJ;
+			/**
+			 * Добавить еще одну карточку
+			 */
+			me.add = function() {
+				$route.reload();
+			};
 		});
