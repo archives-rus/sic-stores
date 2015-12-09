@@ -1,4 +1,6 @@
-<div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Карточка" ng-show="!ctrl.edit"></div>
+<div ng-switch="ctrl.edit">
+	<div ng-switch-when="false" sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Карточка"></div>
+</div>
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Наименование организации и её переименования</div>
 	<div sp-names-table="" data='ctrl.result.content[0].names' edit='ctrl.edit'></div>

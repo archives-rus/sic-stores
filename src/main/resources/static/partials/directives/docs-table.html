@@ -1,7 +1,7 @@
 <div class="btn-group pull-left card-icons" ng-show="edit">
-	<button class="btn btn-default"><span class="btn-plus"></span></button>
-	<button class="btn btn-default"><span class="btn-down"></span></button>
-	<button class="btn btn-default"><span class="btn-up"></span></button>
+	<button class="btn btn-default" ng-click='add()'><span class="btn-plus"></span></button>
+	<button class="btn btn-default" ng-click='down()'><span class="btn-down"></span></button>
+	<button class="btn btn-default" ng-click='up()'><span class="btn-up"></span></button>
 </div>
 <div class="text-center">{{title}}</div>
 <div class="clearfix"></div>
@@ -17,7 +17,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="item in data">
+		<tr ng-repeat="item in data" ng-click="setCurrent($index)" ng-class="{'active': isCurrent($index)}">
 			<td ng-switch="edit">
 				<span ng-switch-when="false" ng-bind='getText(item.type)'></span>
 				<select ng-switch-when='true' ng-model="item.type" ng-options="type.id as type.fullValue for type in typeData" class='form-control'></select>
@@ -38,7 +38,7 @@
 				<span ng-switch-when="false">{{item.docsCount}}</span>
 				<input ng-switch-when="true" ng-model="item.docsCount" class='form-control'/>
 			</td>
-			<td ng-show="edit" class="card-icons"><button class="btn btn-default"><span class="btn-remove"></span></button></td>
+			<td ng-show="edit" class="card-icons"><button class="btn btn-default" ng-click='remove($index)'><span class="btn-remove"></span></button></td>
 		</tr>
 	</tbody>
 </table>
