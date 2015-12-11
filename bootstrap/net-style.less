@@ -10,8 +10,9 @@ and open the template in the editor.
 @import "app-theme.less";
 
 .head-label{
-    width:90%;
     margin:auto;
+    padding:0;
+    padding-left:50px;
     display:block;
 }
 .net-style{
@@ -20,14 +21,23 @@ and open the template in the editor.
         background-color:@site-bg-color;
         .table-border();
         margin-top:-40px;
-        padding:50px 15px 10px 15px;
+        padding:42px 15px 10px 15px;
         .search{
             background-color:@site-serch-panel;
             border-bottom:7px solid @site-dark-color;
             height:60px;
-            padding:15px;   
+            padding:15px;  
+            margin-bottom:35px;
+            position:relative;
+            .archives{
+                float:left;
+                position:absolute;
+                bottom:-7px;
+                left:0;
+            }
             label{
                 text-align:right;
+                float:left;
             }
             label, .btn{
                 color:@head-color;
