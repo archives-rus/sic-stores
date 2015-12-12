@@ -12,14 +12,15 @@
             <img src="img/head-site.png" class="head-label" />
 		<div class="container">
 			<form class="row search" ng-submit="ctrl.search()">
+                            <img src="img/archives.png" class="archives" />
 				<div class='form-group'>
-					<label for="criteria" class="col-sm-4 col-sm-offset-1 control-label">Поиск по местам хранения</label>
-					<div class="col-sm-3">
-						<input id="criteria" class="form-control" ng-keypress="$event.which === 13 && ctrl.search()"/>
-					</div>
-					<div class="col-sm-1">
-						<input class="btn btn-default" type="submit" value="Найти"/>
-					</div>
+                                            <label for="criteria" class="col-sm-4 col-sm-offset-1 control-label">Поиск по местам хранения</label>
+                                            <div class="col-sm-5">
+                                                    <input id="criteria" class="form-control" ng-keypress="$event.which === 13 && ctrl.search()"/>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                    <input class="btn btn-default" type="submit" value="Найти"/>
+                                            </div>
 				</div>
 			</form>
 			<div class="row">
