@@ -43,6 +43,7 @@ public class AdmUser implements Serializable {
 	@Column(name = "DISPLAYED_NAME", insertable = false, updatable = false)
 	private String displayedName;
 
+	@JsonIgnore
 	@JoinTable(name = "ADM_USER_GROUP", joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name="GROUP_ID"))
 	@ManyToMany(fetch = FetchType.EAGER)

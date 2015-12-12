@@ -33,11 +33,11 @@
 		<div class='form-group'>
 			<label class='col-sm-2'>Номер фонда</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false'>{{data.fond.prefix}}{{data.fond.number}}{{data.fond.suffix}}</span>
+				<span ng-switch-when='false'>{{data.prefix}}{{data.number}}{{data.suffix}}</span>
 				<div ng-switch-when='true' class="input-group">
-					<input ng-model="data.fond.prefix" class="form-control" style='width: 60px'/>
-					<input ng-model="data.fond.number" class='form-control' style='width: 60px'/>
-					<input ng-model="data.fond.suffix" class='form-control' style='width: 60px'/>
+					<input ng-model="data.prefix" class="form-control" style='width: 60px'/>
+					<input ng-model="data.number" class='form-control' style='width: 60px'/>
+					<input ng-model="data.suffix" class='form-control' style='width: 60px'/>
 				</div>
 			</div>
 			<label class='col-sm-2'>Телефон</label>
@@ -61,8 +61,8 @@
 		<div class='form-group'>
 			<label class='col-sm-2'>Название фонда</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="data.fond.name"></span>
-				<input class='form-control' ng-switch-when='true' ng-model='data.fond.name'/> 
+				<span ng-switch-when='false' ng-bind="data.fondName"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.fondName'/> 
 			</div>
 			<label class='col-sm-2'>Электронная почта</label>
 			<div class='col-sm-4' ng-switch="edit">
@@ -127,16 +127,16 @@
 		<div class='form-group'>
 			<label class='col-sm-2'>Адрес организации</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="data.adres"></span>
-				<input class='form-control' ng-switch-when='true' ng-model='data.adres'/> 
+				<span ng-switch-when='false' ng-bind="data.orgAdres"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.orgAdres'/> 
 			</div>
 		</div>
 		<div class='clearfix'></div>
 		<div class='form-group'>
 			<label class='col-sm-2'>Телефон организации</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="data.phone"></span>
-				<input class='form-control' ng-switch-when='true' ng-model='data.phone'/> 
+				<span ng-switch-when='false' ng-bind="data.orgPhone"></span>
+				<input class='form-control' ng-switch-when='true' ng-model='data.orgPhone'/> 
 			</div>
 		</div>
 		<div class='clearfix'></div>

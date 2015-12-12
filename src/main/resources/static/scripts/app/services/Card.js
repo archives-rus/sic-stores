@@ -1,43 +1,51 @@
 /** 
  * Сервис для работы с карточкой. Сохранить, удалить, создать новую.
  */
-SP.service('Card', function ($http, orgCard, $httpParamSerializerJQLike) {
-	var pageble = {
-		totalElements: 0,
-		number: 0,
-		current: 0,
-		totalPages: 0,
-		first: true,
-		last: true,
-		size: 0
-	};
+SP.service('Card', function ($http, orgCard, $location) {
+	var initCard = {
+			names: [],
+			rewards: [],
+			trips: [],
+			places: []
+		};
+	function clearCard() {
+		for (var o in orgCard) {
+			delete orgCard[o];
+		}
+	}
 	return {
 		newCard: function () {
-			for (var o in pageble) {
-				orgCard[o] = pageble[o];
+			clearCard();
+			for (var o in initCard) {
+				orgCard[o] = initCard[o];
 			}
-			orgCard.content = [{
-					names: [],
-					rewards: [],
-					trips: [],
-					places: []
-				}];
 		},
 		save: function () {
-			var card = orgCard.content[0];
 			// TODO удалить пустые значения в местах хранения и таблицах
 			// или это сделать на стороне сервера
-			$http[card.id ? 'post' : 'put']({url: '/organization/save',
-				data: $httpParamSerializerJQLike(card),
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				}})
-					.success(function (data) {
-						console.log(data);
+
+			$http[orgCard.id ? 'put' : 'post']('/organization/save' 
+					+ (orgCard.id ? '/' + orgCard.id : ''), orgCard)
+					.success(function (id) {
+						$location.path('/card/' + id);
 					})
 					.error(function (data) {
 						console.log(data);
 					});
+		},
+		get: function (id, success) {
+			$http.get('/organization/' + id)
+					.success(function (data) {
+						for (var o in data) {
+							orgCard[o] = data[o];
+						}
+						if (success)
+							success();
+					})
+					.error(function (data) {
+						console.log(data);
+					});
+			;
 		}
 	};
 });

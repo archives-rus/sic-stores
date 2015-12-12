@@ -1,13 +1,32 @@
 /**
- * Отвечает за создание новой карточки
+ * Отвечает за создание новой карточки, а также редактирование и просмотр карточки по id
  */
-SP.controller('NewCardCtrl', function (Card, orgCard) {
+SP.controller('NewCardCtrl', function (Card, orgCard, $routeParams, $location) {
 	var me = this;
-	me.edit = true;
-	Card.newCard();
-	me.page = orgCard;
-	me.data = orgCard.content[0];
-	me.places = me.data.places;
+	function loadCard() { // Загружаем существующую карточку
+		Card.get($routeParams.id, function () {
+			me.data = orgCard;
+			me.places = orgCard.places;
+			me.loadPlace(0);
+		});
+	}
+
+	function initCard() { // Создаем новую карточку
+		Card.newCard();
+		me.data = orgCard;
+		me.places = orgCard.places;
+	}
+
+	if (/^\/card\/edit\/[0-9]+/.test($location.path())) {
+		me.edit = true;
+		loadCard();
+	} else if (/^\/newcard/.test($location.path())) {
+		me.edit = true;
+		initCard();
+	} else { // Загружаем карточку для просмотра
+		me.edit = false;
+		loadCard();
+	}
 
 	/**
 	 *  Создает единицу страницы места хранения

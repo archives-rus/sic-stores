@@ -1,101 +1,161 @@
 package ru.insoft.archive.sic.storages.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
- * Место хранения документов
+ * Место хранения
  *
  * @author stikkas<stikkas@yandex.ru>
  */
 @Entity
-@Table(name = "STRG_PLACE_ORG")
-public class Place implements Serializable {
+@Table(name = "SP_PLACE")
+public class Place extends OrgProperty {
 
 	/**
-	 * ID места хранения документов
+	 * ID наименования
 	 */
 	@Id
-	@SequenceGenerator(name = "seqPlace", sequenceName = "SEQ_STRG_PLACE_ORG", allocationSize = 1)
+	@SequenceGenerator(name = "seqPlace", sequenceName = "SEQ_SP_PLACE", allocationSize = 1)
 	@GeneratedValue(generator = "seqPlace", strategy = GenerationType.SEQUENCE)
-	@Column(name = "STRG_PLACE_ORG_ID")
+	@Column(name = "PLACE_ID")
 	private Long id;
 
 	/**
-	 * ID места хранения в архиве
-	 */
-	@Column(name = "STRG_PLACE_ARCH_ID")
-	private Long placeArchid;
-
-	/**
-	 * ID организации
+	 * Тип места хранения
 	 */
 	@NotNull
-	@Column(name = "ORGANIZATION_ID", nullable = false)
-	private Long orgId;
-
-	@JsonIgnore
-	@JoinColumn(name = "ORGANIZATION_ID", referencedColumnName = "ORGANIZATION_ID", insertable = false, updatable = false)
-	@ManyToOne
-	private Organization organization;
-
-	@JsonIgnore
-	@OneToMany(mappedBy = "place")
-	private List<Document> documents;
+	@Column(name = "TYPE_ID")
+	private Long type;
 
 	/**
-	 * Название организации
+	 * Архив (для типа "в архиве"). Архив источник комплектования (для типа "в
+	 * организации")
 	 */
-	@Column(name = "ORG_NAME")
-	private String orgName;
+	@Column(name = "ARCHIVE_ID")
+	private Long archive;
 
 	/**
-	 * Адрес
+	 * Уровень архива (для типа "в архиве")
 	 */
-	@Column(name = "ADDRESS")
-	private String address;
+	@Column(name = "LEVEL_ID")
+	private Long level;
 
 	/**
-	 * Телефон
+	 * Адрес архива (для типа "в архиве")
 	 */
-	@Column(name = "PHONE_NUMBER")
+	@Column(name = "ARCHIVE_ADDRESS")
+	private Long adres;
+
+	/**
+	 * Адрес организации (для типа "в организации")
+	 */
+	@Column(name = "ORG_ADDRESS")
+	private String orgAdres;
+
+	/**
+	 * Номер фонда - префикс (для типа "в архиве")
+	 */
+	@Column(name = "FUND_PREFIX")
+	private String prefix;
+
+	/**
+	 * Номер фонда - номер (для типа "в архиве")
+	 */
+	@Column(name = "FUND_NUMBER")
+	private Integer number;
+
+	/**
+	 * Номер фонда - суффикс (для типа "в архиве")
+	 */
+	@Column(name = "FUND_SUFFIX")
+	private String suffix;
+
+	/**
+	 * Телефон (для типа "в архиве")
+	 */
+	@Column(name = "ARCHIVE_PHONE")
 	private String phone;
 
 	/**
-	 * Количество документов
+	 * Телефон организации (для типа "в организации")
 	 */
-	@Column(name = "DOCUMENT_COUNT")
-	private Long documentsCount;
+	@Column(name = "ORG_PHONE")
+	private String orgPhone;
 
 	/**
-	 * Начальный год
+	 * Название фонда (для типа "в архиве")
 	 */
-	@Column(name = "BEGIN_YEAR")
-	private Short beginYear;
+	@Column(name = "FUND_NAME")
+	private String fondName;
 
 	/**
-	 * Конечный год
+	 * Электронная почта
+	 */
+	@Column(name = "EMAIL")
+	private String email;
+
+	/**
+	 * Начальный год (для типа "в архиве")
+	 */
+	@Column(name = "START_YEAR")
+	private Short startYear;
+
+	/**
+	 * Конечный год (для типа "в архиве")
 	 */
 	@Column(name = "END_YEAR")
 	private Short endYear;
 
 	/**
+	 * Архивохранилище (для типа "в архиве")
+	 */
+	@Column(name = "STORE_ARCHIVE")
+	private String shron;
+
+	/**
+	 * Количество ед. хр.
+	 */
+	@Column(name = "UNITS_COUNT")
+	private Integer ucount;
+
+	/**
 	 * Состав документов
 	 */
-	@Column(name = "CONTENTS")
-	private String contents;
+	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<DocumentContent> docs = new ArrayList<>();
+
+	/**
+	 * Дополнительные сведения о составе документов
+	 */
+	@Column(name = "ADD_INFO")
+	private String dopInfo;
+
+	/**
+	 * Примечание
+	 */
+	@Column(name = "REMARK")
+	private String remark;
+
+	public void addDoc(DocumentContent doc) {
+		docs.add(doc);
+		doc.setPlace(this);
+	}
+
+	public void removeDoc(DocumentContent doc) {
+		doc.setPlace(null);
+		docs.remove(doc);
+	}
 
 	public Long getId() {
 		return id;
@@ -105,36 +165,68 @@ public class Place implements Serializable {
 		this.id = id;
 	}
 
-	public Long getPlaceArchid() {
-		return placeArchid;
+	public Long getType() {
+		return type;
 	}
 
-	public void setPlaceArchid(Long placeArchid) {
-		this.placeArchid = placeArchid;
+	public void setType(Long type) {
+		this.type = type;
 	}
 
-	public Long getOrgId() {
-		return orgId;
+	public Long getArchive() {
+		return archive;
 	}
 
-	public void setOrgId(Long orgId) {
-		this.orgId = orgId;
+	public void setArchive(Long archive) {
+		this.archive = archive;
 	}
 
-	public String getOrgName() {
-		return orgName;
+	public Long getLevel() {
+		return level;
 	}
 
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
+	public void setLevel(Long level) {
+		this.level = level;
 	}
 
-	public String getAddress() {
-		return address;
+	public Long getAdres() {
+		return adres;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAdres(Long adres) {
+		this.adres = adres;
+	}
+
+	public String getOrgAdres() {
+		return orgAdres;
+	}
+
+	public void setOrgAdres(String orgAdres) {
+		this.orgAdres = orgAdres;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public String getSuffix() {
+		return suffix;
+	}
+
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
 	}
 
 	public String getPhone() {
@@ -145,20 +237,36 @@ public class Place implements Serializable {
 		this.phone = phone;
 	}
 
-	public Long getDocumentsCount() {
-		return documentsCount;
+	public String getOrgPhone() {
+		return orgPhone;
 	}
 
-	public void setDocumentsCount(Long documentsCount) {
-		this.documentsCount = documentsCount;
+	public void setOrgPhone(String orgPhone) {
+		this.orgPhone = orgPhone;
 	}
 
-	public Short getBeginYear() {
-		return beginYear;
+	public String getFondName() {
+		return fondName;
 	}
 
-	public void setBeginYear(Short beginYear) {
-		this.beginYear = beginYear;
+	public void setFondName(String fondName) {
+		this.fondName = fondName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Short getStartYear() {
+		return startYear;
+	}
+
+	public void setStartYear(Short startYear) {
+		this.startYear = startYear;
 	}
 
 	public Short getEndYear() {
@@ -169,28 +277,40 @@ public class Place implements Serializable {
 		this.endYear = endYear;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getShron() {
+		return shron;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setShron(String shron) {
+		this.shron = shron;
 	}
 
-	public Organization getOrganization() {
-		return organization;
+	public Integer getUcount() {
+		return ucount;
 	}
 
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
+	public void setUcount(Integer ucount) {
+		this.ucount = ucount;
 	}
 
-	public List<Document> getDocuments() {
-		return documents;
+	public List<DocumentContent> getDocs() {
+		return docs;
 	}
 
-	public void setDocuments(List<Document> documents) {
-		this.documents = documents;
+	public String getDopInfo() {
+		return dopInfo;
+	}
+
+	public void setDopInfo(String dopInfo) {
+		this.dopInfo = dopInfo;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

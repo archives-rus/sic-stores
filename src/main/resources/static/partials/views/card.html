@@ -1,5 +1,5 @@
-<div ng-switch="ctrl.edit">
-	<div ng-switch-when="false" sp-paginator="" data="ctrl.page" load="ctrl.loadPage(page)" title-page="Карточка"></div>
+<div ng-switch="stream">
+	<div ng-switch-when="true" sp-paginator="" data="ctrl.page" load="ctrl.loadPage(page)" title-page="Карточка"></div>
 </div>
 <div class="panel panel-default">
 	<div class="panel-heading panel-title">Наименование организации и её переименования</div>
@@ -16,7 +16,10 @@
 		<div ng-switch="ctrl.places.length">
 			<div ng-switch-when="0" class="clearfix"></div>
 			<div ng-switch-default="">
-				<div sp-paginator="" data="ctrl.place" load="ctrl.loadPlace(page)" title-page="Запись"></div>
+				<div ng-switch="ctrl.place">
+					<div ng-switch-when="undefined" class="clearfix"></div>
+					<div ng-switch-default="" sp-paginator="" ng-show="ctrl.place" data="ctrl.place" load="ctrl.loadPlace(page)" title-page="Запись"></div>
+				</div>
 				<div sp-store-card="" data="ctrl.place.content" edit='ctrl.edit'></div>
 			</div>
 		</div>
@@ -33,5 +36,5 @@
 	<div sp-docs-table="" doc-type='Вид документа' data='ctrl.data.trips' type-data='tripTypes' edit='ctrl.edit'></div>
 </div>
 
-<div class="col-sm-6 text-right">Имя пользователя:	<span ng-bind="ctrl.result.content[0].user"></span></div>
-<div class="col-sm-6">Дата корректировки: <span ng-bind="ctrl.result.content[0].date"></span></div>
+<div class="col-sm-6 text-right" ng-show="ctrl.data.id">Имя пользователя:	<span ng-bind="ctrl.data.user.fio"></span></div>
+<div class="col-sm-6" ng-show="ctrl.data.id">Дата корректировки: <span ng-bind="ctrl.data.updateDate"></span></div>

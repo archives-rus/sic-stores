@@ -1,123 +1,99 @@
 package ru.insoft.archive.sic.storages.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 
 /**
- * Состав хранимых документов
+ * Таблицы для состава документов, сведения о награждениях, сведения о
+ * загранкомандировках
  *
  * @author stikkas<stikkas@yandex.ru>
  */
-@Entity
-@Table(name = "STRG_DOC_CONTENTS")
-public class Document implements Serializable {
+@MappedSuperclass
+public abstract class Document extends OrgProperty {
 
 	/**
-	 * ID коллекции документов
+	 * ID Вид документа / Название награды
 	 */
-	@Id
-	@SequenceGenerator(name = "seqDocument", sequenceName = "SEQ_STRG_DOC_CONTENTS", allocationSize = 1)
-	@GeneratedValue(generator = "seqDocument", strategy = GenerationType.SEQUENCE)
-	@Column(name = "DOC_CONTENTS_ID")
-	private Long id;
+	@Column(name = "TYPE_ID")
+	Long type;
 
 	/**
-	 * ID места хранения документов
+	 * Дата начальная
 	 */
-	@Column(name = "STRG_PLACE_ORG_ID")
-	private Long placeOrgId;
-
-	@JsonIgnore
-	@JoinColumn(name = "STRG_PLACE_ORG_ID", insertable = false, updatable = false)
-	@ManyToOne
-	private Place place;
+	@Column(name = "START_DATE")
+	Short startDate;
 
 	/**
-	 * Вид документов
+	 * Дата конечная
 	 */
-	@Column(name = "DOC_TYPE_ID")
-	private Long typeId;
-	/**
-	 * Даты
-	 */
-	@Column(name = "DATES")
-	private String dates;
+	@Column(name = "END_DATE")
+	Short endDate;
 
 	/**
-	 * Номера описей
+	 * Номер описи
 	 */
-	@Column(name = "SERIES")
-	private String series;
+	@Column(name = "OPIS_NUMBER")
+	Integer opisNumber;
 
 	/**
 	 * Количество дел
 	 */
-	@Column(name = "CASE_COUNT")
-	private Long count;
+	@Column(name = "DOCS_COUNT")
+	Integer docsCount;
 
-	public Long getId() {
-		return id;
+	/**
+	 * Порядок сортировки
+	 */
+	@Column(name = "SORT")
+	private Long sort;
+
+	public Short getStartDate() {
+		return startDate;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setStartDate(Short startDate) {
+		this.startDate = startDate;
 	}
 
-	public Long getPlaceOrgId() {
-		return placeOrgId;
+	public Short getEndDate() {
+		return endDate;
 	}
 
-	public void setPlaceOrgId(Long placeOrgId) {
-		this.placeOrgId = placeOrgId;
+	public void setEndDate(Short endDate) {
+		this.endDate = endDate;
 	}
 
-	public Long getTypeId() {
-		return typeId;
+	public Integer getOpisNumber() {
+		return opisNumber;
 	}
 
-	public void setTypeId(Long typeId) {
-		this.typeId = typeId;
+	public void setOpisNumber(Integer opisNumber) {
+		this.opisNumber = opisNumber;
 	}
 
-	public String getDates() {
-		return dates;
+	public Integer getDocsCount() {
+		return docsCount;
 	}
 
-	public void setDates(String dates) {
-		this.dates = dates;
+	public void setDocsCount(Integer docsCount) {
+		this.docsCount = docsCount;
 	}
 
-	public String getSeries() {
-		return series;
+	public Long getType() {
+		return type;
 	}
 
-	public void setSeries(String series) {
-		this.series = series;
+	public void setType(Long type) {
+		this.type = type;
 	}
 
-	public Long getCount() {
-		return count;
+	public Long getSort() {
+		return sort;
 	}
 
-	public void setCount(Long count) {
-		this.count = count;
-	}
-
-	public Place getPlace() {
-		return place;
-	}
-
-	public void setPlace(Place place) {
-		this.place = place;
+	public void setSort(Long sort) {
+		this.sort = sort;
 	}
 
 }

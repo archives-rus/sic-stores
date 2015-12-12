@@ -1,15 +1,20 @@
 package ru.insoft.archive.sic.storages.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -21,6 +26,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import ru.insoft.archive.sic.storages.convert.JsonCalendarSerializer;
+import ru.insoft.archive.sic.storages.domain.admin.AdmUser;
 
 /**
  * Организация
@@ -29,53 +36,22 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "STRG_ORGANIZATION")
+@Table(name = "SP_ORGANIZATION")
 public class Organization implements Serializable {
 
 	/**
 	 * ID организации
 	 */
 	@Id
-	@SequenceGenerator(name = "seqOrganization", sequenceName = "SEQ_STRG_ORGANIZATION", allocationSize = 1)
+	@SequenceGenerator(name = "seqOrganization", sequenceName = "SEQ_SP_ORGANIZATION", allocationSize = 1)
 	@GeneratedValue(generator = "seqOrganization", strategy = GenerationType.SEQUENCE)
 	@Column(name = "ORGANIZATION_ID")
 	private Long id;
 
 	/**
-	 * ID архива TODO: эта информация присутствует в определении фонда, надо
-	 * разобраться, и, если ничего не мешает, убрать повторяющиеся данные отсюда
-	 */
-	@NotNull
-	@Column(name = "ARCHIVE_ID")
-	private Long archiveId;
-
-	/**
-	 * ID фонда
-	 */
-	@Column(name = "FUND_ID")
-	private Long fundId;
-
-	/**
-	 * Сведения о загранкомандировках
-	 */
-	@Column(name = "BUSINESS_TRIPS_INFO")
-	private String tripsInfo;
-
-	/**
-	 * Сведения о награждениях
-	 */
-	@Column(name = "REWARDS_INFO")
-	private String rewardsInfo;
-
-	/**
-	 * Примечание
-	 */
-	@Column(name = "NOTES")
-	private String notes;
-
-	/**
 	 * ID пользователя, создавшего запись
 	 */
+	@JsonIgnore
 	@NotNull
 	@Column(name = "ADD_USER_ID")
 	@CreatedBy
@@ -84,14 +60,20 @@ public class Organization implements Serializable {
 	/**
 	 * ID пользователя, обновившего запись
 	 */
+	@JsonIgnore
 	@NotNull
 	@Column(name = "MOD_USER_ID")
 	@LastModifiedBy
 	private Long modUserId;
 
+	@ManyToOne
+	@JoinColumn(name = "MOD_USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
+	private AdmUser user;
+
 	/**
 	 * Дата создания
 	 */
+	@JsonIgnore
 	@NotNull
 	@Column(name = "INSERT_DATE", columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -101,15 +83,76 @@ public class Organization implements Serializable {
 	/**
 	 * Дата последнего обновления
 	 */
+	@JsonSerialize(using = JsonCalendarSerializer.class)
 	@NotNull
 	@Column(name = "LAST_UPDATE_DATE", columnDefinition = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Calendar updateDate;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "organization")
-	private List<Place> places;
+	/**
+	 * Места хранения
+	 */
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Place> places = new ArrayList<>();
+
+	/**
+	 * Наименования и переименования
+	 */
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Name> names = new ArrayList<>();
+
+	/**
+	 * Награждения
+	 */
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Reward> rewards = new ArrayList<>();
+
+	/**
+	 * Загранкомандировки
+	 */
+	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Trip> trips = new ArrayList<>();
+
+	public void addPlace(Place place) {
+		places.add(place);
+		place.setOrganization(this);
+	}
+
+	public void removePlace(Place place) {
+		place.setOrganization(null);
+		places.remove(place);
+	}
+
+	public void addName(Name name) {
+		names.add(name);
+		name.setOrganization(this);
+	}
+
+	public void removeName(Name name) {
+		name.setOrganization(null);
+		names.remove(name);
+	}
+
+	public void addReward(Reward reward) {
+		rewards.add(reward);
+		reward.setOrganization(this);
+	}
+
+	public void removeReward(Reward reward) {
+		reward.setOrganization(null);
+		rewards.remove(reward);
+	}
+
+	public void addTrip(Trip trip) {
+		trips.add(trip);
+		trip.setOrganization(this);
+	}
+
+	public void removeTrip(Trip trip) {
+		trip.setOrganization(null);
+		trips.remove(trip);
+	}
 
 	public Long getId() {
 		return id;
@@ -117,46 +160,6 @@ public class Organization implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getArchiveId() {
-		return archiveId;
-	}
-
-	public void setArchiveId(Long archiveId) {
-		this.archiveId = archiveId;
-	}
-
-	public Long getFundId() {
-		return fundId;
-	}
-
-	public void setFundId(Long fundId) {
-		this.fundId = fundId;
-	}
-
-	public String getTripsInfo() {
-		return tripsInfo;
-	}
-
-	public void setTripsInfo(String tripsInfo) {
-		this.tripsInfo = tripsInfo;
-	}
-
-	public String getRewardsInfo() {
-		return rewardsInfo;
-	}
-
-	public void setRewardsInfo(String rewardsInfo) {
-		this.rewardsInfo = rewardsInfo;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
 	}
 
 	public Long getAddUserId() {
@@ -195,8 +198,40 @@ public class Organization implements Serializable {
 		return places;
 	}
 
+	public List<Name> getNames() {
+		return names;
+	}
+
+	public List<Reward> getRewards() {
+		return rewards;
+	}
+
+	public List<Trip> getTrips() {
+		return trips;
+	}
+
+	public AdmUser getUser() {
+		return user;
+	}
+
+	public void setUser(AdmUser user) {
+		this.user = user;
+	}
+
 	public void setPlaces(List<Place> places) {
 		this.places = places;
+	}
+
+	public void setNames(List<Name> names) {
+		this.names = names;
+	}
+
+	public void setRewards(List<Reward> rewards) {
+		this.rewards = rewards;
+	}
+
+	public void setTrips(List<Trip> trips) {
+		this.trips = trips;
 	}
 
 }

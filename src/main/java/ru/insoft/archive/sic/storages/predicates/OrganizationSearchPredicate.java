@@ -30,7 +30,7 @@ public class OrganizationSearchPredicate {
 
 		Long longCondition = criteria.getDocType();
 		if (longCondition != null) {
-			exprs.add(org.organization.places.any().documents.any().typeId.eq(longCondition));
+			exprs.add(org.organization.places.any().docs.any().type.eq(longCondition));
 		}
 
 		longCondition = criteria.getArchive();

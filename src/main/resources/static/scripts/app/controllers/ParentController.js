@@ -1,6 +1,6 @@
 SP.controller('ParentCtrl',
 		function ($http, $window, $location, $timeout, $route,
-				$rootScope, Search, Card) {
+				$rootScope, Search, Card, orgCard) {
 			var me = this;
 
 			$http.get('/userinfo').success(function (data) {
@@ -63,11 +63,23 @@ SP.controller('ParentCtrl',
 			/**
 			 * Добавить еще одну карточку
 			 */
-			me.add = function() {
+			me.add = function () {
 				$route.reload();
 			};
 			/**
 			 * Сохраняет карточку
 			 */
-			me.save = Card.save; 
+			me.save = Card.save;
+			/**
+			 * Отменяет изменения
+			 */
+			me.cancel = function () {
+				$location.path('/card/' + orgCard.id);
+			};
+			/**
+			 * Редактировать карточку
+			 */
+			me.edit = function () {
+				$location.path('/card/edit/' + orgCard.id);
+			};
 		});

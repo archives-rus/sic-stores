@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
-import org.springframework.web.bind.annotation.PathVariable;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -43,45 +42,13 @@ public class MainController {
 	/**
 	 * Перенаправляет запрос к роутеру angular
 	 *
-	 * @param from откуда вызывается маршрут
-	 * @return строку с перенаправлением к реальному маршруту 
-	 */
-	@RequestMapping(value = "/new_card/{from}")
-	public String getNewCard(@PathVariable("from") String from) {
-		return "redirect:/#new_card/" + from;
-	}
-
-
-	/**
-	 * Перенаправляет запрос к роутеру angular
-	 *
-	 * @param start начальная позиция карточки в таблице результатов поиска
-	 * @return строку с перенаправлением к реальному маршруту 
-	 */
-	@RequestMapping(value = "/view_card/{start}")
-	public String getViewCard(@PathVariable("start") Integer start) {
-		return "redirect:/#view_card/" + start;
-	}
-
-	/**
-	 * Перенаправляет запрос к роутеру angular
-	 *
-	 * @param start начальная позиция карточки в таблице результатов поиска жри
-	 * @return строку с перенаправлением к реальному маршруту 
-	 */
-	@RequestMapping(value = "/view_jrch/{start}")
-	public String getJrchCard(@PathVariable("start") Integer start) {
-		return "redirect:/#view_jrch/" + start;
-	}
-
-	/**
-	 * Перенаправляет запрос к роутеру angular
-	 *
 	 * @param request
-	 * @return строку с перенаправлением к реальному маршруту 
+	 * @return строку с перенаправлением к реальному маршруту
 	 */
-	@RequestMapping(value = {"/edit_card", "/reports", "/jrch"})
+	@RequestMapping(value = {"/reports", "/jrch", "/newcard", "/card/edit/{id}",
+		"/card/{id}", "/cards/{pos}", "/jrchs/{pos}"})
 	public String getEditCard(HttpServletRequest request) {
 		return "redirect:/#" + request.getServletPath();
 	}
+
 }

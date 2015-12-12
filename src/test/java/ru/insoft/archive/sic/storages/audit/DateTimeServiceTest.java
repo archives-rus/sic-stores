@@ -43,13 +43,11 @@ public class DateTimeServiceTest {
 	public void testAuditOrganizationBegin() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Organization org = new Organization();
-		org.setArchiveId(3l);
 		org.setAddUserId(1l);
 		org.setModUserId(1l);
 		orgRepo.save(org);
 
 		org = orgRepo.findOne(1l);
-		org.setNotes("Change notes");
 		orgRepo.save(org);
 
 		for (Organization o : orgRepo.findAll()) {
