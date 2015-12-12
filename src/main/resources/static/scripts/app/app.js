@@ -26,8 +26,6 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 									url = $location.url();
 							if (/^\/cards?\/[0-9]+/.test(url)) {
 								$rootScope.topMenu = dir + 'view_card.html';
-							} else if (/^\/card\/edit\/[0-9]+/.test(url)) {
-								$rootScope.topMenu = dir + 'edit_card.html';
 							} else if (/^\/jrchs\/[0-9]+/.test(url)) {
 								$rootScope.topMenu = dir + 'view_jrch.html';
 							} else {
@@ -41,8 +39,10 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 									case '/reports':
 										$rootScope.topMenu = dir + 'reports.html';
 										break;
-									default:
+									case '/':
+									case '/index.html':
 										$rootScope.topMenu = dir + 'main.html';
+										break;
 								}
 							}
 						}]
@@ -99,4 +99,16 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap'])
 					});
 
 			$locationProvider.html5Mode(true);
+		})
+		.run(function ($rootScope) {
+			$rootScope.$on('$locationChangeSuccess', function (evt, current, prev) {
+				if (/\/card\/edit\/[0-9]+$/.test(current)) {
+					if (/\/cards\/[0-9]+$/.test(prev)) {
+						$rootScope.topMenu = 'partials/menus/edit_card_stream.html';
+					} else {
+						$rootScope.topMenu = 'partials/menus/edit_card.html';
+					}
+				}
+			});
 		});
+

@@ -1,7 +1,7 @@
 /** 
  * Сервис для работы с карточкой. Сохранить, удалить, создать новую.
  */
-SP.service('Card', function ($http, orgCard, $location) {
+SP.service('Card', function ($http, orgCard, $location, orgCardPage) {
 	var initCard = {
 		names: [],
 		rewards: [],
@@ -20,14 +20,17 @@ SP.service('Card', function ($http, orgCard, $location) {
 				orgCard[o] = initCard[o];
 			}
 		},
-		save: function () {
+		save: function (stream) {
 			// TODO удалить пустые значения в местах хранения и таблицах
 			// или это сделать на стороне сервера
 			delete orgCard.updateDate;
 			delete orgCard.user;
 			$http[orgCard.id ? 'put' : 'post']('/organization/save' + (orgCard.id ? '/' + orgCard.id : ''), orgCard)
 					.success(function (id) {
-						$location.path('/card/' + id);
+						if (stream)
+							$location.path('/cards/' + orgCardPage.number);
+						else
+							$location.path('/card/' + id);
 					})
 					.error(function (data) {
 						console.log(data);

@@ -1,6 +1,6 @@
 SP.controller('ParentCtrl',
 		function ($http, $window, $location, $timeout, $route,
-				$rootScope, Search, Card, orgCard) {
+				$rootScope, Search, Card, orgCard, orgCardPage) {
 			var me = this;
 
 			$http.get('/userinfo').success(function (data) {
@@ -73,8 +73,11 @@ SP.controller('ParentCtrl',
 			/**
 			 * Отменяет изменения
 			 */
-			me.cancel = function () {
-				$location.path('/card/' + orgCard.id);
+			me.cancel = function (stream) {
+				if (stream)
+					$location.path('/cards/' + orgCardPage.number);
+				else
+					$location.path('/card/' + orgCard.id);
 			};
 			/**
 			 * Редактировать карточку
