@@ -3,11 +3,11 @@
  */
 SP.service('Card', function ($http, orgCard, $location) {
 	var initCard = {
-			names: [],
-			rewards: [],
-			trips: [],
-			places: []
-		};
+		names: [],
+		rewards: [],
+		trips: [],
+		places: []
+	};
 	function clearCard() {
 		for (var o in orgCard) {
 			delete orgCard[o];
@@ -23,9 +23,9 @@ SP.service('Card', function ($http, orgCard, $location) {
 		save: function () {
 			// TODO удалить пустые значения в местах хранения и таблицах
 			// или это сделать на стороне сервера
-
-			$http[orgCard.id ? 'put' : 'post']('/organization/save' 
-					+ (orgCard.id ? '/' + orgCard.id : ''), orgCard)
+			delete orgCard.updateDate;
+			delete orgCard.user;
+			$http[orgCard.id ? 'put' : 'post']('/organization/save' + (orgCard.id ? '/' + orgCard.id : ''), orgCard)
 					.success(function (id) {
 						$location.path('/card/' + id);
 					})
@@ -45,7 +45,6 @@ SP.service('Card', function ($http, orgCard, $location) {
 					.error(function (data) {
 						console.log(data);
 					});
-			;
 		}
 	};
 });

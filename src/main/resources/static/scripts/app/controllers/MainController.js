@@ -8,6 +8,6 @@ SP.controller('MainCtrl',
 
 			me.loadPage = Search.loadTablePage;
 			me.viewCard = function(index) {
-				$location.path('/view_card/' + index);
+				$location.path('/cards/' + index);
 			};
 		});

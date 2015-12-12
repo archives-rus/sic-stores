@@ -14,13 +14,24 @@ public class TableOrgDto {
 	private String archive;
 	private String fund;
 	private String years;
+	private Long orgId;
 
 	@QueryProjection
-	public TableOrgDto(String organization, String archive, String fund, String years) {
+	public TableOrgDto(String organization, String archive, String fund, String years,
+			Long orgId) {
 		this.organization = organization;
 		this.archive = archive;
 		this.fund = fund;
 		this.years = years;
+		this.orgId = orgId;
+	}
+
+	public Long getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(Long orgId) {
+		this.orgId = orgId;
 	}
 
 	public String getOrganization() {

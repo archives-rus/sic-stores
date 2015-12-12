@@ -48,12 +48,14 @@ public class OrganizationSearchRepo extends QueryDslRepositorySupport {
 		QOrganizationSearch org = QOrganizationSearch.organizationSearch;
 
 		JPAQuery query = new JPAQuery(getEntityManager()).from(org);
+		/*
 		if (predicates.length != 0) {
 			query.where(predicates);
 		}
+		 */
 		query.orderBy(new OrderSpecifier<>(Order.ASC, org.fullName));
 		return readPage(query, new QTableOrgDto(org.fullName, org.archiveName,
-				org.completeFundNumber, org.years), pageable);
+				org.completeFundNumber, org.years, org.organizationId), pageable);
 	}
 
 }

@@ -14,15 +14,21 @@ import javax.persistence.Table;
  * @author stikkas<stikkas@yandex.ru>
  */
 @Entity
-@Table(name = "V_STRG_ORG_SEARCH")
+@Table(name = "V_SP_ORG_SEARCH")
 public class OrganizationSearch implements Serializable {
 
 	/**
 	 * ID названия организации
 	 */
 	@Id
-	@Column(name = "ORG_NAME_ID", insertable = false, updatable = false)
+	@Column(name = "NAME_ID", insertable = false, updatable = false)
 	private Long id;
+
+	/**
+	 * ID организации
+	 */
+	@Column(name="ORGANIZATION_ID", insertable = false, updatable = false)
+	private Long organizationId;
 
 	/**
 	 * организация
@@ -58,13 +64,13 @@ public class OrganizationSearch implements Serializable {
 	/**
 	 * Префикс для номера фонда
 	 */
-	@Column(name = "PREFIX", insertable = false, updatable = false)
+	@Column(name = "FUND_PREFIX", insertable = false, updatable = false)
 	private String fundPrefix;
 
 	/**
 	 * Суффикс для номера фонда
 	 */
-	@Column(name = "SUFFIX", insertable = false, updatable = false)
+	@Column(name = "FUND_SUFFIX", insertable = false, updatable = false)
 	private String fundSuffix;
 
 	/**
@@ -82,7 +88,7 @@ public class OrganizationSearch implements Serializable {
 	/**
 	 * Начальный год для Места хранения документов
 	 */
-	@Column(name = "BEGIN_YEAR", insertable = false, updatable = false)
+	@Column(name = "START_YEAR", insertable = false, updatable = false)
 	private Short beginYear;
 
 	/**
@@ -177,6 +183,14 @@ public class OrganizationSearch implements Serializable {
 
 	public void setEndYear(Short endYear) {
 		this.endYear = endYear;
+	}
+
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 
 	public Organization getOrganization() {

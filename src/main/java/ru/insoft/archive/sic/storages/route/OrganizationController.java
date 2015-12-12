@@ -35,7 +35,8 @@ public class OrganizationController {
 	}
 
 	@RequestMapping(value = "/save/{id}", method = PUT)
-	public Long saveCard(@PathVariable("id") Long id, @RequestBody Organization organization) {
+	public Long saveCard(@PathVariable("id") Long id,
+			@RequestBody Organization organization) {
 		Organization org = repo.findOne(id);
 		organization.setAddUserId(org.getAddUserId());
 		organization.setInsertDate(org.getInsertDate());
