@@ -28,6 +28,7 @@ and open the template in the editor.
             height:60px;
             padding:15px;  
             margin-bottom:35px;
+            margin-right:0;
             position:relative;
             .archives{
                 float:left;
@@ -49,6 +50,39 @@ and open the template in the editor.
                 margin-left:-55px;
                 background-image:url("../img/site-search.png");
                 .bg-icons();
+            }
+            input.form-control{
+                padding-right:25px;
+            }
+            .search-right-side{
+                height: 76px;
+                position: absolute;
+                right: -15px;
+                top: -15px;            
+            }
+        }
+        .results-info{
+            margin:10px 20px;
+            .col-sm-12{
+                color:@head-color;
+                font:1.35em 'marmeladregular';
+                border-bottom:1px solid #D5D1AE;
+                display:inline-block;
+                padding-bottom:6px;
+                width:auto;
+            }
+        }
+        .search-results{
+            table{
+                font-family:'robotoregular', @font-family-sans-serif;
+                border-color:@light-colors;
+                th{
+                    background-color:@th-bg-color;
+                    color:@main-colors;
+                }
+                th, td{
+                    border-color:@light-colors;
+                }
             }
         }
     }
