@@ -2,7 +2,7 @@
  * Поиск организаций по критериям
  */
 SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
-		tableResultJ, orgCard, orgCardPage, storePlace, ShowMessage) {
+		tableResultJ, orgCard, orgCardPage, $rootScope, ShowMessage) {
 	var
 			// Удаляет все свойства объекта
 			clear = function (obj) {
@@ -31,7 +31,7 @@ SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
 		 * @param {Number/String} numberOfPage - интересующая страница, отсчет идет с нуля
 		 */
 		loadTablePage: function (numberOfPage) {
-			$http.get('/search/main', {
+			$rootScope.mainSearch = $http.get('/search/main', {
 				params: buildParams(correctPageNumber(numberOfPage, tableResult.totalPages), limit)
 			}).success(function (data) {
 				if (!data.totalElements) {

@@ -27,6 +27,10 @@ public class OrganizationSearchPredicate {
 		if (strCondition != null) {
 			exprs.add(organization.name.toLowerCase().like("%" + strCondition.toLowerCase() + "%"));
 		}
+		
+		Long longCondition = criteria.getArchive();
+		if (longCondition != null) {
+		}
 
 		return exprs.toArray(new BooleanExpression[0]);
 	}

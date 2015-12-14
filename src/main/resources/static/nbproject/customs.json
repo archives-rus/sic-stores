@@ -43,6 +43,9 @@
 		"sp-table": {
 			"context": "div"
 		},
+		"cg-busy": {
+			"context": "div"
+		},
 		"file-model": {
 			"context": "input"
 		},

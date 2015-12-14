@@ -62,7 +62,7 @@
 		</form>
 	</div>
 </div>
-<div class="panel panel-default">
+<div class="panel panel-default" cg-busy="{promise:mainSearch,message:'Загрузка',templateUrl:'partials/templates/busy.html'}">
 	<div class="panel-heading panel-title">Результаты поиска</div>
 	<div sp-paginator="" data="ctrl.result" load="ctrl.loadPage(page)" title-page="Страница" show-info="true"></div>
 	<div class="panel-body">
