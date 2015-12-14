@@ -78,13 +78,13 @@
 			<div class='col-sm-4'  ng-switch="edit">
 				<span ng-switch-when='false'>{{data.startYear}}-{{data.endYear}}</span>
 				<div ng-switch-when='true' class="form-inline">
-					<div class="input-group" style="width: 160px">
-						<label class="input-group-addon control-label">c:</label>
-						<input ng-model="data.startYear" class='form-control'/>
+					<div class="input-group" style="width: 100px">
+						<label class="input-group-addon control-label small-width">c:</label>
+						<input ng-model="data.startYear" class='form-control' style="width:50px !important;"/>
 					</div>
-					<div class="input-group" style="width: 160px">
-						<label class="input-group-addon control-label">по:</label> 
-						<input ng-model="data.endYear" class='form-control'/>
+					<div class="input-group" style="width: 100px">
+						<label class="input-group-addon control-label small-width">по:</label> 
+						<input ng-model="data.endYear" class='form-control' style="width:50px !important;" />
 					</div>
 				</div>
 			</div>
