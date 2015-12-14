@@ -1,5 +1,6 @@
 package ru.insoft.archive.sic.storages.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -8,10 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import ru.insoft.archive.sic.storages.domain.admin.DescriptorValue;
 
 /**
  * Место хранения
@@ -44,6 +48,11 @@ public class Place extends OrgProperty {
 	 */
 	@Column(name = "ARCHIVE_ID")
 	private Long archive;
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "ARCHIVE_ID", insertable = false, updatable = false)
+	private DescriptorValue archiveDV;
 
 	/**
 	 * Уровень архива (для типа "в архиве")
@@ -313,4 +322,11 @@ public class Place extends OrgProperty {
 		this.remark = remark;
 	}
 
+	public DescriptorValue getArchiveDV() {
+		return archiveDV;
+	}
+
+	public void setArchiveDV(DescriptorValue archiveDV) {
+		this.archiveDV = archiveDV;
+	}
 }

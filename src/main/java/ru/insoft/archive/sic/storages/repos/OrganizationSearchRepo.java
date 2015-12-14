@@ -2,8 +2,6 @@ package ru.insoft.archive.sic.storages.repos;
 
 import com.mysema.query.jpa.JPQLQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.Order;
-import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 import java.util.Collections;
 import java.util.List;
@@ -48,14 +46,11 @@ public class OrganizationSearchRepo extends QueryDslRepositorySupport {
 		QOrganizationSearch org = QOrganizationSearch.organizationSearch;
 
 		JPAQuery query = new JPAQuery(getEntityManager()).from(org);
-		/*
 		if (predicates.length != 0) {
 			query.where(predicates);
 		}
-		 */
-		query.orderBy(new OrderSpecifier<>(Order.ASC, org.fullName));
-		return readPage(query, new QTableOrgDto(org.fullName, org.archiveName,
-				org.completeFundNumber, org.years, org.organizationId), pageable);
+		return readPage(query, new QTableOrgDto(org.name, org.archive,
+				org.fullFundNumber, org.years, org.organizationId), pageable);
 	}
 
 }
