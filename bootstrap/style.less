@@ -11,7 +11,10 @@
 .decor-label{
 	margin-right:150px;
 }
-
+.top-line{
+    margin-top:10px;
+    border-top:1px solid @table-border-color;
+}
 .btn{
 		border:none;
 		background-color: transparent;
@@ -23,7 +26,8 @@
   background-repeat:no-repeat;
     .vert-line{
           position:absolute;
-          margin:-15px 120px;
+          margin-top:-15px;
+          padding-left:4%;
           float:left;
      }
     .btn-enter{
@@ -34,6 +38,9 @@
 h2{
 	font: @font-size-h2 'SimeizBold';
 	color: @head-color;
+}
+textarea{
+    margin-bottom:5px;
 }
 .mainPages{
     background-image:url("../img/bg.png");
@@ -89,9 +96,13 @@ h2{
 	.control-label&{
 		border: none;
 		background-color: transparent;
+                padding-left:0;
 	}
 }
 .panel{
+    .store{
+        padding:7px 0;
+    }
     .panel-heading{
         color:@main-colors;
         font:@font-size-h3 'Candarab';
