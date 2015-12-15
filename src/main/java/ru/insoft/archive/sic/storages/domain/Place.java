@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -142,6 +143,7 @@ public class Place extends OrgProperty {
 	 * Состав документов
 	 */
 	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("sort")
 	private List<DocumentContent> docs = new ArrayList<>();
 
 	/**

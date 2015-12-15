@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -100,18 +101,21 @@ public class Organization implements Serializable {
 	 * Наименования и переименования
 	 */
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("sort")
 	private List<Name> names = new ArrayList<>();
 
 	/**
 	 * Награждения
 	 */
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("sort")
 	private List<Reward> rewards = new ArrayList<>();
 
 	/**
 	 * Загранкомандировки
 	 */
 	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("sort")
 	private List<Trip> trips = new ArrayList<>();
 
 	public void addPlace(Place place) {
