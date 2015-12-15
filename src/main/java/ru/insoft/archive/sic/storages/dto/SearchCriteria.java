@@ -29,6 +29,10 @@ public class SearchCriteria {
 	 */
 	private Long archive;
 	/**
+	 * Уровень Архива
+	 */
+	private Long level;
+	/**
 	 * № Фонда - префикс
 	 */
 	private String prefix;
@@ -106,6 +110,14 @@ public class SearchCriteria {
 
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
+	}
+
+	public Long getLevel() {
+		return level;
+	}
+
+	public void setLevel(Long level) {
+		this.level = level;
 	}
 
 }

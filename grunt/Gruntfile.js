@@ -3,6 +3,7 @@ module.exports = function (grunt) {
 			join = path.join,
 			projectDir = path.dirname(__dirname),
 			modulesDir = join(__dirname, 'node_modules'),
+			bowerDir = join(__dirname, 'bower_components'),
 			wwwRoot = join(projectDir, 'src', 'main', 'resources', 'static'),
 			jsRoot = join(wwwRoot, 'scripts'),
 			cssRoot = join(wwwRoot, 'styles'),
@@ -21,6 +22,7 @@ module.exports = function (grunt) {
 			},
 			appjs: {
 				src: join(jsRoot, 'app', '**', '*.js'),
+				mod: join(bowerDir, 'angular-busy', 'angular-busy.js'),
 				ann: join(jsRoot, 'app', '**', '*' + annotateSuffix),
 				min: join(jsRoot, 'app.min.js')
 			},
@@ -50,7 +52,7 @@ module.exports = function (grunt) {
 				dst: join(cssRoot, 'login.min.css')
 			},
 			appcss: {
-				src: join(cssRoot, 'app', '**', '*.css'),
+				src: [join(bowerDir, 'angular-busy', 'angular-busy.css'), join(cssRoot, 'app', '**', '*.css')],
 				dst: join(cssRoot, 'app.min.css')
 			},
 			searchcss: {
@@ -63,9 +65,9 @@ module.exports = function (grunt) {
 			},
 			theme: {
 				src: [
-                                    join(projectDir, 'bootstrap', 'app-theme.less'),
-                                    join(projectDir, 'bootstrap', 'net-style.less')
-                                ],
+					join(projectDir, 'bootstrap', 'app-theme.less'),
+					join(projectDir, 'bootstrap', 'net-style.less')
+				],
 				dst: join(cssRoot, 'app-theme.css')
 			},
 			utilsth: {
@@ -260,7 +262,7 @@ module.exports = function (grunt) {
 				dest: '<%= paths.loginjs.min %>'
 			},
 			app: {
-				src: '<%= paths.appjs.ann %>',
+				src: ['<%= paths.appjs.mod %>', '<%= paths.appjs.ann %>'],
 				dest: '<%= paths.appjs.min %>'
 			},
 			utils: {

@@ -1,0 +1,89 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/basa/node/bin/node',
+1 verbose cli   '/home/basa/node/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'angular-busy@4.1.1' ]
+2 info using npm@3.4.0
+3 info using node@v4.2.2
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData angular-busy@4.1.1
+8 silly fetchNamedPackageData angular-busy
+9 silly mapToRegistry name angular-busy
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/angular-busy
+13 verbose request uri https://registry.npmjs.org/angular-busy
+14 verbose request no auth needed
+15 info attempt registry request try #1 at 21:13:12
+16 verbose request id c02591c4eaca5787
+17 verbose etag "D6WG2XPZJZ5SRA1S5BT5EKX0Y"
+18 http request GET https://registry.npmjs.org/angular-busy
+19 http 304 https://registry.npmjs.org/angular-busy
+20 verbose headers { date: 'Mon, 14 Dec 2015 18:13:13 GMT',
+20 verbose headers   via: '1.1 varnish',
+20 verbose headers   'cache-control': 'max-age=300',
+20 verbose headers   etag: '"D6WG2XPZJZ5SRA1S5BT5EKX0Y"',
+20 verbose headers   age: '0',
+20 verbose headers   connection: 'keep-alive',
+20 verbose headers   'x-served-by': 'cache-fra1234-FRA',
+20 verbose headers   'x-cache': 'MISS',
+20 verbose headers   'x-cache-hits': '0',
+20 verbose headers   'x-timer': 'S1450116793.767858,VS0,VE432',
+20 verbose headers   vary: 'Accept' }
+21 silly get cb [ 304,
+21 silly get   { date: 'Mon, 14 Dec 2015 18:13:13 GMT',
+21 silly get     via: '1.1 varnish',
+21 silly get     'cache-control': 'max-age=300',
+21 silly get     etag: '"D6WG2XPZJZ5SRA1S5BT5EKX0Y"',
+21 silly get     age: '0',
+21 silly get     connection: 'keep-alive',
+21 silly get     'x-served-by': 'cache-fra1234-FRA',
+21 silly get     'x-cache': 'MISS',
+21 silly get     'x-cache-hits': '0',
+21 silly get     'x-timer': 'S1450116793.767858,VS0,VE432',
+21 silly get     vary: 'Accept' } ]
+22 verbose etag https://registry.npmjs.org/angular-busy from cache
+23 verbose get saving angular-busy to /home/basa/.npm/registry.npmjs.org/angular-busy/.cache.json
+24 silly fetchPackageMetaData Error: No compatible version found: angular-busy@4.1.1
+24 silly fetchPackageMetaData Valid install targets:
+24 silly fetchPackageMetaData 4.1.0
+24 silly fetchPackageMetaData
+24 silly fetchPackageMetaData     at pickVersionFromRegistryDocument (/home/basa/node/lib/node_modules/npm/lib/fetch-package-metadata.js:156:16)
+24 silly fetchPackageMetaData     at /home/basa/node/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+24 silly fetchPackageMetaData     at /home/basa/node/lib/node_modules/npm/lib/utils/pulse-till-done.js:19:8
+24 silly fetchPackageMetaData     at saved (/home/basa/node/lib/node_modules/npm/lib/cache/caching-client.js:168:7)
+24 silly fetchPackageMetaData     at /home/basa/node/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:210:7
+24 silly fetchPackageMetaData     at FSReqWrap.oncomplete (fs.js:82:15)
+24 silly fetchPackageMetaData  error for angular-busy@4.1.1 [Error: No compatible version found: angular-busy@4.1.1
+24 silly fetchPackageMetaData Valid install targets:
+24 silly fetchPackageMetaData 4.1.0
+24 silly fetchPackageMetaData ]
+25 silly rollbackFailedOptional Starting
+26 silly rollbackFailedOptional Finishing
+27 silly runTopLevelLifecycles Starting
+28 silly runTopLevelLifecycles Finishing
+29 silly install printInstalled
+30 verbose stack Error: No compatible version found: angular-busy@4.1.1
+30 verbose stack Valid install targets:
+30 verbose stack 4.1.0
+30 verbose stack
+30 verbose stack     at pickVersionFromRegistryDocument (/home/basa/node/lib/node_modules/npm/lib/fetch-package-metadata.js:156:16)
+30 verbose stack     at /home/basa/node/lib/node_modules/npm/node_modules/iferr/index.js:13:50
+30 verbose stack     at /home/basa/node/lib/node_modules/npm/lib/utils/pulse-till-done.js:19:8
+30 verbose stack     at saved (/home/basa/node/lib/node_modules/npm/lib/cache/caching-client.js:168:7)
+30 verbose stack     at /home/basa/node/lib/node_modules/npm/node_modules/graceful-fs/polyfills.js:210:7
+30 verbose stack     at FSReqWrap.oncomplete (fs.js:82:15)
+31 verbose cwd /home/basa/Projects/sic-storages/grunt
+32 error Linux 3.2.0-4-amd64
+33 error argv "/home/basa/node/bin/node" "/home/basa/node/bin/npm" "install" "--save" "angular-busy@4.1.1"
+34 error node v4.2.2
+35 error npm  v3.4.0
+36 error No compatible version found: angular-busy@4.1.1
+36 error Valid install targets:
+36 error 4.1.0
+37 error If you need help, you may report this error at:
+37 error     <https://github.com/npm/npm/issues>
+38 verbose exit [ 1, true ]
