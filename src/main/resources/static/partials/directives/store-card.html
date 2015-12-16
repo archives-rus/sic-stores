@@ -1,12 +1,12 @@
 <div ng-switch='isArchive()' class="storage-place">
 	<div ng-switch-when="Архив">
 		<div class='form-group'>
-			<label class='col-sm-2'>Место хранения</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Место хранения</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="getText(data.type, places)"></span>
 				<select ng-switch-when='true' ng-model="data.type" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
 			</div>
-			<label class='col-sm-2'>Архив</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Архив</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="getText(data.archive, archives)"></span>
 				<select ng-switch-when='true' ng-model="data.archive" ng-options="archive.id as archive.fullValue for archive in archives" class='form-control'></select>
@@ -16,12 +16,12 @@
 		<div class="clearfix"></div>
 
 		<div class='form-group'>
-			<label class='col-sm-2'>Уровень архива</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Уровень архива</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="getText(data.level, levels)"></span>
 				<select ng-switch-when='true' ng-model="data.level" ng-options="level.id as level.fullValue for level in levels" class='form-control'></select>
 			</div>
-			<label class='col-sm-2'>Адрес архива</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Адрес архива</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="getText(data.adres, addresses(data.archive))"></span>
 				<select ng-switch-when='true' ng-model="data.adres" ng-options="adres.id as adres.fullValue for adres in addresses(data.archive)" class='form-control'></select>
@@ -31,16 +31,16 @@
 		<div class="clearfix"></div>
 
 		<div class='form-group'>
-			<label class='col-sm-2'>Номер фонда</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Номер фонда</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false'>{{data.prefix}}{{data.number}}{{data.suffix}}</span>
 				<div ng-switch-when='true' class="input-group">
 					<input ng-model="data.prefix" class="form-control" style='width: 60px'/>
-					<input ng-model="data.number" class='form-control' style='width: 60px'/>
+					<input ng-model="data.number" mask='ddddddd' restrict='reject' class='form-control' style='width: 60px'/>
 					<input ng-model="data.suffix" class='form-control' style='width: 60px'/>
 				</div>
 			</div>
-			<label class='col-sm-2'>Телефон</label>
+			<label class='col-sm-2'><span ng-show="edit">&nbsp;</span> Телефон</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.phone"></span>
 				<input class='form-control'  ng-switch-when='true' ng-model='data.phone'/> 
@@ -59,12 +59,12 @@
 		<div class="clearfix"></div>
 
 		<div class='form-group'>
-			<label class='col-sm-2'>Название фонда</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Название фонда</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.fondName"></span>
 				<input class='form-control' ng-switch-when='true' ng-model='data.fondName'/> 
 			</div>
-			<label class='col-sm-2'>Электронная почта</label>
+			<label class='col-sm-2'><span ng-show="edit">&nbsp;</span> Электронная почта</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.email"></span>
 				<input class='form-control' ng-switch-when='true' ng-model='data.email'/> 
@@ -74,21 +74,21 @@
 		<div class="clearfix"></div>
 
 		<div class='form-group'>
-			<label class="col-sm-2">Годы</label>
+			<label class="col-sm-2"><span style="color: red" ng-show="edit">*</span> Годы</label>
 			<div class='col-sm-4'  ng-switch="edit">
 				<span ng-switch-when='false'>{{data.startYear}}-{{data.endYear}}</span>
 				<div ng-switch-when='true' class="form-inline">
 					<div class="input-group" style="width: 100px">
 						<label class="input-group-addon control-label small-width">c:</label>
-						<input ng-model="data.startYear" class='form-control' style="width:50px !important;"/>
+						<input ng-model="data.startYear" mask='dddd' restrict='reject' class='form-control' style="width:50px !important;"/>
 					</div>
 					<div class="input-group" style="width: 100px">
 						<label class="input-group-addon control-label small-width">по:</label> 
-						<input ng-model="data.endYear" class='form-control' style="width:50px !important;" />
+						<input ng-model="data.endYear" mask='dddd' restrict='reject' class='form-control' style="width:50px !important;" />
 					</div>
 				</div>
 			</div>
-			<label class='col-sm-2'>Архивохранилище</label>
+			<label class='col-sm-2'><span ng-show="edit">&nbsp;</span> Архивохранилище</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.shron"></span>
 				<input class='form-control' ng-switch-when='true' ng-model='data.shron'/> 
@@ -98,10 +98,10 @@
 		<div class='clearfix'></div>
 
 		<div class='form-group'>
-			<label class="col-sm-2">Количество ед. хр.</label>
+			<label class="col-sm-2"><span ng-show="edit">&nbsp;</span> Количество ед. хр.</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.ucount"></span>
-				<input class='form-control' ng-switch-when='true' ng-model='data.ucount' width="50px"/> 
+				<input class='form-control' mask='ddddddd' restrict='reject' ng-switch-when='true' ng-model='data.ucount' width="50px"/> 
 			</div>
 		</div>
 
@@ -112,7 +112,7 @@
 
 	<div ng-switch-when="Организация">
 		<div class='form-group'>
-			<label class='col-sm-2'>Место хранения</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Место хранения</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="getText(data.type, places)"></span>
 				<select ng-switch-when='true' ng-model="data.type" ng-options="place.id as place.fullValue for place in places" class='form-control'></select>
@@ -125,7 +125,7 @@
 		</div>
 		<div class='clearfix'></div>
 		<div class='form-group'>
-			<label class='col-sm-2'>Адрес организации</label>
+			<label class='col-sm-2'><span style="color: red" ng-show="edit">*</span> Адрес организации</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.orgAdres"></span>
 				<input class='form-control' ng-switch-when='true' ng-model='data.orgAdres'/> 
@@ -133,7 +133,7 @@
 		</div>
 		<div class='clearfix'></div>
 		<div class='form-group'>
-			<label class='col-sm-2'>Телефон организации</label>
+			<label class='col-sm-2'><span ng-show="edit">&nbsp;</span> Телефон организации</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.orgPhone"></span>
 				<input class='form-control' ng-switch-when='true' ng-model='data.orgPhone'/> 
@@ -141,7 +141,7 @@
 		</div>
 		<div class='clearfix'></div>
 		<div class='form-group'>
-			<label class='col-sm-2'>Электронная почта организации</label>
+			<label class='col-sm-2'><span ng-show="edit">&nbsp;</span> Электронная почта организации</label>
 			<div class='col-sm-4' ng-switch="edit">
 				<span ng-switch-when='false' ng-bind="data.email"></span>
 				<input class='form-control' ng-switch-when='true' ng-model='data.email'/> 

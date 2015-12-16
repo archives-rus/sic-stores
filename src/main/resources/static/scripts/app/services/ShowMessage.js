@@ -8,6 +8,9 @@ SP.service('ShowMessage', function ($modal) {
 		$scope.message = message;
 		$scope.title = title;
 		$scope.ok = $modalInstance.close;
+		$scope.isArray = function() {
+			return message instanceof Array;
+		};
 	};
 
 	ShowMessageController.$inject = ['$scope', 'message', 'title', '$modalInstance'];

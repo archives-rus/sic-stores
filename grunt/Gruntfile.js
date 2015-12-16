@@ -43,7 +43,8 @@ module.exports = function (grunt) {
 					join(modulesDir, 'angular-animate', 'angular-animate.min.js'),
 					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap.min.js'),
 					join(modulesDir, 'angular-ui-bootstrap', 'ui-bootstrap-tpls.min.js'),
-					join(modulesDir, 'angular-i18n', 'angular-locale_ru-ru.js')
+					join(modulesDir, 'angular-i18n', 'angular-locale_ru-ru.js'),
+					join(bowerDir, 'ngMask', 'dist', 'ngMask.min.js')
 				],
 				dst: join(jsRoot, 'vendor', 'script.min.js')
 			},
