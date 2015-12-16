@@ -27,15 +27,43 @@
   header{
       margin-top:8%;
   }
-    .vert-line{
-          position:absolute;
-          margin-top:-15px;
-          padding-left:4%;
-          float:left;
-     }
-    .btn-enter{
-        font:1.14em/1.1em 'Candarab';
+  form{
+    @media (max-width: @screen-md){
+        text-align:center;
     }
+    .form-group{
+        @media (max-width: @screen-md){
+            height:20px;
+        }               
+        label{
+        @media (max-width: @screen-md){
+            position:absolute;
+            left:40%;
+        }        
+        }
+        input[type='text'], input[type='password']{
+        @media (max-width: @screen-md){
+            position:absolute;
+            left:60%;
+        }        
+        }
+    }
+        .vert-line{
+              position:absolute;
+              margin-top:-15px;
+              padding-left:4%;
+              float:left;
+              @media (max-width: @screen-md){
+
+              }
+         }
+        .btn-enter{
+            font:1.14em/1.1em 'Candarab';
+            @media (max-width: @screen-md){
+                margin-left:240px;
+            }       
+        }
+  }
 }	  
 
 h2{
