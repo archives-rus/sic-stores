@@ -9,8 +9,8 @@
 	<thead>
 		<tr>
 			<th>{{docType}}</th>
-			<th>Дата начальная</th>
-			<th>Дата конечная</th>
+			<th>Год начальный</th>
+			<th>Год конечный</th>
 			<th>№ описи</th>
 			<th>Количество дел</th>
 			<th ng-show="edit"></th>
@@ -24,19 +24,19 @@
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.startDate}}</span>
-				<input ng-switch-when="true" ng-model="item.startDate" class='form-control'/>
+				<input ng-switch-when="true" ng-model="item.startDate" mask='dddd' restrict='reject' class='form-control'/>
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.endDate}}</span>
-				<input ng-switch-when="true" ng-model="item.endDate" class='form-control'/>
+				<input ng-switch-when="true" ng-model="item.endDate" mask='dddd' restrict='reject' class='form-control'/>
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.opisNumber}}</span>
-				<input ng-switch-when="true" ng-model="item.opisNumber" class='form-control'/>
+				<input ng-switch-when="true" ng-model="item.opisNumber" mask='dddddddd' restrict='reject' class='form-control'/>
 			</td>
 			<td ng-switch="edit">
 				<span ng-switch-when="false">{{item.docsCount}}</span>
-				<input ng-switch-when="true" ng-model="item.docsCount" class='form-control'/>
+				<input ng-switch-when="true" ng-model="item.docsCount" mask='ddddddd' restrict='reject' class='form-control'/>
 			</td>
 			<td ng-show="edit" class="card-icons"><button class="btn btn-default" ng-click='remove($index)'><span class="btn-remove"></span></button></td>
 		</tr>

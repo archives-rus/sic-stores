@@ -10,7 +10,7 @@
 	</div>
 	{{titlePage}}
 	<input style="width: 55px" class='form-control' type='text' ng-disabled="!start()" ng-model='data.current'
-		   ng-keypress="$event.which === 13 && load({page: data.current - 1})"/>
+		 mask='ddddddd' restrict='reject' ng-keypress="$event.which === 13 && load({page: data.current - 1})"/>
 	из {{data.totalPages}}
 	<div class="btn-group">
 		<button class='btn btn-default' ng-disabled="last()" ng-click="load({page: data.number + 1})">
