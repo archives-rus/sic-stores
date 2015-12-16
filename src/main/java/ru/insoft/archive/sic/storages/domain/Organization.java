@@ -104,19 +104,6 @@ public class Organization implements Serializable {
 	@OrderBy("sort")
 	private List<Name> names = new ArrayList<>();
 
-	/**
-	 * Награждения
-	 */
-	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy("sort")
-	private List<Reward> rewards = new ArrayList<>();
-
-	/**
-	 * Загранкомандировки
-	 */
-	@OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy("sort")
-	private List<Trip> trips = new ArrayList<>();
 
 	public void addPlace(Place place) {
 		places.add(place);
@@ -136,26 +123,6 @@ public class Organization implements Serializable {
 	public void removeName(Name name) {
 		name.setOrganization(null);
 		names.remove(name);
-	}
-
-	public void addReward(Reward reward) {
-		rewards.add(reward);
-		reward.setOrganization(this);
-	}
-
-	public void removeReward(Reward reward) {
-		reward.setOrganization(null);
-		rewards.remove(reward);
-	}
-
-	public void addTrip(Trip trip) {
-		trips.add(trip);
-		trip.setOrganization(this);
-	}
-
-	public void removeTrip(Trip trip) {
-		trip.setOrganization(null);
-		trips.remove(trip);
 	}
 
 	public Long getId() {
@@ -206,13 +173,6 @@ public class Organization implements Serializable {
 		return names;
 	}
 
-	public List<Reward> getRewards() {
-		return rewards;
-	}
-
-	public List<Trip> getTrips() {
-		return trips;
-	}
 
 	public AdmUser getUser() {
 		return user;
@@ -229,13 +189,4 @@ public class Organization implements Serializable {
 	public void setNames(List<Name> names) {
 		this.names = names;
 	}
-
-	public void setRewards(List<Reward> rewards) {
-		this.rewards = rewards;
-	}
-
-	public void setTrips(List<Trip> trips) {
-		this.trips = trips;
-	}
-
 }

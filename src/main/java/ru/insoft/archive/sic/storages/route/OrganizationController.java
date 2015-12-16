@@ -53,15 +53,15 @@ public class OrganizationController {
 		for (Name name : organization.getNames()) {
 			name.setOrganization(organization);
 		}
-		for (Trip trip : organization.getTrips()) {
-			trip.setOrganization(organization);
-		}
-		for (Reward reward : organization.getRewards()) {
-			reward.setOrganization(organization);
-		}
 		for (Place place : organization.getPlaces()) {
 			for (DocumentContent doc : place.getDocs()) {
 				doc.setPlace(place);
+			}
+			for (Trip trip : place.getTrips()) {
+				trip.setPlace(place);
+			}
+			for (Reward reward : place.getRewards()) {
+				reward.setPlace(place);
 			}
 			place.setOrganization(organization);
 		}

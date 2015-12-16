@@ -70,7 +70,7 @@ SP.controller('NewCardCtrl', function (Card, orgCard, orgCardPage, $routeParams,
 	};
 
 	me.add = function () {
-		me.places.push({docs: []});
+		me.places.push({docs: [], rewards: [], trips: []});
 		me.loadPlace(me.places.length - 1);
 	};
 	me.remove = function () {

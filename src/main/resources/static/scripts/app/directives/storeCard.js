@@ -19,7 +19,16 @@ SP.directive('spStoreCard', function ($rootScope) {
 						return item.values;
 				} 
 			};
+			scope.phones = function(id) {
+				for(var i = 0, max = $rootScope.phones.length; i < max; ++i) {
+					var item = $rootScope.phones[i];
+					if (item.id === id)
+						return item.values;
+				} 
+			};
 			scope.docTypes = $rootScope.docTypes;
+			scope.rewardTypes = $rootScope.rewardTypes;
+			scope.tripTypes = $rootScope.tripTypes;
 			scope.getText = function (id, data) {
 				if (data)
 					for (var i = 0; i < data.length; ++i) {
