@@ -24,6 +24,9 @@
   background-image:url("../img/bg-login.png");
   background-position:center bottom;
   background-repeat:no-repeat;
+  header{
+      margin-top:8%;
+  }
     .vert-line{
           position:absolute;
           margin-top:-15px;
@@ -52,6 +55,7 @@ textarea{
 	header{
 		background-color: @header-bg-color;
 		border-bottom: 1em solid @header-border-color;
+                padding:5px 15px;
 	}
 }
 
@@ -81,14 +85,14 @@ textarea{
 }
 .pull-right{
     color:@page-color;
-    .italic-sans();
-    font-family:'robotobold_italic', @font-family-sans-serif;
-    .vertical-separator{
-        font-style:normal;
+    font-weight:bold;
+    .ng-binding{
+        .italic-sans();
+        font-family:'robotobold_italic', @font-family-sans-serif;
     }
     button{
         font-family:'robotobold', @font-family-sans-serif;
-        font-style:normal;
+        /*font-style:normal;*/
         color:@page-color;     
     }
 }
@@ -97,6 +101,7 @@ textarea{
 		border: none;
 		background-color: transparent;
                 padding-left:0;
+                font-weight:bold;
 	}
 }
 .panel{
@@ -126,6 +131,9 @@ textarea{
                 width:58px;
             }
         }
+    }
+    .input-group-addon{
+        color:@font-color;
     }
 }
 .row{
