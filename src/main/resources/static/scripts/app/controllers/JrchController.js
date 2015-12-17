@@ -7,7 +7,7 @@ SP.controller('JrchCtrl', function (criteriaJ, tableResultJ,
 	me.result = tableResultJ;
 	me.loadPage = Search.loadTablePageJ;
 	me.viewCard = function (index) {
-		$location.path('/view_jrch/' + index);
+		$location.path('/jrchs/' + index);
 	};
 
 	// открытие datepickers

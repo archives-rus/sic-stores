@@ -76,7 +76,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in ctrl.result.content" ng-dblclick="ctrl.viewCard($index)">
+				<tr ng-repeat="item in ctrl.result.content" ng-dblclick="ctrl.viewCard(ctrl.result.number * ctrl.result.size + $index)">
 					<td>{{item.organization}}</td>
 					<td>{{item.archive}}</td>
 					<td>{{item.fund}}</td>
