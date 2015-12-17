@@ -1,14 +1,10 @@
 package ru.insoft.archive.sic.storages.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,7 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "SP_DOCUMENT")
-public class DocumentContent implements Serializable {
+public class DocumentContent extends PlaceProperty {
 
 	/**
 	 * ID состава документов
@@ -32,23 +28,7 @@ public class DocumentContent implements Serializable {
 	private Long id;
 
 	/**
-	 * ID места хранения
-	 */
-	@JsonIgnore
-	@Column(name = "PLACE_ID", insertable = false, updatable = false)
-	Long placeId;
-
-	/**
-	 * Место хранения
-	 */
-	@JsonIgnore
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "PLACE_ID", referencedColumnName = "PLACE_ID")
-	Place place;
-
-	/**
-	 * ID Вид документа 
+	 * ID Вид документа
 	 */
 	@Column(name = "TYPE_ID")
 	Long type;
@@ -139,22 +119,4 @@ public class DocumentContent implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public Long getPlaceId() {
-		return placeId;
-	}
-
-	public void setPlaceId(Long placeId) {
-		this.placeId = placeId;
-	}
-
-	public Place getPlace() {
-		return place;
-	}
-
-	public void setPlace(Place place) {
-		this.place = place;
-	}
-
-	
 }

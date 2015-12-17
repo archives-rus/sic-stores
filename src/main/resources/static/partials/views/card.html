@@ -25,16 +25,5 @@
 		</div>
 	</div>
 </div>
-
-<div class="panel panel-default">
-	<div class="panel-heading panel-title">Сведения о награждениях</div>
-	<div sp-docs-table="" doc-type='Название награды' data='ctrl.data.rewards' type-data='rewardTypes' edit='ctrl.edit'></div>
-</div>
-
-<div class="panel panel-default">
-	<div class="panel-heading panel-title">Сведения о загранкомандировках</div>
-	<div sp-docs-table="" doc-type='Вид документа' data='ctrl.data.trips' type-data='tripTypes' edit='ctrl.edit'></div>
-</div>
-
 <div class="col-sm-6 text-right" ng-show="ctrl.data.id">Имя пользователя:	<span ng-bind="ctrl.data.user.fio"></span></div>
 <div class="col-sm-6" ng-show="ctrl.data.id">Дата корректировки: <span ng-bind="ctrl.data.updateDate"></span></div>

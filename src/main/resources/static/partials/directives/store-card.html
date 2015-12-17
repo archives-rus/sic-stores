@@ -42,8 +42,8 @@
 			</div>
 			<label class='col-sm-2'><span ng-show="edit">&nbsp;</span> Телефон</label>
 			<div class='col-sm-4' ng-switch="edit">
-				<span ng-switch-when='false' ng-bind="data.phone"></span>
-				<input class='form-control'  ng-switch-when='true' ng-model='data.phone'/> 
+				<span ng-switch-when='false' ng-bind="getText(data.phone, phones(data.adres))"></span>
+				<select ng-switch-when='true' ng-model="data.phone" ng-options="phone.id as phone.fullValue for phone in phones(data.adres)" class='form-control'></select>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -108,6 +108,8 @@
 		<div class='clearfix'></div>
 		<div ng-include="'partials/includes/docs-content.html'"></div>
 		<div class='clearfix'></div>
+		<div ng-include="'partials/includes/rewards-info.html'"></div>
+		<div ng-include="'partials/includes/trips-info.html'"></div>
 	</div>
 
 	<div ng-switch-when="Организация">
@@ -150,6 +152,8 @@
 		<div class='clearfix'></div>
 		<div ng-include="'partials/includes/docs-content.html'"></div>
 		<div class='clearfix'></div>
+		<div ng-include="'partials/includes/rewards-info.html'"></div>
+		<div ng-include="'partials/includes/trips-info.html'"></div>
 	</div>
 	<div ng-switch-default="">
 		<label class='col-sm-2'>Место хранения</label>

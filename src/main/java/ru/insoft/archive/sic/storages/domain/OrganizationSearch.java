@@ -37,7 +37,7 @@ public class OrganizationSearch implements Serializable {
 	@Column(name="FULL_NAME", insertable = false, updatable = false)
 	private String name;
 
-	@Column(name="ARCHIVE", insertable = false, updatable = false)
+	@Column(name="PLACE", insertable = false, updatable = false)
 	private String archive;
 
 	@Column(name="ARCHIVE_ID", insertable = false, updatable = false)

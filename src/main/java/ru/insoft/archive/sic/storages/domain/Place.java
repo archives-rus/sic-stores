@@ -95,7 +95,7 @@ public class Place extends OrgProperty {
 	 * Телефон (для типа "в архиве")
 	 */
 	@Column(name = "ARCHIVE_PHONE")
-	private String phone;
+	private Long phone;
 
 	/**
 	 * Телефон организации (для типа "в организации")
@@ -158,6 +158,20 @@ public class Place extends OrgProperty {
 	@Column(name = "REMARK")
 	private String remark;
 
+	/**
+	 * Награждения
+	 */
+	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("sort")
+	private List<Reward> rewards = new ArrayList<>();
+
+	/**
+	 * Загранкомандировки
+	 */
+	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("sort")
+	private List<Trip> trips = new ArrayList<>();
+
 	public void addDoc(DocumentContent doc) {
 		docs.add(doc);
 		doc.setPlace(this);
@@ -166,6 +180,42 @@ public class Place extends OrgProperty {
 	public void removeDoc(DocumentContent doc) {
 		doc.setPlace(null);
 		docs.remove(doc);
+	}
+
+	public void addReward(Reward reward) {
+		rewards.add(reward);
+		reward.setPlace(this);
+	}
+
+	public void removeReward(Reward reward) {
+		reward.setPlace(null);
+		rewards.remove(reward);
+	}
+
+	public void addTrip(Trip trip) {
+		trips.add(trip);
+		trip.setPlace(this);
+	}
+
+	public void removeTrip(Trip trip) {
+		trip.setPlace(null);
+		trips.remove(trip);
+	}
+
+	public List<Reward> getRewards() {
+		return rewards;
+	}
+
+	public List<Trip> getTrips() {
+		return trips;
+	}
+
+	public void setRewards(List<Reward> rewards) {
+		this.rewards = rewards;
+	}
+
+	public void setTrips(List<Trip> trips) {
+		this.trips = trips;
 	}
 
 	public Long getId() {
@@ -240,11 +290,11 @@ public class Place extends OrgProperty {
 		this.suffix = suffix;
 	}
 
-	public String getPhone() {
+	public Long getPhone() {
 		return phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(Long phone) {
 		this.phone = phone;
 	}
 

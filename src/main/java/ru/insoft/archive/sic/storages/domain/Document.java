@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
  * @author stikkas<stikkas@yandex.ru>
  */
 @MappedSuperclass
-public abstract class Document extends OrgProperty {
+public abstract class Document extends PlaceProperty {
 
 	/**
 	 * ID Вид документа / Название награды
