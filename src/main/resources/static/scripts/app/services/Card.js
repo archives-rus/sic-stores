@@ -14,7 +14,7 @@ SP.service('Card', function ($http, orgCard, $location, $rootScope,
 		level: 'Уровень архива',
 		adres: 'Адрес архива',
 		number: 'Номер фонда',
-		fondName: 'Назание фонда',
+		fondName: 'Название фонда',
 		startYear: 'Начальный год',
 		endYear: 'Конечный год'
 	},
