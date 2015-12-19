@@ -22,7 +22,6 @@ import javax.persistence.Table;
 @Table(name = "ADM_USER")
 public class AdmUser implements Serializable {
 
-	@JsonIgnore
 	@Id
 	@Column(name = "USER_ID", insertable = false, updatable = false)
 	private Long id;

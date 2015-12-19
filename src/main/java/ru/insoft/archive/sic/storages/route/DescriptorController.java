@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.insoft.archive.sic.storages.DictCodes;
+import ru.insoft.archive.sic.storages.domain.admin.AdmUser;
 import ru.insoft.archive.sic.storages.domain.admin.DescriptorGroupAttr;
 import ru.insoft.archive.sic.storages.domain.admin.DescriptorValue;
 import ru.insoft.archive.sic.storages.domain.admin.DescriptorValueAttr;
 import ru.insoft.archive.sic.storages.domain.admin.DescriptorValueWithDescAttr;
+import ru.insoft.archive.sic.storages.repos.AdmUserRepo;
 import ru.insoft.archive.sic.storages.repos.DescriptorValueRepo;
 import ru.insoft.archive.sic.storages.repos.DescriptorValueWithDescAttrRepo;
 
@@ -23,6 +25,9 @@ public class DescriptorController {
 
 	@Autowired
 	private DescriptorValueRepo repo;
+
+	@Autowired
+	private AdmUserRepo userRepo;
 
 	@Autowired
 	private DescriptorValueWithDescAttrRepo attrRepo;
@@ -95,7 +100,7 @@ public class DescriptorController {
 	 */
 	@RequestMapping("/addresses")
 	public List<DescriptorValueWithDescAttr> getAddresses() {
-		List<DescriptorValueWithDescAttr> result = attrRepo.findByGroupWithGroupAttr(DictCodes.ORG_STRUCTURE, 
+		List<DescriptorValueWithDescAttr> result = attrRepo.findByGroupWithGroupAttr(DictCodes.ORG_STRUCTURE,
 				DictCodes.STRG_ADDRESS);
 		// Не знаю как через запрос отфильтровать ненужные результаты, поэтому пока так
 		for (DescriptorValueWithDescAttr d : result) {
@@ -118,4 +123,15 @@ public class DescriptorController {
 	public List<DescriptorValueWithDescAttr> getPhones() {
 		return attrRepo.findByGroupWithGroupAttr(DictCodes.ADDRESSES, DictCodes.PHONES);
 	}
+
+	/**
+	 * Возвращает список всех пользователей
+	 *
+	 * @return список зарегестрированных в системе пользователей
+	 */
+	@RequestMapping("/users")
+	public List<AdmUser> getUsers() {
+		return userRepo.findAll();
+	}
+
 }

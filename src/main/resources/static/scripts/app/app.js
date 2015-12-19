@@ -1,4 +1,5 @@
-var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'cgBusy', 'ngMask'])
+var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap',
+	'cgBusy', 'ngMask', 'ui.mask'])
 		.constant('criteria', {}) // Критерии поиска
 		.constant('criteriaJ', {}) // Критерии поиска для ЖРИ
 		.constant('tableResult', {}) // Результаты поиска для таблицы
@@ -97,7 +98,6 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'cg
 						controllerAs: 'ctrl',
 						resolve: resolve()
 					});
-
 			$locationProvider.html5Mode(true);
 		})
 		.run(function ($rootScope) {

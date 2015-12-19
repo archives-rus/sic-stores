@@ -39,12 +39,6 @@ SP.service('Card', function ($http, orgCard, $location, $rootScope,
 		}
 	}
 
-	function clearCard() {
-		for (var o in orgCard) {
-			delete orgCard[o];
-		}
-	}
-
 	/**
 	 * Проверяет на заполнение обязательных полей.
 	 * Заполняет список незаполненных полей.

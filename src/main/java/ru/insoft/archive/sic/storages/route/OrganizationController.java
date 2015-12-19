@@ -1,6 +1,9 @@
 package ru.insoft.archive.sic.storages.route;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +11,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import org.springframework.web.bind.annotation.RestController;
+import ru.insoft.archive.sic.storages.domain.ChangedField;
 import ru.insoft.archive.sic.storages.domain.DocumentContent;
 import ru.insoft.archive.sic.storages.domain.Name;
 import ru.insoft.archive.sic.storages.domain.Organization;
@@ -41,6 +45,7 @@ public class OrganizationController {
 		organization.setAddUserId(org.getAddUserId());
 		organization.setInsertDate(org.getInsertDate());
 		coupleParents(organization);
+		checkChangedValues(organization, org);
 		return repo.saveAndFlush(organization).getId();
 	}
 
@@ -66,4 +71,49 @@ public class OrganizationController {
 			place.setOrganization(organization);
 		}
 	}
+
+	@Async
+	/**
+	 * Записывает все изменения
+	 */
+	private void checkChangedValues(Organization newOrg, Organization oldOrg) {
+		List<Name> namesNew = newOrg.getNames();
+		List<Name> namesOld = oldOrg.getNames();
+		int namesNewSize = namesNew.size();
+		int namesOldSize = namesOld.size();
+
+		List<ChangedField> namesFields = new ArrayList<>();
+		int minSize = Math.min(namesNewSize, namesOldSize);
+		int i = 0;
+		for (; i < minSize; ++i) {
+			List<ChangedField> fields = Name.getChangedFields(namesNew.get(i), namesOld.get(i));
+			if (!fields.isEmpty()) {
+				namesFields.add(ChangedField.getInstance("Наименование организации и ее переименование", fields));
+			}
+		}
+		if (i < namesNewSize) {
+			for (; i < namesNewSize; ++i) {
+				namesFields.add(ChangedField.getInstance("Наименование организации и ее переименование",
+						Name.getChangedFields(namesNew.get(i), null)));
+			}
+		} else if (i < namesOldSize) {
+			for (; i < namesOldSize; ++i) {
+				namesFields.add(ChangedField.getInstance("Наименование организации и ее переименование",
+						Name.getChangedFields(null, namesOld.get(i))));
+			}
+		}
+		showChanges(namesFields);
+	}
+
+	private void showChanges(List<ChangedField> fields) {
+		for (ChangedField field : fields) {
+			System.out.println(field.getName().toUpperCase());
+			if (!field.getKids().isEmpty()) {
+				showChanges(field.getKids());
+			} else {
+				System.out.println(field.getOldValue() + " --- " + field.getNewValue());
+			}
+		}
+	}
+
 }

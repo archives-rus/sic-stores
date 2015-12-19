@@ -25,5 +25,11 @@ SP.controller('JrchCtrl', function (criteriaJ, tableResultJ,
 		closeText: "Выбрать",
 		showWeeks: false
 	};
+	me.checkDate = function(date) {
+		if (!date) {
+			date = new Date();
+			date = null;
+		}
+	};
 });
 
