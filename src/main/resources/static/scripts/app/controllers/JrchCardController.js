@@ -21,7 +21,10 @@ SP.controller('JrchCardCtrl', function (jCard, jCardPage, Search,
 
 	me.changeShow = function () {
 		me.show = !me.show;
-		me.show ? me.title = "Скрыть историю изменений" : me.title = "Показать историю изменений";
+		if (me.show)
+			me.title = "Скрыть историю изменений";
+		else
+			me.title = "Показать историю изменений";
 	};
 	me.loadPage($routeParams.pos);
 });
