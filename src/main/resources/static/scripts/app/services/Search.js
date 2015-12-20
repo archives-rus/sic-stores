@@ -2,7 +2,7 @@
  * Поиск организаций по критериям
  */
 SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
-		tableResultJ, orgCard, orgCardPage, $rootScope, ShowMessage) {
+		tableResultJ, orgCard, jCard, orgCardPage, jCardPage, $rootScope, ShowMessage) {
 	var
 			// Удаляет все свойства объекта
 			clear = function (obj) {
@@ -10,9 +10,9 @@ SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
 					delete obj[o];
 			},
 			// Создает список параметров для запроса
-			buildParams = function (start, limit) {
+			buildParams = function (start, limit, crit) {
 				return {
-					criteria: criteria,
+					criteria: crit,
 					page: start,
 					size: limit
 				};
@@ -32,7 +32,7 @@ SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
 		 */
 		loadTablePage: function (numberOfPage) {
 			$rootScope.mainSearch = $http.get('/search/main', {
-				params: buildParams(correctPageNumber(numberOfPage, tableResult.totalPages), limit)
+				params: buildParams(correctPageNumber(numberOfPage, tableResult.totalPages), limit, criteria)
 			}).success(function (data) {
 				if (!data.totalElements) {
 					clear(tableResult);
@@ -51,7 +51,7 @@ SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
 		// Получает данные для карточки
 		loadOrgCard: function (numberOfPage, success) {
 			$http.get('/search/card', {
-				params: buildParams(correctPageNumber(numberOfPage, tableResult.totalElements), 1)
+				params: buildParams(correctPageNumber(numberOfPage, tableResult.totalElements), 1, criteria)
 			}).success(function (data) {
 				var result = data.content[0];
 				clear(orgCard);
@@ -74,26 +74,47 @@ SP.service('Search', function ($http, criteria, tableResult, criteriaJ,
 		},
 		// Получает данные для таблицы ЖРИ
 		loadTablePageJ: function (numberOfPage) {
-			var data = {
-				totalElements: 1,
-				numberOfElements: 1,
-				number: 0,
-				current: 1,
-				totalPages: 1,
-				first: true,
-				last: true,
-				size: 1,
-				content: [{
-						archive: 'Какой-то архив',
-						level: 'Федеральный архив',
-						date: '28.01.2015',
-						type: 'Редактирование',
-						user: 'Иванов И. И.',
-						organization: 'Какая-то организация'
-					}]
-			};
-			for (var o in data)
-				tableResultJ[o] = data[o];
+			$rootScope.jrchSearch = $http.get('/search/jrch', {
+				params: buildParams(correctPageNumber(numberOfPage, tableResultJ.totalPages), limit, criteriaJ)
+			}).success(function (data) {
+				if (!data.totalElements) {
+					clear(tableResultJ);
+					ShowMessage.show('Внимание', 'Операции не найдены');
+				} else {
+					for (var o in data) {
+						tableResultJ[o] = data[o];
+					}
+					tableResultJ.current = tableResultJ.number + 1;
+				}
+			}).error(function () {
+				clear(tableResultJ);
+				ShowMessage.show('Внимание', 'Операции не найдены');
+			});
+
+		},
+		// Получает данные для карточки ЖРИ
+		loadJCard: function (numberOfPage, success) {
+			$http.get('/search/jcard', {
+				params: buildParams(correctPageNumber(numberOfPage, tableResultJ.totalElements), 1, criteriaJ)
+			}).success(function (data) {
+				var result = data.content[0];
+				clear(jCard);
+				for (var o in result) {
+					jCard[o] = result[o];
+				}
+				delete data.content;
+				for (var b in data) {
+					jCardPage[b] = data[b];
+				}
+				jCardPage.current = jCardPage.number + 1;
+				if (!jCardPage.totalElements) // Не должно быть такой ситуации никогда
+					ShowMessage.show('Внимание', 'Ошибка получения данных');
+				else if (success)
+					success();
+			}).error(function () {
+				clear(jCard);
+				ShowMessage.show('Внимание', 'Ошибка получения данных');
+			});
 		},
 		// Очищает параметры и результаты поиска
 		clearCriteria: function () {

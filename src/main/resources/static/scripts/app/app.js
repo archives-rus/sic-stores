@@ -5,7 +5,9 @@ var SP = angular.module('Storages', ['ngRoute', 'ngAnimate', 'ui.bootstrap',
 		.constant('tableResult', {}) // Результаты поиска для таблицы
 		.constant('tableResultJ', {}) // Результаты поиска для таблицы для ЖРИ
 		.value('orgCard', {}) // Карточка организации
+		.value('jCard', {}) // Карточка ЖРИ
 		.value('orgCardPage', {}) // Данные для просмотра карточек в потоке
+		.value('jCardPage', {}) // Данные для просмотра карточек ЖРИ в потоке
 		.constant('storePlace', {}) // Результаты поиска места хранения для одной организации
 		.config(function ($routeProvider, $locationProvider, $httpProvider) {
 			$httpProvider.defaults.withCredentials = true;

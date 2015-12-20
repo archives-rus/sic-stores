@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import ru.insoft.archive.sic.storages.FieldNames;
 
 /**
  * Наименование организации и ее переименование
@@ -113,37 +114,37 @@ public class Name extends OrgProperty {
 
 		List<ChangedField> fields = new ArrayList<>();
 		if (oldOne == null) {
-			fields.add(new ChangedField("Полное наименование и переименования", newOne.full, ""));
+			fields.add(new ChangedField(FieldNames.FULL_NAME, newOne.full, ""));
 			if (newOne.brief != null) {
-				fields.add(new ChangedField("Краткое наименование", newOne.brief, ""));
+				fields.add(new ChangedField(FieldNames.BRIEF_NAME, newOne.brief, ""));
 			}
 			if (newOne.sub != null) {
-				fields.add(new ChangedField("Подчинённость", newOne.sub, ""));
+				fields.add(new ChangedField(FieldNames.SUBORDINATION, newOne.sub, ""));
 			}
-			fields.add(new ChangedField("Даты", newOne.dates, ""));
+			fields.add(new ChangedField(FieldNames.DATES, newOne.dates, ""));
 		} else if (newOne == null) {
-			fields.add(new ChangedField("Полное наименование и переименования", "", oldOne.full));
+			fields.add(new ChangedField(FieldNames.FULL_NAME, "", oldOne.full));
 			if (oldOne.brief != null) {
-				fields.add(new ChangedField("Краткое наименование", "", oldOne.brief));
+				fields.add(new ChangedField(FieldNames.BRIEF_NAME, "", oldOne.brief));
 			}
 			if (oldOne.sub != null) {
-				fields.add(new ChangedField("Подчинённость", "", oldOne.sub));
+				fields.add(new ChangedField(FieldNames.SUBORDINATION, "", oldOne.sub));
 			}
-			fields.add(new ChangedField("Даты", "", oldOne.dates));
+			fields.add(new ChangedField(FieldNames.DATES, "", oldOne.dates));
 		} else {
 			if (!Objects.equals(newOne.full, oldOne.full)) {
-				fields.add(new ChangedField("Полное наименование и переименования", newOne.full, oldOne.full));
+				fields.add(new ChangedField(FieldNames.FULL_NAME, newOne.full, oldOne.full));
 			}
 			if (!Objects.equals(newOne.brief, oldOne.brief)) {
-				fields.add(new ChangedField("Краткое наименование", newOne.brief == null ? "" : newOne.brief,
+				fields.add(new ChangedField(FieldNames.BRIEF_NAME, newOne.brief == null ? "" : newOne.brief,
 						oldOne.brief == null ? "" : oldOne.brief));
 			}
 			if (!Objects.equals(newOne.sub, oldOne.sub)) {
-				fields.add(new ChangedField("Подчинённость", newOne.sub == null ? "" : newOne.sub,
+				fields.add(new ChangedField(FieldNames.SUBORDINATION, newOne.sub == null ? "" : newOne.sub,
 						oldOne.sub == null ? "" : oldOne.sub));
 			}
 			if (!Objects.equals(newOne.dates, oldOne.dates)) {
-				fields.add(new ChangedField("Даты", newOne.dates, oldOne.dates));
+				fields.add(new ChangedField(FieldNames.DATES, newOne.dates, oldOne.dates));
 			}
 		}
 		return fields;

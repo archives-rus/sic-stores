@@ -13,11 +13,12 @@ SP.controller('ParentCtrl',
 
 			// Инициализируем справочники
 			['archives', 'docTypes', 'addresses', 'places', 'phones',
-				'levels', 'rewardTypes', 'tripTypes'].forEach(function (it) {
-				$http.get('/dict/' + it).success(function (data) {
-					$rootScope[it] = data;
-				});
-			});
+				'levels', 'rewardTypes', 'tripTypes', 'actions', 'users']
+					.forEach(function (it) {
+						$http.get('/dict/' + it).success(function (data) {
+							$rootScope[it] = data;
+						});
+					});
 			/**
 			 * Выполняет выход из системы
 			 */

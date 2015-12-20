@@ -94,4 +94,29 @@ public class DictCodes {
 	 * Код группы аттрибутов Адрес хранилища
 	 */
 	public static String STRG_ADDRESS = "STRG_ADDRESS";
+
+	/**
+	 * Операция редактирования
+	 */
+	public static String EDIT_ACTION = "EDIT_ACTION";
+
+	/**
+	 * Операция удаления
+	 */
+	public static String REMOVE_ACTION = "REMOVE_ACTION";
+
+	/**
+	 * Тип операции
+	 */
+	public static String ACTION_TYPE = "ACTION_TYPE";
+
+	/**
+	 * Тип хранения в архиве
+	 */
+	public static String PLACE_ARCHIVE = "PLACE_ARCHIVE";
+
+	/**
+	 * Тип хранения в организации
+	 */
+	public static String PLACE_ORG = "PLACE_ORG";
 }

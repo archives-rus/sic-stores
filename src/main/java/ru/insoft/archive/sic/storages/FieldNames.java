@@ -21,8 +21,6 @@ public class FieldNames {
 	public static final String ARCHIVE_LEVEL = "Уровень архива";
 	public static final String FUND_NUMBER = "Номер фонда";
 	public static final String FUND_NAME = "Название фонда";
-	public static final String SINCE = "с";
-	public static final String UP_TO = "по";
 	public static final String UNIT_COUNT = "Количество ед. хр.";
 	public static final String ARCHIVE = "Архив";
 	public static final String ARCHIVE_ADDRESS = "Адрес архива";

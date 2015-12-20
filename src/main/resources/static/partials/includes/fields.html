@@ -1,0 +1,33 @@
+<div ng-repeat="field in data.fields">
+	<h4 ng-bind="field.name"></h4>
+	<div ng-switch="field.kids.length">
+		<div ng-switch-when="0">
+			<p style="text-decoration: line-through" ng-bind="field.oldValue"></p>
+			<p ng-bind="field.newValue"></p>
+		</div>
+		<div ng-switch-default="">
+			<div ng-repeat="k in field.kids">
+				<h4 ng-bind="k.name"></h4>
+				<div ng-switch="k.kids.length">
+					<div ng-switch-when="0">
+						<p style="text-decoration: line-through" ng-bind="k.oldValue"></p>
+						<p ng-bind="k.newValue"></p>
+					</div>
+					<div ng-switch-default="">
+						<div ng-repeat="n in k.kids">
+							<h4 ng-bind="n.name"></h4>
+							<div ng-switch="n.kids.length">
+								<div ng-switch-when="0">
+									<p style="text-decoration: line-through" ng-bind="n.oldValue"></p>
+									<p ng-bind="n.newValue"></p>
+								</div>
+								<div ng-switch-default="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

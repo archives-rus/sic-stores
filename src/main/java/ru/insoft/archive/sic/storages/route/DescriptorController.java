@@ -134,4 +134,14 @@ public class DescriptorController {
 		return userRepo.findAll();
 	}
 
+	/**
+	 * Возвращает действий для ЖРИ
+	 *
+	 * @return список операций
+	 */
+	@RequestMapping("/actions")
+	public List<DescriptorValue> getActions() {
+		return repo.findByGroupCode(DictCodes.ACTION_TYPE);
+	}
+
 }

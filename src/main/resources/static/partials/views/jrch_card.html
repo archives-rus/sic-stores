@@ -1,15 +1,18 @@
-<div sp-paginator="" data="ctrl.record" load="ctrl.loadRecord(page)" title-page="Запись"></div>
+<div ng-switch="ctrl.page && true">
+	<div ng-switch-when="true" sp-paginator="" data="ctrl.page" load="ctrl.loadPage(page)" title-page="Запись"></div>
+</div>
 <div class="panel-body">
-	<div class="col-sm-2">Архив</div>
-	<div class="col-sm-2">Тот самый архив</div>
-	<div class="clearfix"></div>
-	<div class="col-sm-2">Уровень архива</div>
-	<div class="col-sm-2">Тот самый уровень</div>
+	<div class="col-sm-2">Организация</div>
+	<div class="col-sm-2" ng-bind="ctrl.data.name"></div>
 	<div class="clearfix"></div>
 </div>
 <div class="panel panel-default">
-	<div class="panel-heading panel-title" ng-bind="ctrl.title"></div>
-	<div class="panel-body">
-		<div sp-change-card="" data='op' ng-repeat="op in ctrl.operations" class="change-info"></div>
+	<div class="panel-heading panel-title" ng-bind="ctrl.title" ng-click='ctrl.changeShow()' ng-class="{
+				'hist-hide': ctrl.show, 'hist-show': !ctrl.show}"></div>
+	<div class="panel-body" ng-show='ctrl.show'>
+		<div sp-change-card="" data='op' ng-repeat="op in ctrl.data.operations" class="change-info"></div>
+	</div>
+	<div class="panel-body" ng-show='!ctrl.show'>
+		<div sp-change-card="" data='ctrl.data.operations[0]' class="change-info"></div>
 	</div>
 </div>

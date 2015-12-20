@@ -3,6 +3,7 @@ package ru.insoft.archive.sic.storages.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,10 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import ru.insoft.archive.sic.storages.DictCodes;
+import ru.insoft.archive.sic.storages.FieldNames;
 import ru.insoft.archive.sic.storages.domain.admin.DescriptorValue;
+import ru.insoft.archive.sic.storages.repos.DescriptorValueRepo;
 
 /**
  * Место хранения
@@ -43,6 +47,11 @@ public class Place extends OrgProperty {
 	@Column(name = "TYPE_ID")
 	private Long type;
 
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "TYPE_ID", referencedColumnName = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
+	private DescriptorValue typeDV;
+
 	/**
 	 * Архив (для типа "в архиве"). Архив источник комплектования (для типа "в
 	 * организации")
@@ -52,7 +61,7 @@ public class Place extends OrgProperty {
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "ARCHIVE_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ARCHIVE_ID", referencedColumnName = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
 	private DescriptorValue archiveDV;
 
 	/**
@@ -62,10 +71,26 @@ public class Place extends OrgProperty {
 	private Long level;
 
 	/**
+	 * Уровень архива (для типа "в архиве")
+	 */
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "LEVEL_ID", referencedColumnName = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
+	private DescriptorValue levelDV;
+
+	/**
 	 * Адрес архива (для типа "в архиве")
 	 */
 	@Column(name = "ARCHIVE_ADDRESS")
 	private Long adres;
+
+	/**
+	 * Адрес архива (для типа "в архиве")
+	 */
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "ARCHIVE_ADDRESS", referencedColumnName = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
+	private DescriptorValue adresDV;
 
 	/**
 	 * Адрес организации (для типа "в организации")
@@ -96,6 +121,14 @@ public class Place extends OrgProperty {
 	 */
 	@Column(name = "ARCHIVE_PHONE")
 	private Long phone;
+
+	/**
+	 * Телефон (для типа "в архиве")
+	 */
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "ARCHIVE_PHONE", referencedColumnName = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
+	private DescriptorValue phoneDV;
 
 	/**
 	 * Телефон организации (для типа "в организации")
@@ -380,5 +413,204 @@ public class Place extends OrgProperty {
 
 	public void setArchiveDV(DescriptorValue archiveDV) {
 		this.archiveDV = archiveDV;
+	}
+
+	public DescriptorValue getTypeDV() {
+		return typeDV;
+	}
+
+	public void setTypeDV(DescriptorValue typeDV) {
+		this.typeDV = typeDV;
+	}
+
+	public DescriptorValue getLevelDV() {
+		return levelDV;
+	}
+
+	public void setLevelDV(DescriptorValue levelDV) {
+		this.levelDV = levelDV;
+	}
+
+	public DescriptorValue getAdresDV() {
+		return adresDV;
+	}
+
+	public void setAdresDV(DescriptorValue adresDV) {
+		this.adresDV = adresDV;
+	}
+
+	private String getFullFundNumber() {
+		String fullFundNumber = "";
+		if (prefix != null) {
+			fullFundNumber += prefix + "-";
+		}
+		fullFundNumber += number;
+		if (suffix != null) {
+			fullFundNumber += "-" + suffix;
+		}
+		return fullFundNumber;
+	}
+
+	private String getYears() {
+		return startYear + "-" + endYear;
+	}
+
+	public static List<ChangedField> getChangedFields(Place newOne, Place oldOne, DescriptorValueRepo repo) {
+		List<ChangedField> fields = new ArrayList<>();
+		if (oldOne == null) {
+			DescriptorValue typeDV = repo.findOne(newOne.type);
+			fields.add(new ChangedField(FieldNames.STORE_PLACE, typeDV.getFullValue(), ""));
+			String typeCode = typeDV.getCode();
+			if (typeCode.equals(DictCodes.PLACE_ARCHIVE)) {
+				fields.add(new ChangedField(FieldNames.ARCHIVE, repo.findOne(newOne.archive).getFullValue(), ""));
+				fields.add(new ChangedField(FieldNames.ARCHIVE_LEVEL, repo.findOne(newOne.level).getFullValue(), ""));
+				fields.add(new ChangedField(FieldNames.ARCHIVE_ADDRESS, repo.findOne(newOne.adres).getFullValue(), ""));
+				fields.add(new ChangedField(FieldNames.FUND_NUMBER, newOne.getFullFundNumber(), ""));
+				if (newOne.phone != null) {
+					fields.add(new ChangedField(FieldNames.PHONE, repo.findOne(newOne.phone).getFullValue(), ""));
+				}
+				fields.add(new ChangedField(FieldNames.FUND_NAME, newOne.fondName, ""));
+				if (newOne.email != null) {
+					fields.add(new ChangedField(FieldNames.EMAIL, newOne.email, ""));
+				}
+				if (newOne.shron != null) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_STORE, newOne.shron, ""));
+				}
+				if (newOne.ucount != null) {
+					fields.add(new ChangedField(FieldNames.UNIT_COUNT, newOne.ucount.toString(), ""));
+				}
+			} else {
+				fields.add(new ChangedField(FieldNames.ORG_ADDRESS, newOne.orgAdres, ""));
+				if (newOne.orgPhone != null) {
+					fields.add(new ChangedField(FieldNames.ORG_PHONE, newOne.orgPhone, ""));
+				}
+				if (newOne.email != null) {
+					fields.add(new ChangedField(FieldNames.ORG_EMAIL, newOne.email, ""));
+				}
+				if (newOne.archive != null) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_COMPLETE, repo.findOne(newOne.archive).getFullValue(), ""));
+				}
+			}
+			fields.add(new ChangedField(FieldNames.YEARS, newOne.getYears(), ""));
+			if (newOne.dopInfo != null) {
+				fields.add(new ChangedField(FieldNames.DOCS_CONTENT_ADD_INFO, newOne.dopInfo, ""));
+			}
+			if (newOne.remark != null) {
+				fields.add(new ChangedField(FieldNames.REMARK, newOne.remark, ""));
+			}
+
+		} else if (newOne == null) {
+			fields.add(new ChangedField(FieldNames.STORE_PLACE, "", oldOne.typeDV.getFullValue()));
+			String typeCode = oldOne.typeDV.getCode();
+			if (typeCode.equals(DictCodes.PLACE_ARCHIVE)) {
+				fields.add(new ChangedField(FieldNames.ARCHIVE, "", oldOne.archiveDV.getFullValue()));
+				fields.add(new ChangedField(FieldNames.ARCHIVE_LEVEL, "", oldOne.levelDV.getFullValue()));
+				fields.add(new ChangedField(FieldNames.ARCHIVE_ADDRESS, "", oldOne.adresDV.getFullValue()));
+				fields.add(new ChangedField(FieldNames.FUND_NUMBER, "", oldOne.getFullFundNumber()));
+				if (oldOne.phone != null) {
+					fields.add(new ChangedField(FieldNames.PHONE, "", oldOne.phoneDV.getFullValue()));
+				}
+				fields.add(new ChangedField(FieldNames.FUND_NAME, "", oldOne.fondName));
+				if (oldOne.email != null) {
+					fields.add(new ChangedField(FieldNames.EMAIL, "", oldOne.email));
+				}
+				if (oldOne.shron != null) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_STORE, "", oldOne.shron));
+				}
+				if (oldOne.ucount != null) {
+					fields.add(new ChangedField(FieldNames.UNIT_COUNT, "", oldOne.ucount.toString()));
+				}
+			} else {
+				fields.add(new ChangedField(FieldNames.ORG_ADDRESS, "", oldOne.orgAdres));
+				if (oldOne.orgPhone != null) {
+					fields.add(new ChangedField(FieldNames.ORG_PHONE, "", oldOne.orgPhone));
+				}
+				if (oldOne.email != null) {
+					fields.add(new ChangedField(FieldNames.ORG_EMAIL, "", oldOne.email));
+				}
+				if (oldOne.archive != null) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_COMPLETE, "", oldOne.archiveDV.getFullValue()));
+				}
+			}
+			fields.add(new ChangedField(FieldNames.YEARS, "", oldOne.getYears()));
+			if (oldOne.dopInfo != null) {
+				fields.add(new ChangedField(FieldNames.DOCS_CONTENT_ADD_INFO, "", oldOne.dopInfo));
+			}
+			if (oldOne.remark != null) {
+				fields.add(new ChangedField(FieldNames.REMARK, "", oldOne.remark));
+			}
+		} else if (newOne.type.equals(oldOne.type)) {
+			String typeCode = oldOne.typeDV.getCode();
+			if (typeCode.equals(DictCodes.PLACE_ARCHIVE)) {
+				if (!newOne.archive.equals(oldOne.archive)) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE, repo.findOne(newOne.archive).getFullValue(),
+							oldOne.archiveDV.getFullValue()));
+				}
+				if (!newOne.level.equals(oldOne.level)) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_LEVEL, repo.findOne(newOne.level).getFullValue(),
+							oldOne.levelDV.getFullValue()));
+				}
+				if (!newOne.adres.equals(oldOne.adres)) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_ADDRESS, repo.findOne(newOne.adres).getFullValue(),
+							oldOne.adresDV.getFullValue()));
+				}
+				String newFundNumber = newOne.getFullFundNumber();
+				String oldFundNumber = oldOne.getFullFundNumber();
+				if (!newFundNumber.equals(oldFundNumber)) {
+					fields.add(new ChangedField(FieldNames.FUND_NUMBER, newFundNumber, oldFundNumber));
+				}
+				if (!Objects.equals(newOne.phone, oldOne.phone)) {
+					fields.add(new ChangedField(FieldNames.PHONE, newOne.phone == null ? "" : repo.findOne(newOne.phone).getFullValue(),
+							oldOne.phoneDV == null ? "" : oldOne.phoneDV.getFullValue()));
+				}
+				if (!newOne.fondName.equals(oldOne.fondName)) {
+					fields.add(new ChangedField(FieldNames.FUND_NAME, newOne.fondName, oldOne.fondName));
+				}
+
+				if (!Objects.equals(newOne.email, oldOne.email)) {
+					fields.add(new ChangedField(FieldNames.EMAIL, newOne.email, oldOne.email));
+				}
+
+				if (!Objects.equals(newOne.shron, oldOne.shron)) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_STORE, newOne.shron, oldOne.shron));
+				}
+
+				if (!Objects.equals(newOne.ucount, oldOne.ucount)) {
+					fields.add(new ChangedField(FieldNames.UNIT_COUNT, newOne.ucount == null ? "" : newOne.ucount.toString(),
+							oldOne.ucount == null ? "" : oldOne.ucount.toString()));
+				}
+			} else {
+				if (!newOne.orgAdres.equals(oldOne.orgAdres)) {
+					fields.add(new ChangedField(FieldNames.ORG_ADDRESS, newOne.orgAdres, oldOne.orgAdres));
+				}
+				if (!Objects.equals(newOne.orgPhone, oldOne.orgPhone)) {
+					fields.add(new ChangedField(FieldNames.ORG_PHONE, newOne.orgPhone == null ? "" : newOne.orgPhone,
+							oldOne.orgPhone == null ? "" : oldOne.orgPhone));
+				}
+				if (!Objects.equals(newOne.email, oldOne.email)) {
+					fields.add(new ChangedField(FieldNames.ORG_EMAIL, newOne.email == null ? "" : newOne.email,
+							oldOne.email == null ? "" : oldOne.email));
+				}
+				if (!Objects.equals(newOne.archive, oldOne.archive)) {
+					fields.add(new ChangedField(FieldNames.ARCHIVE_COMPLETE, newOne.archive == null ? "" : repo.findOne(newOne.archive).getFullValue(),
+							oldOne.archiveDV == null ? "" : oldOne.archiveDV.getFullValue()));
+				}
+			}
+			String newYears = newOne.getYears();
+			String oldYears = oldOne.getYears();
+			if (!newYears.equals(oldYears)) {
+				fields.add(new ChangedField(FieldNames.YEARS, newYears, oldYears));
+			}
+			if (!Objects.equals(newOne.dopInfo, oldOne.dopInfo)) {
+				fields.add(new ChangedField(FieldNames.DOCS_CONTENT_ADD_INFO, newOne.dopInfo, oldOne.dopInfo));
+			}
+			if (!Objects.equals(newOne.remark, oldOne.remark)) {
+				fields.add(new ChangedField(FieldNames.REMARK, newOne.remark, oldOne.remark));
+			}
+		} else {
+			fields.add(new ChangedField(FieldNames.STORE_PLACE, repo.findOne(newOne.type).getFullValue(),
+					oldOne.typeDV.getFullValue()));
+		}
+		return fields;
 	}
 }
