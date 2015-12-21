@@ -105,6 +105,9 @@ SP.service('Card', function ($http, orgCard, $location, $rootScope,
 		newCard: function () {
 			orgCard.names = [];
 			orgCard.places = [];
+			delete orgCard.id;
+			delete orgCard.user;
+			delete orgCard.updateDate;
 		},
 		save: function (stream) {
 			// TODO удалить пустые значения в местах хранения и таблицах

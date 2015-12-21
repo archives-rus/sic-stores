@@ -30,6 +30,7 @@ SP.controller('NewCardCtrl', function (Card, orgCard, orgCardPage, $routeParams,
 			});
 		}
 	};
+
 	if (/^\/card\/edit\/[0-9]+/.test($location.path())) {
 		me.edit = true;
 		loadCard();
