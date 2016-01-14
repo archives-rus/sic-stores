@@ -1,8 +1,5 @@
 package ru.insoft.archive.sic.storages.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -110,43 +107,12 @@ public class Name extends OrgProperty {
 		this.sort = sort;
 	}
 
-	public static List<ChangedField> getChangedFields(Name newOne, Name oldOne) {
-
-		List<ChangedField> fields = new ArrayList<>();
-		if (oldOne == null) {
-			fields.add(new ChangedField(FieldNames.FULL_NAME, newOne.full, ""));
-			if (newOne.brief != null) {
-				fields.add(new ChangedField(FieldNames.BRIEF_NAME, newOne.brief, ""));
-			}
-			if (newOne.sub != null) {
-				fields.add(new ChangedField(FieldNames.SUBORDINATION, newOne.sub, ""));
-			}
-			fields.add(new ChangedField(FieldNames.DATES, newOne.dates, ""));
-		} else if (newOne == null) {
-			fields.add(new ChangedField(FieldNames.FULL_NAME, "", oldOne.full));
-			if (oldOne.brief != null) {
-				fields.add(new ChangedField(FieldNames.BRIEF_NAME, "", oldOne.brief));
-			}
-			if (oldOne.sub != null) {
-				fields.add(new ChangedField(FieldNames.SUBORDINATION, "", oldOne.sub));
-			}
-			fields.add(new ChangedField(FieldNames.DATES, "", oldOne.dates));
-		} else {
-			if (!Objects.equals(newOne.full, oldOne.full)) {
-				fields.add(new ChangedField(FieldNames.FULL_NAME, newOne.full, oldOne.full));
-			}
-			if (!Objects.equals(newOne.brief, oldOne.brief)) {
-				fields.add(new ChangedField(FieldNames.BRIEF_NAME, newOne.brief == null ? "" : newOne.brief,
-						oldOne.brief == null ? "" : oldOne.brief));
-			}
-			if (!Objects.equals(newOne.sub, oldOne.sub)) {
-				fields.add(new ChangedField(FieldNames.SUBORDINATION, newOne.sub == null ? "" : newOne.sub,
-						oldOne.sub == null ? "" : oldOne.sub));
-			}
-			if (!Objects.equals(newOne.dates, oldOne.dates)) {
-				fields.add(new ChangedField(FieldNames.DATES, newOne.dates, oldOne.dates));
-			}
-		}
-		return fields;
+	public static String[][] getGettersNames() {
+		return new String[][]{
+			{FieldNames.FULL_NAME, "getFull"},
+			{FieldNames.BRIEF_NAME, "getBrief"},
+			{FieldNames.SUBORDINATION, "getSub"},
+			{FieldNames.DATES, "getDates"}
+		};
 	}
 }

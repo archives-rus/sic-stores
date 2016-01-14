@@ -3,7 +3,12 @@ package ru.insoft.archive.sic.storages;
 import java.nio.file.Paths;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import ru.insoft.archive.sic.storages.domain.Name;
+import ru.insoft.archive.sic.storages.domain.Reward;
+import ru.insoft.archive.sic.storages.domain.Trip;
+import ru.insoft.archive.sic.storages.utils.ChangedFieldsGetter;
 
 @EnableJpaAuditing(dateTimeProviderRef = "auditDateTimeProvider",
 		auditorAwareRef = "userAuditorAware")
@@ -52,6 +57,15 @@ public class Application {
 		System.setProperty("spring.profiles.active", activeProfile);
 
 		SpringApplication.run(Application.class, args);
+	}
+
+	@Bean
+	public ChangedFieldsGetter changedFieldsGetter() {
+		ChangedFieldsGetter getter = new ChangedFieldsGetter();
+		getter.addFieldsNames(Name.class, Name.getGettersNames());
+		getter.addFieldsNames(Trip.class, Trip.getGettersNames());
+		getter.addFieldsNames(Reward.class, Reward.getGettersNames());
+		return getter;
 	}
 
 }

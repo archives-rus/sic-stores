@@ -24,6 +24,7 @@ import ru.insoft.archive.sic.storages.domain.Trip;
 import ru.insoft.archive.sic.storages.repos.ChangeOperationRepo;
 import ru.insoft.archive.sic.storages.repos.DescriptorValueRepo;
 import ru.insoft.archive.sic.storages.repos.OrganizationRepo;
+import ru.insoft.archive.sic.storages.utils.ChangedFieldsGetter;
 
 /**
  * Работа с карточкой организации
@@ -42,6 +43,9 @@ public class OrganizationController {
 
 	@Autowired
 	private DescriptorValueRepo dvRepo;
+
+	@Autowired
+	private ChangedFieldsGetter cfGetter;
 
 	@RequestMapping(value = "/save", method = POST)
 	public Long createCard(@RequestBody Organization organization) {
@@ -98,7 +102,7 @@ public class OrganizationController {
 		int i = 0;
 		// Обрабатываем наименования и переименования
 		for (; i < minSize; ++i) {
-			List<ChangedField> fields = Name.getChangedFields(namesNew.get(i), namesOld.get(i));
+			List<ChangedField> fields = cfGetter.getChangedFields(namesNew.get(i), namesOld.get(i));
 			if (!fields.isEmpty()) {
 				changedFields.add(ChangedField.getInstance(FieldNames.NAME_ORG_AND_PERENAME, fields));
 			}
@@ -106,12 +110,12 @@ public class OrganizationController {
 		if (i < namesNewSize) {
 			for (; i < namesNewSize; ++i) {
 				changedFields.add(ChangedField.getInstance(FieldNames.NAME_ORG_AND_PERENAME,
-						Name.getChangedFields(namesNew.get(i), null)));
+						cfGetter.getChangedFields(namesNew.get(i), null)));
 			}
 		} else if (i < namesOldSize) {
 			for (; i < namesOldSize; ++i) {
 				changedFields.add(ChangedField.getInstance(FieldNames.NAME_ORG_AND_PERENAME,
-						Name.getChangedFields(null, namesOld.get(i))));
+						cfGetter.getChangedFields(null, namesOld.get(i))));
 			}
 		}
 

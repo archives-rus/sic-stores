@@ -118,4 +118,14 @@ public class DescriptorValue implements Serializable {
 		this.attrs = attrs;
 	}
 
+	/**
+	 * Используется при получении измененных значений
+	 *
+	 * @return Полное значение справочника
+	 */
+	@Override
+	public String toString() {
+		return fullValue;
+	}
+
 }

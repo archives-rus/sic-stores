@@ -2,6 +2,7 @@ package ru.insoft.archive.sic.storages.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import ru.insoft.archive.sic.storages.FieldNames;
 
 /**
  * Таблицы для состава документов, сведения о награждениях, сведения о
@@ -96,4 +97,13 @@ public abstract class Document extends PlaceProperty {
 		this.sort = sort;
 	}
 
+	public static String[][] getGettersNames() {
+		return new String[][]{
+			{FieldNames.FULL_NAME, "type", ""},
+			{FieldNames.BRIEF_NAME, "startDate"},
+			{FieldNames.SUBORDINATION, "endDate"},
+			{FieldNames.DATES, "opisNumber"},
+			{FieldNames.DATES, "docsCount"}
+		};
+	}
 }
