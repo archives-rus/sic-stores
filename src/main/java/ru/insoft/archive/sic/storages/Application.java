@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import ru.insoft.archive.sic.storages.domain.DocumentContent;
 import ru.insoft.archive.sic.storages.domain.Name;
 import ru.insoft.archive.sic.storages.domain.Reward;
 import ru.insoft.archive.sic.storages.domain.Trip;
@@ -65,6 +66,7 @@ public class Application {
 		getter.addFieldsNames(Name.class, Name.getGettersNames());
 		getter.addFieldsNames(Trip.class, Trip.getGettersNames());
 		getter.addFieldsNames(Reward.class, Reward.getGettersNames());
+		getter.addFieldsNames(DocumentContent.class, DocumentContent.getGettersNames());
 		return getter;
 	}
 

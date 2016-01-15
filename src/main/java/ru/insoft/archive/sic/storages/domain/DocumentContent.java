@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import ru.insoft.archive.sic.storages.FieldNames;
 
 /**
  * Состав документов
@@ -119,4 +120,15 @@ public class DocumentContent extends PlaceProperty {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public static String[][] getGettersNames() {
+		return new String[][]{
+			{FieldNames.DOC_TYPE, "getType", ""},
+			{FieldNames.START_YEAR, "getStartDate"},
+			{FieldNames.END_YEAR, "getEndDate"},
+			{FieldNames.OPIS_NUMBER, "getOpisNumber"},
+			{FieldNames.DOCS_COUNT, "getDocsCount"}
+		};
+	}
+
 }
