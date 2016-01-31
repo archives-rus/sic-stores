@@ -47,11 +47,6 @@ public class Place extends OrgProperty {
 	@Column(name = "TYPE_ID")
 	private Long type;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "TYPE_ID", referencedColumnName = "DESCRIPTOR_VALUE_ID", insertable = false, updatable = false)
-	private DescriptorValue typeDV;
-
 	/**
 	 * Архив (для типа "в архиве"). Архив источник комплектования (для типа "в
 	 * организации")
@@ -415,14 +410,6 @@ public class Place extends OrgProperty {
 		this.archiveDV = archiveDV;
 	}
 
-	public DescriptorValue getTypeDV() {
-		return typeDV;
-	}
-
-	public void setTypeDV(DescriptorValue typeDV) {
-		this.typeDV = typeDV;
-	}
-
 	public DescriptorValue getLevelDV() {
 		return levelDV;
 	}
@@ -500,8 +487,9 @@ public class Place extends OrgProperty {
 			}
 
 		} else if (newOne == null) {
-			fields.add(new ChangedField(FieldNames.STORE_PLACE, "", oldOne.typeDV.getFullValue()));
-			String typeCode = oldOne.typeDV.getCode();
+			DescriptorValue typeDV = repo.findOne(oldOne.type);
+			fields.add(new ChangedField(FieldNames.STORE_PLACE, "", typeDV.getFullValue()));
+			String typeCode = typeDV.getCode();
 			if (typeCode.equals(DictCodes.PLACE_ARCHIVE)) {
 				fields.add(new ChangedField(FieldNames.ARCHIVE, "", oldOne.archiveDV.getFullValue()));
 				fields.add(new ChangedField(FieldNames.ARCHIVE_LEVEL, "", oldOne.levelDV.getFullValue()));
@@ -540,7 +528,7 @@ public class Place extends OrgProperty {
 				fields.add(new ChangedField(FieldNames.REMARK, "", oldOne.remark));
 			}
 		} else if (newOne.type.equals(oldOne.type)) {
-			String typeCode = oldOne.typeDV.getCode();
+			String typeCode = repo.findOne(oldOne.type).getCode();
 			if (typeCode.equals(DictCodes.PLACE_ARCHIVE)) {
 				if (!newOne.archive.equals(oldOne.archive)) {
 					fields.add(new ChangedField(FieldNames.ARCHIVE, repo.findOne(newOne.archive).getFullValue(),
@@ -609,7 +597,7 @@ public class Place extends OrgProperty {
 			}
 		} else {
 			fields.add(new ChangedField(FieldNames.STORE_PLACE, repo.findOne(newOne.type).getFullValue(),
-					oldOne.typeDV.getFullValue()));
+					repo.findOne(oldOne.type).getFullValue()));
 		}
 		return fields;
 	}

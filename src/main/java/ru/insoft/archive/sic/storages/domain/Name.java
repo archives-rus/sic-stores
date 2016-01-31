@@ -1,5 +1,6 @@
 package ru.insoft.archive.sic.storages.domain;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import ru.insoft.archive.sic.storages.FieldNames;
  */
 @Entity
 @Table(name = "SP_NAME")
-public class Name extends OrgProperty {
+public class Name extends OrgProperty implements Comparable<Name> {
 
 	/**
 	 * ID наименования
@@ -114,5 +115,12 @@ public class Name extends OrgProperty {
 			{FieldNames.SUBORDINATION, "getSub"},
 			{FieldNames.DATES, "getDates"}
 		};
+	}
+
+	// Используется для сортировки в пределах одной карточки
+	// если требуется сортирвка в пределах таблицы, то нужно переопределять
+	@Override
+	public int compareTo(Name o) {
+		return sort.compareTo(o.sort);
 	}
 }
