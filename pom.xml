@@ -119,20 +119,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>runserver</id>
-						<phase>install</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<jvmArguments>
-						-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
-					</jvmArguments>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
