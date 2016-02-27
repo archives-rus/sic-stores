@@ -1,59 +1,6 @@
 {
 	"elements": {
-		"names-table": {
-			"attributes": {
-				"names": {}
-			}
-		},
-		"ng-include": {
-			"attributes": {
-				"src": {},
-				"class": {}
-			}
-		},
-		"uib-alert": {
-			"attributes": {
-				"ng-show": {},
-				"class": {},
-				"template-url": {}
-			}
-		},
-		"alert": {
-			"attributes": {
-				"ng-show": {},
-				"id": {},
-				"type": {},
-				"class": {}
-			}
-		}
+		"ng-include": {}
 	},
-	"attributes": {
-		"sp-paginator": {
-			"context": "div"
-		},
-		"sp-names-table": {
-			"context": "div"
-		},
-		"sp-docs-table": {
-			"context": "div"
-		},
-		"sp-change-card": {
-			"context": "div"
-		},
-		"sp-table": {
-			"context": "div"
-		},
-		"cg-busy": {
-			"context": "div"
-		},
-		"file-model": {
-			"context": "input"
-		},
-		"sp-store-card": {
-			"context": "div"
-		},
-		"sp-store-info": {
-			"context": "div"
-		}
-	}
+	"attributes": {}
 }
