@@ -1,5 +1,9 @@
 package ru.insoft.archive.sic.storages.route;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,10 +62,11 @@ public class SearchController {
 	}
 
 	@RequestMapping("/jcard")
-	public Page<OrganizationWithChangeOperations> jCardSearch(Pageable pageable, @RequestParam("criteria") SearchCriteria criteria) {
+	public Page<OrganizationWithChangeOperations> jCardSearch(Pageable pageable, @RequestParam("criteria") SearchCriteria criteria) throws IOException {
 		Page<ChangeOperationLast> page = changeSearchRepo.search(new OrganizationSearchPredicate(criteria).getPredicate(), pageable);
-		return new PageImpl<>(Arrays.asList(changeRepo.findOne(page.getContent().get(0).getOrgId())),
-				pageable, page.getTotalElements());
+        OrganizationWithChangeOperations org = changeRepo.findOne(page.getContent().get(0).getOrgId());
+        Page<OrganizationWithChangeOperations> result = new PageImpl<>(Arrays.asList(org),pageable, page.getTotalElements());
+		return result;
 	}
 
 }

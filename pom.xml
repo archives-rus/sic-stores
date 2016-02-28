@@ -119,15 +119,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>1.2.5.RELEASE</version>
-                    </dependency>
-                </dependencies>
                 <configuration>
-                    <fork>true</fork>
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
@@ -174,7 +166,18 @@
                     <exclude>static/nbproject/</exclude>
                     <exclude>static/nbactions.xml</exclude>
                     <exclude>static/nb-configuration.xml</exclude>
+                    <exclude>static/scripts/</exclude>
+                    <exclude>static/styles/</exclude>
                 </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>static/scripts/*.min.js</include>
+                    <include>static/scripts/vendor/</include>
+                    <include>static/styles/*.min.css</include>
+                    <include>static/styles/vendor/</include>
+                </includes>
             </resource>
         </resources>
     </build>

@@ -1,13 +1,11 @@
 module.exports = function (grunt) {
 	var path = require('path'),
 			join = path.join,
-			projectDir = path.dirname(__dirname),
 			modulesDir = join(__dirname, 'node_modules'),
 			bowerDir = join(__dirname, 'bower_components'),
-			wwwRoot = join(projectDir, 'src', 'main', 'resources', 'static'),
-			jsRoot = join(wwwRoot, 'scripts'),
-			cssRoot = join(wwwRoot, 'styles'),
-			fontsRoot = join(wwwRoot, 'fonts'),
+			jsRoot = join(__dirname, 'scripts'),
+			cssRoot = join(__dirname, 'styles'),
+			fontsRoot = join(__dirname, 'fonts'),
 			annotateSuffix = '-annotated';
 
 	require('load-grunt-tasks')(grunt);
@@ -67,13 +65,13 @@ module.exports = function (grunt) {
 			},
 			theme: {
 				src: [
-					join(projectDir, 'bootstrap', 'app-theme.less'),
-					join(projectDir, 'bootstrap', 'net-style.less')
+					join(__dirname, 'bootstrap', 'app-theme.less'),
+					join(__dirname, 'bootstrap', 'net-style.less')
 				],
 				dst: join(cssRoot, 'app-theme.css')
 			},
 			utilsth: {
-				src: join(projectDir, 'bootstrap', 'utils-theme.less'),
+				src: join(__dirname, 'bootstrap', 'utils-theme.less'),
 				dst: join(cssRoot, 'utils-theme.css')
 			},
 			vendorcss: {
