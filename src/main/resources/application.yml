@@ -1,0 +1,38 @@
+server:
+    port: 8991
+    session-timeout: -1
+logging:
+    level:
+        root: WARN
+
+spring:
+    main:
+        show-banner: false
+    jpa:
+        hibernate:
+            ddl-auto: none
+        generate-ddl: false
+
+multipart:
+    maxFileSize: 50MB
+    maxRequestSize: 50MB
+
+---
+spring:
+    profiles: development
+    datasource:
+        platform: h2
+
+logging:
+    level:
+        root: INFO
+---
+spring:
+    profiles: production
+    datasource:
+        url: jdbc:oracle:thin:@localhost:1521:hawkw 
+        username: store
+        password: PstoreLace
+
+logging:
+    file: /tmp/ais-storeplaces.log

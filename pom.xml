@@ -35,17 +35,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
-            <scope>test</scope>
-        </dependency>	
-        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>2.47.1</version>
@@ -92,6 +81,15 @@
             <artifactId>ojdbc6</artifactId>
             <version>11.2.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>	
         <dependency> 
             <groupId>com.mysema.querydsl</groupId> 
             <artifactId>querydsl-core</artifactId> 
@@ -146,9 +144,7 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <fork>true</fork>
-                    <meminitial>512m</meminitial>
-                    <maxmem>1024m</maxmem>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>
