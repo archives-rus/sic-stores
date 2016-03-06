@@ -26,20 +26,12 @@ import ru.insoft.archive.sic.storages.utils.ChangedFieldsGetter;
 public class Application {
 
     public static void main(String[] args) throws SQLException {
-        boolean inDevelopment = false;
-        if ("development".equals(System.getProperty("spring.profiles.active"))) {
-            inDevelopment = true;
-        } else {
-            for (int i = 0; i < args.length; ++i) {
-                if (args[i].equals("--spring.profiles.active=development")) {
-                    inDevelopment = true;
-                    break;
-                }
-            }
-        }
+        boolean inDevelopment = isDevelopment(args);
+        // Если не указан активный профиль, то работаем в development
         if (inDevelopment) {
-        // В разработке использую сервер h2, чтобы тестовые данные не 
-        // пропадали при перезапуске
+            System.setProperty("spring.profiles.active", "development");
+            // В разработке использую сервер h2, чтобы тестовые данные не 
+            // пропадали при перезапуске
             runH2Server();
         }
 
@@ -59,6 +51,23 @@ public class Application {
     @Bean
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager();
+    }
+
+    private static boolean isDevelopment(String[] args) {
+        boolean inDevelopment = true;
+        String activeProfile = System.getProperty("spring.profiles.active");
+        if (activeProfile != null && !activeProfile.equals("development")) {
+            inDevelopment = false;
+        } else {
+            for (int i = 0; i < args.length; ++i) {
+                if (args[i].startsWith("--spring.profiles.active")
+                        && !args[i].equals("--spring.profiles.active=development")) {
+                    inDevelopment = false;
+                    break;
+                }
+            }
+        }
+        return inDevelopment;
     }
 
     private static void runH2Server() throws SQLException {

@@ -111,7 +111,7 @@
             <type>jar</type>
         </dependency>
     </dependencies>
-	
+    <!--Не devtools, не springloaded нормально не работают, не хотять перезапускать базу-->	
     <build>
         <plugins>
             <plugin>
