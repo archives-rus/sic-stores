@@ -37,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/scripts/vendor/script.min.js", "/scripts/login.min.js",
 						"/styles/vendor/styles.min.css", "/styles/login.min.css",
 						"/img/**", "/fonts/**", "/search.html", "/search/**",
-						"/scripts/search.min.js", "/styles/search.min.css")
+						"/scripts/search.min.js", "/styles/search.min.css",
+                        "/h2-console/**")
 				.permitAll()
 				.antMatchers("/utils.html", "/utils/**").hasAuthority("SP_UTILS")
 				.anyRequest().authenticated()
@@ -52,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.and()
 				.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-				//				.csrf().disable();
+//							.csrf().disable();
 				.csrf().csrfTokenRepository(csrfTokenRepository());
 		/*
 				.and()

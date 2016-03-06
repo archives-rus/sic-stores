@@ -1,6 +1,9 @@
 package ru.insoft.archive.sic.storages;
 
-import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.h2.tools.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.CacheManager;
@@ -22,7 +25,24 @@ import ru.insoft.archive.sic.storages.utils.ChangedFieldsGetter;
 @EnableCaching
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        boolean inDevelopment = false;
+        if ("development".equals(System.getProperty("spring.profiles.active"))) {
+            inDevelopment = true;
+        } else {
+            for (int i = 0; i < args.length; ++i) {
+                if (args[i].equals("--spring.profiles.active=development")) {
+                    inDevelopment = true;
+                    break;
+                }
+            }
+        }
+        if (inDevelopment) {
+        // В разработке использую сервер h2, чтобы тестовые данные не 
+        // пропадали при перезапуске
+            runH2Server();
+        }
+
         SpringApplication.run(Application.class, args);
     }
 
@@ -39,5 +59,19 @@ public class Application {
     @Bean
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager();
+    }
+
+    private static void runH2Server() throws SQLException {
+        final Server server = Server.createTcpServer("-tcpAllowOthers", "-tcpPort", "9092");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    server.start();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
     }
 }
