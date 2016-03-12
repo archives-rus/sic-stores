@@ -1,57 +1,58 @@
 # sic-storages
-New version of the storages
+To insert, to change, to search information about organizations.
 
 # Configuration properties
-All properties can be customized through system environments.
+The project uses only standard spring boot application options.
+All options can be customized through environment or command line arguments.
+Default active profile is _development_. Other profiles are _production_ and _test_.
 
-* **STORAGES_PORT** - default _8991_ (can be set by command line option, example, java -Dserver.port=1111 -jar server.jar)
-* **STORAGES_LOG** - default _java.io.tmpdir + ais-storeplaces.log_ (can be set by command line option, example, java -Dlogging.file=c:\stores\server.log -jar server.jar)
-* **STORAGES_DB** - default _hawkw_
-* **STORAGES_DB_HOST** - default _localhost_
-* **STORAGES_DB_USER** - default ***
-* **STORAGES_DB_PASSWORD** - default ***
-* **STORAGES_DB_DRIVER** - default _oracle.jdbc.OracleDriver_
+## Default options for all profiles
+* __port:__ 8991
+* __session timeout:__ none
+* __maxFileSize:__ 50Mb
+* __maxRequestSize:__ 50Mb
+
+## Default options for __development__ profile
+* __database:__ H2
+* __database host:__ localhost
+* __database port:__ 9092
+* __database name:__ development
+* __database username:__ sa
+* __database password:__ sa
+* __logging level:__ INFO
+
+## Default options for __production__ profile
+* __database:__ ORACLE
+* __database host:__ localhost
+* __database port:__ 1521
+* __database name:__ hawkw
+* __database username:__ store
+* __database password:__ PstoreLace
+* __logging level:__ WARN
+* __logging file:__ /tmp/ais-storeplaces.log
 
 # Install
 ```sh
-$ git clone -b spring_boot https://github.com/stikkas/sic-storages.git
-$ cd sic-storages/grunt
+$ git clone -b reorg https://stikkas@bitbucket.org/stikkas/sic-storage.git
+$ cd sic-storage/src/main/resources/static/
 $ npm install
 $ grunt compile
-$ cd ..
-$ mvn clean install
+$ cd ../../../../
+$ mvn clean package
 ```
 
 # Develop
 ```sh
-$ git clone -b spring_boot https://github.com/stikkas/sic-storages.git
-$ cd sic-storages/grunt
+$ git clone -b reorg https://stikkas@bitbucket.org/stikkas/sic-storage.git
+$ cd sic-storage/src/main/resources/static/
 $ npm install
 $ grunt
 ```
 Open new terminal session and
 ```sh
-$ cd sic-storages/
+$ cd sic-storage/
 $ mvn clean spring-boot:run
 ```
-
-# Content
-* **scripts** - scripts and programms for deploying
-* **boostrap** - source less for css theme
-* **grunt** - angular, bootstrap dists and additional npm modules to compile css and js client files
-* **karma** - tests for javascript frontend
-* **src/main/resources/static** - document root for web
-  * index.html - main web file
-  * enter.html - authorization form
-  * **fonts** - fonts for css theme
-  * **img** - images, icons
-  * **partials** - html parts
-  * **scripts/login** - js files for authorization form
-  * **scripts/app** - js files for main file
-  * **scripts/vendor** - js libraries
-  * **styles/login** - css files for authorization form
-  * **styles/app** - css files for main file
-  * **styles/vendor** - extra css files for js libraries
 
 # Deploy
 ## Windows
