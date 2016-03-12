@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS SP_TRIP (
     FOREIGN KEY (PLACE_ID) REFERENCES SP_PLACE (PLACE_ID)
 );
 
-CREATE ALIAS IF NOT EXISTS MD5 FOR "org.apache.commons.codec.digest.DigestUtils.md5Hex";
+CREATE ALIAS IF NOT EXISTS MD5 FOR "org.apache.commons.codec.digest.DigestUtils.md5Hex(java.lang.String)";
 CREATE ALIAS IF NOT EXISTS GET_FUND_FULL_NUMBER FOR "ru.insoft.dev.H2Functions.getFundFullNumber";
 CREATE ALIAS IF NOT EXISTS GET_YEARS FOR "ru.insoft.dev.H2Functions.getYears";
 CREATE ALIAS IF NOT EXISTS SETVAL FOR "ru.insoft.dev.H2Functions.setSequenceValue";
