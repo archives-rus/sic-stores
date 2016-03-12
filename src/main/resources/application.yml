@@ -3,7 +3,7 @@ server:
     session-timeout: -1
 logging:
     level:
-        root: WARN
+        root: INFO
 
 spring:
     main:
@@ -22,13 +22,16 @@ spring:
     profiles: development
     datasource:
         platform: h2
-        url: jdbc:h2:tcp://localhost:9092/~/test
+        url: jdbc:h2:tcp://localhost:9092/~/development
         username: sa
         password: sa
 
-logging:
-    level:
-        root: INFO
+---
+spring:
+    profiles: test
+    datasource:
+        platform: h2
+
 ---
 spring:
     profiles: production
@@ -39,3 +42,5 @@ spring:
 
 logging:
     file: /tmp/ais-storeplaces.log
+    level:
+        root: WARN

@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.insoft.archive.sic.storages.Application;
-import ru.insoft.archive.sic.storages.TestConfig;
 
 /**
  * Юнит тесты для основного контроллера маршрутов.
@@ -18,7 +17,7 @@ import ru.insoft.archive.sic.storages.TestConfig;
  * @author stikkas<stikkas@yandex.ru>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, TestConfig.class})
+@SpringApplicationConfiguration(classes = {Application.class})
 @ActiveProfiles("test")
 public class MainControllerTest {
 

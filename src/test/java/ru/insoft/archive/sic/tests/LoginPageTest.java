@@ -14,10 +14,9 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.insoft.archive.sic.storages.Application;
-import ru.insoft.archive.sic.storages.TestConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, TestConfig.class})
+@SpringApplicationConfiguration(classes = {Application.class})
 @ActiveProfiles("test")
 @WebIntegrationTest(value = "server.port=9000")
 @SeleniumTest(baseUrl = "http://localhost:9000/enter.html")

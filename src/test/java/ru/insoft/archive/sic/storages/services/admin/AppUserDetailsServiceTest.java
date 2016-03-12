@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.insoft.archive.sic.storages.Application;
-import ru.insoft.archive.sic.storages.TestConfig;
 import ru.insoft.archive.sic.storages.serivces.admin.AppUserDetailsService;
 
 /**
@@ -19,7 +18,7 @@ import ru.insoft.archive.sic.storages.serivces.admin.AppUserDetailsService;
  * @author stikkas<stikkas@yandex.ru>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, TestConfig.class})
+@SpringApplicationConfiguration(classes = {Application.class})
 @ActiveProfiles("test")
 public class AppUserDetailsServiceTest {
 

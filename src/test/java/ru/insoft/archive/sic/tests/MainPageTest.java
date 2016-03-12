@@ -13,7 +13,6 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.insoft.archive.sic.storages.Application;
-import ru.insoft.archive.sic.storages.TestConfig;
 
 /**
  * Интеграционные тесты для страниц, отдаваемых сервером
@@ -21,7 +20,7 @@ import ru.insoft.archive.sic.storages.TestConfig;
  * @author stikkas<stikkas@yandex.ru>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, TestConfig.class})
+@SpringApplicationConfiguration(classes = {Application.class})
 @ActiveProfiles("test")
 @WebIntegrationTest(value = "server.port=9000")
 @SeleniumTest(baseUrl = "http://localhost:9000/index.html")

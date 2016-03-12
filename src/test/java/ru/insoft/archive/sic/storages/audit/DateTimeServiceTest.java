@@ -10,12 +10,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import ru.insoft.archive.sic.storages.Application;
-import ru.insoft.archive.sic.storages.TestConfig;
 import ru.insoft.archive.sic.storages.domain.Organization;
 import ru.insoft.archive.sic.storages.repos.OrganizationRepo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, TestConfig.class})
+@SpringApplicationConfiguration(classes = {Application.class})
 @ActiveProfiles("test")
 @TransactionConfiguration(defaultRollback = true)
 public class DateTimeServiceTest {

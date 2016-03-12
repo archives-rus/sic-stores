@@ -27,7 +27,6 @@ public class Application {
 
     public static void main(String[] args) throws SQLException {
         boolean inDevelopment = isDevelopment(args);
-        // Если не указан активный профиль, то работаем в development
         if (inDevelopment) {
             System.setProperty("spring.profiles.active", "development");
             // В разработке использую сервер h2, чтобы тестовые данные не 
@@ -54,6 +53,7 @@ public class Application {
     }
 
     private static boolean isDevelopment(String[] args) {
+        // Если не указан активный профиль, то работаем в development
         boolean inDevelopment = true;
         String activeProfile = System.getProperty("spring.profiles.active");
         if (activeProfile != null && !activeProfile.equals("development")) {
