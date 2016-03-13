@@ -96,7 +96,7 @@ public class JrchSaverService {
 
 		if (!changedFields.isEmpty()) {
 			ChangeOperation operation = new ChangeOperation();
-			operation.setActionId(dvRepo.findOneByCode(DictCodes.EDIT_ACTION).getId());
+			operation.setActionId(dvRepo.findOneByCodeAndGroup_Code(DictCodes.EDIT_ACTION, DictCodes.ACTION_TYPE).getId());
 			operation.setOrganizationId(oldOrg.getId());
 			for (ChangedField field : changedFields) {
 				operation.addField(field);

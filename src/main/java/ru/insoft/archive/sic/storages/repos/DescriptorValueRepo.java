@@ -8,7 +8,7 @@ import ru.insoft.archive.sic.storages.domain.admin.DescriptorValue;
 
 public interface DescriptorValueRepo extends JpaRepository<DescriptorValue, Long> {
 
-	@Cacheable("descriptors")
+//	@Cacheable("descriptors")
 	@Override
 	DescriptorValue findOne(Long id);
 
@@ -18,5 +18,5 @@ public interface DescriptorValueRepo extends JpaRepository<DescriptorValue, Long
 
 	List<DescriptorValue> findByAttrDescriptor(@Param("code") String code);
 
-	DescriptorValue findOneByCode(String code);
+	DescriptorValue findOneByCodeAndGroup_Code(String code, String groupCode);
 }
