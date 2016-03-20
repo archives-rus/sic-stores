@@ -1,9 +1,6 @@
 package ru.insoft.archive.sic.storages;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.h2.tools.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.CacheManager;
@@ -26,14 +23,6 @@ import ru.insoft.archive.sic.storages.utils.ChangedFieldsGetter;
 public class Application {
 
     public static void main(String[] args) throws SQLException {
-        boolean inDevelopment = isDevelopment(args);
-        if (inDevelopment) {
-            System.setProperty("spring.profiles.active", "development");
-            // В разработке использую сервер h2, чтобы тестовые данные не 
-            // пропадали при перезапуске
-            runH2Server();
-        }
-
         SpringApplication.run(Application.class, args);
     }
 
@@ -52,35 +41,4 @@ public class Application {
         return new ConcurrentMapCacheManager();
     }
 
-    private static boolean isDevelopment(String[] args) {
-        // Если не указан активный профиль, то работаем в development
-        boolean inDevelopment = true;
-        String activeProfile = System.getProperty("spring.profiles.active");
-        if (activeProfile != null && !activeProfile.equals("development")) {
-            inDevelopment = false;
-        } else {
-            for (int i = 0; i < args.length; ++i) {
-                if (args[i].startsWith("--spring.profiles.active")
-                        && !args[i].equals("--spring.profiles.active=development")) {
-                    inDevelopment = false;
-                    break;
-                }
-            }
-        }
-        return inDevelopment;
-    }
-
-    private static void runH2Server() throws SQLException {
-        final Server server = Server.createTcpServer("-tcpAllowOthers", "-tcpPort", "9092");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    server.start();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }).start();
-    }
 }
