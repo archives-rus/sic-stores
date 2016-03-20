@@ -1,4 +1,4 @@
 target/
-/nbactions.xml
-/nbproject/
-/nb-configuration.xml
+nbproject/
+nbactions.xml
+nb-configuration.xml
