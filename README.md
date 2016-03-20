@@ -1,6 +1,30 @@
 # sic-storages
 To insert, to change, to search information about organizations.
 
+# Development flow
+При разработке использую профиль _development_ maven и профиль _development_ spring-boot.
+Собираю проект без указания профилей. По умолчанию используется профиль _production_, в котором прописано подключение к OracleDB. Для разработки необходимо поднять сервер БД H2.
+При тестировании используется встроенный сервер БД H2 (для этого необходимо использовать профиль _development_ maven).
+
+## Actions of the Netbeans:
+* **Test project**: 
+* * Execute Goals: test
+* * Active Profiles: development
+* **Test file**: 
+* * Execute Goals: test-compile surefire:test
+* * Active Profiles: development
+* * Set Properties: test=${packageClassName}
+* **Run**:
+* * Execute Goals: spring-boot:run
+* * Active Profiles: development
+* * Set Properties: Env.spring_profiles_active=development
+    run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+* **Notest**:
+* * Execute Goals: test-compile surefire:test
+* * Set Properties: skipTests=true
+
+For build production version use **Notest** action.
+
 # Configuration properties
 The project uses only standard spring boot application options.
 All options can be customized through environment or command line arguments.
@@ -33,7 +57,7 @@ Default active profile is _development_. Other profiles are _production_ and _te
 
 # Install
 ```sh
-$ git clone -b reorg https://stikkas@bitbucket.org/stikkas/sic-storage.git
+$ git clone -b reorg https://stikkas@bitbucket.org/sicstores/sic-storage.git
 $ cd sic-storage/src/main/resources/static/
 $ npm install
 $ grunt compile
@@ -43,7 +67,7 @@ $ mvn clean package
 
 # Develop
 ```sh
-$ git clone -b reorg https://stikkas@bitbucket.org/stikkas/sic-storage.git
+$ git clone -b reorg https://stikkas@bitbucket.org/sicstores/sic-storage.git
 $ cd sic-storage/src/main/resources/static/
 $ npm install
 $ grunt
