@@ -7,21 +7,21 @@ To insert, to change, to search information about organizations.
 При тестировании используется встроенный сервер БД H2 (для этого необходимо использовать профиль _development_ maven).
 
 ## Actions of the Netbeans:
-* **Test project**: 
-*   * Execute Goals: test
-* * Active Profiles: development
-* **Test file**: 
-* * Execute Goals: test-compile surefire:test
-* * Active Profiles: development
-* * Set Properties: test=${packageClassName}
-* **Run**:
-* * Execute Goals: spring-boot:run
-* * Active Profiles: development
-* * Set Properties: Env.spring_profiles_active=development
-    run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
-* **Notest**:
-* * Execute Goals: test-compile surefire:test
-* * Set Properties: skipTests=true
+- **Test project**: 
+    * Execute Goals: test
+    * Active Profiles: development
+- **Test file**: 
+    * Execute Goals: test-compile surefire:test
+    * Active Profiles: development
+    * Set Properties: test=${packageClassName}
+- **Run**:
+    * Execute Goals: spring-boot:run
+    * Active Profiles: development
+    * Set Properties: Env.spring_profiles_active=development
+        run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+- **Notest**:
+    * Execute Goals: test-compile surefire:test
+    * Set Properties: skipTests=true
 
 For build production version use **Notest** action.
 
