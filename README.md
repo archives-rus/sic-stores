@@ -11,17 +11,16 @@ To insert, to change, to search information about organizations.
     * __Execute Goals:__ _test_
     * __Active Profiles:__ _development_
 - **Test file**: 
-    * Execute Goals: test-compile surefire:test
-    * Active Profiles: development
-    * Set Properties: test=${packageClassName}
+    * __Execute Goals:__ _test-compile surefire:test_
+    * __Active Profiles:__ _development_
+    * __Set Properties:__ _test=${packageClassName}_
 - **Run**:
-    * Execute Goals: spring-boot:run
-    * Active Profiles: development
-    * Set Properties: Env.spring_profiles_active=development
-        run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+    * __Execute Goals:__ _spring-boot:run_
+    * __Active Profiles:__ _development_
+    * __Set Properties:__ *Env.spring_profiles_active=development run.jvmArguments=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005*
 - **Notest**:
-    * Execute Goals: test-compile surefire:test
-    * Set Properties: skipTests=true
+    * __Execute Goals:__ _test-compile surefire:test_
+    * __Set Properties:__ _skipTests=true_
 
 For build production version use **Notest** action.
 
