@@ -8,8 +8,8 @@ To insert, to change, to search information about organizations.
 
 ## Actions of the Netbeans:
 - **Test project**: 
-    * Execute Goals: test
-    * Active Profiles: development
+    * __Execute Goals:__ _test_
+    * __Active Profiles:__ _development_
 - **Test file**: 
     * Execute Goals: test-compile surefire:test
     * Active Profiles: development
